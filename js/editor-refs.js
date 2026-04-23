@@ -87,7 +87,8 @@
   banner.id = 'jbc-editor-banner';
   banner.innerHTML = '<span>EDITOR MODE — Click text to edit · Hover images to replace · Use + to add · Hit SAVE</span>';
   document.body.prepend(banner);
-  document.body.style.marginTop = '40px';
+  /* Use padding instead of margin so getBoundingClientRect stays consistent */
+  document.body.style.paddingTop = '40px';
 
   /* ========== TOAST ========== */
   var toast = document.createElement('div');
@@ -286,10 +287,14 @@
           var target = e2.target.closest('section') || e2.target.closest('.hero') || document.querySelector('.hero') || document.body;
           var rect = target.getBoundingClientRect();
 
+          /* Calculate position relative to the section (accounting for scroll) */
+          var posLeft = e2.pageX - (rect.left + window.scrollX) - 100;
+          var posTop = e2.pageY - (rect.top + window.scrollY) - 75;
+
           /* Create the image element */
           var wrapper = document.createElement('div');
           wrapper.className = 'jbc-added';
-          wrapper.style.cssText = 'left:'+(e2.clientX - rect.left - 100)+'px;top:'+(e2.clientY - rect.top - 75)+'px;width:300px;';
+          wrapper.style.cssText = 'left:'+posLeft+'px;top:'+posTop+'px;width:300px;';
 
           var img = document.createElement('img');
           img.src = ev.target.result;
@@ -372,9 +377,12 @@
       var target = e2.target.closest('section') || e2.target.closest('.hero') || document.querySelector('.hero') || document.body;
       var rect = target.getBoundingClientRect();
 
+      var posLeft = e2.pageX - (rect.left + window.scrollX);
+      var posTop = e2.pageY - (rect.top + window.scrollY);
+
       var wrapper = document.createElement('div');
       wrapper.className = 'jbc-added';
-      wrapper.style.cssText = 'left:'+(e2.clientX - rect.left)+'px;top:'+(e2.clientY - rect.top)+'px;';
+      wrapper.style.cssText = 'left:'+posLeft+'px;top:'+posTop+'px;';
 
       var textEl = document.createElement('p');
       textEl.setAttribute('contenteditable','true');
@@ -580,13 +588,12 @@
 
     /* Clean added elements — bake positioning into inline styles, remove editor controls */
     clone.querySelectorAll('.jbc-added').forEach(function(el){
-      /* Bake the CSS class properties into inline style so they survive */
+      /* Bake the CSS class properties into inline so they survive without the editor CSS */
       el.style.position = 'absolute';
+      el.style.zIndex = el.style.zIndex || '5';
       el.style.cursor = '';
       el.style.userSelect = '';
-      /* Compensate for the 40px editor banner offset */
-      var currentTop = parseInt(el.style.top) || 0;
-      el.style.top = (currentTop - 40) + 'px';
+      el.style.outline = 'none';
       /* Remove editor-only children */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle').forEach(function(c){ c.remove(); });
       /* Remove the class (its CSS will be gone in the saved file) */
@@ -631,7 +638,7 @@
     });
 
     var body = clone.querySelector('body');
-    if(body) body.style.marginTop = '';
+    if(body){ body.style.marginTop = ''; body.style.paddingTop = ''; }
     body.classList.remove('jbc-placement-mode');
 
     return '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
