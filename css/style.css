@@ -653,7 +653,13 @@ section { padding:var(--section-pad) 0; }
   .testi-brutal { grid-template-columns:1fr; }
   .testi-mark { writing-mode:horizontal-tb; padding:20px; }
   .footer-grid { grid-template-columns:1fr 1fr; }
-  .hero { padding:80px 25px 25px; }
+  .hero { padding:70px 20px 20px; }
+  .hero-mega .l1, .hero-mega .l2, .hero-mega .l3 { font-size:clamp(3.5rem,14vw,7rem); }
+  .hero-mega .l2 { margin-left:20px; }
+  .hero-mega { letter-spacing:-3px; }
+  .hero .tag { font-size:0.7rem; right:15px; top:70px; }
+  .hero-bottom { flex-direction:column; align-items:flex-start; gap:15px; }
+  .hero-bottom .scroll-txt { align-self:flex-end; }
   .page-header .container { flex-direction:column; align-items:flex-start; }
   .blog-grid { grid-template-columns:1fr; }
 }
