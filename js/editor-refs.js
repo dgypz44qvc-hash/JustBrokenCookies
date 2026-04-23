@@ -59,6 +59,14 @@
     #jbc-toast.success{border-color:#2ecc40;}
     #jbc-toast.error{border-color:#E84848;background:#3a0a0a;}
 
+    /* Right-click context menu */
+    #jbc-context-menu{position:fixed;z-index:1000010;background:#1a1a1a;border:2px solid #E8891D;display:none;min-width:180px;font-family:monospace;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+    #jbc-context-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:12px 16px;background:none;border:none;border-bottom:1px solid #333;color:#fff;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;text-align:left;}
+    #jbc-context-menu button:last-child{border-bottom:none;}
+    #jbc-context-menu button:hover{background:#E8891D;color:#000;}
+    #jbc-context-menu button i{width:18px;text-align:center;font-size:14px;}
+    #jbc-context-menu .jbc-menu-header{padding:8px 16px;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;}
+
     /* Placement mode */
     .jbc-placement-mode{cursor:crosshair!important;}
     .jbc-placement-mode *{cursor:crosshair!important;}
@@ -97,6 +105,91 @@
   var placementHint = document.createElement('div');
   placementHint.id = 'jbc-placement-hint';
   document.body.appendChild(placementHint);
+
+  /* ========== RIGHT-CLICK CONTEXT MENU ========== */
+  var ctxMenu = document.createElement('div');
+  ctxMenu.id = 'jbc-context-menu';
+  ctxMenu.innerHTML = [
+    '<div class="jbc-menu-header">Layers</div>',
+    '<button data-action="send-back"><i class="fas fa-arrow-down"></i> Send Behind</button>',
+    '<button data-action="send-far-back"><i class="fas fa-angles-down"></i> Send to Back</button>',
+    '<button data-action="bring-front"><i class="fas fa-arrow-up"></i> Bring Forward</button>',
+    '<button data-action="bring-far-front"><i class="fas fa-angles-up"></i> Bring to Front</button>',
+    '<div class="jbc-menu-header">Opacity</div>',
+    '<button data-action="opacity-down"><i class="fas fa-eye-slash"></i> More Transparent</button>',
+    '<button data-action="opacity-up"><i class="fas fa-eye"></i> Less Transparent</button>',
+    '<div class="jbc-menu-header">Actions</div>',
+    '<button data-action="delete" style="color:#E84848;"><i class="fas fa-trash"></i> Delete</button>'
+  ].join('');
+  document.body.appendChild(ctxMenu);
+
+  var ctxTarget = null;
+
+  /* Show menu on right-click on images / added elements */
+  document.addEventListener('contextmenu', function(e){
+    var el = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap') || e.target.closest('.hero-portrait');
+    if(!el) return;
+    e.preventDefault();
+    ctxTarget = el;
+    ctxMenu.style.display = 'block';
+    ctxMenu.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+    ctxMenu.style.top = Math.min(e.clientY, window.innerHeight - 300) + 'px';
+  });
+
+  /* Hide menu on click elsewhere */
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('#jbc-context-menu')){
+      ctxMenu.style.display = 'none';
+      ctxTarget = null;
+    }
+  });
+
+  /* Handle menu actions */
+  ctxMenu.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn || !ctxTarget) return;
+    var action = btn.getAttribute('data-action');
+    var currentZ = parseInt(getComputedStyle(ctxTarget).zIndex) || 1;
+    var currentOp = parseFloat(ctxTarget.style.opacity || getComputedStyle(ctxTarget).opacity) || 1;
+
+    switch(action){
+      case 'send-back':
+        ctxTarget.style.zIndex = Math.max(0, currentZ - 1);
+        showToast('Sent back (z-index: ' + ctxTarget.style.zIndex + ')');
+        break;
+      case 'send-far-back':
+        ctxTarget.style.zIndex = '0';
+        showToast('Sent to very back');
+        break;
+      case 'bring-front':
+        ctxTarget.style.zIndex = currentZ + 1;
+        showToast('Brought forward (z-index: ' + ctxTarget.style.zIndex + ')');
+        break;
+      case 'bring-far-front':
+        ctxTarget.style.zIndex = '99';
+        showToast('Brought to front');
+        break;
+      case 'opacity-down':
+        var newOp = Math.max(0.1, currentOp - 0.15);
+        ctxTarget.style.opacity = newOp.toFixed(2);
+        showToast('Opacity: ' + Math.round(newOp * 100) + '%');
+        break;
+      case 'opacity-up':
+        var newOp2 = Math.min(1, currentOp + 0.15);
+        ctxTarget.style.opacity = newOp2.toFixed(2);
+        showToast('Opacity: ' + Math.round(newOp2 * 100) + '%');
+        break;
+      case 'delete':
+        ctxTarget.remove();
+        showToast('Deleted');
+        break;
+    }
+
+    changes.text++;
+    updateCounter();
+    ctxMenu.style.display = 'none';
+    ctxTarget = null;
+  });
 
   /* ========== TOOLBAR ========== */
   var toolbar = document.createElement('div');
