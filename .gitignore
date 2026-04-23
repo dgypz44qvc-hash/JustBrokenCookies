@@ -1,5 +1,7 @@
 *.zip
 .DS_Store
 preview-mockup.html
+mockup-*.html
+original/
 DEPLOYMENT-GUIDE.md
 SITE-MAP-REFERENCE.html

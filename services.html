@@ -7,194 +7,136 @@
   <meta name="description" content="Visuals, Strategy, and Words — the three pillars of storytelling at JustBrokenCookies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .service-detail {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      padding: 80px 0;
-      border-bottom: 1px solid var(--dark-gray);
-    }
-    .service-detail:last-of-type { border-bottom: none; }
-    .service-detail.reverse { direction: rtl; }
-    .service-detail.reverse > * { direction: ltr; }
-    .service-detail-image {
-      aspect-ratio: 4/3;
-      background: var(--dark-gray);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      color: var(--mid-gray);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-    }
-    .service-detail-content .service-number {
-      font-family: var(--font-display);
-      font-size: 4rem;
-      opacity: 0.15;
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-    .service-list {
-      margin-top: 24px;
-    }
-    .service-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--dark-gray);
-      color: var(--light-gray);
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .service-list li::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--coral);
-      flex-shrink: 0;
-    }
-    @media (max-width: 968px) {
-      .service-detail,
-      .service-detail.reverse { grid-template-columns: 1fr; direction: ltr; }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="nav" id="navbar">
     <div class="container">
-      <a href="index.html" class="nav-logo">
-        <span class="just">Just</span><span class="broken">Broken</span><span class="cookies">Cookies</span>
-      </a>
+      <a href="index.html" class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></a>
       <div class="nav-links" id="navLinks">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="services.html" class="active">Services</a>
-        <a href="portfolio.html">Portfolio</a>
+        <a href="portfolio.html">Work</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
       </div>
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
-      </div>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     </div>
   </nav>
 
   <!-- PAGE HEADER -->
   <section class="page-header">
     <div class="container">
-      <p class="section-label">What We Offer</p>
-      <h1 class="section-title gradient-text">Our Services</h1>
-      <p class="section-subtitle">three pillars, one story</p>
+      <div>
+        <p class="section-label">What We Offer</p>
+        <h1 class="section-title"><span style="color:var(--gold)">Our</span> <span style="color:var(--coral)">Services</span></h1>
+      </div>
+      <p class="section-subtitle" style="margin-bottom:0;">three pillars, one story</p>
     </div>
   </section>
 
   <!-- SERVICE 1: VISUALS -->
-  <section style="padding-top: 0;">
-    <div class="container">
-
-      <div class="service-detail fade-up">
-        <div class="service-detail-image"><img src="https://images.unsplash.com/photo-1601506521793-dc748fc80b67?w=700&q=80" alt="Visual storytelling - camera and film" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="service-detail-content">
-          <div class="service-number gradient-text">01</div>
-          <h2 class="section-title gradient-text">Visuals</h2>
-          <p class="section-subtitle">see the story</p>
-          <p class="section-text">
-            From cinematic brand films to scroll-stopping photography, we create
-            visuals that don't just capture attention — they capture emotion.
-            Every frame is intentional, every shot is a chapter in your brand's story.
-          </p>
-          <ul class="service-list">
-            <li>Brand Photography &amp; Lifestyle Shoots</li>
-            <li>Video Production &amp; Direction</li>
-            <li>Motion Graphics &amp; Animation</li>
-            <li>Social Media Content Creation</li>
-            <li>Visual Brand Identity Design</li>
-            <li>Event &amp; Behind-the-Scenes Documentation</li>
-          </ul>
-        </div>
+  <section style="padding:0;">
+    <div class="service-detail">
+      <div class="service-detail-image">
+        <img src="https://images.unsplash.com/photo-1601506521793-dc748fc80b67?w=700&q=80" alt="Visual storytelling">
       </div>
-
-      <!-- SERVICE 2: STRATEGY -->
-      <div class="service-detail reverse fade-up">
-        <div class="service-detail-image"><img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=700&q=80" alt="Strategy and planning" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="service-detail-content">
-          <div class="service-number gradient-text">02</div>
-          <h2 class="section-title gradient-text">Strategy</h2>
-          <p class="section-subtitle">map the story</p>
-          <p class="section-text">
-            Great stories don't happen by accident. We architect the narrative
-            before a single pixel moves or word drops. Strategy is the foundation
-            that makes everything else hit harder.
-          </p>
-          <ul class="service-list">
-            <li>Brand Positioning &amp; Voice Development</li>
-            <li>Content Strategy &amp; Editorial Planning</li>
-            <li>Campaign Architecture &amp; Rollout Plans</li>
-            <li>Audience Research &amp; Persona Building</li>
-            <li>Social Media Strategy</li>
-            <li>Launch Strategy &amp; Go-to-Market Narratives</li>
-          </ul>
-        </div>
+      <div class="service-detail-content">
+        <div class="service-number">NO. 01</div>
+        <h2 class="section-title gradient-text" style="font-size:2.5rem;">Visuals</h2>
+        <p class="section-subtitle">see the story</p>
+        <p class="section-text">
+          From cinematic brand films to scroll-stopping photography, we create
+          visuals that don't just capture attention — they capture emotion.
+          Every frame is intentional, every shot is a chapter in your brand's story.
+        </p>
+        <ul class="service-list">
+          <li>Brand Photography &amp; Lifestyle Shoots</li>
+          <li>Video Production &amp; Direction</li>
+          <li>Motion Graphics &amp; Animation</li>
+          <li>Social Media Content Creation</li>
+          <li>Visual Brand Identity Design</li>
+          <li>Event &amp; Behind-the-Scenes Documentation</li>
+        </ul>
       </div>
+    </div>
 
-      <!-- SERVICE 3: WORDS -->
-      <div class="service-detail fade-up">
-        <div class="service-detail-image"><img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=700&q=80" alt="Writing and words" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="service-detail-content">
-          <div class="service-number gradient-text">03</div>
-          <h2 class="section-title gradient-text">Words</h2>
-          <p class="section-subtitle">speak the story</p>
-          <p class="section-text">
-            Words are where the soul of a story lives. We write with voice,
-            with rhythm, with intention. From a single headline to a full brand
-            narrative — every word earns its place.
-          </p>
-          <ul class="service-list">
-            <li>Brand Copywriting &amp; Taglines</li>
-            <li>Website &amp; Landing Page Copy</li>
-            <li>Blog Posts &amp; Editorial Content</li>
-            <li>Scriptwriting for Video &amp; Audio</li>
-            <li>Social Media Captions &amp; Storytelling</li>
-            <li>Email Sequences &amp; Newsletters</li>
-          </ul>
-        </div>
+    <!-- SERVICE 2: STRATEGY -->
+    <div class="service-detail reverse">
+      <div class="service-detail-image">
+        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=700&q=80" alt="Strategy and planning">
       </div>
+      <div class="service-detail-content">
+        <div class="service-number">NO. 02</div>
+        <h2 class="section-title gradient-text" style="font-size:2.5rem;">Strategy</h2>
+        <p class="section-subtitle">map the story</p>
+        <p class="section-text">
+          Great stories don't happen by accident. We architect the narrative
+          before a single pixel moves or word drops. Strategy is the foundation
+          that makes everything else hit harder.
+        </p>
+        <ul class="service-list">
+          <li>Brand Positioning &amp; Voice Development</li>
+          <li>Content Strategy &amp; Editorial Planning</li>
+          <li>Campaign Architecture &amp; Rollout Plans</li>
+          <li>Audience Research &amp; Persona Building</li>
+          <li>Social Media Strategy</li>
+          <li>Launch Strategy &amp; Go-to-Market Narratives</li>
+        </ul>
+      </div>
+    </div>
 
+    <!-- SERVICE 3: WORDS -->
+    <div class="service-detail">
+      <div class="service-detail-image">
+        <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=700&q=80" alt="Writing and words">
+      </div>
+      <div class="service-detail-content">
+        <div class="service-number">NO. 03</div>
+        <h2 class="section-title gradient-text" style="font-size:2.5rem;">Words</h2>
+        <p class="section-subtitle">speak the story</p>
+        <p class="section-text">
+          Words are where the soul of a story lives. We write with voice,
+          with rhythm, with intention. From a single headline to a full brand
+          narrative — every word earns its place.
+        </p>
+        <ul class="service-list">
+          <li>Brand Copywriting &amp; Taglines</li>
+          <li>Website &amp; Landing Page Copy</li>
+          <li>Blog Posts &amp; Editorial Content</li>
+          <li>Scriptwriting for Video &amp; Audio</li>
+          <li>Social Media Captions &amp; Storytelling</li>
+          <li>Email Sequences &amp; Newsletters</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- PROCESS -->
-  <section class="testimonial-section">
+  <section style="border-top:2px solid #fff;border-bottom:2px solid #fff;">
     <div class="container">
-      <div class="fade-up" style="text-align: center;">
-        <p class="section-label">How We Work</p>
-        <h2 class="section-title gradient-text">Our Process</h2>
-        <p class="section-subtitle">from first hello to final story</p>
+      <div class="sec-header">
+        <h2>How We Work</h2>
+        <span>03</span>
       </div>
-      <div class="services-grid fade-up" style="margin-top: 50px;">
-        <div class="service-card">
-          <span class="service-icon" style="font-family: var(--font-display); font-size: 2rem; color: var(--gold);">01</span>
-          <h3 class="gradient-text">Discover</h3>
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="p-num">NO. 01</div>
+          <h3>Discover</h3>
           <p>We listen. We dig. We uncover the truth at the core of your story through deep-dive conversations and research.</p>
         </div>
-        <div class="service-card">
-          <span class="service-icon" style="font-family: var(--font-display); font-size: 2rem; color: var(--coral);">02</span>
-          <h3 class="gradient-text">Design</h3>
+        <div class="process-card">
+          <div class="p-num">NO. 02</div>
+          <h3>Design</h3>
           <p>We map the narrative arc, choose the medium, and build a creative strategy that will carry your story forward.</p>
         </div>
-        <div class="service-card">
-          <span class="service-icon" style="font-family: var(--font-display); font-size: 2rem; color: var(--purple);">03</span>
-          <h3 class="gradient-text">Deliver</h3>
+        <div class="process-card">
+          <div class="p-num">NO. 03</div>
+          <h3>Deliver</h3>
           <p>We produce, refine, and launch. Every deliverable is crafted to move your audience and achieve your goals.</p>
         </div>
       </div>
@@ -203,52 +145,32 @@
 
   <!-- CTA -->
   <section class="cta-section">
-    <div class="container fade-up" style="text-align: center;">
-      <h2 class="section-title gradient-text">Ready to Tell Your Story?</h2>
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title"><span style="color:var(--gold);">Ready to </span><span style="color:var(--coral);">Tell Your </span><span style="color:var(--purple);">Story?</span></h2>
       <p class="section-subtitle">let's find the right combination</p>
-      <a href="contact.html" class="btn btn-primary" style="margin-top: 30px;">Start a Project</a>
+      <a href="contact.html" class="btn btn-primary">Start a Project</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="nav-logo">
-            <span class="just">Just</span><span class="broken">Broken</span><span class="cookies">Cookies</span>
-          </div>
-          <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary.</p>
-          <div class="social-links" style="margin-top: 20px;">
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
-            <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <h4>Navigate</h4>
-          <a href="about.html">About</a>
-          <a href="services.html">Services</a>
-          <a href="portfolio.html">Portfolio</a>
-          <a href="blog.html">Blog</a>
-        </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <a href="services.html">Visuals</a>
-          <a href="services.html">Strategy</a>
-          <a href="services.html">Words</a>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <a href="mailto:hello@justbrokencookies.com">hello@justbrokencookies.com</a>
-          <a href="contact.html">Send a Message</a>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></div>
+        <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+          <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 JustBrokenCookies. All rights reserved.</p>
-        <p>Crafted with broken cookies &amp; love.</p>
-      </div>
+      <div class="footer-col"><h4>Navigate</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="blog.html">Blog</a></div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html">Visuals</a><a href="services.html">Strategy</a><a href="services.html">Words</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="mailto:hello@justbrokencookies.com">hello@justbrokencookies.com</a><a href="contact.html">Send a Message</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span><span style="color:var(--gold)">JUST</span><span style="color:var(--coral)">BROKEN</span><span style="color:var(--purple)">COOKIES</span></span>
+      <span>&copy; 2026</span>
     </div>
   </footer>
 
