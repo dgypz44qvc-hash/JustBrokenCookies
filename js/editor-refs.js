@@ -8,14 +8,14 @@
   /* ========== STYLES ========== */
   var css = document.createElement('style');
   css.textContent = `
-    /* Banner */
-    #jbc-editor-banner{position:fixed;top:0;left:0;right:0;z-index:1000000;background:#E84848;color:#fff;text-align:center;font-family:monospace;font-size:13px;font-weight:bold;padding:10px 20px;letter-spacing:1px;}
+    /* Banner — green */
+    #jbc-editor-banner{position:fixed;top:0;left:0;right:0;z-index:1000000;background:#2ecc40;color:#000;text-align:center;font-family:monospace;font-size:13px;font-weight:bold;padding:10px 20px;letter-spacing:1px;}
 
     /* Editable text */
     .jbc-editable{outline:2px dashed transparent;outline-offset:3px;cursor:text;transition:outline-color 0.2s;}
-    .jbc-editable:hover{outline-color:rgba(232,72,72,0.5);}
-    .jbc-editable:focus{outline-color:#E84848;outline-style:solid;background:rgba(232,72,72,0.05);}
-    .jbc-text-changed{border-left:3px solid #E84848!important;padding-left:8px!important;}
+    .jbc-editable:hover{outline-color:rgba(46,204,64,0.5);}
+    .jbc-editable:focus{outline-color:#2ecc40;outline-style:solid;background:rgba(46,204,64,0.05);}
+    .jbc-text-changed{border-left:3px solid #2ecc40!important;padding-left:8px!important;}
 
     /* Image overlay */
     .jbc-img-wrap{position:relative;display:block;}
@@ -27,10 +27,10 @@
     /* Toolbar */
     #jbc-toolbar{position:fixed;bottom:20px;right:20px;z-index:1000001;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
     #jbc-toolbar button{background:#1a1a1a;color:#fff;border:2px solid #fff;padding:12px 20px;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px;}
-    #jbc-toolbar button:hover{background:#E84848;border-color:#E84848;}
-    #jbc-toolbar button:disabled{opacity:0.4;cursor:not-allowed;background:#333!important;border-color:#555!important;}
-    #jbc-toolbar .jbc-counter{background:#E84848;color:#fff;border-color:#E84848;pointer-events:none;padding:8px 14px;font-size:11px;}
-    #jbc-toolbar .jbc-save-btn{background:#2ecc40;border-color:#2ecc40;font-size:14px;padding:14px 24px;}
+    #jbc-toolbar button:hover{background:#2ecc40;border-color:#2ecc40;color:#000;}
+    #jbc-toolbar button:disabled{opacity:0.4;cursor:not-allowed;background:#333!important;border-color:#555!important;color:#fff!important;}
+    #jbc-toolbar .jbc-counter{background:#2ecc40;color:#000;border-color:#2ecc40;pointer-events:none;padding:8px 14px;font-size:11px;}
+    #jbc-toolbar .jbc-save-btn{background:#2ecc40;border-color:#2ecc40;color:#000;font-size:14px;padding:14px 24px;}
     #jbc-toolbar .jbc-save-btn:hover{background:#27ae60;border-color:#27ae60;}
 
     /* + ADD BUTTON */
@@ -48,24 +48,28 @@
     /* Added elements */
     .jbc-added{position:absolute;z-index:5;cursor:move;user-select:none;}
     .jbc-added:hover{outline:2px solid #E8891D;outline-offset:4px;}
+    .jbc-added.jbc-selected{outline:2px solid #2ecc40;outline-offset:4px;}
     .jbc-added .jbc-delete-btn{position:absolute;top:-12px;right:-12px;width:24px;height:24px;background:#E84848;color:#fff;border:2px solid #fff;border-radius:50%;font-size:14px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:300;font-family:monospace;line-height:1;}
     .jbc-added:hover .jbc-delete-btn{display:flex;}
     .jbc-added .jbc-resize-handle{position:absolute;bottom:-5px;right:-5px;width:14px;height:14px;background:#E8891D;cursor:nwse-resize;z-index:200;border:2px solid #fff;display:none;}
     .jbc-added:hover .jbc-resize-handle{display:block;}
 
     /* Toast */
-    #jbc-toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:1000002;background:#1a1a1a;color:#fff;font-family:monospace;font-size:13px;padding:12px 24px;border:2px solid #E84848;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+    #jbc-toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:1000002;background:#1a1a1a;color:#fff;font-family:monospace;font-size:13px;padding:12px 24px;border:2px solid #2ecc40;opacity:0;transition:opacity 0.3s;pointer-events:none;}
     #jbc-toast.show{opacity:1;}
     #jbc-toast.success{border-color:#2ecc40;}
     #jbc-toast.error{border-color:#E84848;background:#3a0a0a;}
 
     /* Right-click context menu */
-    #jbc-context-menu{position:fixed;z-index:1000010;background:#1a1a1a;border:2px solid #E8891D;display:none;min-width:180px;font-family:monospace;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
-    #jbc-context-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:12px 16px;background:none;border:none;border-bottom:1px solid #333;color:#fff;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;text-align:left;}
+    #jbc-context-menu{position:fixed;z-index:1000010;background:#1a1a1a;border:2px solid #E8891D;display:none;min-width:220px;max-height:80vh;overflow-y:auto;font-family:monospace;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+    #jbc-context-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 16px;background:none;border:none;border-bottom:1px solid #333;color:#fff;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;text-align:left;}
     #jbc-context-menu button:last-child{border-bottom:none;}
     #jbc-context-menu button:hover{background:#E8891D;color:#000;}
-    #jbc-context-menu button i{width:18px;text-align:center;font-size:14px;}
+    #jbc-context-menu button i{width:18px;text-align:center;font-size:14px;flex-shrink:0;}
     #jbc-context-menu .jbc-menu-header{padding:8px 16px;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;}
+    #jbc-context-menu .jbc-layer-item{padding:8px 16px;font-size:11px;}
+    #jbc-context-menu .jbc-layer-item.active{background:#333;color:#2ecc40;}
+    #jbc-context-menu .jbc-layer-preview{max-width:20px;max-height:16px;margin-right:4px;vertical-align:middle;display:inline-block;overflow:hidden;}
 
     /* Placement mode */
     .jbc-placement-mode{cursor:crosshair!important;}
@@ -75,19 +79,18 @@
   document.head.appendChild(css);
 
   /* ========== STATE ========== */
-  var isServerMode = (window.location.protocol === 'http:' && window.location.hostname === 'localhost');
   var changes = {text:0, images:0};
   var originalTexts = new Map();
   var pendingImages = [];
   var addedElements = [];
-  var folderHandle = null; /* File System Access API handle */
+  var folderHandle = null;
+  var ctxTarget = null; /* currently selected element for context menu actions */
 
-  /* ========== BANNER ========== */
+  /* ========== BANNER (green) ========== */
   var banner = document.createElement('div');
   banner.id = 'jbc-editor-banner';
-  banner.innerHTML = '<span>EDITOR MODE — Click text to edit · Hover images to replace · Use + to add · Hit SAVE</span>';
+  banner.innerHTML = '<span>EDITOR MODE — Click any text to edit \u00b7 Hover images to replace \u00b7 Right-click for layers \u00b7 Use + to add \u00b7 Hit SAVE</span>';
   document.body.prepend(banner);
-  /* Use padding instead of margin so getBoundingClientRect stays consistent */
   document.body.style.paddingTop = '40px';
 
   /* ========== TOAST ========== */
@@ -109,30 +112,122 @@
   /* ========== RIGHT-CLICK CONTEXT MENU ========== */
   var ctxMenu = document.createElement('div');
   ctxMenu.id = 'jbc-context-menu';
-  ctxMenu.innerHTML = [
-    '<div class="jbc-menu-header">Layers</div>',
-    '<button data-action="send-back"><i class="fas fa-arrow-down"></i> Send Behind</button>',
-    '<button data-action="send-far-back"><i class="fas fa-angles-down"></i> Send to Back</button>',
-    '<button data-action="bring-front"><i class="fas fa-arrow-up"></i> Bring Forward</button>',
-    '<button data-action="bring-far-front"><i class="fas fa-angles-up"></i> Bring to Front</button>',
-    '<div class="jbc-menu-header">Opacity</div>',
-    '<button data-action="opacity-down"><i class="fas fa-eye-slash"></i> More Transparent</button>',
-    '<button data-action="opacity-up"><i class="fas fa-eye"></i> Less Transparent</button>',
-    '<div class="jbc-menu-header">Actions</div>',
-    '<button data-action="delete" style="color:#E84848;"><i class="fas fa-trash"></i> Delete</button>'
-  ].join('');
   document.body.appendChild(ctxMenu);
 
-  var ctxTarget = null;
+  /* Gather all meaningful elements in a section for the layer list */
+  function getSectionElements(section){
+    if(!section) return [];
+    var items = [];
+    /* All images (both original and added) */
+    section.querySelectorAll('img').forEach(function(img){
+      if(img.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu')) return;
+      if(img.width < 20 && img.height < 20) return;
+      var wrap = img.closest('.jbc-added') || img.closest('.jbc-img-wrap');
+      var el = wrap || img;
+      if(items.indexOf(el) === -1) items.push(el);
+    });
+    /* All text elements */
+    section.querySelectorAll('h1,h2,h3,h4,h5,h6,p,span,a,blockquote,cite,div').forEach(function(el){
+      if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu,#jbc-toast,#jbc-placement-hint')) return;
+      if(el.querySelector('img')) return; /* skip containers that just hold images */
+      if(!el.textContent.trim()) return;
+      /* Skip containers that are just structural wrappers */
+      if(el.tagName === 'DIV' && el.children.length > 2 && !el.classList.contains('jbc-added')) return;
+      /* Only leaf-ish text elements */
+      var isLeaf = el.childElementCount === 0 || (el.classList.contains('jbc-added'));
+      var isEditable = el.hasAttribute('contenteditable');
+      var isAdded = el.classList.contains('jbc-added');
+      if(isLeaf || isEditable || isAdded){
+        if(items.indexOf(el) === -1) items.push(el);
+      }
+    });
+    /* Added elements that may not be caught above */
+    section.querySelectorAll('.jbc-added').forEach(function(el){
+      if(items.indexOf(el) === -1) items.push(el);
+    });
+    return items;
+  }
 
-  /* Show menu on right-click on images / added elements */
+  function getLayerLabel(el){
+    if(el.classList.contains('jbc-added')){
+      var inner = el.querySelector('img');
+      if(inner) return 'Added Image';
+      return 'Added Text';
+    }
+    if(el.classList.contains('jbc-img-wrap') || el.tagName === 'IMG') return 'Image';
+    var tag = el.tagName.toLowerCase();
+    var txt = el.textContent.trim().substring(0,25);
+    if(txt.length === 25) txt += '\u2026';
+    if(tag.match(/^h[1-6]$/)) return 'Title: ' + txt;
+    if(el.classList.contains('l1')||el.classList.contains('l2')||el.classList.contains('l3')) return 'Hero: ' + txt;
+    if(el.classList.contains('tag')) return 'Tag: ' + txt;
+    if(tag === 'a') return 'Link: ' + txt;
+    if(tag === 'span') return 'Span: ' + txt;
+    return 'Text: ' + txt;
+  }
+
+  function getLayerIcon(el){
+    if(el.classList.contains('jbc-img-wrap') || el.tagName === 'IMG' || el.querySelector('img')) return 'fa-image';
+    var tag = el.tagName.toLowerCase();
+    if(tag.match(/^h[1-6]$/)) return 'fa-heading';
+    if(el.classList.contains('l1')||el.classList.contains('l2')||el.classList.contains('l3')) return 'fa-font';
+    if(tag === 'a') return 'fa-link';
+    return 'fa-align-left';
+  }
+
+  function buildContextMenu(section, clickX, clickY){
+    var html = '';
+    var layers = getSectionElements(section);
+
+    html += '<div class="jbc-menu-header">Layers in Section</div>';
+    if(layers.length === 0){
+      html += '<div style="padding:10px 16px;color:#666;font-size:11px;font-family:monospace;">No elements found</div>';
+    } else {
+      layers.forEach(function(el, idx){
+        var label = getLayerLabel(el);
+        var icon = getLayerIcon(el);
+        var isActive = (el === ctxTarget) ? ' active' : '';
+        html += '<button class="jbc-layer-item'+isActive+'" data-action="select-layer" data-layer-idx="'+idx+'"><i class="fas '+icon+'"></i> '+label+'</button>';
+      });
+    }
+
+    if(ctxTarget){
+      html += '<div class="jbc-menu-header">Z-Order</div>';
+      html += '<button data-action="send-back"><i class="fas fa-arrow-down"></i> Send Behind</button>';
+      html += '<button data-action="send-far-back"><i class="fas fa-angles-down"></i> Send to Back</button>';
+      html += '<button data-action="bring-front"><i class="fas fa-arrow-up"></i> Bring Forward</button>';
+      html += '<button data-action="bring-far-front"><i class="fas fa-angles-up"></i> Bring to Front</button>';
+      html += '<div class="jbc-menu-header">Opacity</div>';
+      html += '<button data-action="opacity-down"><i class="fas fa-eye-slash"></i> More Transparent</button>';
+      html += '<button data-action="opacity-up"><i class="fas fa-eye"></i> Less Transparent</button>';
+      html += '<div class="jbc-menu-header">Actions</div>';
+      html += '<button data-action="delete" style="color:#E84848;"><i class="fas fa-trash"></i> Delete</button>';
+    }
+
+    ctxMenu.innerHTML = html;
+    /* Store reference to layers for selection */
+    ctxMenu._layers = layers;
+  }
+
+  /* Show context menu on right-click ANYWHERE on the page */
   document.addEventListener('contextmenu', function(e){
-    var el = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap');
-    if(!el) return;
+    /* Ignore right-clicks on editor UI */
+    if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu')) return;
     e.preventDefault();
-    ctxTarget = el;
+
+    /* Find the section the click is in */
+    var section = e.target.closest('section') || e.target.closest('.hero') || e.target.closest('.manifesto') || e.target.closest('nav') || e.target.closest('footer') || document.body;
+
+    /* Pre-select if clicking directly on an element */
+    var directEl = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap');
+    if(directEl){
+      ctxTarget = directEl;
+    }
+
+    buildContextMenu(section, e.clientX, e.clientY);
+
     ctxMenu.style.display = 'block';
-    ctxMenu.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+    ctxMenu.style.left = Math.min(e.clientX, window.innerWidth - 240) + 'px';
     ctxMenu.style.top = Math.min(e.clientY, window.innerHeight - 300) + 'px';
   });
 
@@ -140,15 +235,45 @@
   document.addEventListener('click', function(e){
     if(!e.target.closest('#jbc-context-menu')){
       ctxMenu.style.display = 'none';
-      ctxTarget = null;
+      /* Deselect */
+      document.querySelectorAll('.jbc-selected').forEach(function(el){ el.classList.remove('jbc-selected'); });
     }
   });
 
-  /* Handle menu actions */
+  /* Handle context menu actions */
   ctxMenu.addEventListener('click', function(e){
     var btn = e.target.closest('button');
-    if(!btn || !ctxTarget) return;
+    if(!btn) return;
     var action = btn.getAttribute('data-action');
+
+    /* Layer selection */
+    if(action === 'select-layer'){
+      var idx = parseInt(btn.getAttribute('data-layer-idx'));
+      var layers = ctxMenu._layers || [];
+      if(layers[idx]){
+        /* Deselect previous */
+        document.querySelectorAll('.jbc-selected').forEach(function(el){ el.classList.remove('jbc-selected'); });
+        ctxTarget = layers[idx];
+        /* Highlight selected */
+        if(ctxTarget.classList.contains('jbc-added')){
+          ctxTarget.classList.add('jbc-selected');
+        }
+        /* Scroll into view */
+        ctxTarget.scrollIntoView({behavior:'smooth', block:'center'});
+        /* Rebuild menu with this element selected, keeping position */
+        var section = ctxTarget.closest('section') || ctxTarget.closest('.hero') || ctxTarget.closest('.manifesto') || ctxTarget.closest('nav') || ctxTarget.closest('footer') || document.body;
+        var menuLeft = ctxMenu.style.left;
+        var menuTop = ctxMenu.style.top;
+        buildContextMenu(section);
+        ctxMenu.style.left = menuLeft;
+        ctxMenu.style.top = menuTop;
+        showToast('Selected: ' + getLayerLabel(ctxTarget));
+      }
+      return;
+    }
+
+    if(!ctxTarget) return;
+
     var currentZ = parseInt(getComputedStyle(ctxTarget).zIndex) || 1;
     var currentOp = parseFloat(ctxTarget.style.opacity || getComputedStyle(ctxTarget).opacity) || 1;
 
@@ -181,6 +306,7 @@
         break;
       case 'delete':
         ctxTarget.remove();
+        ctxTarget = null;
         showToast('Deleted');
         break;
     }
@@ -188,7 +314,6 @@
     changes.text++;
     updateCounter();
     ctxMenu.style.display = 'none';
-    ctxTarget = null;
   });
 
   /* ========== TOOLBAR ========== */
@@ -247,7 +372,6 @@
     addMenu.classList.toggle('open', menuOpen);
   });
 
-  /* Close menu when clicking elsewhere */
   document.addEventListener('click', function(e){
     if(!e.target.closest('#jbc-add-btn') && !e.target.closest('#jbc-add-menu')){
       menuOpen = false;
@@ -256,7 +380,7 @@
     }
   });
 
-  /* ---- ADD IMAGE ---- */
+  /* ---- ADD IMAGE (percentage-based positioning) ---- */
   addMenu.querySelector('[data-type="image"]').addEventListener('click', function(){
     menuOpen = false;
     addBtn.classList.remove('open');
@@ -273,7 +397,6 @@
 
       var reader = new FileReader();
       reader.onload = function(ev){
-        /* Enter placement mode */
         placementHint.textContent = 'CLICK WHERE YOU WANT THE IMAGE';
         placementHint.style.display = 'block';
         document.body.classList.add('jbc-placement-mode');
@@ -283,56 +406,53 @@
           placementHint.style.display = 'none';
           document.removeEventListener('click', placeImage, true);
 
-          /* Find nearest section to place it in */
           var target = e2.target.closest('section') || e2.target.closest('.hero') || document.querySelector('.hero') || document.body;
           var rect = target.getBoundingClientRect();
+          var targetW = rect.width;
+          var targetH = rect.height;
 
-          /* Calculate position relative to the section (accounting for scroll) */
-          var posLeft = e2.pageX - (rect.left + window.scrollX) - 100;
-          var posTop = e2.pageY - (rect.top + window.scrollY) - 75;
+          /* Calculate percentage-based position relative to parent section */
+          var rawLeft = e2.pageX - (rect.left + window.scrollX);
+          var rawTop = e2.pageY - (rect.top + window.scrollY);
+          var pctLeft = ((rawLeft - 100) / targetW * 100).toFixed(2);
+          var pctTop = ((rawTop - 75) / targetH * 100).toFixed(2);
 
-          /* Create the image element */
           var wrapper = document.createElement('div');
           wrapper.className = 'jbc-added';
-          wrapper.style.cssText = 'left:'+posLeft+'px;top:'+posTop+'px;width:300px;';
+          wrapper.style.cssText = 'left:'+pctLeft+'%;top:'+pctTop+'%;width:20%;';
+          wrapper.setAttribute('data-pos-type','percent');
 
           var img = document.createElement('img');
           img.src = ev.target.result;
           img.style.cssText = 'width:100%;height:auto;display:block;filter:grayscale(100%);';
           img.setAttribute('data-added','true');
 
-          /* Determine save path */
           var ext = file.name.split('.').pop() || 'jpg';
           var saveName = 'images/added-' + Date.now() + '.' + ext;
           img.setAttribute('data-save-path', saveName);
 
-          /* Delete button */
-          var delBtn = document.createElement('button');
-          delBtn.className = 'jbc-delete-btn';
-          delBtn.textContent = '×';
-          delBtn.addEventListener('click', function(e3){
+          var delBtn2 = document.createElement('button');
+          delBtn2.className = 'jbc-delete-btn';
+          delBtn2.textContent = '\u00d7';
+          delBtn2.addEventListener('click', function(e3){
             e3.stopPropagation();
             wrapper.remove();
             showToast('Element removed');
           });
 
-          /* Resize handle */
           var resizeH = document.createElement('div');
           resizeH.className = 'jbc-resize-handle';
 
           wrapper.appendChild(img);
-          wrapper.appendChild(delBtn);
+          wrapper.appendChild(delBtn2);
           wrapper.appendChild(resizeH);
 
-          /* Make sure target is positioned */
           if(getComputedStyle(target).position === 'static') target.style.position = 'relative';
           target.appendChild(wrapper);
 
-          /* Enable drag */
-          makeDraggable(wrapper);
+          makeDraggablePercent(wrapper, target);
           makeResizable(wrapper, resizeH);
 
-          /* Track image for save */
           pendingImages.push({
             img: img,
             origSrc: saveName,
@@ -344,10 +464,9 @@
           addedElements.push(wrapper);
           changes.images++;
           updateCounter();
-          showToast('Image added — drag to position, corners to resize');
+          showToast('Image added \u2014 drag to position, corners to resize');
         }
 
-        /* Wait for click to place */
         setTimeout(function(){
           document.addEventListener('click', placeImage, true);
         }, 100);
@@ -358,13 +477,12 @@
     fi.click();
   });
 
-  /* ---- ADD TEXT ---- */
+  /* ---- ADD TEXT (percentage-based positioning) ---- */
   addMenu.querySelector('[data-type="text"]').addEventListener('click', function(){
     menuOpen = false;
     addBtn.classList.remove('open');
     addMenu.classList.remove('open');
 
-    /* Enter placement mode */
     placementHint.textContent = 'CLICK WHERE YOU WANT THE TEXT';
     placementHint.style.display = 'block';
     document.body.classList.add('jbc-placement-mode');
@@ -376,13 +494,18 @@
 
       var target = e2.target.closest('section') || e2.target.closest('.hero') || document.querySelector('.hero') || document.body;
       var rect = target.getBoundingClientRect();
+      var targetW = rect.width;
+      var targetH = rect.height;
 
-      var posLeft = e2.pageX - (rect.left + window.scrollX);
-      var posTop = e2.pageY - (rect.top + window.scrollY);
+      var rawLeft = e2.pageX - (rect.left + window.scrollX);
+      var rawTop = e2.pageY - (rect.top + window.scrollY);
+      var pctLeft = (rawLeft / targetW * 100).toFixed(2);
+      var pctTop = (rawTop / targetH * 100).toFixed(2);
 
       var wrapper = document.createElement('div');
       wrapper.className = 'jbc-added';
-      wrapper.style.cssText = 'left:'+posLeft+'px;top:'+posTop+'px;';
+      wrapper.style.cssText = 'left:'+pctLeft+'%;top:'+pctTop+'%;';
+      wrapper.setAttribute('data-pos-type','percent');
 
       var textEl = document.createElement('p');
       textEl.setAttribute('contenteditable','true');
@@ -390,24 +513,23 @@
       textEl.textContent = 'Your text here';
       textEl.setAttribute('data-added','true');
 
-      var delBtn = document.createElement('button');
-      delBtn.className = 'jbc-delete-btn';
-      delBtn.textContent = '×';
-      delBtn.addEventListener('click', function(e3){
+      var delBtn2 = document.createElement('button');
+      delBtn2.className = 'jbc-delete-btn';
+      delBtn2.textContent = '\u00d7';
+      delBtn2.addEventListener('click', function(e3){
         e3.stopPropagation();
         wrapper.remove();
         showToast('Element removed');
       });
 
       wrapper.appendChild(textEl);
-      wrapper.appendChild(delBtn);
+      wrapper.appendChild(delBtn2);
 
       if(getComputedStyle(target).position === 'static') target.style.position = 'relative';
       target.appendChild(wrapper);
 
-      makeDraggable(wrapper);
+      makeDraggablePercent(wrapper, target);
 
-      /* Auto-focus the text */
       textEl.focus();
       document.execCommand('selectAll', false, null);
 
@@ -419,7 +541,7 @@
       addedElements.push(wrapper);
       changes.text++;
       updateCounter();
-      showToast('Text added — type to edit, drag to move');
+      showToast('Text added \u2014 type to edit, drag to move');
     }
 
     setTimeout(function(){
@@ -427,7 +549,50 @@
     }, 100);
   });
 
-  /* ========== DRAG HELPER ========== */
+  /* ========== DRAG HELPER (percentage-based) ========== */
+  function makeDraggablePercent(el, parentSection){
+    var startX, startY, origPctLeft, origPctTop, dragging = false;
+
+    el.addEventListener('mousedown', function(e){
+      if(e.target.classList.contains('jbc-resize-handle')) return;
+      if(e.target.classList.contains('jbc-delete-btn')) return;
+      if(e.target.getAttribute('contenteditable') === 'true' && document.activeElement === e.target) return;
+      if(e.target.closest('.jbc-img-overlay')) return;
+      if(e.button !== 0) return;
+
+      dragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      origPctLeft = parseFloat(el.style.left) || 0;
+      origPctTop = parseFloat(el.style.top) || 0;
+      el.style.opacity = '0.8';
+      e.preventDefault();
+
+      var parentRect = parentSection.getBoundingClientRect();
+
+      function onMove(e2){
+        if(!dragging) return;
+        var dx = e2.clientX - startX;
+        var dy = e2.clientY - startY;
+        var dxPct = (dx / parentRect.width) * 100;
+        var dyPct = (dy / parentRect.height) * 100;
+        el.style.left = (origPctLeft + dxPct).toFixed(2) + '%';
+        el.style.top = (origPctTop + dyPct).toFixed(2) + '%';
+      }
+      function onUp(){
+        dragging = false;
+        el.style.opacity = '';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        changes.text++;
+        updateCounter();
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  /* ========== DRAG HELPER (pixel-based, for legacy elements) ========== */
   function makeDraggable(el){
     var startX, startY, origX, origY, dragging = false;
 
@@ -458,7 +623,6 @@
         document.removeEventListener('mouseup', onUp);
         changes.text++;
         updateCounter();
-        showToast('Repositioned');
       }
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onUp);
@@ -467,16 +631,28 @@
 
   /* ========== RESIZE HELPER ========== */
   function makeResizable(el, handle){
-    var resizing = false, rStartX, rStartY, rStartW, rStartH;
+    var resizing = false, rStartX, rStartW;
     handle.addEventListener('mousedown', function(e){
       e.stopPropagation(); e.preventDefault();
       resizing = true;
-      rStartX = e.clientX; rStartY = e.clientY;
-      rStartW = el.offsetWidth; rStartH = el.offsetHeight;
+      rStartX = e.clientX;
+      rStartW = el.offsetWidth;
 
       function onMove(e2){
         if(!resizing) return;
-        el.style.width = Math.max(50, rStartW + e2.clientX - rStartX) + 'px';
+        var newW = Math.max(50, rStartW + e2.clientX - rStartX);
+        /* If parent uses percent positioning, set width as percent too */
+        if(el.getAttribute('data-pos-type') === 'percent'){
+          var parent = el.parentElement;
+          if(parent){
+            var pct = (newW / parent.offsetWidth * 100).toFixed(2);
+            el.style.width = pct + '%';
+          } else {
+            el.style.width = newW + 'px';
+          }
+        } else {
+          el.style.width = newW + 'px';
+        }
       }
       function onUp(){
         resizing = false;
@@ -504,14 +680,46 @@
     return {filename:filename,subdir:subdir};
   }
 
-  /* ========== MAKE EXISTING TEXT EDITABLE ========== */
-  var textSelectors = 'h1,h2,h3,h4,h5,h6,p,.section-label,.section-title,.section-subtitle,.section-text,.btn-primary,.btn-outline,blockquote,cite,.blog-card-content p,.blog-card-content h3,.blog-card-meta,.service-card h3,.service-card p,.value-card h3,.value-card p,.process-card h3,.process-card p,.service-detail-content h3,.service-detail-content p,.service-list li,.testi-brutal blockquote,.testi-brutal cite,.footer-brand > p,.footer-col h4,.footer-col a,.read-more,.sec-header h2,.sec-header span';
+  /* ========== MAKE ALL TEXT EDITABLE ========== */
+  /* Comprehensive selectors including hero spans, .tag, nav links, everything visible */
+  var textSelectors = [
+    'h1','h2','h3','h4','h5','h6','p',
+    '.section-label','.section-title','.section-subtitle','.section-text',
+    '.btn-primary','.btn-outline',
+    'blockquote','cite',
+    '.blog-card-content p','.blog-card-content h3','.blog-card-meta',
+    '.service-card h3','.service-card p',
+    '.value-card h3','.value-card p',
+    '.process-card h3','.process-card p',
+    '.service-detail-content h3','.service-detail-content p',
+    '.service-list li',
+    '.testi-brutal blockquote','.testi-brutal cite',
+    '.footer-brand > p','.footer-col h4','.footer-col a',
+    '.read-more','.sec-header h2','.sec-header span',
+    /* Hero mega title spans */
+    '.hero-mega .l1','.hero-mega .l2','.hero-mega .l3',
+    /* Tag element */
+    '.tag',
+    /* Nav links */
+    '.nav-links a','.nav-logo span',
+    /* Description */
+    '.desc','.scroll-txt',
+    /* Service sub text */
+    '.service-sub','.service-num',
+    /* Manifesto spans */
+    '.manifesto-inner > span',
+    /* Any other visible text-bearing elements */
+    '.hero-bottom p','.hero-bottom span',
+    'figcaption','label','li','dt','dd',
+    '.footer-brand a','footer p','footer a','footer span'
+  ].join(',');
 
   document.querySelectorAll(textSelectors).forEach(function(el){
-    if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu')) return;
-    if(el.tagName==='A' && el.closest('.nav-links')) return;
+    if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu,#jbc-toast,#jbc-add-btn,#jbc-placement-hint')) return;
     if(el.tagName==='SCRIPT'||el.tagName==='STYLE'||el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
     if(!el.textContent.trim()) return;
+    /* Skip if already editable */
+    if(el.getAttribute('contenteditable') === 'true') return;
 
     el.setAttribute('contenteditable','true');
     el.classList.add('jbc-editable');
@@ -528,11 +736,15 @@
     el.addEventListener('keydown', function(e){
       if(e.key==='Enter'&&!e.shiftKey&&el.tagName!=='P'&&el.tagName!=='BLOCKQUOTE') e.preventDefault();
     });
+    /* Prevent nav links from navigating when clicking to edit */
+    if(el.tagName === 'A'){
+      el.addEventListener('click', function(e){ e.preventDefault(); });
+    }
   });
 
   /* ========== MAKE EXISTING IMAGES REPLACEABLE ========== */
   document.querySelectorAll('img').forEach(function(img){
-    if(img.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu')) return;
+    if(img.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu')) return;
     if(img.width<40 && img.height<40) return;
 
     var wrap = document.createElement('div');
@@ -567,7 +779,7 @@
         pendingImages.push({img:img,origSrc:origSrc,base64:e.target.result,targetPath:targetPath,fileName:file.name});
         changes.images++;
         updateCounter();
-        showToast('Image replaced → '+targetPath);
+        showToast('Image replaced \u2192 '+targetPath);
       };
       reader.readAsDataURL(file);
     });
@@ -578,12 +790,15 @@
     var clone = document.documentElement.cloneNode(true);
 
     /* Remove all editor UI */
-    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint').forEach(function(el){ el.remove(); });
+    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu').forEach(function(el){ el.remove(); });
 
     /* Clean contenteditable */
     clone.querySelectorAll('[contenteditable]').forEach(function(el){
       el.removeAttribute('contenteditable');
       el.classList.remove('jbc-editable','jbc-text-changed');
+      if(el.getAttribute('spellcheck') === 'false') el.removeAttribute('spellcheck');
+      /* Clean empty class attributes */
+      if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
 
     /* Clean added elements — bake positioning into inline styles, remove editor controls */
@@ -591,16 +806,20 @@
       /* Bake the CSS class properties into inline so they survive without the editor CSS */
       el.style.position = 'absolute';
       el.style.zIndex = el.style.zIndex || '5';
+      /* Clean editor-only properties */
       el.style.cursor = '';
       el.style.userSelect = '';
-      el.style.outline = 'none';
+      el.style.outline = '';
+      el.style.outlineOffset = '';
       /* Remove editor-only children */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle').forEach(function(c){ c.remove(); });
-      /* Remove the class (its CSS will be gone in the saved file) */
-      el.classList.remove('jbc-added');
+      /* Remove the editor classes */
+      el.classList.remove('jbc-added','jbc-selected');
+      el.removeAttribute('data-pos-type');
+      if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
 
-    /* Unwrap image wrappers */
+    /* Unwrap image wrappers — restore images to their original position */
     clone.querySelectorAll('.jbc-img-wrap').forEach(function(wrap){
       var img = wrap.querySelector('img');
       if(img){
@@ -612,6 +831,7 @@
         img.removeAttribute('data-save-path');
         wrap.parentNode.insertBefore(img, wrap);
       }
+      /* Remove overlay, file input, and wrapper */
       wrap.remove();
     });
 
@@ -632,14 +852,22 @@
       img.removeAttribute('data-orig-src');
     });
 
+    /* Remove hidden file inputs left over */
+    clone.querySelectorAll('input[type="file"]').forEach(function(fi){ fi.remove(); });
+
     /* Remove editor styles */
     clone.querySelectorAll('style').forEach(function(s){
-      if(s.textContent.indexOf('jbc-editor')!==-1||s.textContent.indexOf('jbc-editable')!==-1||s.textContent.indexOf('jbc-add')!==-1) s.remove();
+      if(s.textContent.indexOf('jbc-editor')!==-1||s.textContent.indexOf('jbc-editable')!==-1||s.textContent.indexOf('jbc-add')!==-1||s.textContent.indexOf('jbc-context')!==-1) s.remove();
     });
 
+    /* Clean body */
     var body = clone.querySelector('body');
-    if(body){ body.style.marginTop = ''; body.style.paddingTop = ''; }
-    body.classList.remove('jbc-placement-mode');
+    if(body){
+      body.style.marginTop = '';
+      body.style.paddingTop = '';
+      body.classList.remove('jbc-placement-mode');
+      if(body.getAttribute('style') === '') body.removeAttribute('style');
+    }
 
     return '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
   }
@@ -653,13 +881,11 @@
     saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SAVING...';
 
     try {
-      /* First time: ask user to pick the website folder */
       if(!folderHandle){
         showToast('Pick your website folder...');
         folderHandle = await window.showDirectoryPicker({mode:'readwrite'});
       }
 
-      /* Verify we have write permission */
       var perm = await folderHandle.requestPermission({mode:'readwrite'});
       if(perm !== 'granted') throw new Error('Need permission to save files');
 
@@ -671,12 +897,10 @@
         var imgPathParts = pi.targetPath.split('/');
         var imgDir = folderHandle;
 
-        /* Navigate/create subdirectories (e.g. images/) */
         for(var d=0; d<imgPathParts.length-1; d++){
           imgDir = await imgDir.getDirectoryHandle(imgPathParts[d], {create:true});
         }
 
-        /* Write image file */
         var imgFileName = imgPathParts[imgPathParts.length-1];
         var imgFileHandle = await imgDir.getFileHandle(imgFileName, {create:true});
         var imgWritable = await imgFileHandle.createWritable();
@@ -695,7 +919,7 @@
       var pageInfo = getPageInfo();
       var cleanHTML = buildCleanHTML(imagePaths);
 
-      /* 3. Save HTML file (handle subdirectory like blog/) */
+      /* 3. Save HTML file */
       var htmlDir = folderHandle;
       if(pageInfo.subdir){
         htmlDir = await folderHandle.getDirectoryHandle(pageInfo.subdir, {create:true});
@@ -705,7 +929,7 @@
       await htmlWritable.write(cleanHTML);
       await htmlWritable.close();
 
-      showToast('Saved! ' + pageInfo.filename + ' — ready to git push', 'success');
+      showToast('Saved! ' + pageInfo.filename + ' \u2014 ready to git push', 'success');
 
       /* Reset state */
       changes = {text:0, images:0};
@@ -740,6 +964,6 @@
   }
 
   /* ========== LOG ========== */
-  console.log('✅ JBC Editor loaded! '+(isServerMode?'SERVER MODE':'PREVIEW MODE'));
+  console.log('JBC Editor loaded — EDITOR MODE active');
 
 })();
