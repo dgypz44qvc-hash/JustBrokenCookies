@@ -578,12 +578,19 @@
       el.classList.remove('jbc-editable','jbc-text-changed');
     });
 
-    /* Clean added elements — keep them but remove editor controls */
+    /* Clean added elements — bake positioning into inline styles, remove editor controls */
     clone.querySelectorAll('.jbc-added').forEach(function(el){
-      el.classList.remove('jbc-added');
-      el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle').forEach(function(c){ c.remove(); });
+      /* Bake the CSS class properties into inline style so they survive */
+      el.style.position = 'absolute';
       el.style.cursor = '';
       el.style.userSelect = '';
+      /* Compensate for the 40px editor banner offset */
+      var currentTop = parseInt(el.style.top) || 0;
+      el.style.top = (currentTop - 40) + 'px';
+      /* Remove editor-only children */
+      el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle').forEach(function(c){ c.remove(); });
+      /* Remove the class (its CSS will be gone in the saved file) */
+      el.classList.remove('jbc-added');
     });
 
     /* Unwrap image wrappers */
