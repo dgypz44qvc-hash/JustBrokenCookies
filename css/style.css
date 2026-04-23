@@ -89,8 +89,9 @@ ul { list-style:none; }
 .hero::before { display:none; }
 .hero-content { flex:1; display:flex; flex-direction:column; justify-content:flex-start; padding-top:0; }
 .hero-logo { display:none; }
-.hero-top { display:flex; justify-content:space-between; align-items:flex-start; }
-.hero-top .tag {
+.hero-top { display:none; }
+.hero .tag {
+  position:absolute; top:80px; right:30px; z-index:10;
   font-size:0.9rem; letter-spacing:5px; text-transform:uppercase;
   color:var(--coral); writing-mode:vertical-rl; text-orientation:mixed;
 }
