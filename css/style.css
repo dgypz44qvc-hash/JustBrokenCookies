@@ -83,11 +83,11 @@ ul { list-style:none; }
 /* ---------- HERO — Brutalist oversized type ---------- */
 .hero {
   min-height:100vh; display:flex; flex-direction:column;
-  justify-content:space-between; padding:100px 40px 40px;
+  justify-content:space-between; padding:70px 40px 40px;
   position:relative; overflow:hidden;
 }
 .hero::before { display:none; }
-.hero-content { flex:1; display:flex; flex-direction:column; justify-content:flex-start; padding-top:7vh; }
+.hero-content { flex:1; display:flex; flex-direction:column; justify-content:flex-start; padding-top:2vh; }
 .hero-logo { display:none; }
 .hero-top { display:flex; justify-content:space-between; align-items:flex-start; }
 .hero-top .tag {
