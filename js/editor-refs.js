@@ -80,13 +80,12 @@
   var originalTexts = new Map();
   var pendingImages = [];
   var addedElements = [];
+  var folderHandle = null; /* File System Access API handle */
 
   /* ========== BANNER ========== */
   var banner = document.createElement('div');
   banner.id = 'jbc-editor-banner';
-  banner.innerHTML = isServerMode
-    ? '<span>EDITOR MODE — Click text to edit · Hover images to replace · Use + to add elements · SAVE writes to files</span>'
-    : '<span>EDITOR MODE (preview) — Run <b>node server.js</b> to enable saving</span>';
+  banner.innerHTML = '<span>EDITOR MODE — Click text to edit · Hover images to replace · Use + to add · Hit SAVE</span>';
   document.body.prepend(banner);
   document.body.style.marginTop = '40px';
 
@@ -127,7 +126,7 @@
 
   /* Show menu on right-click on images / added elements */
   document.addEventListener('contextmenu', function(e){
-    var el = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap') || e.target.closest('.hero-portrait');
+    var el = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap');
     if(!el) return;
     e.preventDefault();
     ctxTarget = el;
@@ -631,53 +630,86 @@
     return '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
   }
 
-  /* ========== SAVE (server mode) ========== */
+  /* ========== SAVE — uses File System Access API (no server needed) ========== */
   async function savePage(){
-    if(!isServerMode){ showToast('Run "node server.js" to enable saving','error'); return; }
     var total = changes.text + changes.images;
     if(total===0){ showToast('No changes to save'); return; }
 
     saveBtn.disabled = true;
     saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SAVING...';
-    showToast('Saving '+total+' changes...');
 
     try {
-      var imagePaths = {};
-      for(var i=0; i<pendingImages.length; i++){
-        var pi = pendingImages[i];
-        var resp = await fetch('/editor-save-image', {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({path:pi.targetPath, base64:pi.base64})
-        });
-        var result = await resp.json();
-        if(result.ok){ imagePaths[pi.origSrc]=pi.targetPath; }
-        else throw new Error('Image save failed: '+result.error);
+      /* First time: ask user to pick the website folder */
+      if(!folderHandle){
+        showToast('Pick your website folder...');
+        folderHandle = await window.showDirectoryPicker({mode:'readwrite'});
       }
 
+      /* Verify we have write permission */
+      var perm = await folderHandle.requestPermission({mode:'readwrite'});
+      if(perm !== 'granted') throw new Error('Need permission to save files');
+
+      var imagePaths = {};
+
+      /* 1. Save all pending images */
+      for(var i=0; i<pendingImages.length; i++){
+        var pi = pendingImages[i];
+        var imgPathParts = pi.targetPath.split('/');
+        var imgDir = folderHandle;
+
+        /* Navigate/create subdirectories (e.g. images/) */
+        for(var d=0; d<imgPathParts.length-1; d++){
+          imgDir = await imgDir.getDirectoryHandle(imgPathParts[d], {create:true});
+        }
+
+        /* Write image file */
+        var imgFileName = imgPathParts[imgPathParts.length-1];
+        var imgFileHandle = await imgDir.getFileHandle(imgFileName, {create:true});
+        var imgWritable = await imgFileHandle.createWritable();
+        var base64Data = pi.base64.replace(/^data:image\/\w+;base64,/, '');
+        var binaryStr = atob(base64Data);
+        var bytes = new Uint8Array(binaryStr.length);
+        for(var b=0; b<binaryStr.length; b++) bytes[b] = binaryStr.charCodeAt(b);
+        await imgWritable.write(bytes);
+        await imgWritable.close();
+
+        imagePaths[pi.origSrc] = pi.targetPath;
+        console.log('Saved image:', pi.targetPath);
+      }
+
+      /* 2. Build clean HTML */
       var pageInfo = getPageInfo();
       var cleanHTML = buildCleanHTML(imagePaths);
 
-      var resp2 = await fetch('/editor-save', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({filename:pageInfo.filename, subdir:pageInfo.subdir, html:cleanHTML})
-      });
-      var result2 = await resp2.json();
+      /* 3. Save HTML file (handle subdirectory like blog/) */
+      var htmlDir = folderHandle;
+      if(pageInfo.subdir){
+        htmlDir = await folderHandle.getDirectoryHandle(pageInfo.subdir, {create:true});
+      }
+      var htmlFileHandle = await htmlDir.getFileHandle(pageInfo.filename, {create:true});
+      var htmlWritable = await htmlFileHandle.createWritable();
+      await htmlWritable.write(cleanHTML);
+      await htmlWritable.close();
 
-      if(result2.ok){
-        showToast('Saved! '+pageInfo.filename+' — ready to git push','success');
-        changes = {text:0,images:0};
-        pendingImages = [];
-        updateCounter();
-        document.querySelectorAll('.jbc-text-changed').forEach(function(el){ el.classList.remove('jbc-text-changed'); });
-      } else throw new Error(result2.error);
+      showToast('Saved! ' + pageInfo.filename + ' — ready to git push', 'success');
+
+      /* Reset state */
+      changes = {text:0, images:0};
+      pendingImages = [];
+      updateCounter();
+      document.querySelectorAll('.jbc-text-changed').forEach(function(el){ el.classList.remove('jbc-text-changed'); });
 
     } catch(e){
       console.error('Save failed:', e);
-      showToast('Save failed: '+e.message,'error');
+      if(e.name === 'AbortError'){
+        showToast('Save cancelled');
+      } else {
+        showToast('Save failed: ' + e.message, 'error');
+      }
     }
 
     saveBtn.innerHTML = '<i class="fas fa-save"></i> SAVE';
-    saveBtn.disabled = (changes.text+changes.images)===0;
+    saveBtn.disabled = (changes.text + changes.images) === 0;
   }
 
   /* ========== DOWNLOAD (fallback) ========== */
