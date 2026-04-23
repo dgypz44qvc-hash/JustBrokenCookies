@@ -1,241 +1,289 @@
+/* ============================================
+   JUSTBROKENCOOKIES — Inline Visual Editor
+   Activate by adding ?edit to any page URL
+   ============================================ */
 (function(){
-  // Only activate in edit mode — add ?edit to ANY page URL
   if(window.location.search.indexOf('edit') === -1) return;
 
-  // Inject styles
-  var style = document.createElement('style');
-  style.textContent = '.ref-tag{position:fixed;z-index:99999;background:#E84848;color:#fff;font-size:13px;font-family:monospace;font-weight:bold;padding:2px 7px;border-radius:4px;pointer-events:none;line-height:1.4;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.7);border:1px solid #fff;} .ref-outline{outline:2px dashed #E84848!important;outline-offset:2px!important;}';
-  document.head.appendChild(style);
+  /* ---------- STYLES ---------- */
+  var css = document.createElement('style');
+  css.textContent = [
+    /* Banner */
+    '#jbc-editor-banner{position:fixed;top:0;left:0;right:0;z-index:1000000;background:#E84848;color:#fff;text-align:center;font-family:monospace;font-size:13px;font-weight:bold;padding:10px 20px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:20px;}',
+    '#jbc-editor-banner button{background:#fff;color:#E84848;border:none;padding:6px 16px;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;}',
+    '#jbc-editor-banner button:hover{background:#ffd;color:#000;}',
 
-  // Detect current page
-  var path = window.location.pathname;
-  var page = 'index';
-  if(path.indexOf('about') !== -1) page = 'about';
-  else if(path.indexOf('services') !== -1) page = 'services';
-  else if(path.indexOf('portfolio') !== -1) page = 'portfolio';
-  else if(path.indexOf('blog/') !== -1 || path.indexOf('post-') !== -1) page = 'post';
-  else if(path.indexOf('blog') !== -1) page = 'blog';
-  else if(path.indexOf('contact') !== -1) page = 'contact';
+    /* Editable text highlight */
+    '.jbc-editable{outline:2px dashed transparent;outline-offset:3px;cursor:text;transition:outline-color 0.2s;}',
+    '.jbc-editable:hover{outline-color:rgba(232,72,72,0.5);}',
+    '.jbc-editable:focus{outline-color:#E84848;outline-style:solid;background:rgba(232,72,72,0.05);}',
 
-  // Build selector map based on page
-  var map = [];
+    /* Image overlay */
+    '.jbc-img-wrap{position:relative;display:block;}',
+    '.jbc-img-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);opacity:0;transition:opacity 0.25s;cursor:pointer;z-index:100;}',
+    '.jbc-img-wrap:hover .jbc-img-overlay{opacity:1;}',
+    '.jbc-img-overlay span{color:#fff;font-family:monospace;font-size:14px;font-weight:bold;letter-spacing:1px;pointer-events:none;}',
+    '.jbc-img-overlay i{font-size:36px;color:#fff;margin-bottom:10px;pointer-events:none;}',
 
-  // NAV (all pages) #1-7
-  map.push({s:'.nav-logo', n:1});
-  map.push({s:'.nav-links a:nth-child(1)', n:2});
-  map.push({s:'.nav-links a:nth-child(2)', n:3});
-  map.push({s:'.nav-links a:nth-child(3)', n:4});
-  map.push({s:'.nav-links a:nth-child(4)', n:5});
-  map.push({s:'.nav-links a:nth-child(5)', n:6});
-  map.push({s:'.nav-links a:nth-child(6)', n:7});
+    /* Change indicator dot */
+    '.jbc-changed::after{content:"";position:absolute;top:4px;right:4px;width:8px;height:8px;background:#E84848;border-radius:50;z-index:101;}',
+    '.jbc-text-changed{border-left:3px solid #E84848!important;padding-left:8px!important;}',
 
-  // HOME PAGE #8-49
-  if(page === 'index') {
-    map.push({s:'.hero-logo', n:8});
-    map.push({s:'.hero-content .btn-primary', n:9});
-    map.push({s:'.hero-content .btn-outline', n:10});
-    map.push({s:'#intro .section-label', n:11});
-    map.push({s:'#intro .section-title', n:12});
-    map.push({s:'#intro .section-subtitle', n:13});
-    map.push({s:'#intro .section-text', n:14});
-    map.push({s:'#services-overview .section-label', n:15});
-    map.push({s:'#services-overview .section-title', n:16});
-    map.push({s:'.services-grid .service-card:nth-child(1) img', n:17});
-    map.push({s:'.services-grid .service-card:nth-child(1) .service-icon', n:18});
-    map.push({s:'.services-grid .service-card:nth-child(1) h3', n:19});
-    map.push({s:'.services-grid .service-card:nth-child(1) p', n:20});
-    map.push({s:'.services-grid .service-card:nth-child(2) img', n:21});
-    map.push({s:'.services-grid .service-card:nth-child(2) .service-icon', n:22});
-    map.push({s:'.services-grid .service-card:nth-child(2) h3', n:23});
-    map.push({s:'.services-grid .service-card:nth-child(2) p', n:24});
-    map.push({s:'.services-grid .service-card:nth-child(3) img', n:25});
-    map.push({s:'.services-grid .service-card:nth-child(3) .service-icon', n:26});
-    map.push({s:'.services-grid .service-card:nth-child(3) h3', n:27});
-    map.push({s:'.services-grid .service-card:nth-child(3) p', n:28});
-    map.push({s:'#services-overview .btn-outline', n:29});
-    map.push({s:'#featured-work .section-label', n:30});
-    map.push({s:'#featured-work .section-title', n:31});
-    map.push({s:'#featured-work .section-subtitle', n:32});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(1) img', n:33});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(1) span', n:34});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(1) h3', n:35});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(2) img', n:36});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(2) span', n:37});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(2) h3', n:38});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(3) img', n:39});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(3) span', n:40});
-    map.push({s:'.portfolio-grid .portfolio-item:nth-child(3) h3', n:41});
-    map.push({s:'#featured-work .btn-outline', n:42});
-    map.push({s:'.testimonial blockquote', n:43});
-    map.push({s:'.testimonial cite', n:44});
-    map.push({s:'.cta-section .section-label', n:45});
-    map.push({s:'.cta-section .section-title', n:46});
-    map.push({s:'.cta-section .section-subtitle', n:47});
-    map.push({s:'.cta-section .section-text', n:48});
-    map.push({s:'.cta-section .btn-primary', n:49});
-  }
+    /* Floating toolbar */
+    '#jbc-toolbar{position:fixed;bottom:20px;right:20px;z-index:1000001;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}',
+    '#jbc-toolbar button{background:#1a1a1a;color:#fff;border:2px solid #fff;padding:12px 20px;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px;}',
+    '#jbc-toolbar button:hover{background:#E84848;border-color:#E84848;}',
+    '#jbc-toolbar .jbc-counter{background:#E84848;color:#fff;border-color:#E84848;pointer-events:none;padding:8px 14px;font-size:11px;}',
 
-  // FOOTER (all pages) #50-57
-  map.push({s:'footer .nav-logo, .footer .nav-logo', n:50});
-  map.push({s:'footer .footer-brand > p, .footer-brand > p', n:51});
-  map.push({s:'footer .social-links a:nth-child(1), .footer .social-links a:nth-child(1)', n:52});
-  map.push({s:'footer .social-links a:nth-child(2), .footer .social-links a:nth-child(2)', n:53});
-  map.push({s:'footer .social-links a:nth-child(3), .footer .social-links a:nth-child(3)', n:54});
-  map.push({s:'footer .social-links a:nth-child(4), .footer .social-links a:nth-child(4)', n:55});
-  map.push({s:'footer .footer-bottom p:nth-child(1), .footer-bottom p:nth-child(1)', n:56});
-  map.push({s:'footer .footer-bottom p:nth-child(2), .footer-bottom p:nth-child(2)', n:57});
+    /* Toast notification */
+    '#jbc-toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:1000002;background:#1a1a1a;color:#fff;font-family:monospace;font-size:13px;padding:12px 24px;border:2px solid #E84848;opacity:0;transition:opacity 0.3s;pointer-events:none;}',
+    '#jbc-toast.show{opacity:1;}'
+  ].join('\n');
+  document.head.appendChild(css);
 
-  // ABOUT PAGE #58-96
-  if(page === 'about') {
-    map.push({s:'.page-header .section-label', n:58});
-    map.push({s:'.page-header .section-title', n:59});
-    map.push({s:'.page-header .section-subtitle', n:60});
-    map.push({s:'.about-image img', n:61});
-    map.push({s:'.about-grid .section-label', n:62});
-    map.push({s:'.about-grid .section-title', n:63});
-    map.push({s:'.about-grid .section-text', n:64});
-    map.push({s:'.cta-section .section-title', n:94});
-    map.push({s:'.cta-section .section-subtitle', n:95});
-    map.push({s:'.cta-section .btn-primary', n:96});
-  }
+  /* ---------- STATE ---------- */
+  var changes = {text:0, images:0};
+  var originalTexts = new Map();
 
-  // SERVICES PAGE #97-129
-  if(page === 'services') {
-    map.push({s:'.page-header .section-label', n:97});
-    map.push({s:'.page-header .section-title', n:98});
-    map.push({s:'.page-header .section-subtitle', n:99});
-    map.push({s:'.cta-section .section-title', n:127});
-    map.push({s:'.cta-section .section-subtitle', n:128});
-    map.push({s:'.cta-section .btn-primary', n:129});
-  }
-
-  // PORTFOLIO PAGE #130-156
-  if(page === 'portfolio') {
-    map.push({s:'.page-header .section-label', n:130});
-    map.push({s:'.page-header .section-title', n:131});
-    map.push({s:'.page-header .section-subtitle', n:132});
-    map.push({s:'.cta-section .section-title', n:154});
-    map.push({s:'.cta-section .section-subtitle', n:155});
-    map.push({s:'.cta-section .btn-primary', n:156});
-  }
-
-  // BLOG PAGE #157-183
-  if(page === 'blog') {
-    map.push({s:'.page-header .section-label', n:157});
-    map.push({s:'.page-header .section-title', n:158});
-    map.push({s:'.page-header .section-subtitle', n:159});
-  }
-
-  // CONTACT PAGE #184-203
-  if(page === 'contact') {
-    map.push({s:'.page-header .section-label', n:184});
-    map.push({s:'.page-header .section-title', n:185});
-    map.push({s:'.page-header .section-subtitle', n:186});
-    map.push({s:'input[name="name"]', n:187});
-    map.push({s:'input[name="email"]', n:188});
-    map.push({s:'textarea[name="message"]', n:191});
-    map.push({s:'.contact-form .btn-primary', n:192});
-  }
-
-  // BLOG POST #204-209
-  if(page === 'post') {
-    map.push({s:'.page-header .section-label', n:204});
-    map.push({s:'.page-header .section-title', n:205});
-    map.push({s:'.page-header .section-subtitle', n:206});
-  }
-
-  // === TOGGLE BUTTON ===
-  var toggle = document.createElement('button');
-  toggle.textContent = '# REF NUMBERS: ON';
-  toggle.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:999999;background:#E84848;color:#fff;border:3px solid #fff;padding:12px 22px;font-family:monospace;font-size:14px;font-weight:bold;cursor:pointer;border-radius:8px;box-shadow:0 4px 15px rgba(232,72,72,.6);text-transform:uppercase;';
-  document.body.appendChild(toggle);
-
-  // === EDIT MODE BANNER ===
+  /* ---------- BANNER ---------- */
   var banner = document.createElement('div');
-  banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999999;background:#E84848;color:#fff;text-align:center;font-family:monospace;font-size:13px;font-weight:bold;padding:8px;letter-spacing:1px;';
-  banner.textContent = 'EDITOR MODE — Reference numbers are visible. Remove ?edit from URL to exit.';
-  document.body.appendChild(banner);
-  document.body.style.marginTop = '36px';
+  banner.id = 'jbc-editor-banner';
+  banner.innerHTML = '<span>EDITOR MODE — Click text to edit &bull; Hover images to replace</span>';
+  document.body.prepend(banner);
+  document.body.style.marginTop = '40px';
 
-  var tags = [];
-  var visible = false;
+  /* ---------- TOAST ---------- */
+  var toast = document.createElement('div');
+  toast.id = 'jbc-toast';
+  document.body.appendChild(toast);
 
-  function createTags(){
-    try {
-      map.forEach(function(item){
-        var el = null;
-        try {
-          // Try the selector - use first match from comma-separated selectors
-          var selectors = item.s.split(',');
-          for(var i = 0; i < selectors.length; i++){
-            el = document.querySelector(selectors[i].trim());
-            if(el) break;
-          }
-        } catch(e){ return; }
-        if(!el) return;
-
-        // Use FIXED positioning — no need to mess with parents
-        var tag = document.createElement('span');
-        tag.className = 'ref-tag';
-        tag.textContent = '#' + item.n;
-        tag.style.display = 'none';
-        document.body.appendChild(tag);
-        tags.push({tag: tag, el: el, num: item.n});
-      });
-    } catch(e){
-      console.error('Editor refs error:', e);
-    }
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ toast.classList.remove('show'); }, 2500);
   }
 
-  function positionTags(){
-    tags.forEach(function(t){
-      if(t.tag.style.display === 'none') return;
-      var rect = t.el.getBoundingClientRect();
-      t.tag.style.top = (rect.top + window.scrollY - 5) + 'px';
-      t.tag.style.left = (rect.left + window.scrollX - 5) + 'px';
+  /* ---------- COUNTER + TOOLBAR ---------- */
+  var toolbar = document.createElement('div');
+  toolbar.id = 'jbc-toolbar';
+  document.body.appendChild(toolbar);
+
+  var counter = document.createElement('button');
+  counter.className = 'jbc-counter';
+  counter.textContent = '0 changes';
+  toolbar.appendChild(counter);
+
+  function updateCounter(){
+    var total = changes.text + changes.images;
+    counter.textContent = total + ' change' + (total !== 1 ? 's' : '');
+    counter.style.display = total > 0 ? '' : 'none';
+  }
+  updateCounter();
+
+  /* Download button */
+  var dlBtn = document.createElement('button');
+  dlBtn.innerHTML = '<i class="fas fa-download"></i> DOWNLOAD PAGE';
+  dlBtn.title = 'Download this page with your edits';
+  dlBtn.addEventListener('click', downloadPage);
+  toolbar.appendChild(dlBtn);
+
+  /* Reset button */
+  var resetBtn = document.createElement('button');
+  resetBtn.innerHTML = '<i class="fas fa-undo"></i> RESET ALL';
+  resetBtn.title = 'Undo all edits on this page';
+  resetBtn.addEventListener('click', function(){
+    if(!confirm('Reset all changes on this page? This cannot be undone.')) return;
+    location.reload();
+  });
+  toolbar.appendChild(resetBtn);
+
+  /* ---------- MAKE TEXT EDITABLE ---------- */
+  var textSelectors = [
+    'h1','h2','h3','h4','h5','h6',
+    'p',
+    '.section-label','.section-title','.section-subtitle','.section-text',
+    '.btn-primary','.btn-outline',
+    'blockquote','cite',
+    '.blog-card-content p','.blog-card-content h3','.blog-card-meta',
+    '.service-card h3','.service-card p',
+    '.portfolio-overlay span','.portfolio-overlay h3',
+    '.value-card h3','.value-card p',
+    '.stat-number','.stat-label',
+    '.team-info h3','.team-info p',
+    '.process-card h3','.process-card p',
+    '.service-detail-content h3','.service-detail-content p',
+    '.service-list li',
+    '.contact-info-item h4','.contact-info-item a','.contact-info-item p',
+    '.testi-brutal blockquote','.testi-brutal cite',
+    '.footer-brand > p',
+    '.footer-col h4','.footer-col a',
+    '.read-more',
+    '.blog-post p','.blog-post h2',
+    '.marquee-text','.manifesto p',
+    '.sec-header h2','.sec-header span',
+    'a.nav-links > a'
+  ].join(',');
+
+  /* Exclude nav, footer links, and form elements from contentEditable */
+  var editableEls = document.querySelectorAll(textSelectors);
+
+  editableEls.forEach(function(el){
+    /* Skip nav links, scripts, style tags */
+    if(el.closest('#jbc-editor-banner') || el.closest('#jbc-toolbar')) return;
+    if(el.tagName === 'A' && el.closest('.nav-links')) return;
+    if(el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return;
+    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') return;
+
+    /* Skip very short utility text */
+    var txt = el.textContent.trim();
+    if(!txt || txt.length < 1) return;
+
+    el.setAttribute('contenteditable', 'true');
+    el.classList.add('jbc-editable');
+    el.spellcheck = false;
+    originalTexts.set(el, el.innerHTML);
+
+    el.addEventListener('focus', function(){
+      /* Store for comparison */
+      if(!el._snapshot) el._snapshot = el.innerHTML;
     });
-  }
 
-  function showTags(){
-    tags.forEach(function(t){
-      t.tag.style.display = 'block';
-      t.el.classList.add('ref-outline');
+    el.addEventListener('blur', function(){
+      if(el.innerHTML !== el._snapshot){
+        if(!el.classList.contains('jbc-text-changed')){
+          changes.text++;
+          el.classList.add('jbc-text-changed');
+          updateCounter();
+        }
+        el._snapshot = el.innerHTML;
+        showToast('Text updated');
+      }
     });
-    visible = true;
-    positionTags();
-    toggle.textContent = '# REF NUMBERS: OFF';
-    toggle.style.background = '#333';
-  }
 
-  function hideTags(){
-    tags.forEach(function(t){
-      t.tag.style.display = 'none';
-      t.el.classList.remove('ref-outline');
+    /* Prevent Enter from creating divs — just a <br> */
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && !e.shiftKey){
+        /* Allow Enter in paragraphs / blockquotes */
+        if(el.tagName === 'P' || el.tagName === 'BLOCKQUOTE') return;
+        e.preventDefault();
+      }
     });
-    visible = false;
-    toggle.textContent = '# REF NUMBERS: ON';
-    toggle.style.background = '#E84848';
-  }
-
-  // Reposition on scroll/resize
-  window.addEventListener('scroll', function(){ if(visible) positionTags(); });
-  window.addEventListener('resize', function(){ if(visible) positionTags(); });
-
-  toggle.addEventListener('click', function(){
-    if(tags.length === 0) createTags();
-    if(visible) hideTags();
-    else showTags();
   });
 
-  // Auto-show after page fully loads
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      createTags();
-      showTags();
-      // Re-position again after images/fonts load
-      setTimeout(positionTags, 1000);
-    }, 800);
+  /* ---------- MAKE IMAGES REPLACEABLE ---------- */
+  var allImages = document.querySelectorAll('img');
+
+  allImages.forEach(function(img){
+    /* Skip tiny icons, logos inside editor */
+    if(img.closest('#jbc-editor-banner') || img.closest('#jbc-toolbar')) return;
+    if(img.width < 40 && img.height < 40) return;
+
+    var parent = img.parentElement;
+
+    /* Create wrapper if parent isn't already positioned */
+    var wrap = document.createElement('div');
+    wrap.className = 'jbc-img-wrap';
+    wrap.style.cssText = 'position:relative;display:' + (parent.style.display || 'block') + ';width:100%;height:100%;';
+    img.parentNode.insertBefore(wrap, img);
+    wrap.appendChild(img);
+
+    /* Create overlay */
+    var overlay = document.createElement('div');
+    overlay.className = 'jbc-img-overlay';
+    overlay.innerHTML = '<i class="fas fa-camera"></i><span>CLICK TO REPLACE</span>';
+    wrap.appendChild(overlay);
+
+    /* Hidden file input */
+    var fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    wrap.appendChild(fileInput);
+
+    overlay.addEventListener('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function(){
+      var file = fileInput.files[0];
+      if(!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e){
+        img.src = e.target.result;
+        img.removeAttribute('srcset');
+        img.style.filter = 'none'; /* remove grayscale for preview */
+        changes.images++;
+        updateCounter();
+        showToast('Image replaced — ' + file.name);
+      };
+      reader.readAsDataURL(file);
+    });
   });
 
-  console.log('✅ Editor refs loaded! Page detected: ' + page + ' | Elements mapped: ' + map.length);
+  /* ---------- DOWNLOAD FUNCTION ---------- */
+  function downloadPage(){
+    /* Clone the document */
+    var clone = document.documentElement.cloneNode(true);
+
+    /* Remove editor elements from clone */
+    var removeSelectors = ['#jbc-editor-banner','#jbc-toolbar','#jbc-toast','style'];
+    clone.querySelectorAll('#jbc-editor-banner, #jbc-toolbar, #jbc-toast').forEach(function(el){ el.remove(); });
+
+    /* Remove contenteditable attributes */
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){
+      el.removeAttribute('contenteditable');
+      el.classList.remove('jbc-editable','jbc-text-changed');
+    });
+
+    /* Unwrap image wrappers */
+    clone.querySelectorAll('.jbc-img-wrap').forEach(function(wrap){
+      var img = wrap.querySelector('img');
+      if(img){
+        wrap.parentNode.insertBefore(img, wrap);
+      }
+      wrap.remove();
+    });
+
+    /* Remove editor-specific styles */
+    clone.querySelectorAll('style').forEach(function(s){
+      if(s.textContent.indexOf('jbc-editor') !== -1 || s.textContent.indexOf('jbc-editable') !== -1){
+        s.remove();
+      }
+    });
+
+    /* Fix body margin */
+    var body = clone.querySelector('body');
+    if(body) body.style.marginTop = '';
+
+    /* Build HTML string */
+    var html = '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
+
+    /* Determine filename */
+    var path = window.location.pathname;
+    var filename = 'index.html';
+    if(path.indexOf('about') !== -1) filename = 'about.html';
+    else if(path.indexOf('services') !== -1) filename = 'services.html';
+    else if(path.indexOf('portfolio') !== -1) filename = 'portfolio.html';
+    else if(path.indexOf('blog/') !== -1 || path.indexOf('post-') !== -1) filename = 'post-01.html';
+    else if(path.indexOf('blog') !== -1) filename = 'blog.html';
+    else if(path.indexOf('contact') !== -1) filename = 'contact.html';
+
+    /* Trigger download */
+    var blob = new Blob([html], {type:'text/html'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+
+    showToast('Downloaded ' + filename + ' with ' + (changes.text + changes.images) + ' changes');
+  }
+
+  /* ---------- LOG ---------- */
+  console.log('✅ JBC Visual Editor loaded! Click text to edit, hover images to replace. ' + editableEls.length + ' text elements, ' + allImages.length + ' images.');
+
 })();
