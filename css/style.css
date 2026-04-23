@@ -99,9 +99,9 @@ ul { list-style:none; }
   font-family:var(--font-display); font-weight:900;
   line-height:0.85; letter-spacing:-5px;
 }
-.hero-mega .l1 { display:block; font-size:clamp(4rem,10vw,9rem); color:var(--gold); }
-.hero-mega .l2 { display:block; font-size:clamp(4rem,10vw,9rem); color:var(--coral); margin-left:clamp(30px,8vw,120px); }
-.hero-mega .l3 { display:block; font-size:clamp(4rem,10vw,9rem); color:var(--purple); }
+.hero-mega .l1 { display:block; font-size:clamp(5rem,15vw,14rem); color:var(--gold); }
+.hero-mega .l2 { display:block; font-size:clamp(5rem,15vw,14rem); color:var(--coral); margin-left:clamp(30px,8vw,120px); }
+.hero-mega .l3 { display:block; font-size:clamp(5rem,15vw,14rem); color:var(--purple); }
 .hero-bottom {
   display:flex; justify-content:space-between; align-items:flex-end;
   padding-top:20px; border-top:var(--border);
