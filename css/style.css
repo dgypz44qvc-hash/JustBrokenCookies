@@ -1108,4 +1108,42 @@ section { padding:var(--section-pad) 0; position:relative; }
     width: 14px;
     height: 14px;
   }
+/* ---- Hero secret words reveal, replaces pattern feel with editorial text ---- */
+.hero-secret-words .l1,
+.hero-secret-words .l2,
+.hero-secret-words .l3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  text-transform: none;
+
+  color: transparent !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(240, 230, 218, 0.95) 0%,
+      rgba(232, 137, 29, 0.95) 38%,
+      rgba(232, 72, 72, 0.9) 68%,
+      rgba(139, 58, 139, 0.92) 100%
+    ) !important;
+
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow: none !important;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.22));
+}
+
+.hero-secret-words .l1 {
+  color: transparent !important;
+}
+
+.hero-secret-words .l2 {
+  color: transparent !important;
+}
+
+.hero-secret-words .l3 {
+  color: transparent !important;
 }

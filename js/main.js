@@ -588,3 +588,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+  // ---- HERO SECRET WORDS REVEAL ----
+  // Replaces the decorative pattern underlay with elegant text:
+  // Just -> ONCE, Broken -> UPON, Cookies -> A TIME
+  setTimeout(() => {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    const underlays = hero.querySelectorAll('.hero-mega.hero-underlay');
+    if (!underlays.length) return;
+
+    underlays.forEach((underlay) => {
+      const l1 = underlay.querySelector('.l1');
+      const l2 = underlay.querySelector('.l2');
+      const l3 = underlay.querySelector('.l3');
+
+      if (l1) l1.textContent = 'Once';
+      if (l2) l2.textContent = 'Upon';
+      if (l3) l3.textContent = 'A Time';
+
+      underlay.classList.add('hero-secret-words');
+    });
+  }, 80);
