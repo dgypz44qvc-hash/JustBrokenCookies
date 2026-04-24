@@ -46,9 +46,10 @@
     #jbc-add-menu button i{font-size:18px;width:22px;text-align:center;}
 
     /* Added elements */
-    .jbc-added{position:absolute;z-index:5;cursor:move;user-select:none;}
+    .jbc-added{position:absolute;z-index:10;cursor:move;user-select:none;}
     .jbc-added:hover{outline:2px solid #E8891D;outline-offset:4px;}
-    .jbc-added.jbc-selected{outline:2px solid #2ecc40;outline-offset:4px;}
+    .jbc-added.jbc-selected{outline:2px solid #2ecc40!important;outline-offset:4px!important;z-index:9999!important;}
+    .jbc-added.jbc-grabbed{outline:3px solid #ff0!important;outline-offset:6px!important;z-index:9999!important;box-shadow:0 0 30px rgba(255,255,0,0.3)!important;}
     .jbc-added .jbc-delete-btn{position:absolute;top:-12px;right:-12px;width:24px;height:24px;background:#E84848;color:#fff;border:2px solid #fff;border-radius:50%;font-size:14px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:300;font-family:monospace;line-height:1;}
     .jbc-added:hover .jbc-delete-btn{display:flex;}
     .jbc-added .jbc-resize-handle{position:absolute;bottom:-5px;right:-5px;width:14px;height:14px;background:#E8891D;cursor:nwse-resize;z-index:200;border:2px solid #fff;display:none;}
@@ -215,23 +216,41 @@
     var html = '';
     var layers = getSectionElements(section);
 
-    html += '<div class="jbc-menu-header">Layers in Section</div>';
-    if(layers.length === 0){
+    /* Sort layers by z-index (highest first) for a clear stacking view */
+    var sortedLayers = layers.slice().sort(function(a,b){
+      var zA = parseInt(a.style.zIndex) || parseInt(getComputedStyle(a).zIndex) || 0;
+      var zB = parseInt(b.style.zIndex) || parseInt(getComputedStyle(b).zIndex) || 0;
+      return zB - zA;
+    });
+
+    html += '<div class="jbc-menu-header">Layers (top \u2192 bottom) \u2014 click to grab</div>';
+    if(sortedLayers.length === 0){
       html += '<div style="padding:10px 16px;color:#666;font-size:11px;font-family:monospace;">No elements found</div>';
     } else {
-      layers.forEach(function(el, idx){
+      sortedLayers.forEach(function(el, idx){
         var label = getLayerLabel(el);
         var icon = getLayerIcon(el);
         var isActive = (el === ctxTarget) ? ' active' : '';
-        html += '<button class="jbc-layer-item'+isActive+'" data-action="select-layer" data-layer-idx="'+idx+'"><i class="fas '+icon+'"></i> '+label+'</button>';
+        var z = parseInt(el.style.zIndex) || parseInt(getComputedStyle(el).zIndex) || 'auto';
+        var isGrabbed = el.classList.contains('jbc-grabbed') ? ' style="color:#ff0;"' : '';
+        /* Find the original index in unsorted layers */
+        var origIdx = layers.indexOf(el);
+        html += '<button class="jbc-layer-item'+isActive+'"'+isGrabbed+' data-action="select-layer" data-layer-idx="'+origIdx+'"><i class="fas '+icon+'"></i> '+label+' <span style="color:#666;font-size:10px;margin-left:auto;">z:'+z+'</span></button>';
       });
     }
 
     if(ctxTarget){
-      /* Show Edit Text option for text wrappers and editable text */
+      /* Grab — bring to front so it's always reachable */
+      html += '<div class="jbc-menu-header">Grab & Move</div>';
+      if(ctxTarget.classList.contains('jbc-grabbed')){
+        html += '<button data-action="release" style="color:#ff0;"><i class="fas fa-unlock"></i> Release (keep position)</button>';
+      } else {
+        html += '<button data-action="grab" style="color:#ff0;"><i class="fas fa-hand"></i> Grab to Front</button>';
+      }
+
+      /* Show Edit Text option for text wrappers */
       var isTextWrapper = ctxTarget.classList.contains('jbc-added-text');
       var hasEditableChild = ctxTarget.querySelector('p,h1,h2,h3,h4,h5,h6,span');
-      var isEditableText = ctxTarget.classList.contains('jbc-editable');
       if(isTextWrapper || (ctxTarget.classList.contains('jbc-added') && hasEditableChild && !ctxTarget.querySelector('img'))){
         html += '<div class="jbc-menu-header">Text</div>';
         if(ctxTarget.classList.contains('jbc-editing')){
@@ -240,6 +259,7 @@
           html += '<button data-action="edit-text" style="color:#2ecc40;"><i class="fas fa-pencil"></i> Edit Text</button>';
         }
       }
+
       html += '<div class="jbc-menu-header">Clipboard</div>';
       html += '<button data-action="copy"><i class="fas fa-copy"></i> Copy</button>';
       html += '<button data-action="duplicate"><i class="fas fa-clone"></i> Duplicate</button>';
@@ -247,10 +267,10 @@
         html += '<button data-action="paste"><i class="fas fa-paste"></i> Paste Here</button>';
       }
       html += '<div class="jbc-menu-header">Z-Order</div>';
-      html += '<button data-action="send-back"><i class="fas fa-arrow-down"></i> Send Behind</button>';
-      html += '<button data-action="send-far-back"><i class="fas fa-angles-down"></i> Send to Back</button>';
-      html += '<button data-action="bring-front"><i class="fas fa-arrow-up"></i> Bring Forward</button>';
-      html += '<button data-action="bring-far-front"><i class="fas fa-angles-up"></i> Bring to Front</button>';
+      html += '<button data-action="send-back"><i class="fas fa-arrow-down"></i> Send Behind (-5)</button>';
+      html += '<button data-action="send-far-back"><i class="fas fa-angles-down"></i> Send to Back (z:1)</button>';
+      html += '<button data-action="bring-front"><i class="fas fa-arrow-up"></i> Bring Forward (+5)</button>';
+      html += '<button data-action="bring-far-front"><i class="fas fa-angles-up"></i> Bring to Front (z:50)</button>';
       html += '<div class="jbc-menu-header">Opacity</div>';
       html += '<button data-action="opacity-down"><i class="fas fa-eye-slash"></i> More Transparent</button>';
       html += '<button data-action="opacity-up"><i class="fas fa-eye"></i> Less Transparent</button>';
@@ -299,7 +319,7 @@
   document.addEventListener('click', function(e){
     if(!e.target.closest('#jbc-context-menu')){
       ctxMenu.style.display = 'none';
-      /* Deselect */
+      /* Deselect (but keep grabbed elements — they stay grabbed until released) */
       document.querySelectorAll('.jbc-selected').forEach(function(el){ el.classList.remove('jbc-selected'); });
     }
   });
@@ -310,17 +330,22 @@
     if(!btn) return;
     var action = btn.getAttribute('data-action');
 
-    /* Layer selection */
+    /* Layer selection — always brings element to front temporarily so it's reachable */
     if(action === 'select-layer'){
       var idx = parseInt(btn.getAttribute('data-layer-idx'));
       var layers = ctxMenu._layers || [];
       if(layers[idx]){
-        /* Deselect previous */
-        document.querySelectorAll('.jbc-selected').forEach(function(el){ el.classList.remove('jbc-selected'); });
+        /* Deselect & un-grab previous */
+        document.querySelectorAll('.jbc-selected,.jbc-grabbed').forEach(function(el){
+          el.classList.remove('jbc-selected');
+          el.classList.remove('jbc-grabbed');
+        });
         ctxTarget = layers[idx];
-        /* Highlight selected */
-        if(ctxTarget.classList.contains('jbc-added')){
-          ctxTarget.classList.add('jbc-selected');
+        /* Grab it — bring to front so it's always interactive */
+        ctxTarget.classList.add('jbc-grabbed');
+        /* Store the original z-index so we can restore it */
+        if(!ctxTarget.hasAttribute('data-orig-z')){
+          ctxTarget.setAttribute('data-orig-z', ctxTarget.style.zIndex || '');
         }
         /* Scroll into view */
         ctxTarget.scrollIntoView({behavior:'smooth', block:'center'});
@@ -331,8 +356,33 @@
         buildContextMenu(section);
         ctxMenu.style.left = menuLeft;
         ctxMenu.style.top = menuTop;
-        showToast('Selected: ' + getLayerLabel(ctxTarget));
+        showToast('Grabbed: ' + getLayerLabel(ctxTarget) + ' — drag to move, right-click for options');
       }
+      return;
+    }
+
+    /* ---- Grab / Release ---- */
+    if(action === 'grab' && ctxTarget){
+      document.querySelectorAll('.jbc-grabbed').forEach(function(el){ el.classList.remove('jbc-grabbed'); });
+      if(!ctxTarget.hasAttribute('data-orig-z')){
+        ctxTarget.setAttribute('data-orig-z', ctxTarget.style.zIndex || '');
+      }
+      ctxTarget.classList.add('jbc-grabbed');
+      showToast('Grabbed! Drag to move, right-click \u2192 Release when done');
+      ctxMenu.style.display = 'none';
+      return;
+    }
+
+    if(action === 'release' && ctxTarget){
+      ctxTarget.classList.remove('jbc-grabbed');
+      /* Restore original z-index */
+      var origZ = ctxTarget.getAttribute('data-orig-z');
+      if(origZ !== null){
+        ctxTarget.style.zIndex = origZ;
+        ctxTarget.removeAttribute('data-orig-z');
+      }
+      showToast('Released at z-index: ' + (ctxTarget.style.zIndex || 'auto'));
+      ctxMenu.style.display = 'none';
       return;
     }
 
@@ -453,20 +503,20 @@
 
     switch(action){
       case 'send-back':
-        ctxTarget.style.zIndex = Math.max(0, currentZ - 1);
-        showToast('Sent back (z-index: ' + ctxTarget.style.zIndex + ')');
+        ctxTarget.style.zIndex = Math.max(1, currentZ - 5);
+        showToast('Sent back (z:' + ctxTarget.style.zIndex + ') \u2014 right-click layer list to re-grab');
         break;
       case 'send-far-back':
-        ctxTarget.style.zIndex = '0';
-        showToast('Sent to very back');
+        ctxTarget.style.zIndex = '1';
+        showToast('Sent to back (z:1) \u2014 right-click layer list to re-grab');
         break;
       case 'bring-front':
-        ctxTarget.style.zIndex = currentZ + 1;
-        showToast('Brought forward (z-index: ' + ctxTarget.style.zIndex + ')');
+        ctxTarget.style.zIndex = Math.min(99, currentZ + 5);
+        showToast('Brought forward (z:' + ctxTarget.style.zIndex + ')');
         break;
       case 'bring-far-front':
-        ctxTarget.style.zIndex = '99';
-        showToast('Brought to front');
+        ctxTarget.style.zIndex = '50';
+        showToast('Brought to front (z:50)');
         break;
       case 'opacity-down':
         var newOp = Math.max(0.1, currentOp - 0.15);
@@ -1603,9 +1653,10 @@
       /* Remove editor-only children */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b').forEach(function(c){ c.remove(); });
       /* Remove the editor classes */
-      el.classList.remove('jbc-added','jbc-added-text','jbc-selected','jbc-editing');
+      el.classList.remove('jbc-added','jbc-added-text','jbc-selected','jbc-editing','jbc-grabbed');
       el.removeAttribute('data-pos-type');
       el.removeAttribute('data-box');
+      el.removeAttribute('data-orig-z');
       if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
 
