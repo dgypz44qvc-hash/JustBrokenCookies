@@ -224,25 +224,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // ---- OIL-ON-WATER HERO TEXT REVEAL ----
-    // Bottom layer: white text with a broken-cookie crackle pattern
-    // Top layer: the normal colored text, masked with a radial hole at cursor
-    // Hover pushes the colored "oil" aside to reveal the white pattern beneath
+    // Two identical layers of text stacked exactly on top of each other.
+    // Bottom layer: white text with broken-cookie crackle pattern
+    // Top layer: the normal colored text, with a CSS mask hole on hover
+    // Hovering "pushes aside" the colored oil to reveal the white pattern beneath
     if (heroMega) {
 
-      // 1. Create the white patterned underlay (sits behind colored text)
+      // 1. Wrap heroMega so we can stack the underlay perfectly on top
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('hero-oil-wrap');
+      heroMega.parentElement.insertBefore(wrapper, heroMega);
+      wrapper.appendChild(heroMega);
+
+      // 2. Clone and insert the underlay INSIDE the same wrapper
       const underlay = heroMega.cloneNode(true);
       underlay.classList.add('hero-underlay');
+      underlay.classList.remove('hero-mega');
       underlay.removeAttribute('style');
-      // Insert BEFORE heroMega so it's underneath
-      heroMega.parentElement.insertBefore(underlay, heroMega);
+      wrapper.insertBefore(underlay, heroMega); // underlay first = behind
 
-      // 2. Inject CSS
+      // 3. Inject CSS — both layers are position:absolute inside wrapper
       const oilCSS = document.createElement('style');
       oilCSS.textContent = `
-        /* --- Underlay: white text with crackle texture --- */
+        /* Wrapper takes the natural size of the text */
+        .hero-oil-wrap {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+        }
+
+        /* --- Underlay: white patterned text (bottom layer) --- */
         .hero-underlay {
           position: absolute;
-          top: 0; left: 0;
+          top: 0; left: 0; width: 100%; height: 100%;
           pointer-events: none;
           z-index: 1;
           user-select: none;
@@ -261,18 +275,16 @@ document.addEventListener('DOMContentLoaded', () => {
           -webkit-text-fill-color: transparent;
         }
 
-        /* --- Colored layer: gets the mask hole on hover --- */
-        .hero-mega {
+        /* --- Top layer: colored text with mask on hover --- */
+        .hero-oil-wrap .hero-mega {
           position: relative;
           z-index: 2;
           --mx: -300px;
           --my: -300px;
-          /* Default: fully visible (no mask) */
           -webkit-mask-image: none;
           mask-image: none;
-          transition: none;
         }
-        .hero-mega.oil-active {
+        .hero-oil-wrap .hero-mega.oil-active {
           -webkit-mask-image:
             radial-gradient(
               ellipse 180px 200px at var(--mx) var(--my),
@@ -295,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       document.head.appendChild(oilCSS);
 
-      // 3. Mouse tracking — smooth with lerp for that fluid feel
+      // 4. Mouse tracking — smooth with lerp for fluid feel
       let targetX = -300, targetY = -300;
       let currentX = -300, currentY = -300;
       let oilActive = false;
@@ -308,13 +320,15 @@ document.addEventListener('DOMContentLoaded', () => {
         heroMega.style.setProperty('--my', currentY + 'px');
         if (oilActive || Math.abs(targetX - currentX) > 0.5) {
           oilRAF = requestAnimationFrame(lerpOil);
+        } else {
+          oilRAF = null;
         }
       }
 
       heroMega.addEventListener('mouseenter', () => {
         oilActive = true;
         heroMega.classList.add('oil-active');
-        if (!oilRAF) lerpOil();
+        if (!oilRAF) oilRAF = requestAnimationFrame(lerpOil);
       });
 
       heroMega.addEventListener('mouseleave', () => {
@@ -322,14 +336,13 @@ document.addEventListener('DOMContentLoaded', () => {
         heroMega.classList.remove('oil-active');
         targetX = -300;
         targetY = -300;
-        // Let lerp finish animating out
       });
 
       heroMega.addEventListener('mousemove', (e) => {
         const rect = heroMega.getBoundingClientRect();
         targetX = e.clientX - rect.left;
         targetY = e.clientY - rect.top;
-        if (!oilRAF) lerpOil();
+        if (!oilRAF) oilRAF = requestAnimationFrame(lerpOil);
       });
     }
   }
