@@ -1272,7 +1272,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 .hero-mega:not(.hero-underlay) .l3::after {
   font-family: var(--font-script) !important;
   font-style: normal !important;
-  font-weight: 700 !important;
+  font-weight: 400 !important;
 
   font-size: 0.52em !important;
   letter-spacing: -0.025em !important;
@@ -1280,6 +1280,13 @@ section { padding:var(--section-pad) 0; position:relative; }
 
   display: flex !important;
   align-items: center !important;
+
+  /* Slim red/pink — matching the banner */
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: var(--dusty-rose) !important;
+  color: var(--dusty-rose) !important;
 
   opacity: 0 !important;
   filter: blur(14px) !important;
