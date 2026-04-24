@@ -1375,6 +1375,33 @@
     }
   }
 
+  /* ========== ALIGNMENT HELPER ========== */
+  function alignElement(el, alignVal){
+    /* Only touch THIS element — never the parent or siblings */
+    var cs = getComputedStyle(el);
+    var isInline = (cs.display === 'inline');
+
+    /* If inline, make it inline-block so text-align can work */
+    if(isInline){
+      el.style.display = 'inline-block';
+      el.style.width = '100%';
+    }
+
+    el.style.textAlign = alignVal;
+
+    /* Reset this element's margins so alignment isn't fought by offsets */
+    if(alignVal === 'center'){
+      el.style.marginLeft = 'auto';
+      el.style.marginRight = 'auto';
+    } else if(alignVal === 'right'){
+      el.style.marginLeft = 'auto';
+      el.style.marginRight = '0';
+    } else if(alignVal === 'left'){
+      el.style.marginLeft = '0';
+      el.style.marginRight = '';
+    }
+  }
+
   /* Prevent format bar interactions from stealing focus from the text element */
   formatBar.addEventListener('mousedown', function(e){
     e.preventDefault();
@@ -1418,24 +1445,7 @@
       case 'align-right':
       case 'align-justify':
         var alignVal = fmt.replace('align-','');
-        /* Apply text-align to the element */
-        el.style.textAlign = alignVal;
-        /* If element is inline, also apply to its parent so it actually takes effect */
-        var elDisplay = cs.display;
-        if(elDisplay === 'inline' || elDisplay === 'inline-block'){
-          if(el.parentElement) el.parentElement.style.textAlign = alignVal;
-        }
-        /* Handle margin-left/right that can override visual alignment */
-        if(alignVal === 'center'){
-          el.style.marginLeft = 'auto';
-          el.style.marginRight = 'auto';
-        } else if(alignVal === 'left'){
-          el.style.marginLeft = '0';
-          el.style.marginRight = '';
-        } else if(alignVal === 'right'){
-          el.style.marginLeft = 'auto';
-          el.style.marginRight = '0';
-        }
+        alignElement(el, alignVal);
         break;
       case 'color-gold':   el.style.color = '#E8891D'; fontColorInput.value = '#E8891D'; break;
       case 'color-blush':  el.style.color = '#E84848'; fontColorInput.value = '#E84848'; break;
