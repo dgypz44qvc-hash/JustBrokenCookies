@@ -57,6 +57,25 @@
     .jbc-added .jbc-resize-handle-r{position:absolute;top:50%;right:-4px;width:8px;height:30px;margin-top:-15px;background:#E8891D;cursor:ew-resize;z-index:200;border:2px solid #fff;border-radius:3px;display:none;}
     .jbc-added .jbc-resize-handle-b{position:absolute;bottom:-4px;left:50%;height:8px;width:30px;margin-left:-15px;background:#E8891D;cursor:ns-resize;z-index:200;border:2px solid #fff;border-radius:3px;display:none;}
     .jbc-added:hover .jbc-resize-handle-r,.jbc-added:hover .jbc-resize-handle-b{display:block;}
+    /* ---- ALIGNMENT GUIDES ---- */
+    #jbc-guides{position:fixed;inset:0;z-index:999998;pointer-events:none;display:none;}
+    #jbc-guides.visible{display:block;}
+    #jbc-guides .jbc-guide{position:absolute;background:rgba(0,180,255,0.35);}
+    #jbc-guides .jbc-guide-label{position:absolute;background:rgba(0,180,255,0.8);color:#fff;font-family:monospace;font-size:9px;padding:2px 5px;white-space:nowrap;}
+    #jbc-guides .jbc-guide-v{width:1px;top:0;bottom:0;}
+    #jbc-guides .jbc-guide-h{height:1px;left:0;right:0;}
+    #jbc-guides .jbc-guide-v.center{background:rgba(255,50,50,0.5);}
+    #jbc-guides .jbc-guide-h.center{background:rgba(255,50,50,0.5);}
+    #jbc-guides .jbc-guide-v.third{background:rgba(0,180,255,0.2);}
+    #jbc-guides .jbc-guide-h.third{background:rgba(0,180,255,0.2);}
+    #jbc-guides .jbc-guide-v.container-edge{background:rgba(46,204,64,0.3);width:1px;}
+    #jbc-snap-line{position:fixed;z-index:999999;pointer-events:none;display:none;}
+    #jbc-snap-line.visible{display:block;}
+    #jbc-snap-line .snap-v{position:absolute;width:1px;top:0;bottom:0;background:#ff0;}
+    #jbc-snap-line .snap-h{position:absolute;height:1px;left:0;right:0;background:#ff0;}
+    #jbc-toolbar .jbc-guides-btn{background:#0af;border-color:#0af;color:#000;}
+    #jbc-toolbar .jbc-guides-btn.active{background:#2ecc40;border-color:#2ecc40;}
+
     .jbc-added-text{cursor:move;}
     .jbc-added-text:hover{outline:2px dashed rgba(46,204,64,0.5)!important;outline-offset:3px!important;}
     .jbc-added-text.jbc-selected{outline:2px dashed #2ecc40!important;outline-offset:3px!important;}
@@ -763,6 +782,76 @@
   });
   toolbar.appendChild(moveBtn);
 
+  /* ---- ALIGNMENT GUIDES TOGGLE ---- */
+  var guidesOn = false;
+  var guidesOverlay = document.createElement('div');
+  guidesOverlay.id = 'jbc-guides';
+  document.body.appendChild(guidesOverlay);
+
+  function buildGuides(){
+    var w = window.innerWidth;
+    var h = document.documentElement.scrollHeight;
+    var cx = w / 2;
+    /* Find the container max-width for content area guides */
+    var containerMax = 1200;
+    var containerLeft = Math.max(0, (w - containerMax) / 2);
+    var containerRight = Math.min(w, containerLeft + containerMax);
+
+    var html = '';
+    /* Page vertical center — red */
+    html += '<div class="jbc-guide jbc-guide-v center" style="left:'+cx+'px;"><div class="jbc-guide-label" style="top:60px;left:4px;">CENTER</div></div>';
+    /* Thirds — blue faint */
+    html += '<div class="jbc-guide jbc-guide-v third" style="left:'+(w/3)+'px;"><div class="jbc-guide-label" style="top:60px;left:4px;">1/3</div></div>';
+    html += '<div class="jbc-guide jbc-guide-v third" style="left:'+(w*2/3)+'px;"><div class="jbc-guide-label" style="top:60px;left:4px;">2/3</div></div>';
+    /* Container edges — green */
+    if(containerLeft > 20){
+      html += '<div class="jbc-guide jbc-guide-v container-edge" style="left:'+containerLeft+'px;"><div class="jbc-guide-label" style="top:80px;left:4px;">CONTAINER</div></div>';
+      html += '<div class="jbc-guide jbc-guide-v container-edge" style="left:'+containerRight+'px;"></div>';
+    }
+    /* Horizontal guides at viewport intervals */
+    var scrollTop = window.scrollY;
+    var viewH = window.innerHeight;
+    /* Viewport center */
+    html += '<div class="jbc-guide jbc-guide-h center" style="top:'+(scrollTop + viewH/2)+'px;position:absolute;"><div class="jbc-guide-label" style="left:4px;top:2px;">VIEWPORT CENTER</div></div>';
+    /* Viewport thirds */
+    html += '<div class="jbc-guide jbc-guide-h third" style="top:'+(scrollTop + viewH/3)+'px;position:absolute;"></div>';
+    html += '<div class="jbc-guide jbc-guide-h third" style="top:'+(scrollTop + viewH*2/3)+'px;position:absolute;"></div>';
+
+    guidesOverlay.innerHTML = html;
+    /* Make the overlay span the full page height */
+    guidesOverlay.style.height = h + 'px';
+  }
+
+  var guidesBtn = document.createElement('button');
+  guidesBtn.className = 'jbc-guides-btn';
+  guidesBtn.innerHTML = '<i class="fas fa-ruler-combined"></i> GUIDES';
+  guidesBtn.addEventListener('click', function(){
+    guidesOn = !guidesOn;
+    guidesBtn.classList.toggle('active', guidesOn);
+    guidesOverlay.classList.toggle('visible', guidesOn);
+    if(guidesOn){
+      buildGuides();
+      guidesBtn.innerHTML = '<i class="fas fa-ruler-combined"></i> GUIDES ON';
+    } else {
+      guidesBtn.innerHTML = '<i class="fas fa-ruler-combined"></i> GUIDES';
+    }
+    showToast(guidesOn ? 'Guides ON — red=center, blue=thirds, green=container' : 'Guides OFF');
+  });
+  toolbar.appendChild(guidesBtn);
+
+  /* Update guides on scroll/resize */
+  var guidesRAF = null;
+  function updateGuidesThrottled(){
+    if(!guidesOn) return;
+    if(guidesRAF) return;
+    guidesRAF = requestAnimationFrame(function(){
+      buildGuides();
+      guidesRAF = null;
+    });
+  }
+  window.addEventListener('scroll', updateGuidesThrottled, {passive:true});
+  window.addEventListener('resize', updateGuidesThrottled, {passive:true});
+
   var dlBtn = document.createElement('button');
   dlBtn.innerHTML = '<i class="fas fa-download"></i> DOWNLOAD';
   dlBtn.addEventListener('click', downloadPage);
@@ -1212,6 +1301,13 @@
     '  <button data-fmt="uppercase" title="Toggle uppercase"><i class="fas fa-font"></i> AA</button>',
     '</div>',
     '<div class="jbc-fmt-group">',
+    '  <label>Align</label>',
+    '  <button data-fmt="align-left" title="Align left"><i class="fas fa-align-left"></i></button>',
+    '  <button data-fmt="align-center" title="Align center"><i class="fas fa-align-center"></i></button>',
+    '  <button data-fmt="align-right" title="Align right"><i class="fas fa-align-right"></i></button>',
+    '  <button data-fmt="align-justify" title="Justify"><i class="fas fa-align-justify"></i></button>',
+    '</div>',
+    '<div class="jbc-fmt-group">',
     '  <label>Weight</label>',
     '  <select id="jbc-font-weight">',
     '    <option value="">— current —</option>',
@@ -1317,6 +1413,10 @@
       case 'uppercase':
         el.style.textTransform = cs.textTransform === 'uppercase' ? 'none' : 'uppercase';
         break;
+      case 'align-left':    el.style.textAlign = 'left'; break;
+      case 'align-center':  el.style.textAlign = 'center'; break;
+      case 'align-right':   el.style.textAlign = 'right'; break;
+      case 'align-justify': el.style.textAlign = 'justify'; break;
       case 'color-gold':   el.style.color = '#E8891D'; fontColorInput.value = '#E8891D'; break;
       case 'color-blush':  el.style.color = '#E84848'; fontColorInput.value = '#E84848'; break;
       case 'color-wine':   el.style.color = '#8B3A8B'; fontColorInput.value = '#8B3A8B'; break;
@@ -1626,7 +1726,7 @@
     var clone = document.documentElement.cloneNode(true);
 
     /* Remove all editor UI */
-    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar').forEach(function(el){ el.remove(); });
+    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar,#jbc-guides,#jbc-snap-line').forEach(function(el){ el.remove(); });
 
     /* Clean contenteditable and move-mode classes */
     clone.querySelectorAll('[contenteditable]').forEach(function(el){
