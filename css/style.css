@@ -1108,6 +1108,8 @@ section { padding:var(--section-pad) 0; position:relative; }
     width: 14px;
     height: 14px;
   }
+}
+
 /* ---- Hero secret words, safe version ---- */
 /* Hide the old patterned underlay only, without killing the main hero animation */
 .hero .hero-underlay,
@@ -1180,6 +1182,99 @@ section { padding:var(--section-pad) 0; position:relative; }
   color: transparent !important;
   -webkit-text-fill-color: transparent !important;
   text-shadow: none !important;
+}
+
+.hero-mega:not(.hero-underlay) .l1:hover::after,
+.hero-mega:not(.hero-underlay) .l2:hover::after,
+.hero-mega:not(.hero-underlay) .l3:hover::after {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+/* ---- FINAL HERO WORD-BY-WORD SECRET REVEAL FIX ---- */
+
+/* Stop the old patterned underlay from showing */
+.hero .hero-underlay,
+.hero .hero-secret-words {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Restore the normal visible title layer */
+.hero-mega:not(.hero-underlay) {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Each hero word becomes its own hover zone */
+.hero-mega:not(.hero-underlay) .l1,
+.hero-mega:not(.hero-underlay) .l2,
+.hero-mega:not(.hero-underlay) .l3 {
+  position: relative !important;
+  display: block !important;
+  width: max-content !important;
+  cursor: none;
+  transition:
+    color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Secret word layer */
+.hero-mega:not(.hero-underlay) .l1::after,
+.hero-mega:not(.hero-underlay) .l2::after,
+.hero-mega:not(.hero-underlay) .l3::after {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  text-transform: none;
+
+  background: linear-gradient(
+    135deg,
+    rgba(240, 230, 218, 0.96) 0%,
+    rgba(232, 137, 29, 0.95) 36%,
+    rgba(232, 72, 72, 0.92) 68%,
+    rgba(139, 58, 139, 0.94) 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter: blur(10px);
+  transform: translateY(0.03em);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-mega:not(.hero-underlay) .l1::after {
+  content: "Once";
+}
+
+.hero-mega:not(.hero-underlay) .l2::after {
+  content: "Upon";
+}
+
+.hero-mega:not(.hero-underlay) .l3::after {
+  content: "A Time";
+}
+
+/* Hover one word only */
+.hero-mega:not(.hero-underlay) .l1:hover,
+.hero-mega:not(.hero-underlay) .l2:hover,
+.hero-mega:not(.hero-underlay) .l3:hover {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: blur(1px);
 }
 
 .hero-mega:not(.hero-underlay) .l1:hover::after,
