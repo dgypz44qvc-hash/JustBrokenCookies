@@ -330,7 +330,8 @@
         isAdded: ctxTarget.classList.contains('jbc-added'),
         isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
         isText: ctxTarget.classList.contains('jbc-editable'),
-        computedStyle: null
+        computedStyle: null,
+        _sourceEl: ctxTarget
       };
       /* For regular page elements, capture computed styles we care about */
       if(!clipboard.isAdded && !clipboard.isImgWrap){
@@ -365,7 +366,8 @@
         isAdded: ctxTarget.classList.contains('jbc-added'),
         isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
         isText: ctxTarget.classList.contains('jbc-editable'),
-        computedStyle: null
+        computedStyle: null,
+        _sourceEl: ctxTarget
       };
       if(!clipboard.isAdded && !clipboard.isImgWrap){
         var cs2 = getComputedStyle(ctxTarget);
@@ -543,24 +545,21 @@
       showToast('Image pasted — drag to position');
 
     } else {
-      /* It's a regular page text element — create an added-text clone */
-      var wrapper2 = document.createElement('div');
-      wrapper2.className = 'jbc-added';
-      wrapper2.style.cssText = 'left:'+pctLeft+'%;top:'+pctTop+'%;';
-      wrapper2.setAttribute('data-pos-type','percent');
-
-      /* Extract just the text and inline styles */
+      /* It's a regular page text element — insert as normal editable text (green dashed, same as other text) */
       var temp3 = document.createElement('div');
       temp3.innerHTML = clipboard.html;
       var srcEl = temp3.firstElementChild || temp3;
       var textContent = srcEl.textContent || 'Pasted text';
 
-      var textEl = document.createElement('p');
-      textEl.setAttribute('contenteditable','true');
-      textEl.setAttribute('data-added','true');
+      /* Create the same tag type as the original for consistent styling */
+      var origTag = clipboard.tag || 'P';
+      var textEl = document.createElement(origTag.toLowerCase());
       textEl.textContent = textContent;
+      textEl.setAttribute('contenteditable','true');
+      textEl.classList.add('jbc-editable');
+      textEl.spellcheck = false;
 
-      /* Apply captured styles */
+      /* Apply captured computed styles so it looks identical */
       var sty = clipboard.computedStyle;
       if(sty){
         textEl.style.fontSize = sty.fontSize;
@@ -571,52 +570,49 @@
         if(sty.textTransform && sty.textTransform !== 'none') textEl.style.textTransform = sty.textTransform;
         if(sty.letterSpacing && sty.letterSpacing !== 'normal') textEl.style.letterSpacing = sty.letterSpacing;
         if(sty.textDecoration && sty.textDecoration !== 'none') textEl.style.textDecoration = sty.textDecoration;
-      } else {
-        textEl.style.cssText = 'color:#fff;font-family:var(--font-display);font-size:2rem;font-weight:700;';
       }
-      textEl.style.minWidth = '100px';
-      textEl.style.padding = '8px';
-      textEl.style.margin = '0';
-      textEl.style.outline = 'none';
-      textEl.style.background = 'transparent';
 
-      var delBtn4 = document.createElement('button');
-      delBtn4.className = 'jbc-delete-btn';
-      delBtn4.textContent = '\u00d7';
-      delBtn4.addEventListener('click', function(e3){
-        e3.stopPropagation();
-        wrapper2.remove();
-        showToast('Element removed');
-      });
+      /* Insert after the original element if it's still in the DOM, otherwise append to section */
+      var origEl = clipboard._sourceEl;
+      if(origEl && origEl.parentNode){
+        origEl.parentNode.insertBefore(textEl, origEl.nextSibling);
+      } else {
+        /* Find a good insertion point — a container inside the section */
+        var container = section.querySelector('.container') || section;
+        container.appendChild(textEl);
+      }
 
-      wrapper2.appendChild(textEl);
-      wrapper2.appendChild(delBtn4);
+      /* Store original text for tracking changes */
+      originalTexts.set(textEl, textEl.innerHTML);
+      textEl._snap = textEl.innerHTML;
 
-      section.appendChild(wrapper2);
-      makeDraggablePercent(wrapper2, section);
-      addTextBoxHandles(wrapper2);
-      addDoubleClickEdit(wrapper2);
-
-      /* Hook up format bar */
+      /* Wire up editing — same as all other page text */
       textEl.addEventListener('focus', function(){
+        if(!textEl._snap) textEl._snap = textEl.innerHTML;
         showFormatBar(textEl);
-        wrapper2.classList.add('jbc-editing');
       });
       textEl.addEventListener('blur', function(){
+        if(textEl.innerHTML !== textEl._snap){
+          if(!textEl.classList.contains('jbc-text-changed')){ changes.text++; textEl.classList.add('jbc-text-changed'); updateCounter(); }
+          textEl._snap = textEl.innerHTML;
+          showToast('Text updated');
+        }
         setTimeout(function(){
           if(document.activeElement !== textEl && !document.activeElement.closest('#jbc-format-bar')){
             hideFormatBar();
-            wrapper2.classList.remove('jbc-editing');
           }
         }, 200);
-        changes.text++;
-        updateCounter();
+      });
+      textEl.addEventListener('keydown', function(e){
+        if(e.key==='Enter'&&!e.shiftKey&&textEl.tagName!=='P'&&textEl.tagName!=='BLOCKQUOTE') e.preventDefault();
       });
 
-      addedElements.push(wrapper2);
       changes.text++;
       updateCounter();
-      showToast('Text pasted — double-click to edit, drag corners to resize');
+      showToast('Text duplicated — click to edit');
+
+      /* Focus it right away so the user can start editing */
+      textEl.focus();
     }
   }
 
@@ -1342,7 +1338,8 @@
         isAdded: ctxTarget.classList.contains('jbc-added'),
         isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
         isText: ctxTarget.classList.contains('jbc-editable'),
-        computedStyle: null
+        computedStyle: null,
+        _sourceEl: ctxTarget
       };
       if(!clipboard.isAdded && !clipboard.isImgWrap){
         var cs = getComputedStyle(ctxTarget);
@@ -1378,7 +1375,8 @@
         isAdded: ctxTarget.classList.contains('jbc-added'),
         isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
         isText: ctxTarget.classList.contains('jbc-editable'),
-        computedStyle: null
+        computedStyle: null,
+        _sourceEl: ctxTarget
       };
       if(!clipboard.isAdded && !clipboard.isImgWrap){
         var cs2 = getComputedStyle(ctxTarget);
