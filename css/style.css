@@ -379,7 +379,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   margin-bottom:22px; display:block; font-size:0.95rem;
 }
 .service-card p {
-  color:var(--warm-gray); font-size:0.84rem; line-height:1.85; font-weight:300;
+  color:var(--cream); font-size:0.92rem; line-height:1.85; font-weight:400;
 }
 
 /* ---------- SERVICE CARD EXPAND — hidden data source ---------- */
@@ -428,10 +428,10 @@ section { padding:var(--section-pad) 0; position:relative; }
   margin-top: 14px;
 }
 .service-cinema-inner p {
-  color: var(--warm-gray);
-  font-size: 0.92rem;
+  color: var(--cream);
+  font-size: 0.95rem;
   line-height: 2;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 12px;
   max-width: 800px;
 }
