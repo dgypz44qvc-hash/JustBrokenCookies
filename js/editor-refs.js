@@ -111,6 +111,7 @@
   var addedElements = [];
   var folderHandle = null;
   var ctxTarget = null; /* currently selected element for context menu actions */
+  var clipboard = null;  /* stores copied element data for paste */
 
   /* ========== BANNER (green) ========== */
   var banner = document.createElement('div');
@@ -218,6 +219,12 @@
     }
 
     if(ctxTarget){
+      html += '<div class="jbc-menu-header">Clipboard</div>';
+      html += '<button data-action="copy"><i class="fas fa-copy"></i> Copy</button>';
+      html += '<button data-action="duplicate"><i class="fas fa-clone"></i> Duplicate</button>';
+      if(clipboard){
+        html += '<button data-action="paste"><i class="fas fa-paste"></i> Paste Here</button>';
+      }
       html += '<div class="jbc-menu-header">Z-Order</div>';
       html += '<button data-action="send-back"><i class="fas fa-arrow-down"></i> Send Behind</button>';
       html += '<button data-action="send-far-back"><i class="fas fa-angles-down"></i> Send to Back</button>';
@@ -228,6 +235,9 @@
       html += '<button data-action="opacity-up"><i class="fas fa-eye"></i> Less Transparent</button>';
       html += '<div class="jbc-menu-header">Actions</div>';
       html += '<button data-action="delete" style="color:#E84848;"><i class="fas fa-trash"></i> Delete</button>';
+    } else if(clipboard){
+      html += '<div class="jbc-menu-header">Clipboard</div>';
+      html += '<button data-action="paste"><i class="fas fa-paste"></i> Paste Here</button>';
     }
 
     ctxMenu.innerHTML = html;
@@ -245,10 +255,17 @@
     var section = e.target.closest('section') || e.target.closest('.hero') || e.target.closest('.manifesto') || e.target.closest('nav') || e.target.closest('footer') || document.body;
 
     /* Pre-select if clicking directly on an element */
-    var directEl = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap');
+    var directEl = e.target.closest('.jbc-added') || e.target.closest('.jbc-img-wrap') || e.target.closest('.jbc-editable');
     if(directEl){
       ctxTarget = directEl;
     }
+
+    /* Store the click position and section for paste */
+    ctxMenu._pasteX = e.clientX;
+    ctxMenu._pasteY = e.clientY;
+    ctxMenu._pastePageX = e.pageX;
+    ctxMenu._pastePageY = e.pageY;
+    ctxMenu._pasteSection = section;
 
     buildContextMenu(section, e.clientX, e.clientY);
 
@@ -298,6 +315,70 @@
       return;
     }
 
+    /* ---- Copy / Paste / Duplicate (work even without ctxTarget for paste) ---- */
+    if(action === 'copy' && ctxTarget){
+      clipboard = {
+        html: ctxTarget.outerHTML,
+        tag: ctxTarget.tagName,
+        isAdded: ctxTarget.classList.contains('jbc-added'),
+        isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
+        isText: ctxTarget.classList.contains('jbc-editable'),
+        computedStyle: null
+      };
+      /* For regular page elements, capture computed styles we care about */
+      if(!clipboard.isAdded && !clipboard.isImgWrap){
+        var cs = getComputedStyle(ctxTarget);
+        clipboard.computedStyle = {
+          fontSize: cs.fontSize,
+          fontFamily: cs.fontFamily,
+          fontWeight: cs.fontWeight,
+          fontStyle: cs.fontStyle,
+          color: cs.color,
+          textTransform: cs.textTransform,
+          letterSpacing: cs.letterSpacing,
+          textDecoration: cs.textDecorationLine || cs.textDecoration
+        };
+      }
+      showToast('Copied: ' + getLayerLabel(ctxTarget));
+      ctxMenu.style.display = 'none';
+      return;
+    }
+
+    if(action === 'paste' && clipboard){
+      pasteElement(ctxMenu._pastePageX, ctxMenu._pastePageY, ctxMenu._pasteSection);
+      ctxMenu.style.display = 'none';
+      return;
+    }
+
+    if(action === 'duplicate' && ctxTarget){
+      /* Copy then paste offset slightly */
+      clipboard = {
+        html: ctxTarget.outerHTML,
+        tag: ctxTarget.tagName,
+        isAdded: ctxTarget.classList.contains('jbc-added'),
+        isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
+        isText: ctxTarget.classList.contains('jbc-editable'),
+        computedStyle: null
+      };
+      if(!clipboard.isAdded && !clipboard.isImgWrap){
+        var cs2 = getComputedStyle(ctxTarget);
+        clipboard.computedStyle = {
+          fontSize: cs2.fontSize, fontFamily: cs2.fontFamily,
+          fontWeight: cs2.fontWeight, fontStyle: cs2.fontStyle,
+          color: cs2.color, textTransform: cs2.textTransform,
+          letterSpacing: cs2.letterSpacing,
+          textDecoration: cs2.textDecorationLine || cs2.textDecoration
+        };
+      }
+      /* Place duplicate near the original */
+      var rect = ctxTarget.getBoundingClientRect();
+      var section = ctxTarget.closest('section') || ctxTarget.closest('.hero') || ctxTarget.closest('.manifesto') || ctxTarget.closest('nav') || ctxTarget.closest('footer') || document.body;
+      pasteElement(rect.left + window.scrollX + 30, rect.top + window.scrollY + 30, section);
+      showToast('Duplicated: ' + getLayerLabel(ctxTarget));
+      ctxMenu.style.display = 'none';
+      return;
+    }
+
     if(!ctxTarget) return;
 
     var currentZ = parseInt(getComputedStyle(ctxTarget).zIndex) || 1;
@@ -341,6 +422,185 @@
     updateCounter();
     ctxMenu.style.display = 'none';
   });
+
+  /* ========== PASTE HELPER ========== */
+  function pasteElement(pageX, pageY, section){
+    if(!clipboard) return;
+    if(!section) section = document.querySelector('.hero') || document.body;
+
+    var rect = section.getBoundingClientRect();
+    var targetW = rect.width;
+    var targetH = rect.height;
+    var rawLeft = pageX - (rect.left + window.scrollX);
+    var rawTop = pageY - (rect.top + window.scrollY);
+    var pctLeft = (rawLeft / targetW * 100).toFixed(2);
+    var pctTop = (rawTop / targetH * 100).toFixed(2);
+
+    if(getComputedStyle(section).position === 'static') section.style.position = 'relative';
+
+    if(clipboard.isAdded){
+      /* It's an added element (text or image from + button) — clone the whole wrapper */
+      var temp = document.createElement('div');
+      temp.innerHTML = clipboard.html;
+      var clone = temp.firstElementChild;
+      if(!clone) return;
+
+      /* Offset position so it's not exactly on top */
+      clone.style.left = pctLeft + '%';
+      clone.style.top = pctTop + '%';
+      clone.classList.add('jbc-added');
+      clone.setAttribute('data-pos-type','percent');
+
+      /* Re-wire delete button */
+      var del = clone.querySelector('.jbc-delete-btn');
+      if(del){
+        del.addEventListener('click', function(e3){
+          e3.stopPropagation();
+          clone.remove();
+          showToast('Element removed');
+        });
+      }
+
+      section.appendChild(clone);
+      makeDraggablePercent(clone, section);
+
+      /* Re-wire resize handle if present */
+      var rh = clone.querySelector('.jbc-resize-handle');
+      if(rh) makeResizable(clone, rh);
+
+      /* Make inner text editable if it's a text element */
+      var innerText = clone.querySelector('[contenteditable]') || clone.querySelector('p,h1,h2,h3,h4,h5,h6,span');
+      if(innerText && !innerText.querySelector('img')){
+        innerText.setAttribute('contenteditable','true');
+        innerText.addEventListener('focus', function(){ showFormatBar(innerText); });
+        innerText.addEventListener('blur', function(){
+          setTimeout(function(){
+            if(document.activeElement !== innerText && !document.activeElement.closest('#jbc-format-bar')){
+              hideFormatBar();
+            }
+          }, 200);
+          changes.text++;
+          updateCounter();
+        });
+      }
+
+      addedElements.push(clone);
+      changes.text++;
+      updateCounter();
+      showToast('Pasted');
+
+    } else if(clipboard.isImgWrap){
+      /* It's an existing page image — create a new added-image clone */
+      var temp2 = document.createElement('div');
+      temp2.innerHTML = clipboard.html;
+      var srcImg = temp2.querySelector('img');
+      if(!srcImg) return;
+
+      var wrapper = document.createElement('div');
+      wrapper.className = 'jbc-added';
+      wrapper.style.cssText = 'left:'+pctLeft+'%;top:'+pctTop+'%;width:20%;';
+      wrapper.setAttribute('data-pos-type','percent');
+
+      var newImg = document.createElement('img');
+      newImg.src = srcImg.getAttribute('data-orig-src') || srcImg.src;
+      newImg.style.cssText = 'width:100%;height:auto;display:block;filter:grayscale(100%);';
+
+      var delBtn3 = document.createElement('button');
+      delBtn3.className = 'jbc-delete-btn';
+      delBtn3.textContent = '\u00d7';
+      delBtn3.addEventListener('click', function(e3){
+        e3.stopPropagation();
+        wrapper.remove();
+        showToast('Element removed');
+      });
+
+      var resizeH2 = document.createElement('div');
+      resizeH2.className = 'jbc-resize-handle';
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(delBtn3);
+      wrapper.appendChild(resizeH2);
+
+      section.appendChild(wrapper);
+      makeDraggablePercent(wrapper, section);
+      makeResizable(wrapper, resizeH2);
+
+      addedElements.push(wrapper);
+      changes.images++;
+      updateCounter();
+      showToast('Image pasted — drag to position');
+
+    } else {
+      /* It's a regular page text element — create an added-text clone */
+      var wrapper2 = document.createElement('div');
+      wrapper2.className = 'jbc-added';
+      wrapper2.style.cssText = 'left:'+pctLeft+'%;top:'+pctTop+'%;';
+      wrapper2.setAttribute('data-pos-type','percent');
+
+      /* Extract just the text and inline styles */
+      var temp3 = document.createElement('div');
+      temp3.innerHTML = clipboard.html;
+      var srcEl = temp3.firstElementChild || temp3;
+      var textContent = srcEl.textContent || 'Pasted text';
+
+      var textEl = document.createElement('p');
+      textEl.setAttribute('contenteditable','true');
+      textEl.setAttribute('data-added','true');
+      textEl.textContent = textContent;
+
+      /* Apply captured styles */
+      var sty = clipboard.computedStyle;
+      if(sty){
+        textEl.style.fontSize = sty.fontSize;
+        textEl.style.fontFamily = sty.fontFamily;
+        textEl.style.fontWeight = sty.fontWeight;
+        textEl.style.fontStyle = sty.fontStyle;
+        textEl.style.color = sty.color;
+        if(sty.textTransform && sty.textTransform !== 'none') textEl.style.textTransform = sty.textTransform;
+        if(sty.letterSpacing && sty.letterSpacing !== 'normal') textEl.style.letterSpacing = sty.letterSpacing;
+        if(sty.textDecoration && sty.textDecoration !== 'none') textEl.style.textDecoration = sty.textDecoration;
+      } else {
+        textEl.style.cssText = 'color:#fff;font-family:var(--font-display);font-size:2rem;font-weight:700;';
+      }
+      textEl.style.minWidth = '100px';
+      textEl.style.padding = '8px';
+      textEl.style.margin = '0';
+      textEl.style.outline = 'none';
+      textEl.style.background = 'transparent';
+
+      var delBtn4 = document.createElement('button');
+      delBtn4.className = 'jbc-delete-btn';
+      delBtn4.textContent = '\u00d7';
+      delBtn4.addEventListener('click', function(e3){
+        e3.stopPropagation();
+        wrapper2.remove();
+        showToast('Element removed');
+      });
+
+      wrapper2.appendChild(textEl);
+      wrapper2.appendChild(delBtn4);
+
+      section.appendChild(wrapper2);
+      makeDraggablePercent(wrapper2, section);
+
+      /* Hook up format bar */
+      textEl.addEventListener('focus', function(){ showFormatBar(textEl); });
+      textEl.addEventListener('blur', function(){
+        setTimeout(function(){
+          if(document.activeElement !== textEl && !document.activeElement.closest('#jbc-format-bar')){
+            hideFormatBar();
+          }
+        }, 200);
+        changes.text++;
+        updateCounter();
+      });
+
+      addedElements.push(wrapper2);
+      changes.text++;
+      updateCounter();
+      showToast('Text pasted — drag to reposition');
+    }
+  }
 
   /* ========== TOOLBAR ========== */
   var toolbar = document.createElement('div');
@@ -959,6 +1219,75 @@
     if(!target) return;
     if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar')) return;
     showFormatBar(target);
+  });
+
+  /* ========== KEYBOARD SHORTCUTS (Ctrl+C / Ctrl+V / Ctrl+D) ========== */
+  document.addEventListener('keydown', function(e){
+    /* Only work when not typing inside a contenteditable */
+    var isTyping = document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true';
+
+    /* Ctrl+C — copy selected element */
+    if((e.ctrlKey || e.metaKey) && e.key === 'c' && !isTyping && ctxTarget){
+      clipboard = {
+        html: ctxTarget.outerHTML,
+        tag: ctxTarget.tagName,
+        isAdded: ctxTarget.classList.contains('jbc-added'),
+        isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
+        isText: ctxTarget.classList.contains('jbc-editable'),
+        computedStyle: null
+      };
+      if(!clipboard.isAdded && !clipboard.isImgWrap){
+        var cs = getComputedStyle(ctxTarget);
+        clipboard.computedStyle = {
+          fontSize: cs.fontSize, fontFamily: cs.fontFamily,
+          fontWeight: cs.fontWeight, fontStyle: cs.fontStyle,
+          color: cs.color, textTransform: cs.textTransform,
+          letterSpacing: cs.letterSpacing,
+          textDecoration: cs.textDecorationLine || cs.textDecoration
+        };
+      }
+      showToast('Copied: ' + getLayerLabel(ctxTarget));
+      e.preventDefault();
+    }
+
+    /* Ctrl+V — paste at center of viewport */
+    if((e.ctrlKey || e.metaKey) && e.key === 'v' && !isTyping && clipboard){
+      var centerX = window.scrollX + window.innerWidth / 2;
+      var centerY = window.scrollY + window.innerHeight / 2;
+      /* Find section at center */
+      var elAtCenter = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      var sec = elAtCenter ? (elAtCenter.closest('section') || elAtCenter.closest('.hero') || elAtCenter.closest('footer')) : null;
+      if(!sec) sec = document.querySelector('.hero') || document.body;
+      pasteElement(centerX, centerY, sec);
+      e.preventDefault();
+    }
+
+    /* Ctrl+D — duplicate selected element */
+    if((e.ctrlKey || e.metaKey) && e.key === 'd' && !isTyping && ctxTarget){
+      clipboard = {
+        html: ctxTarget.outerHTML,
+        tag: ctxTarget.tagName,
+        isAdded: ctxTarget.classList.contains('jbc-added'),
+        isImgWrap: ctxTarget.classList.contains('jbc-img-wrap'),
+        isText: ctxTarget.classList.contains('jbc-editable'),
+        computedStyle: null
+      };
+      if(!clipboard.isAdded && !clipboard.isImgWrap){
+        var cs2 = getComputedStyle(ctxTarget);
+        clipboard.computedStyle = {
+          fontSize: cs2.fontSize, fontFamily: cs2.fontFamily,
+          fontWeight: cs2.fontWeight, fontStyle: cs2.fontStyle,
+          color: cs2.color, textTransform: cs2.textTransform,
+          letterSpacing: cs2.letterSpacing,
+          textDecoration: cs2.textDecorationLine || cs2.textDecoration
+        };
+      }
+      var r = ctxTarget.getBoundingClientRect();
+      var s = ctxTarget.closest('section') || ctxTarget.closest('.hero') || ctxTarget.closest('footer') || document.body;
+      pasteElement(r.left + window.scrollX + 30, r.top + window.scrollY + 30, s);
+      showToast('Duplicated');
+      e.preventDefault();
+    }
   });
 
   /* ========== PAGE INFO ========== */
