@@ -279,6 +279,16 @@
         }
       }
 
+      /* Resize options for added elements and text */
+      if(ctxTarget.classList.contains('jbc-added') || ctxTarget.classList.contains('jbc-editable')){
+        html += '<div class="jbc-menu-header">Resize</div>';
+        html += '<button data-action="resize-width-up"><i class="fas fa-arrows-alt-h"></i> Wider (+50px)</button>';
+        html += '<button data-action="resize-width-down"><i class="fas fa-compress-alt"></i> Narrower (-50px)</button>';
+        html += '<button data-action="resize-height-up"><i class="fas fa-arrows-alt-v"></i> Taller (+30px)</button>';
+        html += '<button data-action="resize-height-down"><i class="fas fa-compress-alt"></i> Shorter (-30px)</button>';
+        html += '<button data-action="resize-auto"><i class="fas fa-expand"></i> Auto Height</button>';
+      }
+
       html += '<div class="jbc-menu-header">Clipboard</div>';
       html += '<button data-action="copy"><i class="fas fa-copy"></i> Copy</button>';
       html += '<button data-action="duplicate"><i class="fas fa-clone"></i> Duplicate</button>';
@@ -536,6 +546,40 @@
       case 'bring-far-front':
         ctxTarget.style.zIndex = '50';
         showToast('Brought to front (z:50)');
+        break;
+      case 'resize-width-up':
+        var curW = ctxTarget.offsetWidth;
+        if(ctxTarget.getAttribute('data-pos-type') === 'percent' && ctxTarget.parentElement){
+          var newPctW = ((curW + 50) / ctxTarget.parentElement.offsetWidth * 100).toFixed(2);
+          ctxTarget.style.width = newPctW + '%';
+        } else { ctxTarget.style.width = (curW + 50) + 'px'; }
+        showToast('Width: ' + ctxTarget.style.width);
+        break;
+      case 'resize-width-down':
+        var curW2 = ctxTarget.offsetWidth;
+        var newW2 = Math.max(50, curW2 - 50);
+        if(ctxTarget.getAttribute('data-pos-type') === 'percent' && ctxTarget.parentElement){
+          var newPctW2 = (newW2 / ctxTarget.parentElement.offsetWidth * 100).toFixed(2);
+          ctxTarget.style.width = newPctW2 + '%';
+        } else { ctxTarget.style.width = newW2 + 'px'; }
+        showToast('Width: ' + ctxTarget.style.width);
+        break;
+      case 'resize-height-up':
+        var curH = ctxTarget.offsetHeight;
+        ctxTarget.style.height = (curH + 30) + 'px';
+        ctxTarget.style.overflow = 'visible';
+        showToast('Height: ' + ctxTarget.style.height);
+        break;
+      case 'resize-height-down':
+        var curH2 = ctxTarget.offsetHeight;
+        ctxTarget.style.height = Math.max(30, curH2 - 30) + 'px';
+        ctxTarget.style.overflow = 'visible';
+        showToast('Height: ' + ctxTarget.style.height);
+        break;
+      case 'resize-auto':
+        ctxTarget.style.height = '';
+        ctxTarget.style.overflow = '';
+        showToast('Height set to auto');
         break;
       case 'opacity-down':
         var newOp = Math.max(0.1, currentOp - 0.15);
@@ -1661,7 +1705,7 @@
     document.addEventListener('mouseup', function(){
       if(!dragEl) return;
       dragEl.classList.remove('jbc-move-active');
-      /* Mark as moved if it was actually displaced */
+      /* Mark as moved if it was actually displaced from start */
       var finalTransform = dragEl.style.transform || '';
       var m = finalTransform.match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
       if(m && (Math.abs(parseFloat(m[1])) > 2 || Math.abs(parseFloat(m[2])) > 2)){
@@ -1885,22 +1929,24 @@
   function buildCleanHTML(imagePaths){
     var clone = document.documentElement.cloneNode(true);
 
-    /* Remove all editor UI */
+    /* Remove all editor UI elements */
     clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar,#jbc-guides,#jbc-snap-line').forEach(function(el){ el.remove(); });
 
-    /* Clean contenteditable and move-mode classes */
+    /* ---- Clean ALL contenteditable attributes (both true and false) ---- */
     clone.querySelectorAll('[contenteditable]').forEach(function(el){
       el.removeAttribute('contenteditable');
-      el.classList.remove('jbc-editable','jbc-text-changed','jbc-moved','jbc-move-active','jbc-selected');
+      el.classList.remove('jbc-editable','jbc-text-changed','jbc-moved','jbc-move-active','jbc-selected','jbc-editing','jbc-grabbed','jbc-added-text');
       if(el.getAttribute('spellcheck') === 'false') el.removeAttribute('spellcheck');
-      /* Clean empty class attributes */
+      el.removeAttribute('data-added');
+      /* Clean empty class/style attributes */
       if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
-    /* Clean move-mode from body */
+
+    /* ---- Clean move-mode / placement from body ---- */
     var body2 = clone.querySelector('body');
     if(body2) body2.classList.remove('jbc-move-mode','jbc-placement-mode');
 
-    /* Clean added elements — bake positioning into inline styles, remove editor controls */
+    /* ---- Clean added elements — bake positioning, remove editor controls ---- */
     clone.querySelectorAll('.jbc-added').forEach(function(el){
       /* Bake the CSS class properties into inline so they survive without the editor CSS */
       el.style.position = 'absolute';
@@ -1910,6 +1956,7 @@
       el.style.userSelect = '';
       el.style.outline = '';
       el.style.outlineOffset = '';
+      el.style.boxShadow = '';
       /* Remove editor-only children */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b').forEach(function(c){ c.remove(); });
       /* Remove the editor classes */
@@ -1917,10 +1964,20 @@
       el.removeAttribute('data-pos-type');
       el.removeAttribute('data-box');
       el.removeAttribute('data-orig-z');
+      el.removeAttribute('data-added');
+      /* Clean children that have data-added */
+      el.querySelectorAll('[data-added]').forEach(function(c){ c.removeAttribute('data-added'); });
+      /* Clean children that still have contenteditable */
+      el.querySelectorAll('[contenteditable]').forEach(function(c){
+        c.removeAttribute('contenteditable');
+        c.removeAttribute('spellcheck');
+      });
       if(el.getAttribute('class') === '') el.removeAttribute('class');
+      /* Clean empty style attributes left after clearing editor properties */
+      if(el.getAttribute('style') && el.getAttribute('style').replace(/;\s*$/,'').trim() === '') el.removeAttribute('style');
     });
 
-    /* Unwrap image wrappers — restore images to their original position */
+    /* ---- Unwrap image wrappers — restore images to their original position ---- */
     clone.querySelectorAll('.jbc-img-wrap').forEach(function(wrap){
       var img = wrap.querySelector('img');
       if(img){
@@ -1953,20 +2010,36 @@
       img.removeAttribute('data-orig-src');
     });
 
+    /* ---- Catch any remaining editor data attributes ---- */
+    clone.querySelectorAll('[data-added]').forEach(function(el){ el.removeAttribute('data-added'); });
+    clone.querySelectorAll('[data-orig-z]').forEach(function(el){ el.removeAttribute('data-orig-z'); });
+    clone.querySelectorAll('[data-pos-type]').forEach(function(el){ el.removeAttribute('data-pos-type'); });
+    clone.querySelectorAll('[data-box]').forEach(function(el){ el.removeAttribute('data-box'); });
+
     /* Remove hidden file inputs left over */
     clone.querySelectorAll('input[type="file"]').forEach(function(fi){ fi.remove(); });
 
-    /* Remove editor styles */
+    /* ---- Remove editor styles (the injected <style> block) ---- */
     clone.querySelectorAll('style').forEach(function(s){
-      if(s.textContent.indexOf('jbc-editor')!==-1||s.textContent.indexOf('jbc-editable')!==-1||s.textContent.indexOf('jbc-add')!==-1||s.textContent.indexOf('jbc-context')!==-1) s.remove();
+      if(s.textContent.indexOf('jbc-editor')!==-1||s.textContent.indexOf('jbc-editable')!==-1||s.textContent.indexOf('jbc-add')!==-1||s.textContent.indexOf('jbc-context')!==-1||s.textContent.indexOf('jbc-format')!==-1||s.textContent.indexOf('jbc-move')!==-1||s.textContent.indexOf('jbc-toast')!==-1) s.remove();
     });
 
-    /* Clean body */
+    /* ---- Clean any leftover editor classes from ALL elements ---- */
+    var editorClasses = ['jbc-editable','jbc-text-changed','jbc-moved','jbc-move-active','jbc-selected',
+      'jbc-editing','jbc-grabbed','jbc-added','jbc-added-text','jbc-placement-mode','jbc-move-mode'];
+    editorClasses.forEach(function(cls){
+      clone.querySelectorAll('.'+cls).forEach(function(el){
+        el.classList.remove(cls);
+        if(el.getAttribute('class') === '') el.removeAttribute('class');
+      });
+    });
+
+    /* ---- Clean body ---- */
     var body = clone.querySelector('body');
     if(body){
       body.style.marginTop = '';
       body.style.paddingTop = '';
-      body.classList.remove('jbc-placement-mode');
+      body.classList.remove('jbc-placement-mode','jbc-move-mode');
       if(body.getAttribute('style') === '') body.removeAttribute('style');
     }
 
