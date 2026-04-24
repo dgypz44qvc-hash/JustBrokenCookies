@@ -56,10 +56,12 @@
     .jbc-added .jbc-resize-handle-r{position:absolute;top:50%;right:-4px;width:8px;height:30px;margin-top:-15px;background:#E8891D;cursor:ew-resize;z-index:200;border:2px solid #fff;border-radius:3px;display:none;}
     .jbc-added .jbc-resize-handle-b{position:absolute;bottom:-4px;left:50%;height:8px;width:30px;margin-left:-15px;background:#E8891D;cursor:ns-resize;z-index:200;border:2px solid #fff;border-radius:3px;display:none;}
     .jbc-added:hover .jbc-resize-handle-r,.jbc-added:hover .jbc-resize-handle-b{display:block;}
-    .jbc-added[data-box="text"]{border:1px dashed transparent;min-height:30px;}
-    .jbc-added[data-box="text"]:hover{border-color:rgba(232,137,29,0.5);}
-    .jbc-added[data-box="text"].jbc-editing{border-color:#2ecc40;cursor:text!important;}
-    .jbc-added[data-box="text"].jbc-editing *{cursor:text!important;}
+    .jbc-added-text{cursor:move;}
+    .jbc-added-text:hover{outline:2px dashed rgba(46,204,64,0.5)!important;outline-offset:3px!important;}
+    .jbc-added-text.jbc-selected{outline:2px dashed #2ecc40!important;outline-offset:3px!important;}
+    .jbc-added-text.jbc-editing{outline:2px solid #2ecc40!important;outline-offset:3px!important;cursor:text!important;}
+    .jbc-added-text.jbc-editing *{cursor:text!important;}
+    .jbc-added[data-box="text"]{min-height:30px;}
 
     /* Toast */
     #jbc-toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:1000002;background:#1a1a1a;color:#fff;font-family:monospace;font-size:13px;padding:12px 24px;border:2px solid #2ecc40;opacity:0;transition:opacity 0.3s;pointer-events:none;}
@@ -226,6 +228,18 @@
     }
 
     if(ctxTarget){
+      /* Show Edit Text option for text wrappers and editable text */
+      var isTextWrapper = ctxTarget.classList.contains('jbc-added-text');
+      var hasEditableChild = ctxTarget.querySelector('p,h1,h2,h3,h4,h5,h6,span');
+      var isEditableText = ctxTarget.classList.contains('jbc-editable');
+      if(isTextWrapper || (ctxTarget.classList.contains('jbc-added') && hasEditableChild && !ctxTarget.querySelector('img'))){
+        html += '<div class="jbc-menu-header">Text</div>';
+        if(ctxTarget.classList.contains('jbc-editing')){
+          html += '<button data-action="stop-edit" style="color:#2ecc40;"><i class="fas fa-lock"></i> Done Editing</button>';
+        } else {
+          html += '<button data-action="edit-text" style="color:#2ecc40;"><i class="fas fa-pencil"></i> Edit Text</button>';
+        }
+      }
       html += '<div class="jbc-menu-header">Clipboard</div>';
       html += '<button data-action="copy"><i class="fas fa-copy"></i> Copy</button>';
       html += '<button data-action="duplicate"><i class="fas fa-clone"></i> Duplicate</button>';
@@ -319,6 +333,50 @@
         ctxMenu.style.top = menuTop;
         showToast('Selected: ' + getLayerLabel(ctxTarget));
       }
+      return;
+    }
+
+    /* ---- Edit Text toggle ---- */
+    if(action === 'edit-text' && ctxTarget){
+      ctxTarget.classList.add('jbc-editing');
+      var editChild = ctxTarget.querySelector('p,h1,h2,h3,h4,h5,h6,span');
+      if(editChild){
+        editChild.setAttribute('contenteditable','true');
+        editChild.style.cursor = 'text';
+        editChild.focus();
+        showFormatBar(editChild);
+        /* Wire up blur to exit editing */
+        editChild.addEventListener('blur', function exitEdit(){
+          setTimeout(function(){
+            if(document.activeElement !== editChild && !document.activeElement.closest('#jbc-format-bar')){
+              ctxTarget.classList.remove('jbc-editing');
+              editChild.setAttribute('contenteditable','false');
+              editChild.style.cursor = 'move';
+              hideFormatBar();
+              changes.text++;
+              updateCounter();
+            }
+          }, 250);
+        });
+      }
+      showToast('Editing \u2014 type to change text, click away when done');
+      ctxMenu.style.display = 'none';
+      return;
+    }
+
+    if(action === 'stop-edit' && ctxTarget){
+      ctxTarget.classList.remove('jbc-editing');
+      var stopChild = ctxTarget.querySelector('[contenteditable="true"]');
+      if(stopChild){
+        stopChild.setAttribute('contenteditable','false');
+        stopChild.style.cursor = 'move';
+        stopChild.blur();
+      }
+      hideFormatBar();
+      changes.text++;
+      updateCounter();
+      showToast('Done editing \u2014 drag to move');
+      ctxMenu.style.display = 'none';
       return;
     }
 
@@ -545,21 +603,24 @@
       showToast('Image pasted — drag to position');
 
     } else {
-      /* It's a regular page text element — insert as normal editable text (green dashed, same as other text) */
+      /* It's a regular page text element — create draggable clone, right-click to edit */
+      var wrapper2 = document.createElement('div');
+      wrapper2.className = 'jbc-added jbc-added-text';
+      wrapper2.style.cssText = 'left:'+pctLeft+'%;top:'+pctTop+'%;';
+      wrapper2.setAttribute('data-pos-type','percent');
+      wrapper2.setAttribute('data-box','text');
+
       var temp3 = document.createElement('div');
       temp3.innerHTML = clipboard.html;
       var srcEl = temp3.firstElementChild || temp3;
       var textContent = srcEl.textContent || 'Pasted text';
 
-      /* Create the same tag type as the original for consistent styling */
-      var origTag = clipboard.tag || 'P';
-      var textEl = document.createElement(origTag.toLowerCase());
+      var textEl = document.createElement('p');
+      textEl.setAttribute('contenteditable','false');
+      textEl.setAttribute('data-added','true');
       textEl.textContent = textContent;
-      textEl.setAttribute('contenteditable','true');
-      textEl.classList.add('jbc-editable');
-      textEl.spellcheck = false;
 
-      /* Apply captured computed styles so it looks identical */
+      /* Apply captured styles */
       var sty = clipboard.computedStyle;
       if(sty){
         textEl.style.fontSize = sty.fontSize;
@@ -570,49 +631,36 @@
         if(sty.textTransform && sty.textTransform !== 'none') textEl.style.textTransform = sty.textTransform;
         if(sty.letterSpacing && sty.letterSpacing !== 'normal') textEl.style.letterSpacing = sty.letterSpacing;
         if(sty.textDecoration && sty.textDecoration !== 'none') textEl.style.textDecoration = sty.textDecoration;
-      }
-
-      /* Insert after the original element if it's still in the DOM, otherwise append to section */
-      var origEl = clipboard._sourceEl;
-      if(origEl && origEl.parentNode){
-        origEl.parentNode.insertBefore(textEl, origEl.nextSibling);
       } else {
-        /* Find a good insertion point — a container inside the section */
-        var container = section.querySelector('.container') || section;
-        container.appendChild(textEl);
+        textEl.style.cssText = 'color:#fff;font-family:var(--font-display);font-size:2rem;font-weight:700;';
       }
+      textEl.style.minWidth = '100px';
+      textEl.style.padding = '8px';
+      textEl.style.margin = '0';
+      textEl.style.outline = 'none';
+      textEl.style.background = 'transparent';
+      textEl.style.cursor = 'move';
 
-      /* Store original text for tracking changes */
-      originalTexts.set(textEl, textEl.innerHTML);
-      textEl._snap = textEl.innerHTML;
-
-      /* Wire up editing — same as all other page text */
-      textEl.addEventListener('focus', function(){
-        if(!textEl._snap) textEl._snap = textEl.innerHTML;
-        showFormatBar(textEl);
-      });
-      textEl.addEventListener('blur', function(){
-        if(textEl.innerHTML !== textEl._snap){
-          if(!textEl.classList.contains('jbc-text-changed')){ changes.text++; textEl.classList.add('jbc-text-changed'); updateCounter(); }
-          textEl._snap = textEl.innerHTML;
-          showToast('Text updated');
-        }
-        setTimeout(function(){
-          if(document.activeElement !== textEl && !document.activeElement.closest('#jbc-format-bar')){
-            hideFormatBar();
-          }
-        }, 200);
-      });
-      textEl.addEventListener('keydown', function(e){
-        if(e.key==='Enter'&&!e.shiftKey&&textEl.tagName!=='P'&&textEl.tagName!=='BLOCKQUOTE') e.preventDefault();
+      var delBtn4 = document.createElement('button');
+      delBtn4.className = 'jbc-delete-btn';
+      delBtn4.textContent = '\u00d7';
+      delBtn4.addEventListener('click', function(e3){
+        e3.stopPropagation();
+        wrapper2.remove();
+        showToast('Element removed');
       });
 
+      wrapper2.appendChild(textEl);
+      wrapper2.appendChild(delBtn4);
+
+      section.appendChild(wrapper2);
+      makeDraggablePercent(wrapper2, section);
+      addTextBoxHandles(wrapper2);
+
+      addedElements.push(wrapper2);
       changes.text++;
       updateCounter();
-      showToast('Text duplicated — click to edit');
-
-      /* Focus it right away so the user can start editing */
-      textEl.focus();
+      showToast('Text duplicated \u2014 drag to move, right-click \u2192 Edit Text');
     }
   }
 
@@ -1555,7 +1603,7 @@
       /* Remove editor-only children */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b').forEach(function(c){ c.remove(); });
       /* Remove the editor classes */
-      el.classList.remove('jbc-added','jbc-selected','jbc-editing');
+      el.classList.remove('jbc-added','jbc-added-text','jbc-selected','jbc-editing');
       el.removeAttribute('data-pos-type');
       el.removeAttribute('data-box');
       if(el.getAttribute('class') === '') el.removeAttribute('class');
