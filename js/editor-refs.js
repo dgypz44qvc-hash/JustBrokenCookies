@@ -1941,9 +1941,9 @@
        ================================================================ */
     clone.querySelectorAll('body *').forEach(function(el){
       /* Skip added elements — their inline positioning is intentional */
-      if(el.classList.contains('jbc-added')) return;
+      if(el.classList.contains('jbc-added') || el.classList.contains('jbc-custom')) return;
       /* Skip added element children */
-      if(el.closest('.jbc-added')) return;
+      if(el.closest('.jbc-added') || el.closest('.jbc-custom')) return;
       /* Skip images inside wrappers — handled separately */
       if(el.closest('.jbc-img-wrap')) return;
 
@@ -1982,48 +1982,60 @@
        class so page CSS doesn't accidentally affect them.
        ================================================================ */
     clone.querySelectorAll('.jbc-added').forEach(function(el){
-      /* Give it a permanent, non-editor class so it's identifiable
-         and can be excluded from page CSS if needed */
+      /* Give it a permanent, non-editor class so it's identifiable */
       el.classList.add('jbc-custom');
 
-      /* Bake ALL needed CSS into inline so it works without editor stylesheet */
-      el.style.position = 'absolute';
-      el.style.zIndex = el.style.zIndex || '5';
-      el.style.display = 'block';
-      el.style.pointerEvents = 'auto';
-      /* Strip editor-only inline props */
-      el.style.cursor = '';
-      el.style.userSelect = '';
-      el.style.outline = '';
-      el.style.outlineOffset = '';
-      el.style.boxShadow = '';
-      el.style.opacity = el.style.opacity || '';
+      /* Capture the positioning values BEFORE any manipulation */
+      var keepLeft = el.style.left;
+      var keepTop = el.style.top;
+      var keepWidth = el.style.width;
+      var keepHeight = el.style.height;
+      var keepOverflow = el.style.overflow;
+      var keepZIndex = el.style.zIndex || '5';
 
-      /* Remove editor-only children (delete btn, resize handles) */
+      /* Remove editor-only children FIRST (delete btn, resize handles) */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b').forEach(function(c){ c.remove(); });
 
-      /* Clean inner text elements — remove editor artifacts from <p>, <span>, etc. */
-      el.querySelectorAll('p,h1,h2,h3,h4,h5,h6,span,div').forEach(function(inner){
+      /* Clean inner text elements — strip editor artifacts, keep user content/styles */
+      el.querySelectorAll('p,h1,h2,h3,h4,h5,h6').forEach(function(inner){
+        /* Strip editor-only style props, keep user-set text styles */
         inner.style.cursor = '';
         inner.style.outline = '';
+        inner.style.outlineOffset = '';
         inner.style.userSelect = '';
+        inner.style.background = '';
+        inner.style.backgroundColor = inner.style.backgroundColor === 'transparent' ? '' : inner.style.backgroundColor;
         inner.removeAttribute('contenteditable');
         inner.removeAttribute('spellcheck');
         inner.removeAttribute('data-added');
         if(inner.getAttribute('class') === '') inner.removeAttribute('class');
+        /* Clean empty style */
+        if(inner.hasAttribute('style') && inner.getAttribute('style').replace(/;\s*/g,'').trim() === ''){
+          inner.removeAttribute('style');
+        }
       });
 
-      /* Remove editor classes, keep jbc-custom */
+      /* Rebuild the wrapper's style cleanly — ONLY what's needed for the live site */
+      el.removeAttribute('style');
+      var cleanStyle = 'position:absolute;';
+      if(keepLeft) cleanStyle += 'left:' + keepLeft + ';';
+      if(keepTop) cleanStyle += 'top:' + keepTop + ';';
+      if(keepWidth) cleanStyle += 'width:' + keepWidth + ';';
+      if(keepHeight) cleanStyle += 'height:' + keepHeight + ';';
+      if(keepOverflow) cleanStyle += 'overflow:' + keepOverflow + ';';
+      cleanStyle += 'z-index:' + keepZIndex + ';';
+      el.setAttribute('style', cleanStyle);
+
+      /* Remove ALL editor classes and data attributes */
       el.classList.remove('jbc-added','jbc-added-text','jbc-selected','jbc-editing','jbc-grabbed');
       el.removeAttribute('data-pos-type');
       el.removeAttribute('data-box');
       el.removeAttribute('data-orig-z');
       el.removeAttribute('data-added');
-      if(el.getAttribute('class') === 'jbc-custom'){
-        /* Class is just jbc-custom, that's fine */
-      } else if(el.getAttribute('class') === ''){
-        el.setAttribute('class','jbc-custom');
-      }
+      /* Ensure jbc-custom is the only class */
+      el.setAttribute('class','jbc-custom');
+
+      console.log('[SAVE] Added element:', el.outerHTML.substring(0,200));
     });
 
     /* ================================================================

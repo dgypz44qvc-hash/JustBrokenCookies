@@ -286,7 +286,7 @@ ul { list-style:none; }
 }
 
 /* ---------- SECTIONS ---------- */
-section { padding:var(--section-pad) 0; }
+section { padding:var(--section-pad) 0; position:relative; }
 
 .section-label {
   font-size:0.6rem; letter-spacing:7px; text-transform:uppercase;
@@ -993,9 +993,22 @@ section { padding:var(--section-pad) 0; }
 /* ---- Custom elements added via editor ---- */
 .jbc-custom {
   position: absolute;
-  display: block;
+  display: block !important;
   box-sizing: border-box;
   pointer-events: auto;
   margin: 0;
   padding: 0;
+  opacity: 1 !important;
+  transform: none;
+  filter: none;
+  visibility: visible !important;
+}
+.jbc-custom p,
+.jbc-custom h1, .jbc-custom h2, .jbc-custom h3,
+.jbc-custom h4, .jbc-custom h5, .jbc-custom h6,
+.jbc-custom span {
+  opacity: 1 !important;
+  transform: none;
+  filter: none;
+  visibility: visible !important;
 }
