@@ -1055,3 +1055,54 @@ section { padding:var(--section-pad) 0; position:relative; }
   filter: none;
   visibility: visible !important;
 }
+/* Storytelling vertical accent, refined brutalist line */
+.hero .tag {
+  overflow: visible;
+}
+
+.hero .tag::before {
+  content: '';
+  position: absolute;
+  left: -44px;
+  top: 4px;
+  width: 1px;
+  height: calc(100% - 8px);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(232, 72, 72, 0.72) 0 2px,
+    transparent 2px 8px
+  );
+  opacity: 0.75;
+}
+
+.hero .tag::after {
+  content: '';
+  position: absolute;
+  left: -53px;
+  bottom: 14px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(232, 72, 72, 0.9);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--gold) 0 2px, transparent 3px),
+    rgba(42, 34, 30, 0.88);
+  box-shadow:
+    0 0 0 4px rgba(42, 34, 30, 0.85),
+    0 0 18px rgba(232, 72, 72, 0.22);
+}
+
+/* Mobile refinement */
+@media (max-width: 968px) {
+  .hero .tag::before {
+    left: -24px;
+    height: calc(100% - 6px);
+  }
+
+  .hero .tag::after {
+    left: -32px;
+    width: 14px;
+    height: 14px;
+    bottom: 10px;
+  }
+}
