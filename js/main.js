@@ -157,6 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
               entry.target.style.opacity = '1';
               entry.target.style.transform = 'translateY(0)';
               entry.target.style.filter = 'blur(0)';
+              // Clear inline styles after animation so CSS can take over (e.g. expand cards)
+              setTimeout(() => {
+                entry.target.style.transition = '';
+                entry.target.style.opacity = '';
+                entry.target.style.transform = '';
+                entry.target.style.filter = '';
+              }, 900);
             }
           }, delay);
 
