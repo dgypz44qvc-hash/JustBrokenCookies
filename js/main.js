@@ -563,34 +563,44 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeCard = null;
 
   if (readingPanel && readingContent) {
-    document.querySelectorAll('.service-card[data-expandable]').forEach(card => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => {
+    const cards = document.querySelectorAll('.service-card[data-expandable]');
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
         const expandDiv = card.querySelector('.service-expand');
         if (!expandDiv) return;
 
         // If same card clicked again, close
-        if (activeCard === card) {
+        if (activeCard === card && readingPanel.classList.contains('open')) {
           readingPanel.classList.remove('open');
           activeCard = null;
           return;
         }
 
-        // Get card title for the panel header
-        const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+        // Get card title
+        const titleEl = card.querySelector('h3');
+        const title = titleEl ? titleEl.textContent : '';
 
-        // Build content: title + paragraphs from .service-expand
+        // Inject content
         readingContent.innerHTML = '<h4>' + title + '</h4>' + expandDiv.innerHTML;
 
-        // Move panel after the clicked card in the grid
+        // Close first if already open (reset animation)
+        readingPanel.classList.remove('open');
+
+        // Move panel right after the clicked card in the grid
         card.after(readingPanel);
 
-        // Show with slight delay for DOM reflow
-        requestAnimationFrame(() => {
-          readingPanel.classList.add('open');
-        });
+        // Force reflow then open
+        void readingPanel.offsetHeight;
+        readingPanel.classList.add('open');
 
         activeCard = card;
+
+        // Scroll panel into view
+        setTimeout(() => {
+          readingPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
       });
     });
 
@@ -600,7 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
       activeCard = null;
     });
 
-    // Also close if clicking outside cards and panel
+    // Close if clicking outside
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.service-card[data-expandable]') &&
           !e.target.closest('.service-reading-panel')) {

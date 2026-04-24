@@ -394,15 +394,15 @@ section { padding:var(--section-pad) 0; position:relative; }
 /* ---------- READING PANEL (appears below clicked card) ---------- */
 .service-reading-panel {
   grid-column: 1 / -1;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.5s var(--ease-out-expo),
-              opacity 0.35s ease 0.08s;
+  display: none;
 }
 .service-reading-panel.open {
-  max-height: 800px;
-  opacity: 1;
+  display: block;
+  animation: panelSlideIn 0.4s ease forwards;
+}
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .service-reading-panel-inner {
   background: rgba(30,26,23,0.65);
