@@ -409,7 +409,6 @@ section { padding:var(--section-pad) 0; position:relative; }
   border: var(--border);
   border-radius: 12px;
   padding: 38px 65px;
-  aspect-ratio: 21 / 9;
   display: flex;
   flex-direction: column;
   justify-content: center;
