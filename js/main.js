@@ -237,9 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
       wrapper.appendChild(heroMega);
 
       // 2. Clone and insert the underlay INSIDE the same wrapper
+      //    Keep .hero-mega class so .hero-mega .l1/.l2/.l3 CSS rules still apply
       const underlay = heroMega.cloneNode(true);
       underlay.classList.add('hero-underlay');
-      underlay.classList.remove('hero-mega');
       underlay.removeAttribute('style');
       wrapper.insertBefore(underlay, heroMega); // underlay first = behind
 
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /* --- Top layer: colored text with mask on hover --- */
-        .hero-oil-wrap .hero-mega {
+        .hero-oil-wrap .hero-mega:not(.hero-underlay) {
           position: relative;
           z-index: 2;
           --mx: -300px;
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
           -webkit-mask-image: none;
           mask-image: none;
         }
-        .hero-oil-wrap .hero-mega.oil-active {
+        .hero-oil-wrap .hero-mega.oil-active:not(.hero-underlay) {
           -webkit-mask-image:
             radial-gradient(
               ellipse 180px 200px at var(--mx) var(--my),
