@@ -128,6 +128,26 @@
           </div>
         </div>
         <!-- Detail cards (hidden until parent clicked) -->
+        <script>
+        (function(){
+          document.querySelectorAll('.service-card[data-card]').forEach(function(card){
+            card.addEventListener('click', function(e){
+              e.stopPropagation();
+              var id = card.getAttribute('data-card');
+              // Hide all detail cards
+              document.querySelectorAll('.service-detail-card').forEach(function(d){ d.classList.remove('visible'); });
+              // Show matching one
+              var detail = document.querySelector('.service-detail-card[data-parent="'+id+'"]');
+              if(detail){
+                detail.classList.add('visible');
+                detail.style.display = 'block';
+                detail.style.opacity = '1';
+                detail.style.transform = 'translateY(0)';
+              }
+            });
+          });
+        })();
+        </script>
         <div class="service-detail-card" data-parent="1">
           <h4>Define</h4>
           <p>What is the subject? A person, a brand, a project. What stage is it at? What is working, what is missing, what is unclear.</p>
