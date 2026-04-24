@@ -1486,4 +1486,10 @@ section { padding:var(--section-pad) 0; position:relative; }
     right: 60px !important;
     bottom: 160px !important;
   }
+}/* ---- Mobile: move hero photo 20% higher ---- */
+@media (max-width: 768px) {
+  .hero .jbc-custom[style*="position:absolute"],
+  .hero .jbc-custom[style*="position: absolute"] {
+    transform: translateY(-20%) !important;
+  }
 }
