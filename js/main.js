@@ -5,14 +5,14 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---- PRELOADER ---- (max 1s total)
+  // ---- PRELOADER ---- (max 600ms hard cap)
   const preloader = document.querySelector('.preloader');
   if (preloader) {
     const dismissPreloader = () => { if (!preloader.classList.contains('loaded')) preloader.classList.add('loaded'); };
     window.addEventListener('load', dismissPreloader);
     if (document.readyState === 'complete') dismissPreloader();
-    // Hard cap: dismiss after 1 second no matter what
-    setTimeout(dismissPreloader, 1000);
+    // Hard cap: dismiss after 400ms no matter what
+    setTimeout(dismissPreloader, 400);
   }
 
   // ---- PAGE TRANSITIONS ----
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         pageTransition.classList.add('active');
-        setTimeout(() => { window.location.href = href; }, 600);
+        setTimeout(() => { window.location.href = href; }, 350);
       });
     });
   }
@@ -557,19 +557,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   }
 
-  // ---- SERVICE CARD CLICK-TO-EXPAND ----
-  document.querySelectorAll('.service-card[data-expandable]').forEach(card => {
-    card.addEventListener('click', () => {
-      const wasOpen = card.classList.contains('expanded');
-      document.querySelectorAll('.service-card.expanded').forEach(c => c.classList.remove('expanded'));
-      if (!wasOpen) card.classList.add('expanded');
+  // ---- SERVICE CARD → READING PANEL ----
+  const readingPanel = document.getElementById('serviceReadingPanel');
+  const readingContent = document.getElementById('serviceReadingContent');
+  let activeCard = null;
+
+  if (readingPanel && readingContent) {
+    document.querySelectorAll('.service-card[data-expandable]').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        const expandDiv = card.querySelector('.service-expand');
+        if (!expandDiv) return;
+
+        // If same card clicked again, close
+        if (activeCard === card) {
+          readingPanel.classList.remove('open');
+          activeCard = null;
+          return;
+        }
+
+        // Get card title for the panel header
+        const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+
+        // Build content: title + paragraphs from .service-expand
+        readingContent.innerHTML = '<h4>' + title + '</h4>' + expandDiv.innerHTML;
+
+        // Move panel after the clicked card in the grid
+        card.after(readingPanel);
+
+        // Show with slight delay for DOM reflow
+        requestAnimationFrame(() => {
+          readingPanel.classList.add('open');
+        });
+
+        activeCard = card;
+      });
     });
-  });
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.service-card[data-expandable]')) {
-      document.querySelectorAll('.service-card.expanded').forEach(c => c.classList.remove('expanded'));
-    }
-  });
+
+    // Close on mouseleave from reading panel
+    readingPanel.addEventListener('mouseleave', () => {
+      readingPanel.classList.remove('open');
+      activeCard = null;
+    });
+
+    // Also close if clicking outside cards and panel
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.service-card[data-expandable]') &&
+          !e.target.closest('.service-reading-panel')) {
+        readingPanel.classList.remove('open');
+        activeCard = null;
+      }
+    });
+  }
 
   // ---- SECTION BORDER REVEAL ----
   document.querySelectorAll('.sec-header, .hero-bottom, .testimonial-section, .section-divider').forEach(el => {
