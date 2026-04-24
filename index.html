@@ -130,13 +130,20 @@
         <!-- Detail cards (hidden until parent clicked) -->
         <script>
         (function(){
+          function hideDetail(d){
+            d.classList.remove('visible');
+            d.style.display = '';
+            d.style.opacity = '';
+            d.style.transform = '';
+          }
+          function hideAll(){
+            document.querySelectorAll('.service-detail-card').forEach(hideDetail);
+          }
           document.querySelectorAll('.service-card[data-card]').forEach(function(card){
             card.addEventListener('click', function(e){
               e.stopPropagation();
               var id = card.getAttribute('data-card');
-              // Hide all detail cards
-              document.querySelectorAll('.service-detail-card').forEach(function(d){ d.classList.remove('visible'); });
-              // Show matching one
+              hideAll();
               var detail = document.querySelector('.service-detail-card[data-parent="'+id+'"]');
               if(detail){
                 detail.classList.add('visible');
@@ -145,6 +152,10 @@
                 detail.style.transform = 'translateY(0)';
               }
             });
+          });
+          // Hide when cursor leaves the detail card
+          document.querySelectorAll('.service-detail-card').forEach(function(detail){
+            detail.addEventListener('mouseleave', function(){ hideDetail(detail); });
           });
         })();
         </script>
