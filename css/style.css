@@ -1283,4 +1283,62 @@ section { padding:var(--section-pad) 0; position:relative; }
   opacity: 1;
   filter: blur(0);
   transform: translateY(0);
+}/* ---- Refine hero secret words size, font, and fade ---- */
+.hero-mega:not(.hero-underlay) .l1::after,
+.hero-mega:not(.hero-underlay) .l2::after,
+.hero-mega:not(.hero-underlay) .l3::after {
+  font-family: var(--font-script) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+
+  font-size: 0.52em !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1 !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  opacity: 0 !important;
+  filter: blur(14px) !important;
+  transform: translateY(0.08em) scale(0.96) !important;
+
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Reveal gently, one word at a time */
+.hero-mega:not(.hero-underlay) .l1:hover::after,
+.hero-mega:not(.hero-underlay) .l2:hover::after,
+.hero-mega:not(.hero-underlay) .l3:hover::after {
+  opacity: 1 !important;
+  filter: blur(0) !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Hide the original word more softly */
+.hero-mega:not(.hero-underlay) .l1:hover,
+.hero-mega:not(.hero-underlay) .l2:hover,
+.hero-mega:not(.hero-underlay) .l3:hover {
+  transition:
+    color 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-text-fill-color 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Slight optical positioning per word */
+.hero-mega:not(.hero-underlay) .l1::after {
+  justify-content: flex-start;
+  padding-left: 0.04em;
+}
+
+.hero-mega:not(.hero-underlay) .l2::after {
+  justify-content: flex-start;
+  padding-left: 0.03em;
+}
+
+.hero-mega:not(.hero-underlay) .l3::after {
+  justify-content: flex-start;
+  padding-left: 0.02em;
 }
