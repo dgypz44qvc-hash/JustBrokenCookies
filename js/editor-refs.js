@@ -1413,10 +1413,30 @@
       case 'uppercase':
         el.style.textTransform = cs.textTransform === 'uppercase' ? 'none' : 'uppercase';
         break;
-      case 'align-left':    el.style.textAlign = 'left'; break;
-      case 'align-center':  el.style.textAlign = 'center'; break;
-      case 'align-right':   el.style.textAlign = 'right'; break;
-      case 'align-justify': el.style.textAlign = 'justify'; break;
+      case 'align-left':
+      case 'align-center':
+      case 'align-right':
+      case 'align-justify':
+        var alignVal = fmt.replace('align-','');
+        /* Apply text-align to the element */
+        el.style.textAlign = alignVal;
+        /* If element is inline, also apply to its parent so it actually takes effect */
+        var elDisplay = cs.display;
+        if(elDisplay === 'inline' || elDisplay === 'inline-block'){
+          if(el.parentElement) el.parentElement.style.textAlign = alignVal;
+        }
+        /* Handle margin-left/right that can override visual alignment */
+        if(alignVal === 'center'){
+          el.style.marginLeft = 'auto';
+          el.style.marginRight = 'auto';
+        } else if(alignVal === 'left'){
+          el.style.marginLeft = '0';
+          el.style.marginRight = '';
+        } else if(alignVal === 'right'){
+          el.style.marginLeft = 'auto';
+          el.style.marginRight = '0';
+        }
+        break;
       case 'color-gold':   el.style.color = '#E8891D'; fontColorInput.value = '#E8891D'; break;
       case 'color-blush':  el.style.color = '#E84848'; fontColorInput.value = '#E84848'; break;
       case 'color-wine':   el.style.color = '#8B3A8B'; fontColorInput.value = '#8B3A8B'; break;
