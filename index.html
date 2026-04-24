@@ -108,6 +108,55 @@
             rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
             rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
         }
+      </style><style>
+        .hero-oil-wrap { position:relative; display:inline-block; width:100%; overflow:hidden; }
+        .hero { overflow:hidden !important; }
+        .hero-underlay {
+          position:absolute; top:0; left:0; width:100%; height:100%;
+          pointer-events:none; z-index:1; user-select:none;
+          opacity:0; visibility:hidden; transition:opacity 0.4s ease, visibility 0.4s;
+        }
+        .hero-underlay .l1 {
+          color:transparent !important;
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cdefs%3E%3Cstyle%3E*%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='55' cy='55' r='50' stroke-width='0.6' opacity='0.5'/%3E%3Ccircle cx='55' cy='55' r='42' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='34' stroke-width='0.7' opacity='0.55'/%3E%3Ccircle cx='55' cy='55' r='25' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='17' stroke-width='0.8' opacity='0.6'/%3E%3Ccircle cx='55' cy='55' r='9' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='55' cy='55' r='3' stroke-width='0.6' opacity='0.5'/%3E%3Cline x1='55' y1='2' x2='55' y2='10' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='55' y1='100' x2='55' y2='108' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='2' y1='55' x2='10' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='100' y1='55' x2='108' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='16' y1='16' x2='22' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='16' x2='88' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='16' y1='94' x2='22' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='94' x2='88' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M55 5 L58 15 L55 12 L52 15Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M105 55 L95 58 L98 55 L95 52Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M30 12 Q55 32 80 12' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M98 30 Q78 55 98 80' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M80 98 Q55 78 30 98' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M12 80 Q32 55 12 30' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M36 22 Q44 34 55 30 Q66 26 72 18' stroke-width='0.35' opacity='0.28'/%3E%3Cpath d='M88 36 Q76 44 80 55 Q84 66 92 72' stroke-width='0.35' opacity='0.28'/%3E%3C/svg%3E") 0 0/110px 110px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
+          -webkit-background-clip:text !important; background-clip:text !important;
+          -webkit-text-fill-color:transparent !important;
+        }
+        .hero-underlay .l2 {
+          color:transparent !important;
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130'%3E%3Cdefs%3E%3Cstyle%3Eline,path%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='28' cy='22' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='28' cy='22' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='85' cy='16' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='85' cy='16' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='65' cy='52' r='4' fill='none' stroke='%23111' stroke-width='0.8' opacity='0.65'/%3E%3Ccircle cx='65' cy='52' r='1.5' fill='%23111' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='105' cy='62' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='105' cy='62' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='48' cy='105' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='48' cy='105' r='0.8' fill='%23111' opacity='0.45'/%3E%3Cline x1='28' y1='22' x2='65' y2='52' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='85' y2='16' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='65' y1='52' x2='105' y2='62' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='22' y2='75' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='22' y1='75' x2='48' y2='105' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='105' y1='62' x2='110' y2='110' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M65 46 L71 52 L65 58 L59 52Z' stroke-width='0.5' opacity='0.45'/%3E%3Cpath d='M28 22 Q12 48 22 75' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3Cpath d='M85 16 Q110 38 105 62' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3C/svg%3E") 0 0/130px 130px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
+          -webkit-background-clip:text !important; background-clip:text !important;
+          -webkit-text-fill-color:transparent !important;
+        }
+        .hero-underlay .l3 {
+          color:transparent !important;
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='130' viewBox='0 0 150 130'%3E%3Cdefs%3E%3Cstyle%3Epath,line%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Cpath d='M20 42 L28 18 L24 8' stroke-width='1' opacity='0.6'/%3E%3Cpath d='M28 18 Q36 28 30 42' stroke-width='0.7' opacity='0.5'/%3E%3Cpath d='M22 44 L24 42 L20 42 L22 44Z' fill='%23111' opacity='0.5'/%3E%3Cline x1='18' y1='46' x2='6' y2='60' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='19' y1='49' x2='8' y2='64' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='20' y1='52' x2='10' y2='68' stroke-width='0.35' opacity='0.28'/%3E%3Cline x1='21' y1='55' x2='12' y2='72' stroke-width='0.3' opacity='0.25'/%3E%3Ccircle cx='30' cy='42' r='1.5' fill='%23111' opacity='0.45'/%3E%3Cpath d='M10 65 Q35 22 62 48 Q78 62 98 32 Q115 8 142 50' stroke-width='0.6' opacity='0.4'/%3E%3Cpath d='M5 92 Q32 68 58 82 Q80 95 108 62 Q128 38 145 72' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M15 112 Q45 98 65 106 Q88 116 108 96 Q128 78 142 100' stroke-width='0.35' opacity='0.25'/%3E%3Cpath d='M112 10 Q124 4 128 16 Q134 30 124 36 Q112 42 108 30 Q104 18 112 10' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='95' cy='30' r='0.8' fill='%23111' opacity='0.35'/%3E%3Ccircle cx='58' cy='50' r='0.6' fill='%23111' opacity='0.3'/%3E%3Ccircle cx='128' cy='65' r='0.8' fill='%23111' opacity='0.3'/%3E%3Cpath d='M72 112 Q80 100 88 112' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M64 116 Q80 96 96 116' stroke-width='0.4' opacity='0.3'/%3E%3Cline x1='80' y1='96' x2='80' y2='120' stroke-width='0.3' opacity='0.25'/%3E%3C/svg%3E") 0 0/150px 130px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
+          -webkit-background-clip:text !important; background-clip:text !important;
+          -webkit-text-fill-color:transparent !important;
+        }
+        .hero-oil-wrap .hero-mega:not(.hero-underlay) {
+          position:relative; z-index:2; --mx:-300px; --my:-300px;
+        }
+        /* DESKTOP hover reveal */
+        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; visibility:visible; }
+        .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
+          -webkit-mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
+            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
+          mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
+            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
+        }
+        /* MOBILE scroll wipe */
+        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; visibility:visible; }
+        .hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay) {
+          -webkit-mask-image: linear-gradient(to bottom,
+            transparent 0%, transparent var(--scroll-reveal,0%),
+            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
+            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
+          mask-image: linear-gradient(to bottom,
+            transparent 0%, transparent var(--scroll-reveal,0%),
+            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
+            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
+        }
       </style></head>
 <body class="">
 
@@ -123,8 +172,8 @@
   <div class="page-transition"></div>
 
   <!-- ========== CURSOR ========== -->
-  <div class="cursor-dot" style="left: 1226px; top: 495px;"></div>
-  <div class="cursor-ring" style="left: 1226px; top: 495px;"></div>
+  <div class="cursor-dot" style="left: 1382px; top: 828px;"></div>
+  <div class="cursor-ring" style="left: 1382px; top: 828px;"></div>
 
   <!-- ========== NAVIGATION ========== -->
   <nav class="nav" id="navbar">
@@ -148,7 +197,7 @@
 
   <!-- ========== HERO — Brutalist oversized type ========== -->
   <section class="hero">
-    <div class="tag" style="font-size: 36px; font-weight: 700;">Storytelling&nbsp;</div>
+    <div class="tag" style="font-size: 88px; font-weight: 700;">Storytelling&nbsp;</div>
     <div class="hero-content">
       <div class="hero-oil-wrap"><div class="hero-oil-wrap"><div class="hero-mega hero-underlay">
         <span class="l1">Just</span>
@@ -158,11 +207,15 @@
         <span class="l1">Just</span>
         <span class="l2">Broken</span>
         <span class="l3">Cookies</span>
-      </div></div><div class="hero-mega" style="--mx: -299.53813930043157px; --my: -299.76011012768794px;">
+      </div></div><div class="hero-oil-wrap"><div class="hero-mega hero-underlay">
         <span class="l1">Just</span>
         <span class="l2">Broken</span>
         <span class="l3">Cookies</span>
-      </div></div>
+      </div><div class="hero-mega" style="--mx: -299.5809545779772px; --my: -299.8222581674595px;">
+        <span class="l1">Just</span>
+        <span class="l2">Broken</span>
+        <span class="l3">Cookies</span>
+      </div></div></div>
     </div>
     <div class="hero-bottom">
       <p class="desc"><br></p>
@@ -321,6 +374,7 @@
 
   <script src="js/main.js"></script>
   <script src="js/editor-refs.js"></script>
+
 
 
 
