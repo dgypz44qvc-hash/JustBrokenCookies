@@ -8,12 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- PRELOADER ----
   const preloader = document.querySelector('.preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      setTimeout(() => preloader.classList.add('loaded'), 800);
-    });
+    const dismissPreloader = () => preloader.classList.add('loaded');
+    window.addEventListener('load', dismissPreloader);
     // Fallback if load already fired
     if (document.readyState === 'complete') {
-      setTimeout(() => preloader.classList.add('loaded'), 800);
+      dismissPreloader();
     }
   }
 

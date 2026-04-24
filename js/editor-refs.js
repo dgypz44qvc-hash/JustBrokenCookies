@@ -75,6 +75,32 @@
     .jbc-placement-mode{cursor:crosshair!important;}
     .jbc-placement-mode *{cursor:crosshair!important;}
     #jbc-placement-hint{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:1000002;background:#E8891D;color:#000;font-family:monospace;font-size:14px;font-weight:bold;padding:12px 24px;display:none;letter-spacing:1px;}
+
+    /* ---- TEXT FORMAT TOOLBAR ---- */
+    #jbc-format-bar{position:fixed;top:44px;left:0;right:0;z-index:1000000;background:#111;border-bottom:2px solid #333;display:none;align-items:center;gap:6px;padding:6px 16px;font-family:monospace;flex-wrap:wrap;}
+    #jbc-format-bar.visible{display:flex;}
+    #jbc-format-bar button{background:#222;color:#fff;border:1px solid #444;padding:5px 10px;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;min-width:30px;text-align:center;transition:all 0.15s;}
+    #jbc-format-bar button:hover{background:#E8891D;border-color:#E8891D;color:#000;}
+    #jbc-format-bar button.active{background:#2ecc40;border-color:#2ecc40;color:#000;}
+    #jbc-format-bar .jbc-fmt-group{display:flex;align-items:center;gap:3px;border-right:1px solid #333;padding-right:10px;margin-right:4px;}
+    #jbc-format-bar .jbc-fmt-group:last-child{border-right:none;}
+    #jbc-format-bar label{color:#888;font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-right:4px;}
+    #jbc-format-bar select{background:#222;color:#fff;border:1px solid #444;padding:5px 8px;font-family:monospace;font-size:12px;cursor:pointer;max-width:160px;}
+    #jbc-format-bar select:hover{border-color:#E8891D;}
+    #jbc-format-bar input[type="number"]{background:#222;color:#fff;border:1px solid #444;padding:5px 6px;font-family:monospace;font-size:12px;width:52px;text-align:center;}
+    #jbc-format-bar input[type="color"]{background:none;border:1px solid #444;width:28px;height:28px;padding:1px;cursor:pointer;}
+
+    /* ---- MOVE MODE ---- */
+    .jbc-move-mode .jbc-editable{cursor:move!important;outline-color:rgba(232,137,29,0.4)!important;}
+    .jbc-move-mode .jbc-editable:hover{outline-color:#E8891D!important;outline-style:dashed!important;}
+    .jbc-move-mode .jbc-img-wrap{cursor:move!important;}
+    .jbc-move-mode .jbc-img-wrap:hover{outline:2px dashed #E8891D;outline-offset:3px;}
+    .jbc-move-mode .jbc-img-overlay{display:none!important;}
+    .jbc-move-active{opacity:0.7!important;outline:2px solid #E8891D!important;outline-offset:4px!important;}
+    .jbc-moved{outline:2px dashed rgba(232,137,29,0.5)!important;outline-offset:3px;}
+    #jbc-toolbar .jbc-move-btn{background:#E8891D;border-color:#E8891D;color:#000;}
+    #jbc-toolbar .jbc-move-btn.active{background:#2ecc40;border-color:#2ecc40;color:#000;animation:jbc-pulse 1.5s infinite;}
+    @keyframes jbc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,204,64,0.4);}50%{box-shadow:0 0 0 8px rgba(46,204,64,0);}}
   `;
   document.head.appendChild(css);
 
@@ -89,7 +115,7 @@
   /* ========== BANNER (green) ========== */
   var banner = document.createElement('div');
   banner.id = 'jbc-editor-banner';
-  banner.innerHTML = '<span>EDITOR MODE — Click any text to edit \u00b7 Hover images to replace \u00b7 Right-click for layers \u00b7 Use + to add \u00b7 Hit SAVE</span>';
+  banner.innerHTML = '<span>EDITOR MODE — Click text to edit & style \u00b7 MOVE MODE to drag elements \u00b7 Hover images to replace \u00b7 + to add \u00b7 SAVE</span>';
   document.body.prepend(banner);
   document.body.style.paddingTop = '40px';
 
@@ -339,6 +365,31 @@
   saveBtn.disabled = true;
   saveBtn.addEventListener('click', savePage);
   toolbar.appendChild(saveBtn);
+
+  /* ---- MOVE MODE TOGGLE ---- */
+  var moveMode = false;
+  var moveBtn = document.createElement('button');
+  moveBtn.className = 'jbc-move-btn';
+  moveBtn.innerHTML = '<i class="fas fa-arrows-alt"></i> MOVE MODE';
+  moveBtn.addEventListener('click', function(){
+    moveMode = !moveMode;
+    moveBtn.classList.toggle('active', moveMode);
+    document.body.classList.toggle('jbc-move-mode', moveMode);
+    moveBtn.innerHTML = moveMode
+      ? '<i class="fas fa-arrows-alt"></i> MOVE MODE ON'
+      : '<i class="fas fa-arrows-alt"></i> MOVE MODE';
+    /* Toggle contenteditable off in move mode so elements can be dragged */
+    document.querySelectorAll('.jbc-editable').forEach(function(el){
+      if(moveMode){
+        el.setAttribute('contenteditable','false');
+        el.blur();
+      } else {
+        el.setAttribute('contenteditable','true');
+      }
+    });
+    showToast(moveMode ? 'MOVE MODE — drag text & images to reposition' : 'EDIT MODE — click text to edit');
+  });
+  toolbar.appendChild(moveBtn);
 
   var dlBtn = document.createElement('button');
   dlBtn.innerHTML = '<i class="fas fa-download"></i> DOWNLOAD';
@@ -667,6 +718,249 @@
     });
   }
 
+  /* ========== TEXT FORMAT TOOLBAR ========== */
+  var formatBar = document.createElement('div');
+  formatBar.id = 'jbc-format-bar';
+  formatBar.innerHTML = [
+    '<div class="jbc-fmt-group">',
+    '  <label>Size</label>',
+    '  <button data-fmt="size-down" title="Decrease font size"><i class="fas fa-minus"></i></button>',
+    '  <input type="number" id="jbc-font-size" min="8" max="300" value="16" title="Font size in px">',
+    '  <button data-fmt="size-up" title="Increase font size"><i class="fas fa-plus"></i></button>',
+    '</div>',
+    '<div class="jbc-fmt-group">',
+    '  <label>Font</label>',
+    '  <select id="jbc-font-family">',
+    '    <option value="">— current —</option>',
+    '    <option value="\'Playfair Display\', Georgia, serif">Playfair Display</option>',
+    '    <option value="\'Dancing Script\', cursive">Dancing Script</option>',
+    '    <option value="\'Inter\', sans-serif">Inter</option>',
+    '    <option value="Georgia, serif">Georgia</option>',
+    '    <option value="\'Courier New\', monospace">Courier New</option>',
+    '    <option value="Arial, sans-serif">Arial</option>',
+    '    <option value="\'Times New Roman\', serif">Times New Roman</option>',
+    '    <option value="Impact, sans-serif">Impact</option>',
+    '  </select>',
+    '</div>',
+    '<div class="jbc-fmt-group">',
+    '  <label>Style</label>',
+    '  <button data-fmt="bold" title="Bold"><i class="fas fa-bold"></i></button>',
+    '  <button data-fmt="italic" title="Italic"><i class="fas fa-italic"></i></button>',
+    '  <button data-fmt="underline" title="Underline"><i class="fas fa-underline"></i></button>',
+    '  <button data-fmt="uppercase" title="Toggle uppercase"><i class="fas fa-font"></i> AA</button>',
+    '</div>',
+    '<div class="jbc-fmt-group">',
+    '  <label>Weight</label>',
+    '  <select id="jbc-font-weight">',
+    '    <option value="">— current —</option>',
+    '    <option value="300">Light (300)</option>',
+    '    <option value="400">Normal (400)</option>',
+    '    <option value="500">Medium (500)</option>',
+    '    <option value="600">Semi-Bold (600)</option>',
+    '    <option value="700">Bold (700)</option>',
+    '    <option value="900">Black (900)</option>',
+    '  </select>',
+    '</div>',
+    '<div class="jbc-fmt-group">',
+    '  <label>Color</label>',
+    '  <input type="color" id="jbc-font-color" value="#F0E6DA" title="Text color">',
+    '  <button data-fmt="color-gold" title="Amber" style="color:#E8891D;font-size:16px;">●</button>',
+    '  <button data-fmt="color-blush" title="Coral" style="color:#E84848;font-size:16px;">●</button>',
+    '  <button data-fmt="color-wine" title="Purple" style="color:#8B3A8B;font-size:16px;">●</button>',
+    '  <button data-fmt="color-cream" title="Cream" style="color:#F0E6DA;font-size:16px;">●</button>',
+    '</div>',
+    '<div class="jbc-fmt-group">',
+    '  <label>Spacing</label>',
+    '  <button data-fmt="ls-down" title="Tighter letter spacing">A⟵A</button>',
+    '  <button data-fmt="ls-up" title="Wider letter spacing">A⟶A</button>',
+    '</div>'
+  ].join('\n');
+  document.body.appendChild(formatBar);
+
+  var activeFormatEl = null;
+  var fontSizeInput = formatBar.querySelector('#jbc-font-size');
+  var fontFamilySelect = formatBar.querySelector('#jbc-font-family');
+  var fontWeightSelect = formatBar.querySelector('#jbc-font-weight');
+  var fontColorInput = formatBar.querySelector('#jbc-font-color');
+
+  /* Show format bar and populate values when text is focused */
+  function showFormatBar(el){
+    activeFormatEl = el;
+    formatBar.classList.add('visible');
+    var cs = getComputedStyle(el);
+    fontSizeInput.value = Math.round(parseFloat(cs.fontSize));
+    fontColorInput.value = rgbToHex(cs.color);
+    fontFamilySelect.value = '';
+    fontWeightSelect.value = '';
+    /* Update body padding to account for format bar */
+    document.body.style.paddingTop = '80px';
+  }
+
+  function hideFormatBar(){
+    activeFormatEl = null;
+    formatBar.classList.remove('visible');
+    document.body.style.paddingTop = '40px';
+  }
+
+  function rgbToHex(rgb){
+    if(rgb.charAt(0)==='#') return rgb;
+    var m = rgb.match(/(\d+)/g);
+    if(!m||m.length<3) return '#F0E6DA';
+    return '#'+((1<<24)+(+m[0]<<16)+(+m[1]<<8)+(+m[2])).toString(16).slice(1);
+  }
+
+  function markChanged(el){
+    if(!el.classList.contains('jbc-text-changed')){
+      changes.text++;
+      el.classList.add('jbc-text-changed');
+      updateCounter();
+    }
+  }
+
+  /* Prevent format bar interactions from stealing focus from the text element */
+  formatBar.addEventListener('mousedown', function(e){
+    e.preventDefault();
+  });
+
+  /* Format bar actions */
+  formatBar.addEventListener('click', function(e){
+    var btn = e.target.closest('button[data-fmt]');
+    if(!btn || !activeFormatEl) return;
+    var fmt = btn.getAttribute('data-fmt');
+    var el = activeFormatEl;
+    var cs = getComputedStyle(el);
+
+    switch(fmt){
+      case 'size-down':
+        var s1 = Math.max(8, Math.round(parseFloat(cs.fontSize)) - 2);
+        el.style.fontSize = s1 + 'px';
+        fontSizeInput.value = s1;
+        break;
+      case 'size-up':
+        var s2 = Math.min(300, Math.round(parseFloat(cs.fontSize)) + 2);
+        el.style.fontSize = s2 + 'px';
+        fontSizeInput.value = s2;
+        break;
+      case 'bold':
+        var isBold = parseInt(cs.fontWeight) >= 700;
+        el.style.fontWeight = isBold ? '400' : '700';
+        break;
+      case 'italic':
+        el.style.fontStyle = cs.fontStyle === 'italic' ? 'normal' : 'italic';
+        break;
+      case 'underline':
+        var hasDeco = cs.textDecorationLine && cs.textDecorationLine.indexOf('underline') !== -1;
+        el.style.textDecoration = hasDeco ? 'none' : 'underline';
+        break;
+      case 'uppercase':
+        el.style.textTransform = cs.textTransform === 'uppercase' ? 'none' : 'uppercase';
+        break;
+      case 'color-gold':   el.style.color = '#E8891D'; fontColorInput.value = '#E8891D'; break;
+      case 'color-blush':  el.style.color = '#E84848'; fontColorInput.value = '#E84848'; break;
+      case 'color-wine':   el.style.color = '#8B3A8B'; fontColorInput.value = '#8B3A8B'; break;
+      case 'color-cream':  el.style.color = '#F0E6DA'; fontColorInput.value = '#F0E6DA'; break;
+      case 'ls-down':
+        var curLs = parseFloat(cs.letterSpacing) || 0;
+        el.style.letterSpacing = (curLs - 0.5) + 'px';
+        break;
+      case 'ls-up':
+        var curLs2 = parseFloat(cs.letterSpacing) || 0;
+        el.style.letterSpacing = (curLs2 + 0.5) + 'px';
+        break;
+    }
+    markChanged(el);
+    showToast('Style updated');
+  });
+
+  /* Font size direct input */
+  fontSizeInput.addEventListener('change', function(){
+    if(!activeFormatEl) return;
+    var v = Math.max(8, Math.min(300, parseInt(fontSizeInput.value) || 16));
+    activeFormatEl.style.fontSize = v + 'px';
+    fontSizeInput.value = v;
+    markChanged(activeFormatEl);
+  });
+
+  /* Font family select */
+  fontFamilySelect.addEventListener('change', function(){
+    if(!activeFormatEl || !fontFamilySelect.value) return;
+    activeFormatEl.style.fontFamily = fontFamilySelect.value;
+    markChanged(activeFormatEl);
+    showToast('Font changed');
+  });
+
+  /* Font weight select */
+  fontWeightSelect.addEventListener('change', function(){
+    if(!activeFormatEl || !fontWeightSelect.value) return;
+    activeFormatEl.style.fontWeight = fontWeightSelect.value;
+    markChanged(activeFormatEl);
+    showToast('Weight changed');
+  });
+
+  /* Color picker */
+  fontColorInput.addEventListener('input', function(){
+    if(!activeFormatEl) return;
+    activeFormatEl.style.color = fontColorInput.value;
+    markChanged(activeFormatEl);
+  });
+
+  /* ========== MOVE MODE — DRAG EXISTING ELEMENTS ========== */
+  function initMoveModeDrag(){
+    var dragEl = null, dragStartX, dragStartY, origTx, origTy;
+
+    document.addEventListener('mousedown', function(e){
+      if(!moveMode) return;
+      /* Find the element to drag */
+      var target = e.target.closest('.jbc-editable') || e.target.closest('.jbc-img-wrap');
+      if(!target) return;
+      if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar')) return;
+      if(e.button !== 0) return;
+      e.preventDefault();
+
+      dragEl = target;
+      dragEl.classList.add('jbc-move-active');
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+
+      /* Parse existing transform translate */
+      var curTransform = dragEl.style.transform || '';
+      var txMatch = curTransform.match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
+      origTx = txMatch ? parseFloat(txMatch[1]) : 0;
+      origTy = txMatch ? parseFloat(txMatch[2]) : 0;
+    });
+
+    document.addEventListener('mousemove', function(e){
+      if(!dragEl) return;
+      var dx = e.clientX - dragStartX;
+      var dy = e.clientY - dragStartY;
+      dragEl.style.transform = 'translate(' + (origTx + dx) + 'px, ' + (origTy + dy) + 'px)';
+    });
+
+    document.addEventListener('mouseup', function(){
+      if(!dragEl) return;
+      dragEl.classList.remove('jbc-move-active');
+      /* Mark as moved if it was actually displaced */
+      var finalTransform = dragEl.style.transform || '';
+      var m = finalTransform.match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
+      if(m && (Math.abs(parseFloat(m[1])) > 2 || Math.abs(parseFloat(m[2])) > 2)){
+        dragEl.classList.add('jbc-moved');
+        markChanged(dragEl);
+        showToast('Element repositioned');
+      }
+      dragEl = null;
+    });
+  }
+  initMoveModeDrag();
+
+  /* In move mode, single-click a text element to show its format bar for styling */
+  document.addEventListener('click', function(e){
+    if(!moveMode) return;
+    var target = e.target.closest('.jbc-editable');
+    if(!target) return;
+    if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar')) return;
+    showFormatBar(target);
+  });
+
   /* ========== PAGE INFO ========== */
   function getPageInfo(){
     var p = window.location.pathname;
@@ -715,7 +1009,7 @@
   ].join(',');
 
   document.querySelectorAll(textSelectors).forEach(function(el){
-    if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu,#jbc-toast,#jbc-add-btn,#jbc-placement-hint')) return;
+    if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu,#jbc-toast,#jbc-add-btn,#jbc-placement-hint,#jbc-format-bar')) return;
     if(el.tagName==='SCRIPT'||el.tagName==='STYLE'||el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
     if(!el.textContent.trim()) return;
     /* Skip if already editable */
@@ -725,13 +1019,22 @@
     el.classList.add('jbc-editable');
     el.spellcheck = false;
     originalTexts.set(el, el.innerHTML);
-    el.addEventListener('focus', function(){ if(!el._snap) el._snap=el.innerHTML; });
+    el.addEventListener('focus', function(){
+      if(!el._snap) el._snap=el.innerHTML;
+      showFormatBar(el);
+    });
     el.addEventListener('blur', function(){
       if(el.innerHTML !== el._snap){
         if(!el.classList.contains('jbc-text-changed')){ changes.text++; el.classList.add('jbc-text-changed'); updateCounter(); }
         el._snap = el.innerHTML;
         showToast('Text updated');
       }
+      /* Delay hiding so clicking format bar buttons still works */
+      setTimeout(function(){
+        if(document.activeElement !== el && !document.activeElement.closest('#jbc-format-bar')){
+          hideFormatBar();
+        }
+      }, 200);
     });
     el.addEventListener('keydown', function(e){
       if(e.key==='Enter'&&!e.shiftKey&&el.tagName!=='P'&&el.tagName!=='BLOCKQUOTE') e.preventDefault();
@@ -790,16 +1093,19 @@
     var clone = document.documentElement.cloneNode(true);
 
     /* Remove all editor UI */
-    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu').forEach(function(el){ el.remove(); });
+    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar').forEach(function(el){ el.remove(); });
 
-    /* Clean contenteditable */
+    /* Clean contenteditable and move-mode classes */
     clone.querySelectorAll('[contenteditable]').forEach(function(el){
       el.removeAttribute('contenteditable');
-      el.classList.remove('jbc-editable','jbc-text-changed');
+      el.classList.remove('jbc-editable','jbc-text-changed','jbc-moved','jbc-move-active','jbc-selected');
       if(el.getAttribute('spellcheck') === 'false') el.removeAttribute('spellcheck');
       /* Clean empty class attributes */
       if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
+    /* Clean move-mode from body */
+    var body2 = clone.querySelector('body');
+    if(body2) body2.classList.remove('jbc-move-mode','jbc-placement-mode');
 
     /* Clean added elements — bake positioning into inline styles, remove editor controls */
     clone.querySelectorAll('.jbc-added').forEach(function(el){
