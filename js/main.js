@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- PARALLAX ON HERO ----
   const hero = document.querySelector('.hero');
   if (hero) {
-    const heroMega = hero.querySelector('.hero-mega');
+    const heroMega = hero.querySelector('.hero-mega:not(.hero-underlay)') || hero.querySelector('.hero-mega');
     const heroTag = hero.querySelector('.tag');
     const heroBottom = hero.querySelector('.hero-bottom');
 
@@ -204,9 +204,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const heroHeight = hero.offsetHeight;
           if (scrollY < heroHeight) {
             const ratio = scrollY / heroHeight;
-            if (heroMega) {
-              heroMega.style.transform = `translateY(${scrollY * 0.18}px)`;
-              heroMega.style.opacity = 1 - ratio * 0.7;
+            // Apply parallax to the oil-wrap wrapper so both layers move together
+            const oilWrap = hero.querySelector('.hero-oil-wrap');
+            const parallaxTarget = oilWrap || heroMega;
+            if (parallaxTarget) {
+              parallaxTarget.style.transform = `translateY(${scrollY * 0.18}px)`;
+              parallaxTarget.style.opacity = 1 - ratio * 0.7;
             }
             if (heroTag) {
               heroTag.style.transform = `translateY(${scrollY * 0.1}px)`;
@@ -545,70 +548,6 @@ document.addEventListener('DOMContentLoaded', () => {
       heroTag.style.opacity = '1';
       heroTag.style.filter = 'blur(0)';
     }, 100);
-  }
-
-  // ---- DEFINE / DESIGN / DESCRIBE FADE-IN ----
-  // Staggered entrance AFTER hero image loads; colors only appear then
-  const dddBlock = document.querySelector('.hero .jbc-custom p');
-  if (dddBlock) {
-    // Hide initially — text invisible, color transparent
-    const origColor = dddBlock.style.color || 'rgb(139,58,139)';
-    dddBlock.style.color = 'transparent';
-    dddBlock.style.opacity = '0';
-    dddBlock.style.transform = (dddBlock.style.transform || '') === 'none' ? 'translateY(20px)' : dddBlock.style.transform;
-    dddBlock.style.filter = 'blur(6px)';
-    dddBlock.style.fontFamily = "'Cormorant Garamond', Georgia, serif";
-    dddBlock.style.fontStyle = 'italic';
-    dddBlock.style.fontWeight = '400';
-
-    // Wait for hero image to load, then animate in
-    const heroImg = document.querySelector('.hero .jbc-custom img');
-    const revealDDD = () => {
-      // Split into individual words for staggered reveal
-      const text = dddBlock.innerHTML;
-      const words = text.split(/<br\s*\/?>/i);
-      dddBlock.innerHTML = '';
-      words.forEach((word, i) => {
-        const span = document.createElement('span');
-        span.textContent = word.trim();
-        span.style.cssText = `display:block; opacity:0; transform:translateY(18px); filter:blur(5px);
-          transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 200 + 100}ms,
-                      transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 200 + 100}ms,
-                      filter 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 200 + 100}ms,
-                      color 0.6s ease ${i * 200 + 300}ms;
-          color: transparent;`;
-        dddBlock.appendChild(span);
-        if (i < words.length - 1) dddBlock.appendChild(document.createElement('br'));
-      });
-
-      // Now reveal the container
-      dddBlock.style.transition = 'opacity 0.3s ease';
-      dddBlock.style.opacity = '1';
-      dddBlock.style.filter = 'none';
-
-      // Stagger each word in
-      requestAnimationFrame(() => {
-        dddBlock.querySelectorAll('span').forEach(s => {
-          s.style.opacity = '1';
-          s.style.transform = 'translateY(0)';
-          s.style.filter = 'blur(0)';
-          s.style.color = origColor;
-        });
-      });
-    };
-
-    if (heroImg) {
-      if (heroImg.complete) {
-        setTimeout(revealDDD, 600);
-      } else {
-        heroImg.addEventListener('load', () => setTimeout(revealDDD, 300));
-        // Fallback if image takes too long
-        setTimeout(revealDDD, 2500);
-      }
-    } else {
-      // No hero image found, just reveal after a delay
-      setTimeout(revealDDD, 1200);
-    }
   }
 
   // ---- SECTION BORDER REVEAL ----

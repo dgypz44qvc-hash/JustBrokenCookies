@@ -1042,8 +1042,13 @@ section { padding:var(--section-pad) 0; position:relative; }
   pointer-events: auto;
   margin: 0;
   padding: 0;
+  opacity: 1 !important;
   visibility: visible !important;
 }
+.jbc-custom p,
+.jbc-custom h1, .jbc-custom h2, .jbc-custom h3,
+.jbc-custom h4, .jbc-custom h5, .jbc-custom h6,
+.jbc-custom span,
 .jbc-custom img {
   opacity: 1 !important;
   transform: none;
