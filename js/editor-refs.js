@@ -1369,6 +1369,19 @@
     fontColorInput.value = rgbToHex(cs.color);
     fontFamilySelect.value = '';
     fontWeightSelect.value = '';
+    /* Populate line-height */
+    var lhSelect = formatBar.querySelector('#jbc-line-height');
+    if(lhSelect){
+      var lhVal = cs.lineHeight;
+      if(lhVal === 'normal') lhSelect.value = '';
+      else {
+        var lhNum = parseFloat(lhVal) / parseFloat(cs.fontSize);
+        var closest = ['1','1.2','1.4','1.6','1.8','2','2.5','3'].reduce(function(a,b){
+          return Math.abs(parseFloat(b)-lhNum) < Math.abs(parseFloat(a)-lhNum) ? b : a;
+        });
+        lhSelect.value = closest;
+      }
+    }
     /* Update body padding to account for format bar */
     document.body.style.paddingTop = '80px';
   }
@@ -1394,31 +1407,16 @@
     }
   }
 
-  /* ========== ALIGNMENT HELPER ========== */
-  function alignElement(el, alignVal){
-    /* Only touch THIS element — never the parent or siblings */
-    var cs = getComputedStyle(el);
-    var isInline = (cs.display === 'inline');
-
-    /* If inline, make it inline-block so text-align can work */
-    if(isInline){
-      el.style.display = 'inline-block';
-      el.style.width = '100%';
+  /* ========== EXEC-COMMAND HELPER ========== */
+  /* Uses document.execCommand for selection-aware formatting like MS Word.
+     If there's a text selection inside a contenteditable, it applies to the selection.
+     If no selection, it applies to the whole element as fallback. */
+  function execFmt(cmd, value){
+    /* Ensure focus is inside the active contenteditable */
+    if(activeFormatEl && activeFormatEl.getAttribute('contenteditable') === 'true'){
+      activeFormatEl.focus();
     }
-
-    el.style.textAlign = alignVal;
-
-    /* Reset this element's margins so alignment isn't fought by offsets */
-    if(alignVal === 'center'){
-      el.style.marginLeft = 'auto';
-      el.style.marginRight = 'auto';
-    } else if(alignVal === 'right'){
-      el.style.marginLeft = 'auto';
-      el.style.marginRight = '0';
-    } else if(alignVal === 'left'){
-      el.style.marginLeft = '0';
-      el.style.marginRight = '';
-    }
+    document.execCommand(cmd, false, value || null);
   }
 
   /* Prevent format bar interactions from stealing focus from the text element */
@@ -1426,15 +1424,17 @@
     e.preventDefault();
   });
 
-  /* Format bar actions */
+  /* Format bar actions — uses document.execCommand for selection-aware formatting */
   formatBar.addEventListener('click', function(e){
     var btn = e.target.closest('button[data-fmt]');
     if(!btn || !activeFormatEl) return;
     var fmt = btn.getAttribute('data-fmt');
     var el = activeFormatEl;
     var cs = getComputedStyle(el);
+    var isEditable = (el.getAttribute('contenteditable') === 'true');
 
     switch(fmt){
+      /* ---- Font size (whole element) ---- */
       case 'size-down':
         var s1 = Math.max(8, Math.round(parseFloat(cs.fontSize)) - 2);
         el.style.fontSize = s1 + 'px';
@@ -1445,31 +1445,99 @@
         el.style.fontSize = s2 + 'px';
         fontSizeInput.value = s2;
         break;
+
+      /* ---- Text formatting — execCommand for selection-based like Word ---- */
       case 'bold':
-        var isBold = parseInt(cs.fontWeight) >= 700;
-        el.style.fontWeight = isBold ? '400' : '700';
+        if(isEditable){ execFmt('bold'); }
+        else { el.style.fontWeight = parseInt(cs.fontWeight)>=700 ? '400' : '700'; }
         break;
       case 'italic':
-        el.style.fontStyle = cs.fontStyle === 'italic' ? 'normal' : 'italic';
+        if(isEditable){ execFmt('italic'); }
+        else { el.style.fontStyle = cs.fontStyle==='italic' ? 'normal' : 'italic'; }
         break;
       case 'underline':
-        var hasDeco = cs.textDecorationLine && cs.textDecorationLine.indexOf('underline') !== -1;
-        el.style.textDecoration = hasDeco ? 'none' : 'underline';
+        if(isEditable){ execFmt('underline'); }
+        else { el.style.textDecoration = (cs.textDecorationLine||'').indexOf('underline')!==-1 ? 'none' : 'underline'; }
         break;
+      case 'strikethrough':
+        if(isEditable){ execFmt('strikeThrough'); }
+        else { el.style.textDecoration = (cs.textDecorationLine||'').indexOf('line-through')!==-1 ? 'none' : 'line-through'; }
+        break;
+      case 'superscript':
+        if(isEditable){ execFmt('superscript'); }
+        break;
+      case 'subscript':
+        if(isEditable){ execFmt('subscript'); }
+        break;
+
+      /* ---- Uppercase toggle (whole element) ---- */
       case 'uppercase':
         el.style.textTransform = cs.textTransform === 'uppercase' ? 'none' : 'uppercase';
         break;
-      case 'align-left':
-      case 'align-center':
-      case 'align-right':
-      case 'align-justify':
-        var alignVal = fmt.replace('align-','');
-        alignElement(el, alignVal);
+
+      /* ---- Alignment — execCommand for per-selection control like Word ---- */
+      case 'justifyLeft':
+        if(isEditable){ execFmt('justifyLeft'); }
+        else { el.style.textAlign = 'left'; }
         break;
-      case 'color-gold':   el.style.color = '#E8891D'; fontColorInput.value = '#E8891D'; break;
-      case 'color-blush':  el.style.color = '#E84848'; fontColorInput.value = '#E84848'; break;
-      case 'color-wine':   el.style.color = '#8B3A8B'; fontColorInput.value = '#8B3A8B'; break;
-      case 'color-cream':  el.style.color = '#F0E6DA'; fontColorInput.value = '#F0E6DA'; break;
+      case 'justifyCenter':
+        if(isEditable){ execFmt('justifyCenter'); }
+        else { el.style.textAlign = 'center'; }
+        break;
+      case 'justifyRight':
+        if(isEditable){ execFmt('justifyRight'); }
+        else { el.style.textAlign = 'right'; }
+        break;
+      case 'justifyFull':
+        if(isEditable){ execFmt('justifyFull'); }
+        else { el.style.textAlign = 'justify'; }
+        break;
+
+      /* ---- Indent / Outdent ---- */
+      case 'indent':
+        if(isEditable){ execFmt('indent'); }
+        else {
+          var curPL = parseFloat(cs.paddingLeft) || 0;
+          el.style.paddingLeft = (curPL + 20) + 'px';
+        }
+        break;
+      case 'outdent':
+        if(isEditable){ execFmt('outdent'); }
+        else {
+          var curPL2 = parseFloat(cs.paddingLeft) || 0;
+          el.style.paddingLeft = Math.max(0, curPL2 - 20) + 'px';
+        }
+        break;
+
+      /* ---- Color presets ---- */
+      case 'color-gold':
+        if(isEditable){ execFmt('foreColor','#E8891D'); }
+        else { el.style.color = '#E8891D'; }
+        fontColorInput.value = '#E8891D';
+        break;
+      case 'color-blush':
+        if(isEditable){ execFmt('foreColor','#E84848'); }
+        else { el.style.color = '#E84848'; }
+        fontColorInput.value = '#E84848';
+        break;
+      case 'color-wine':
+        if(isEditable){ execFmt('foreColor','#8B3A8B'); }
+        else { el.style.color = '#8B3A8B'; }
+        fontColorInput.value = '#8B3A8B';
+        break;
+      case 'color-cream':
+        if(isEditable){ execFmt('foreColor','#F0E6DA'); }
+        else { el.style.color = '#F0E6DA'; }
+        fontColorInput.value = '#F0E6DA';
+        break;
+
+      /* ---- Remove highlight background ---- */
+      case 'removeHighlight':
+        if(isEditable){ execFmt('hiliteColor','transparent'); }
+        else { el.style.backgroundColor = ''; }
+        break;
+
+      /* ---- Letter spacing (whole element) ---- */
       case 'ls-down':
         var curLs = parseFloat(cs.letterSpacing) || 0;
         el.style.letterSpacing = (curLs - 0.5) + 'px';
@@ -1477,6 +1545,20 @@
       case 'ls-up':
         var curLs2 = parseFloat(cs.letterSpacing) || 0;
         el.style.letterSpacing = (curLs2 + 0.5) + 'px';
+        break;
+
+      /* ---- Clear all formatting ---- */
+      case 'removeFormat':
+        if(isEditable){ execFmt('removeFormat'); }
+        else {
+          el.style.fontWeight = '';
+          el.style.fontStyle = '';
+          el.style.textDecoration = '';
+          el.style.textTransform = '';
+          el.style.letterSpacing = '';
+          el.style.color = '';
+          el.style.backgroundColor = '';
+        }
         break;
     }
     markChanged(el);
@@ -1508,12 +1590,41 @@
     showToast('Weight changed');
   });
 
-  /* Color picker */
+  /* Color picker — uses execCommand on selection if editable */
   fontColorInput.addEventListener('input', function(){
     if(!activeFormatEl) return;
-    activeFormatEl.style.color = fontColorInput.value;
+    if(activeFormatEl.getAttribute('contenteditable') === 'true'){
+      execFmt('foreColor', fontColorInput.value);
+    } else {
+      activeFormatEl.style.color = fontColorInput.value;
+    }
     markChanged(activeFormatEl);
   });
+
+  /* Background / highlight color picker */
+  var bgColorInput = formatBar.querySelector('#jbc-bg-color');
+  if(bgColorInput){
+    bgColorInput.addEventListener('input', function(){
+      if(!activeFormatEl) return;
+      if(activeFormatEl.getAttribute('contenteditable') === 'true'){
+        execFmt('hiliteColor', bgColorInput.value);
+      } else {
+        activeFormatEl.style.backgroundColor = bgColorInput.value;
+      }
+      markChanged(activeFormatEl);
+    });
+  }
+
+  /* Line height select */
+  var lineHeightSelect = formatBar.querySelector('#jbc-line-height');
+  if(lineHeightSelect){
+    lineHeightSelect.addEventListener('change', function(){
+      if(!activeFormatEl || !lineHeightSelect.value) return;
+      activeFormatEl.style.lineHeight = lineHeightSelect.value;
+      markChanged(activeFormatEl);
+      showToast('Line spacing changed');
+    });
+  }
 
   /* ========== MOVE MODE — DRAG EXISTING ELEMENTS ========== */
   function initMoveModeDrag(){
