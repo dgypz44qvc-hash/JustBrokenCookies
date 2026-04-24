@@ -894,10 +894,16 @@
 
     el.addEventListener('mousedown', function(e){
       if(e.target.classList.contains('jbc-resize-handle')) return;
+      if(e.target.classList.contains('jbc-resize-handle-r')) return;
+      if(e.target.classList.contains('jbc-resize-handle-b')) return;
       if(e.target.classList.contains('jbc-delete-btn')) return;
-      if(e.target.getAttribute('contenteditable') === 'true' && document.activeElement === e.target) return;
       if(e.target.closest('.jbc-img-overlay')) return;
       if(e.button !== 0) return;
+      /* Let clicks through to any contenteditable text — don't hijack for dragging */
+      var editableTarget = e.target.closest('[contenteditable="true"]');
+      if(editableTarget) return;
+      /* Also skip if the wrapper is in editing mode */
+      if(el.classList.contains('jbc-editing')) return;
 
       dragging = true;
       startX = e.clientX;
@@ -937,10 +943,14 @@
 
     el.addEventListener('mousedown', function(e){
       if(e.target.classList.contains('jbc-resize-handle')) return;
+      if(e.target.classList.contains('jbc-resize-handle-r')) return;
+      if(e.target.classList.contains('jbc-resize-handle-b')) return;
       if(e.target.classList.contains('jbc-delete-btn')) return;
-      if(e.target.getAttribute('contenteditable') === 'true' && document.activeElement === e.target) return;
       if(e.target.closest('.jbc-img-overlay')) return;
       if(e.button !== 0) return;
+      var editableTarget2 = e.target.closest('[contenteditable="true"]');
+      if(editableTarget2) return;
+      if(el.classList.contains('jbc-editing')) return;
 
       dragging = true;
       startX = e.clientX;
@@ -1034,16 +1044,27 @@
     makeResizable(wrapper, rBottom, 'y');
   }
 
-  /* Double-click on a text wrapper to enter edit mode */
+  /* Click or double-click on a text wrapper to enter edit mode */
   function addDoubleClickEdit(wrapper){
-    wrapper.addEventListener('dblclick', function(e){
+    /* Single click on text enters editing */
+    wrapper.addEventListener('click', function(e){
       if(e.target.closest('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b')) return;
-      wrapper.classList.add('jbc-editing');
-      var textChild = wrapper.querySelector('[contenteditable]') || wrapper.querySelector('p,h1,h2,h3,h4,h5,h6,span');
-      if(textChild){
+      var textChild = wrapper.querySelector('[contenteditable="true"]') || wrapper.querySelector('p,h1,h2,h3,h4,h5,h6,span');
+      if(textChild && !textChild.querySelector('img')){
+        wrapper.classList.add('jbc-editing');
         textChild.setAttribute('contenteditable','true');
         textChild.focus();
-        /* Select all text for easy replacement */
+        showFormatBar(textChild);
+      }
+    });
+    /* Double-click selects all text for easy replacement */
+    wrapper.addEventListener('dblclick', function(e){
+      if(e.target.closest('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b')) return;
+      var textChild = wrapper.querySelector('[contenteditable="true"]') || wrapper.querySelector('p,h1,h2,h3,h4,h5,h6,span');
+      if(textChild && !textChild.querySelector('img')){
+        wrapper.classList.add('jbc-editing');
+        textChild.setAttribute('contenteditable','true');
+        textChild.focus();
         var sel = window.getSelection();
         var range = document.createRange();
         range.selectNodeContents(textChild);
@@ -1053,8 +1074,7 @@
       }
     });
     /* Exit editing mode on blur */
-    var innerEls = wrapper.querySelectorAll('p,h1,h2,h3,h4,h5,h6,span,[contenteditable]');
-    innerEls.forEach(function(el){
+    function watchBlur(el){
       el.addEventListener('blur', function(){
         setTimeout(function(){
           if(!wrapper.contains(document.activeElement) && !document.activeElement.closest('#jbc-format-bar')){
@@ -1062,7 +1082,8 @@
           }
         }, 200);
       });
-    });
+    }
+    wrapper.querySelectorAll('p,h1,h2,h3,h4,h5,h6,span,[contenteditable]').forEach(watchBlur);
   }
 
   /* ========== TEXT FORMAT TOOLBAR ========== */
