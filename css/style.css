@@ -1060,24 +1060,29 @@ section { padding:var(--section-pad) 0; position:relative; }
   content: '';
   display: block !important;
   position: absolute;
-  right: 148px;
+  right: 190px;
   top: 110px;
   height: 72vh;
   width: 1px;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(232, 72, 72, 0.7) 0px,
-    rgba(232, 72, 72, 0.7) 3px,
+    rgba(232, 72, 72, 0.55) 0px,
+    rgba(232, 72, 72, 0.55) 3px,
     transparent 3px,
     transparent 10px
   );
-  opacity: 0.75;
-  z-index: 9;
+  opacity: 0.7;
+  z-index: 4;
   pointer-events: none;
 }
 
 .hero::after {
+  content: none !important;
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 @media (max-width: 968px) {
