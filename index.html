@@ -7,7 +7,7 @@
   <meta name="description" content="JustBrokenCookies is a storytelling agency crafting visuals, strategy, and words that bring brands, products, and people to life.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&amp;family=Dancing+Script:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 <style>
@@ -16,7 +16,7 @@
         .hero-underlay {
           position:absolute; top:0; left:0; width:100%; height:100%;
           pointer-events:none; z-index:1; user-select:none;
-          opacity:0; transition:opacity 0.4s ease;
+          opacity:0; visibility:hidden; transition:opacity 0.4s ease, visibility 0.4s;
         }
         .hero-underlay .l1 {
           color:transparent !important;
@@ -40,7 +40,7 @@
           position:relative; z-index:2; --mx:-300px; --my:-300px;
         }
         /* DESKTOP hover reveal */
-        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; }
+        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; visibility:visible; }
         .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
           -webkit-mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
             transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
@@ -48,7 +48,7 @@
             transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
         }
         /* MOBILE scroll wipe */
-        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; }
+        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; visibility:visible; }
         .hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay) {
           -webkit-mask-image: linear-gradient(to bottom,
             transparent 0%, transparent var(--scroll-reveal,0%),

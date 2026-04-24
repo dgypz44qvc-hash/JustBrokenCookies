@@ -5,15 +5,14 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ---- PRELOADER ----
+  // ---- PRELOADER ---- (max 1s total)
   const preloader = document.querySelector('.preloader');
   if (preloader) {
-    const dismissPreloader = () => preloader.classList.add('loaded');
+    const dismissPreloader = () => { if (!preloader.classList.contains('loaded')) preloader.classList.add('loaded'); };
     window.addEventListener('load', dismissPreloader);
-    // Fallback if load already fired
-    if (document.readyState === 'complete') {
-      dismissPreloader();
-    }
+    if (document.readyState === 'complete') dismissPreloader();
+    // Hard cap: dismiss after 1 second no matter what
+    setTimeout(dismissPreloader, 1000);
   }
 
   // ---- PAGE TRANSITIONS ----
@@ -253,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .hero-underlay {
           position:absolute; top:0; left:0; width:100%; height:100%;
           pointer-events:none; z-index:1; user-select:none;
-          opacity:0; transition:opacity 0.4s ease;
+          opacity:0; visibility:hidden; transition:opacity 0.4s ease, visibility 0.4s;
         }
         .hero-underlay .l1 {
           color:transparent !important;
@@ -277,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
           position:relative; z-index:2; --mx:-300px; --my:-300px;
         }
         /* DESKTOP hover reveal */
-        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; }
+        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; visibility:visible; }
         .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
           -webkit-mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
             transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
@@ -285,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
         }
         /* MOBILE scroll wipe */
-        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; }
+        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; visibility:visible; }
         .hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay) {
           -webkit-mask-image: linear-gradient(to bottom,
             transparent 0%, transparent var(--scroll-reveal,0%),
@@ -303,13 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // DESKTOP: mouse tracking with lerp
         let targetX=-300,targetY=-300,currentX=-300,currentY=-300,oilActive=false,oilRAF=null;
         function lerpOil(){
-          currentX+=(targetX-currentX)*0.12; currentY+=(targetY-currentY)*0.12;
+          currentX+=(targetX-currentX)*0.4; currentY+=(targetY-currentY)*0.4;
           heroMega.style.setProperty('--mx',currentX+'px');
           heroMega.style.setProperty('--my',currentY+'px');
           if(oilActive||Math.abs(targetX-currentX)>0.5){oilRAF=requestAnimationFrame(lerpOil);}
           else{oilRAF=null;}
         }
-        heroMega.addEventListener('mouseenter',()=>{oilActive=true;wrapper.classList.add('oil-hover');if(!oilRAF)oilRAF=requestAnimationFrame(lerpOil);});
+        heroMega.addEventListener('mouseenter',(e)=>{const r=heroMega.getBoundingClientRect();currentX=targetX=e.clientX-r.left;currentY=targetY=e.clientY-r.top;heroMega.style.setProperty('--mx',currentX+'px');heroMega.style.setProperty('--my',currentY+'px');oilActive=true;wrapper.classList.add('oil-hover');if(!oilRAF)oilRAF=requestAnimationFrame(lerpOil);});
         heroMega.addEventListener('mouseleave',()=>{oilActive=false;wrapper.classList.remove('oil-hover');targetX=-300;targetY=-300;});
         heroMega.addEventListener('mousemove',(e)=>{const r=heroMega.getBoundingClientRect();targetX=e.clientX-r.left;targetY=e.clientY-r.top;if(!oilRAF)oilRAF=requestAnimationFrame(lerpOil);});
       } else {
@@ -546,6 +545,70 @@ document.addEventListener('DOMContentLoaded', () => {
       heroTag.style.opacity = '1';
       heroTag.style.filter = 'blur(0)';
     }, 100);
+  }
+
+  // ---- DEFINE / DESIGN / DESCRIBE FADE-IN ----
+  // Staggered entrance AFTER hero image loads; colors only appear then
+  const dddBlock = document.querySelector('.hero .jbc-custom p');
+  if (dddBlock) {
+    // Hide initially — text invisible, color transparent
+    const origColor = dddBlock.style.color || 'rgb(139,58,139)';
+    dddBlock.style.color = 'transparent';
+    dddBlock.style.opacity = '0';
+    dddBlock.style.transform = (dddBlock.style.transform || '') === 'none' ? 'translateY(20px)' : dddBlock.style.transform;
+    dddBlock.style.filter = 'blur(6px)';
+    dddBlock.style.fontFamily = "'Cormorant Garamond', Georgia, serif";
+    dddBlock.style.fontStyle = 'italic';
+    dddBlock.style.fontWeight = '400';
+
+    // Wait for hero image to load, then animate in
+    const heroImg = document.querySelector('.hero .jbc-custom img');
+    const revealDDD = () => {
+      // Split into individual words for staggered reveal
+      const text = dddBlock.innerHTML;
+      const words = text.split(/<br\s*\/?>/i);
+      dddBlock.innerHTML = '';
+      words.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.textContent = word.trim();
+        span.style.cssText = `display:block; opacity:0; transform:translateY(18px); filter:blur(5px);
+          transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 200 + 100}ms,
+                      transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 200 + 100}ms,
+                      filter 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 200 + 100}ms,
+                      color 0.6s ease ${i * 200 + 300}ms;
+          color: transparent;`;
+        dddBlock.appendChild(span);
+        if (i < words.length - 1) dddBlock.appendChild(document.createElement('br'));
+      });
+
+      // Now reveal the container
+      dddBlock.style.transition = 'opacity 0.3s ease';
+      dddBlock.style.opacity = '1';
+      dddBlock.style.filter = 'none';
+
+      // Stagger each word in
+      requestAnimationFrame(() => {
+        dddBlock.querySelectorAll('span').forEach(s => {
+          s.style.opacity = '1';
+          s.style.transform = 'translateY(0)';
+          s.style.filter = 'blur(0)';
+          s.style.color = origColor;
+        });
+      });
+    };
+
+    if (heroImg) {
+      if (heroImg.complete) {
+        setTimeout(revealDDD, 600);
+      } else {
+        heroImg.addEventListener('load', () => setTimeout(revealDDD, 300));
+        // Fallback if image takes too long
+        setTimeout(revealDDD, 2500);
+      }
+    } else {
+      // No hero image found, just reveal after a delay
+      setTimeout(revealDDD, 1200);
+    }
   }
 
   // ---- SECTION BORDER REVEAL ----
