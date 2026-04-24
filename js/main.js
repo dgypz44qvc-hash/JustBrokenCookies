@@ -550,6 +550,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   }
 
+  // ---- SERVICE CARD CLICK-TO-EXPAND ----
+  document.querySelectorAll('.service-card[data-expandable]').forEach(card => {
+    card.addEventListener('click', () => {
+      const wasExpanded = card.classList.contains('expanded');
+      // Close all cards first
+      document.querySelectorAll('.service-card.expanded').forEach(c => c.classList.remove('expanded'));
+      // Toggle the clicked one (if it wasn't already open)
+      if (!wasExpanded) card.classList.add('expanded');
+    });
+  });
+  // Close expanded card when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.service-card[data-expandable]')) {
+      document.querySelectorAll('.service-card.expanded').forEach(c => c.classList.remove('expanded'));
+    }
+  });
+
   // ---- SECTION BORDER REVEAL ----
   document.querySelectorAll('.sec-header, .hero-bottom, .testimonial-section, .section-divider').forEach(el => {
     const borderEl = el.querySelector('[style*="border"]') || el;

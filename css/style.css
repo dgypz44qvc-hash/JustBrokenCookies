@@ -376,6 +376,49 @@ section { padding:var(--section-pad) 0; position:relative; }
   color:var(--warm-gray); font-size:0.84rem; line-height:1.85; font-weight:300;
 }
 
+/* ---------- SERVICE CARD EXPAND ---------- */
+.service-expand {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s var(--ease-out-expo),
+              opacity 0.5s var(--ease-out-expo),
+              margin 0.5s var(--ease-out-expo);
+  margin-top: 0;
+}
+.service-card.expanded .service-expand {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 16px;
+}
+.service-expand p {
+  color: var(--warm-gray);
+  font-size: 0.82rem;
+  line-height: 1.9;
+  font-weight: 300;
+}
+.service-card[data-expandable] {
+  cursor: pointer;
+}
+.service-card.expanded {
+  background: var(--cream);
+  color: var(--charcoal);
+  border-color: var(--cream);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-deep);
+}
+.service-card.expanded h3 {
+  -webkit-text-fill-color: var(--charcoal);
+  background: none;
+}
+.service-card.expanded .service-sub { color: var(--blush); }
+.service-card.expanded p { color: var(--warm-gray); }
+.service-card.expanded .service-expand p { color: rgba(42,34,30,0.7); }
+.service-card.expanded::after { transform: scaleX(1); }
+.service-short {
+  transition: margin-bottom 0.4s var(--ease-out-expo);
+}
+
 /* ---------- PORTFOLIO GRID ---------- */
 .portfolio-grid, .portfolio-grid-full {
   display:grid; grid-template-columns:repeat(4,1fr);
