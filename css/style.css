@@ -357,12 +357,12 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 .service-card:hover::after { transform:scaleX(1); }
 .service-card:hover {
-  background:var(--cream); color:var(--charcoal);
-  border-color:var(--cream);
+  background:rgba(240,230,218,0.12); color:var(--cream);
+  border-color:rgba(240,230,218,0.25);
   transform:translateY(-6px);
   box-shadow:var(--shadow-deep);
 }
-.service-card:hover h3 { -webkit-text-fill-color:var(--charcoal); background:none; }
+.service-card:hover h3 { -webkit-text-fill-color:var(--cream); background:none; }
 .service-card:hover .service-sub { color:var(--blush); }
 .service-card:hover p { color:var(--warm-gray); }
 .service-card .service-num {
@@ -394,15 +394,14 @@ section { padding:var(--section-pad) 0; position:relative; }
 /* ---------- CINEMATIC DETAIL PANEL (16:9 wide card below service cards) ---------- */
 .service-cinema {
   grid-column: 1 / -1;
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease;
 }
 .service-cinema.visible {
-  display: block;
-  animation: cinemaIn 0.45s ease forwards;
-}
-@keyframes cinemaIn {
-  from { opacity: 0; transform: translateY(-14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  max-height: 800px;
+  opacity: 1;
 }
 .service-cinema-inner {
   background: rgba(30,26,23,0.6);
@@ -502,8 +501,8 @@ section { padding:var(--section-pad) 0; position:relative; }
   border-radius:4px;
 }
 .filter-btn:hover, .filter-btn.active {
-  border-color:var(--cream); color:var(--charcoal);
-  background:var(--cream);
+  border-color:rgba(240,230,218,0.3); color:var(--cream);
+  background:rgba(240,230,218,0.12);
 }
 
 /* ---------- ABOUT GRID ---------- */
@@ -556,10 +555,10 @@ section { padding:var(--section-pad) 0; position:relative; }
   border-radius:10px; box-shadow:var(--shadow-soft);
 }
 .value-card:hover {
-  background:var(--cream); color:var(--charcoal);
+  background:rgba(240,230,218,0.12); color:var(--cream);
   transform:translateY(-6px); box-shadow:var(--shadow-deep);
 }
-.value-card:hover h3 { -webkit-text-fill-color:var(--charcoal); background:none; }
+.value-card:hover h3 { -webkit-text-fill-color:var(--cream); background:none; }
 .value-card:hover p { color:var(--warm-gray); }
 .value-card .v-num {
   font-size:0.55rem; font-weight:700; letter-spacing:5px;
@@ -882,10 +881,10 @@ section { padding:var(--section-pad) 0; position:relative; }
   border-radius:10px; box-shadow:var(--shadow-soft);
 }
 .process-card:hover {
-  background:var(--cream); color:var(--charcoal);
+  background:rgba(240,230,218,0.12); color:var(--cream);
   transform:translateY(-6px); box-shadow:var(--shadow-deep);
 }
-.process-card:hover h3 { -webkit-text-fill-color:var(--charcoal); background:none; }
+.process-card:hover h3 { -webkit-text-fill-color:var(--cream); background:none; }
 .process-card:hover p { color:var(--warm-gray); }
 .process-card .p-num {
   font-family:var(--font-body); font-size:0.55rem;
