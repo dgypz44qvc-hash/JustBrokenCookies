@@ -1146,4 +1146,96 @@ section { padding:var(--section-pad) 0; position:relative; }
 
 .hero-secret-words .l3 {
   color: transparent !important;
+}/* ---- Hero word-by-word secret reveal ---- */
+/* Cancels the old pattern/underlay reveal */
+.hero .hero-underlay,
+.hero .hero-secret-words {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay),
+.hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay),
+.hero-oil-wrap .hero-mega:not(.hero-underlay) {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Make each hero word able to swap elegantly */
+.hero-mega:not(.hero-underlay) .l1,
+.hero-mega:not(.hero-underlay) .l2,
+.hero-mega:not(.hero-underlay) .l3 {
+  position: relative;
+  display: block;
+  width: max-content;
+  transition:
+    color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hidden replacement word */
+.hero-mega:not(.hero-underlay) .l1::after,
+.hero-mega:not(.hero-underlay) .l2::after,
+.hero-mega:not(.hero-underlay) .l3::after {
+  content: attr(data-secret);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  text-transform: none;
+
+  background: linear-gradient(
+    135deg,
+    rgba(240, 230, 218, 0.98) 0%,
+    rgba(232, 137, 29, 0.95) 34%,
+    rgba(232, 72, 72, 0.92) 68%,
+    rgba(139, 58, 139, 0.94) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transform: translateY(0.04em);
+  filter: blur(8px);
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* On hover: original word disappears, secret word appears */
+.hero-mega:not(.hero-underlay) .l1:hover,
+.hero-mega:not(.hero-underlay) .l2:hover,
+.hero-mega:not(.hero-underlay) .l3:hover {
+  color: transparent !important;
+  opacity: 1;
+  filter: blur(0.5px);
+}
+
+.hero-mega:not(.hero-underlay) .l1:hover::after,
+.hero-mega:not(.hero-underlay) .l2:hover::after,
+.hero-mega:not(.hero-underlay) .l3:hover::after {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* Keep the secret words aligned nicely */
+.hero-mega:not(.hero-underlay) .l1::after {
+  content: "Once";
+}
+
+.hero-mega:not(.hero-underlay) .l2::after {
+  content: "Upon";
+}
+
+.hero-mega:not(.hero-underlay) .l3::after {
+  content: "A Time";
 }
