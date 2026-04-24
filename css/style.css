@@ -989,3 +989,13 @@ section { padding:var(--section-pad) 0; }
   .footer-bottom { flex-direction:column; gap:10px; text-align:center; }
   .form-row { grid-template-columns:1fr; }
 }
+
+/* ---- Custom elements added via editor ---- */
+.jbc-custom {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  pointer-events: auto;
+  margin: 0;
+  padding: 0;
+}

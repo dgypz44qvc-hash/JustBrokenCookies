@@ -1932,52 +1932,103 @@
     /* Remove all editor UI elements */
     clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar,#jbc-guides,#jbc-snap-line').forEach(function(el){ el.remove(); });
 
-    /* ---- Clean ALL contenteditable attributes (both true and false) ---- */
+    /* ================================================================
+       STEP 1 — Strip animation/parallax inline styles from ALL elements.
+       main.js applies transform, opacity, filter, clip-path, transition
+       as inline styles for scroll animations. If we save mid-animation
+       these get baked in and break the live site. Reset them so main.js
+       can re-animate from clean initial state on the live page.
+       ================================================================ */
+    clone.querySelectorAll('body *').forEach(function(el){
+      /* Skip added elements — their inline positioning is intentional */
+      if(el.classList.contains('jbc-added')) return;
+      /* Skip added element children */
+      if(el.closest('.jbc-added')) return;
+      /* Skip images inside wrappers — handled separately */
+      if(el.closest('.jbc-img-wrap')) return;
+
+      /* Only strip animation props that main.js sets dynamically */
+      var hadStyle = el.hasAttribute('style');
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.filter = '';
+      el.style.clipPath = '';
+      el.style.transition = '';
+      /* Clean up empty style attribute */
+      if(hadStyle && el.getAttribute('style').replace(/;\s*/g,'').trim() === ''){
+        el.removeAttribute('style');
+      }
+    });
+
+    /* ================================================================
+       STEP 2 — Clean ALL contenteditable attributes (true AND false)
+       ================================================================ */
     clone.querySelectorAll('[contenteditable]').forEach(function(el){
       el.removeAttribute('contenteditable');
       el.classList.remove('jbc-editable','jbc-text-changed','jbc-moved','jbc-move-active','jbc-selected','jbc-editing','jbc-grabbed','jbc-added-text');
       if(el.getAttribute('spellcheck') === 'false') el.removeAttribute('spellcheck');
       el.removeAttribute('data-added');
-      /* Clean empty class/style attributes */
       if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
 
-    /* ---- Clean move-mode / placement from body ---- */
+    /* Clean move-mode / placement from body */
     var body2 = clone.querySelector('body');
     if(body2) body2.classList.remove('jbc-move-mode','jbc-placement-mode');
 
-    /* ---- Clean added elements — bake positioning, remove editor controls ---- */
+    /* ================================================================
+       STEP 3 — Clean ADDED elements — bake positioning, strip editor UI
+       These are user-created text/image elements from the + menu or paste.
+       They need to survive as absolute-positioned divs with a permanent
+       class so page CSS doesn't accidentally affect them.
+       ================================================================ */
     clone.querySelectorAll('.jbc-added').forEach(function(el){
-      /* Bake the CSS class properties into inline so they survive without the editor CSS */
+      /* Give it a permanent, non-editor class so it's identifiable
+         and can be excluded from page CSS if needed */
+      el.classList.add('jbc-custom');
+
+      /* Bake ALL needed CSS into inline so it works without editor stylesheet */
       el.style.position = 'absolute';
       el.style.zIndex = el.style.zIndex || '5';
-      /* Clean editor-only properties */
+      el.style.display = 'block';
+      el.style.pointerEvents = 'auto';
+      /* Strip editor-only inline props */
       el.style.cursor = '';
       el.style.userSelect = '';
       el.style.outline = '';
       el.style.outlineOffset = '';
       el.style.boxShadow = '';
-      /* Remove editor-only children */
+      el.style.opacity = el.style.opacity || '';
+
+      /* Remove editor-only children (delete btn, resize handles) */
       el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b').forEach(function(c){ c.remove(); });
-      /* Remove the editor classes */
+
+      /* Clean inner text elements — remove editor artifacts from <p>, <span>, etc. */
+      el.querySelectorAll('p,h1,h2,h3,h4,h5,h6,span,div').forEach(function(inner){
+        inner.style.cursor = '';
+        inner.style.outline = '';
+        inner.style.userSelect = '';
+        inner.removeAttribute('contenteditable');
+        inner.removeAttribute('spellcheck');
+        inner.removeAttribute('data-added');
+        if(inner.getAttribute('class') === '') inner.removeAttribute('class');
+      });
+
+      /* Remove editor classes, keep jbc-custom */
       el.classList.remove('jbc-added','jbc-added-text','jbc-selected','jbc-editing','jbc-grabbed');
       el.removeAttribute('data-pos-type');
       el.removeAttribute('data-box');
       el.removeAttribute('data-orig-z');
       el.removeAttribute('data-added');
-      /* Clean children that have data-added */
-      el.querySelectorAll('[data-added]').forEach(function(c){ c.removeAttribute('data-added'); });
-      /* Clean children that still have contenteditable */
-      el.querySelectorAll('[contenteditable]').forEach(function(c){
-        c.removeAttribute('contenteditable');
-        c.removeAttribute('spellcheck');
-      });
-      if(el.getAttribute('class') === '') el.removeAttribute('class');
-      /* Clean empty style attributes left after clearing editor properties */
-      if(el.getAttribute('style') && el.getAttribute('style').replace(/;\s*$/,'').trim() === '') el.removeAttribute('style');
+      if(el.getAttribute('class') === 'jbc-custom'){
+        /* Class is just jbc-custom, that's fine */
+      } else if(el.getAttribute('class') === ''){
+        el.setAttribute('class','jbc-custom');
+      }
     });
 
-    /* ---- Unwrap image wrappers — restore images to their original position ---- */
+    /* ================================================================
+       STEP 4 — Unwrap image wrappers (restore <img> to original spot)
+       ================================================================ */
     clone.querySelectorAll('.jbc-img-wrap').forEach(function(wrap){
       var img = wrap.querySelector('img');
       if(img){
@@ -1987,9 +2038,14 @@
         img.removeAttribute('data-orig-src');
         img.removeAttribute('data-added');
         img.removeAttribute('data-save-path');
+        /* Strip animation inline styles from image too */
+        img.style.opacity = '';
+        img.style.transform = '';
+        img.style.filter = '';
+        img.style.transition = '';
+        if(img.getAttribute('style') && img.getAttribute('style').replace(/;\s*/g,'').trim() === '') img.removeAttribute('style');
         wrap.parentNode.insertBefore(img, wrap);
       }
-      /* Remove overlay, file input, and wrapper */
       wrap.remove();
     });
 
@@ -2010,7 +2066,9 @@
       img.removeAttribute('data-orig-src');
     });
 
-    /* ---- Catch any remaining editor data attributes ---- */
+    /* ================================================================
+       STEP 5 — Catch any remaining editor data attributes
+       ================================================================ */
     clone.querySelectorAll('[data-added]').forEach(function(el){ el.removeAttribute('data-added'); });
     clone.querySelectorAll('[data-orig-z]').forEach(function(el){ el.removeAttribute('data-orig-z'); });
     clone.querySelectorAll('[data-pos-type]').forEach(function(el){ el.removeAttribute('data-pos-type'); });
@@ -2019,12 +2077,16 @@
     /* Remove hidden file inputs left over */
     clone.querySelectorAll('input[type="file"]').forEach(function(fi){ fi.remove(); });
 
-    /* ---- Remove editor styles (the injected <style> block) ---- */
+    /* ================================================================
+       STEP 6 — Remove editor <style> block
+       ================================================================ */
     clone.querySelectorAll('style').forEach(function(s){
       if(s.textContent.indexOf('jbc-editor')!==-1||s.textContent.indexOf('jbc-editable')!==-1||s.textContent.indexOf('jbc-add')!==-1||s.textContent.indexOf('jbc-context')!==-1||s.textContent.indexOf('jbc-format')!==-1||s.textContent.indexOf('jbc-move')!==-1||s.textContent.indexOf('jbc-toast')!==-1) s.remove();
     });
 
-    /* ---- Clean any leftover editor classes from ALL elements ---- */
+    /* ================================================================
+       STEP 7 — Final sweep: remove ALL leftover editor classes
+       ================================================================ */
     var editorClasses = ['jbc-editable','jbc-text-changed','jbc-moved','jbc-move-active','jbc-selected',
       'jbc-editing','jbc-grabbed','jbc-added','jbc-added-text','jbc-placement-mode','jbc-move-mode'];
     editorClasses.forEach(function(cls){
@@ -2034,13 +2096,26 @@
       });
     });
 
-    /* ---- Clean body ---- */
+    /* ================================================================
+       STEP 8 — Clean body
+       ================================================================ */
     var body = clone.querySelector('body');
     if(body){
       body.style.marginTop = '';
       body.style.paddingTop = '';
+      body.style.overflow = '';
       body.classList.remove('jbc-placement-mode','jbc-move-mode');
       if(body.getAttribute('style') === '') body.removeAttribute('style');
+    }
+
+    /* ================================================================
+       STEP 9 — Clean <nav> inline styles (navbar hide/show from scroll)
+       ================================================================ */
+    var nav = clone.querySelector('nav');
+    if(nav){
+      nav.style.transform = '';
+      nav.style.transition = '';
+      if(nav.getAttribute('style') && nav.getAttribute('style').replace(/;\s*/g,'').trim() === '') nav.removeAttribute('style');
     }
 
     return '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
