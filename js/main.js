@@ -452,4 +452,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---- MOBILE: REVEAL COLOR ON SCROLL ----
+  if (!window.matchMedia('(hover:hover)').matches) {
+    const allImages = document.querySelectorAll(
+      '.portfolio-item img, .blog-card-image img, .team-card img, ' +
+      '.about-image img, .service-detail-image img'
+    );
+    const colorObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('color-revealed');
+          }, 300);
+          colorObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    allImages.forEach(img => colorObserver.observe(img));
+  }
+
 });
