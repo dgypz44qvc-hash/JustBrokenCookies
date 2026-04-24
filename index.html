@@ -91,7 +91,7 @@
         <span>The 3D Process</span>
       </div>
       <div class="services-grid">
-        <div class="service-card" data-expandable>
+        <div class="service-card" data-expandable data-card="1">
           <div class="service-num">NO. 01</div>
           <h3>Define</h3>
           <span class="service-sub">understand</span>
@@ -103,7 +103,7 @@
             <p>By the end of this step, things are clearer. We know what we are building, why we are building it, and how we might tell it.</p>
           </div>
         </div>
-        <div class="service-card" data-expandable>
+        <div class="service-card" data-expandable data-card="2">
           <div class="service-num">NO. 02</div>
           <h3>Design</h3>
           <span class="service-sub">craft</span>
@@ -115,7 +115,7 @@
             <p>At the end of this phase, the story is clear, structured, and ready to be experienced.</p>
           </div>
         </div>
-        <div class="service-card" data-expandable>
+        <div class="service-card" data-expandable data-card="3">
           <div class="service-num">NO. 03</div>
           <h3>Describe</h3>
           <span class="service-sub">deliver</span>
@@ -127,9 +127,27 @@
             <p>When it works, people understand it quickly, but it also stays with them a bit longer. That's the goal. Not just to show something, but to make it land.</p>
           </div>
         </div>
-        <!-- Reading panel injected by JS -->
-        <div class="service-reading-panel" id="serviceReadingPanel">
-          <div class="service-reading-panel-inner" id="serviceReadingContent"></div>
+        <!-- Detail cards (hidden until parent clicked) -->
+        <div class="service-detail-card" data-parent="1">
+          <h4>Define</h4>
+          <p>What is the subject? A person, a brand, a project. What stage is it at? What is working, what is missing, what is unclear.</p>
+          <p>We ask simple questions, but we go a bit deeper than usual. What do you actually want people to feel? What should change after they see this? Who is it really for?</p>
+          <p>Then we look at the tools. Does this story need photography, video, a website, or written content? Or a mix of them. The choice comes from the goal, not from trends.</p>
+          <p>By the end of this step, things are clearer. We know what we are building, why we are building it, and how we might tell it.</p>
+        </div>
+        <div class="service-detail-card" data-parent="2">
+          <h4>Design</h4>
+          <p>We focus on details. How images are composed. How a video moves. How text sits on a page. How everything works together, not as separate parts, but as one story.</p>
+          <p>We don't add things just to make it look good. Everything needs a reason. If something feels too much, we simplify it. If something feels empty, we build it up.</p>
+          <p>This is also where different media connect. A visual can support a message. A layout can guide attention. A small detail can change how everything is perceived.</p>
+          <p>At the end of this phase, the story is clear, structured, and ready to be experienced.</p>
+        </div>
+        <div class="service-detail-card" data-parent="3">
+          <h4>Describe</h4>
+          <p>We think about flow. What do they see first? What comes next? Where do they pause? What stays with them?</p>
+          <p>We don't try to say everything at once. We let the story unfold in a way that feels natural.</p>
+          <p>If it's a website, it guides you. If it's a video, it carries you through. If it's text, it stays simple and direct.</p>
+          <p>When it works, people understand it quickly, but it also stays with them a bit longer. That's the goal. Not just to show something, but to make it land.</p>
         </div>
       </div>
     </div>

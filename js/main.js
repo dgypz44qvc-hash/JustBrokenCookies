@@ -557,65 +557,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   }
 
-  // ---- SERVICE CARD → READING PANEL ----
-  const readingPanel = document.getElementById('serviceReadingPanel');
-  const readingContent = document.getElementById('serviceReadingContent');
-  let activeCard = null;
+  // ---- SERVICE CARD → DETAIL CARD TOGGLE ----
+  const parentCards = document.querySelectorAll('.service-card[data-card]');
+  const detailCards = document.querySelectorAll('.service-detail-card[data-parent]');
 
-  if (readingPanel && readingContent) {
-    const cards = document.querySelectorAll('.service-card[data-expandable]');
-
-    cards.forEach(card => {
+  if (parentCards.length && detailCards.length) {
+    parentCards.forEach(card => {
       card.addEventListener('click', (e) => {
         e.stopPropagation();
-        const expandDiv = card.querySelector('.service-expand');
-        if (!expandDiv) return;
+        const id = card.getAttribute('data-card');
+        const detail = document.querySelector('.service-detail-card[data-parent="' + id + '"]');
+        if (!detail) return;
 
-        // If same card clicked again, close
-        if (activeCard === card && readingPanel.classList.contains('open')) {
-          readingPanel.classList.remove('open');
-          activeCard = null;
-          return;
+        const wasVisible = detail.classList.contains('visible');
+
+        // Close all detail cards first
+        detailCards.forEach(d => d.classList.remove('visible'));
+
+        // If this one wasn't open, open it
+        if (!wasVisible) {
+          detail.classList.add('visible');
+          // Smooth scroll to show the detail card
+          setTimeout(() => {
+            detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 80);
         }
-
-        // Get card title
-        const titleEl = card.querySelector('h3');
-        const title = titleEl ? titleEl.textContent : '';
-
-        // Inject content
-        readingContent.innerHTML = '<h4>' + title + '</h4>' + expandDiv.innerHTML;
-
-        // Close first if already open (reset animation)
-        readingPanel.classList.remove('open');
-
-        // Move panel right after the clicked card in the grid
-        card.after(readingPanel);
-
-        // Force reflow then open
-        void readingPanel.offsetHeight;
-        readingPanel.classList.add('open');
-
-        activeCard = card;
-
-        // Scroll panel into view
-        setTimeout(() => {
-          readingPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
       });
     });
 
-    // Close on mouseleave from reading panel
-    readingPanel.addEventListener('mouseleave', () => {
-      readingPanel.classList.remove('open');
-      activeCard = null;
-    });
-
-    // Close if clicking outside
+    // Close detail cards when clicking outside
     document.addEventListener('click', (e) => {
-      if (!e.target.closest('.service-card[data-expandable]') &&
-          !e.target.closest('.service-reading-panel')) {
-        readingPanel.classList.remove('open');
-        activeCard = null;
+      if (!e.target.closest('.service-card[data-card]') &&
+          !e.target.closest('.service-detail-card')) {
+        detailCards.forEach(d => d.classList.remove('visible'));
       }
     });
   }

@@ -391,52 +391,48 @@ section { padding:var(--section-pad) 0; position:relative; }
   display: none;
 }
 
-/* ---------- READING PANEL (appears below clicked card) ---------- */
-.service-reading-panel {
-  grid-column: 1 / -1;
+/* ---------- DETAIL CARDS (second row, hidden until parent clicked) ---------- */
+.service-detail-card {
   display: none;
-}
-.service-reading-panel.open {
-  display: block;
-  animation: panelSlideIn 0.4s ease forwards;
-}
-@keyframes panelSlideIn {
-  from { opacity: 0; transform: translateY(-12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.service-reading-panel-inner {
-  background: rgba(30,26,23,0.65);
+  background: rgba(30,26,23,0.55);
   border: var(--border);
   border-radius: 10px;
-  padding: 48px 52px;
-  margin-top: 18px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding: 40px 38px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-.service-reading-panel-inner h4 {
+.service-detail-card.visible {
+  display: block;
+  animation: detailFadeIn 0.4s ease forwards;
+}
+@keyframes detailFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.service-detail-card h4 {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--cream);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   letter-spacing: -0.3px;
 }
-.service-reading-panel-inner h4::after {
+.service-detail-card h4::after {
   content: '';
   display: block;
-  width: 40px;
+  width: 36px;
   height: 2px;
   background: linear-gradient(90deg, var(--gold), var(--blush));
-  margin-top: 12px;
+  margin-top: 10px;
 }
-.service-reading-panel-inner p {
+.service-detail-card p {
   color: var(--warm-gray);
-  font-size: 0.84rem;
-  line-height: 1.95;
+  font-size: 0.82rem;
+  line-height: 1.9;
   font-weight: 300;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-.service-reading-panel-inner p:last-child {
+.service-detail-card p:last-child {
   margin-bottom: 0;
 }
 
@@ -1045,7 +1041,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .blog-grid { grid-template-columns:1fr; }
   .cursor-dot, .cursor-ring { display:none; }
 
-  .service-reading-panel-inner { padding:30px 24px; }
+  .service-detail-card { padding:28px 22px; }
 
   /* Hero added image — scale down and reposition for mobile */
   .hero .jbc-custom img { max-height:45vh; object-fit:cover; border-radius:4px; }
