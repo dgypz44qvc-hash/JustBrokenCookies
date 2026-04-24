@@ -224,152 +224,117 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // ---- OIL-ON-WATER HERO TEXT REVEAL ----
-    // Two identical layers of text stacked exactly on top of each other.
-    // Bottom layer: white text with broken-cookie crackle pattern
-    // Top layer: the normal colored text, with a CSS mask hole on hover
-    // Hovering "pushes aside" the colored oil to reveal the white pattern beneath
     if (heroMega) {
+      const isTouch = !window.matchMedia('(hover:hover)').matches;
 
-      // 1. Wrap heroMega so we can stack the underlay perfectly on top
+      // 1. Wrap heroMega
       const wrapper = document.createElement('div');
       wrapper.classList.add('hero-oil-wrap');
       heroMega.parentElement.insertBefore(wrapper, heroMega);
       wrapper.appendChild(heroMega);
 
-      // 2. Clone and insert the underlay INSIDE the same wrapper
-      //    Keep .hero-mega class so .hero-mega .l1/.l2/.l3 CSS rules still apply
+      // 2. Clone underlay
       const underlay = heroMega.cloneNode(true);
       underlay.classList.add('hero-underlay');
       underlay.removeAttribute('style');
-      wrapper.insertBefore(underlay, heroMega); // underlay first = behind
+      wrapper.insertBefore(underlay, heroMega);
 
-      // 3. Inject CSS — both layers are position:absolute inside wrapper
+      // 3. SVG patterns — tattoo ink (black #111 on white), fine-line art
+      const lensSVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cdefs%3E%3Cstyle%3E*%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='55' cy='55' r='50' stroke-width='0.6' opacity='0.5'/%3E%3Ccircle cx='55' cy='55' r='42' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='34' stroke-width='0.7' opacity='0.55'/%3E%3Ccircle cx='55' cy='55' r='25' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='17' stroke-width='0.8' opacity='0.6'/%3E%3Ccircle cx='55' cy='55' r='9' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='55' cy='55' r='3' stroke-width='0.6' opacity='0.5'/%3E%3Cline x1='55' y1='2' x2='55' y2='10' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='55' y1='100' x2='55' y2='108' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='2' y1='55' x2='10' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='100' y1='55' x2='108' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='16' y1='16' x2='22' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='16' x2='88' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='16' y1='94' x2='22' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='94' x2='88' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M55 5 L58 15 L55 12 L52 15Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M105 55 L95 58 L98 55 L95 52Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M30 12 Q55 32 80 12' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M98 30 Q78 55 98 80' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M80 98 Q55 78 30 98' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M12 80 Q32 55 12 30' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M36 22 Q44 34 55 30 Q66 26 72 18' stroke-width='0.35' opacity='0.28'/%3E%3Cpath d='M88 36 Q76 44 80 55 Q84 66 92 72' stroke-width='0.35' opacity='0.28'/%3E%3C/svg%3E";
+      const constellSVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130'%3E%3Cdefs%3E%3Cstyle%3Eline,path%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='28' cy='22' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='28' cy='22' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='85' cy='16' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='85' cy='16' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='65' cy='52' r='4' fill='none' stroke='%23111' stroke-width='0.8' opacity='0.65'/%3E%3Ccircle cx='65' cy='52' r='1.5' fill='%23111' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='105' cy='62' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='105' cy='62' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='48' cy='105' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='48' cy='105' r='0.8' fill='%23111' opacity='0.45'/%3E%3Cline x1='28' y1='22' x2='65' y2='52' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='85' y2='16' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='65' y1='52' x2='105' y2='62' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='22' y2='75' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='22' y1='75' x2='48' y2='105' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='105' y1='62' x2='110' y2='110' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M65 46 L71 52 L65 58 L59 52Z' stroke-width='0.5' opacity='0.45'/%3E%3Cpath d='M28 22 Q12 48 22 75' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3Cpath d='M85 16 Q110 38 105 62' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3C/svg%3E";
+      const quillSVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='130' viewBox='0 0 150 130'%3E%3Cdefs%3E%3Cstyle%3Epath,line%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Cpath d='M20 42 L28 18 L24 8' stroke-width='1' opacity='0.6'/%3E%3Cpath d='M28 18 Q36 28 30 42' stroke-width='0.7' opacity='0.5'/%3E%3Cpath d='M22 44 L24 42 L20 42 L22 44Z' fill='%23111' opacity='0.5'/%3E%3Cline x1='18' y1='46' x2='6' y2='60' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='19' y1='49' x2='8' y2='64' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='20' y1='52' x2='10' y2='68' stroke-width='0.35' opacity='0.28'/%3E%3Cline x1='21' y1='55' x2='12' y2='72' stroke-width='0.3' opacity='0.25'/%3E%3Ccircle cx='30' cy='42' r='1.5' fill='%23111' opacity='0.45'/%3E%3Cpath d='M10 65 Q35 22 62 48 Q78 62 98 32 Q115 8 142 50' stroke-width='0.6' opacity='0.4'/%3E%3Cpath d='M5 92 Q32 68 58 82 Q80 95 108 62 Q128 38 145 72' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M15 112 Q45 98 65 106 Q88 116 108 96 Q128 78 142 100' stroke-width='0.35' opacity='0.25'/%3E%3Cpath d='M112 10 Q124 4 128 16 Q134 30 124 36 Q112 42 108 30 Q104 18 112 10' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='95' cy='30' r='0.8' fill='%23111' opacity='0.35'/%3E%3Ccircle cx='58' cy='50' r='0.6' fill='%23111' opacity='0.3'/%3E%3Ccircle cx='128' cy='65' r='0.8' fill='%23111' opacity='0.3'/%3E%3Cpath d='M72 112 Q80 100 88 112' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M64 116 Q80 96 96 116' stroke-width='0.4' opacity='0.3'/%3E%3Cline x1='80' y1='96' x2='80' y2='120' stroke-width='0.3' opacity='0.25'/%3E%3C/svg%3E";
+      const gradBG = "linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%)";
+
+      // 4. Inject CSS
       const oilCSS = document.createElement('style');
       oilCSS.textContent = `
-        /* Wrapper — clips everything inside hero bounds */
-        .hero-oil-wrap {
-          position: relative;
-          display: inline-block;
-          width: 100%;
-          overflow: hidden;
-        }
-        .hero { overflow: hidden !important; }
-
-        /* --- Underlay: HIDDEN by default, only visible on hover --- */
+        .hero-oil-wrap { position:relative; display:inline-block; width:100%; overflow:hidden; }
+        .hero { overflow:hidden !important; }
         .hero-underlay {
-          position: absolute;
-          top: 0; left: 0; width: 100%; height: 100%;
-          pointer-events: none;
-          z-index: 1;
-          user-select: none;
-          opacity: 0;
-          transition: opacity 0.3s ease;
+          position:absolute; top:0; left:0; width:100%; height:100%;
+          pointer-events:none; z-index:1; user-select:none;
+          opacity:0; transition:opacity 0.4s ease;
         }
-        .hero-oil-wrap.oil-hover .hero-underlay {
-          opacity: 1;
-        }
-
-        /* JUST — Camera lens: aperture rings, iris blades (~50% opacity) */
         .hero-underlay .l1 {
-          color: transparent !important;
-          background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23fff' stroke-width='1.5' opacity='0.6'/%3E%3Ccircle cx='50' cy='50' r='36' fill='none' stroke='%23fff' stroke-width='1.2' opacity='0.55'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23fff' stroke-width='1.5' opacity='0.6'/%3E%3Ccircle cx='50' cy='50' r='16' fill='none' stroke='%23fff' stroke-width='1' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='7' fill='none' stroke='%23fff' stroke-width='2' opacity='0.65'/%3E%3Cline x1='50' y1='2' x2='50' y2='14' stroke='%23fff' stroke-width='1' opacity='0.5'/%3E%3Cline x1='50' y1='86' x2='50' y2='98' stroke='%23fff' stroke-width='1' opacity='0.5'/%3E%3Cline x1='2' y1='50' x2='14' y2='50' stroke='%23fff' stroke-width='1' opacity='0.5'/%3E%3Cline x1='86' y1='50' x2='98' y2='50' stroke='%23fff' stroke-width='1' opacity='0.5'/%3E%3Cpath d='M50 4 L55 20 L50 15 L45 20 Z' fill='%23fff' opacity='0.25'/%3E%3Cpath d='M96 50 L80 55 L85 50 L80 45 Z' fill='%23fff' opacity='0.25'/%3E%3Cpath d='M50 96 L45 80 L50 85 L55 80 Z' fill='%23fff' opacity='0.25'/%3E%3Cpath d='M4 50 L20 45 L15 50 L20 55 Z' fill='%23fff' opacity='0.25'/%3E%3Cpath d='M26 10 Q50 30 74 10' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M90 26 Q70 50 90 74' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M74 90 Q50 70 26 90' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M10 74 Q30 50 10 26' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.4'/%3E%3Cline x1='35' y1='8' x2='33' y2='14' stroke='%23fff' stroke-width='0.5' opacity='0.35'/%3E%3Cline x1='65' y1='8' x2='67' y2='14' stroke='%23fff' stroke-width='0.5' opacity='0.35'/%3E%3Cline x1='92' y1='35' x2='86' y2='33' stroke='%23fff' stroke-width='0.5' opacity='0.35'/%3E%3Cline x1='92' y1='65' x2='86' y2='67' stroke='%23fff' stroke-width='0.5' opacity='0.35'/%3E%3C/svg%3E") 0 0 / 100px 100px repeat,
-            linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(215,205,192,0.9) 50%, rgba(255,255,255,0.95) 100%);
-          -webkit-background-clip: text !important;
-          background-clip: text !important;
-          -webkit-text-fill-color: transparent !important;
+          color:transparent !important;
+          background: url("${lensSVG}") 0 0/110px 110px repeat, ${gradBG};
+          -webkit-background-clip:text !important; background-clip:text !important;
+          -webkit-text-fill-color:transparent !important;
         }
-
-        /* BROKEN — Strategy: constellation network (~50% opacity) */
         .hero-underlay .l2 {
-          color: transparent !important;
-          background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='25' cy='20' r='4' fill='%23fff' opacity='0.55'/%3E%3Ccircle cx='80' cy='15' r='3.5' fill='%23fff' opacity='0.5'/%3E%3Ccircle cx='60' cy='50' r='5' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='20' cy='70' r='3.5' fill='%23fff' opacity='0.5'/%3E%3Ccircle cx='100' cy='60' r='4' fill='%23fff' opacity='0.55'/%3E%3Ccircle cx='45' cy='100' r='3.5' fill='%23fff' opacity='0.5'/%3E%3Ccircle cx='105' cy='105' r='3' fill='%23fff' opacity='0.45'/%3E%3Ccircle cx='45' cy='30' r='2' fill='%23fff' opacity='0.35'/%3E%3Ccircle cx='85' cy='38' r='2' fill='%23fff' opacity='0.35'/%3E%3Ccircle cx='35' cy='55' r='2' fill='%23fff' opacity='0.3'/%3E%3Ccircle cx='80' cy='85' r='2' fill='%23fff' opacity='0.35'/%3E%3Cline x1='25' y1='20' x2='45' y2='30' stroke='%23fff' stroke-width='1.2' opacity='0.45'/%3E%3Cline x1='45' y1='30' x2='60' y2='50' stroke='%23fff' stroke-width='1.2' opacity='0.45'/%3E%3Cline x1='60' y1='50' x2='80' y2='15' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cline x1='60' y1='50' x2='85' y2='38' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cline x1='85' y1='38' x2='100' y2='60' stroke='%23fff' stroke-width='1.2' opacity='0.45'/%3E%3Cline x1='60' y1='50' x2='35' y2='55' stroke='%23fff' stroke-width='0.8' opacity='0.35'/%3E%3Cline x1='35' y1='55' x2='20' y2='70' stroke='%23fff' stroke-width='1.2' opacity='0.45'/%3E%3Cline x1='20' y1='70' x2='45' y2='100' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cline x1='100' y1='60' x2='105' y2='105' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cline x1='45' y1='100' x2='80' y2='85' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cline x1='80' y1='85' x2='105' y2='105' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cpath d='M60 43 L67 50 L60 57 L53 50 Z' fill='none' stroke='%23fff' stroke-width='1.2' opacity='0.5'/%3E%3Cpath d='M25 20 Q8 45 20 70' fill='none' stroke='%23fff' stroke-width='0.6' stroke-dasharray='3 5' opacity='0.3'/%3E%3Cpath d='M80 15 Q108 38 100 60' fill='none' stroke='%23fff' stroke-width='0.6' stroke-dasharray='3 5' opacity='0.3'/%3E%3C/svg%3E") 0 0 / 120px 120px repeat,
-            linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(215,205,192,0.9) 50%, rgba(255,255,255,0.95) 100%);
-          -webkit-background-clip: text !important;
-          background-clip: text !important;
-          -webkit-text-fill-color: transparent !important;
+          color:transparent !important;
+          background: url("${constellSVG}") 0 0/130px 130px repeat, ${gradBG};
+          -webkit-background-clip:text !important; background-clip:text !important;
+          -webkit-text-fill-color:transparent !important;
         }
-
-        /* COOKIES — Writing: quill flourishes, calligraphic swashes (~50% opacity) */
         .hero-underlay .l3 {
-          color: transparent !important;
-          background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='120' viewBox='0 0 140 120'%3E%3Cpath d='M8 60 Q28 18 55 40 Q72 52 92 28 Q112 6 135 42' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' opacity='0.5'/%3E%3Cpath d='M5 85 Q30 62 55 76 Q78 90 102 58 Q122 38 138 68' fill='none' stroke='%23fff' stroke-width='1.2' stroke-linecap='round' opacity='0.45'/%3E%3Cpath d='M12 102 Q42 88 62 98 Q82 108 102 90 Q122 76 138 96' fill='none' stroke='%23fff' stroke-width='0.8' stroke-linecap='round' opacity='0.35'/%3E%3Cpath d='M18 38 L26 18 L22 10' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' opacity='0.55'/%3E%3Cpath d='M26 18 Q34 26 28 38' stroke='%23fff' stroke-width='1.2' stroke-linecap='round' opacity='0.5'/%3E%3Cline x1='15' y1='42' x2='4' y2='54' stroke='%23fff' stroke-width='0.8' opacity='0.35'/%3E%3Cline x1='16' y1='45' x2='6' y2='58' stroke='%23fff' stroke-width='0.8' opacity='0.35'/%3E%3Cline x1='17' y1='48' x2='8' y2='62' stroke='%23fff' stroke-width='0.8' opacity='0.35'/%3E%3Cline x1='18' y1='51' x2='10' y2='66' stroke='%23fff' stroke-width='0.8' opacity='0.3'/%3E%3Cline x1='19' y1='54' x2='12' y2='69' stroke='%23fff' stroke-width='0.7' opacity='0.28'/%3E%3Ccircle cx='28' cy='38' r='2.5' fill='%23fff' opacity='0.5'/%3E%3Ccircle cx='92' cy='26' r='1.5' fill='%23fff' opacity='0.4'/%3E%3Ccircle cx='55' cy='42' r='1.2' fill='%23fff' opacity='0.35'/%3E%3Ccircle cx='122' cy='62' r='1.8' fill='%23fff' opacity='0.4'/%3E%3Cpath d='M105 10 Q118 5 122 15 Q128 28 118 34 Q108 38 103 28 Q98 18 105 10' fill='none' stroke='%23fff' stroke-width='1' opacity='0.42'/%3E%3Cpath d='M68 106 Q78 94 88 106' fill='none' stroke='%23fff' stroke-width='1' opacity='0.4'/%3E%3Cpath d='M60 110 Q78 92 96 110' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.35'/%3E%3Cline x1='78' y1='92' x2='78' y2='114' stroke='%23fff' stroke-width='0.6' opacity='0.3'/%3E%3C/svg%3E") 0 0 / 140px 120px repeat,
-            linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(215,205,192,0.9) 50%, rgba(255,255,255,0.95) 100%);
-          -webkit-background-clip: text !important;
-          background-clip: text !important;
-          -webkit-text-fill-color: transparent !important;
+          color:transparent !important;
+          background: url("${quillSVG}") 0 0/150px 130px repeat, ${gradBG};
+          -webkit-background-clip:text !important; background-clip:text !important;
+          -webkit-text-fill-color:transparent !important;
         }
-
-        /* --- Top layer: colored text with mask on hover --- */
         .hero-oil-wrap .hero-mega:not(.hero-underlay) {
-          position: relative;
-          z-index: 2;
-          --mx: -300px;
-          --my: -300px;
+          position:relative; z-index:2; --mx:-300px; --my:-300px;
         }
+        /* DESKTOP hover reveal */
+        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; }
         .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
-          -webkit-mask-image:
-            radial-gradient(
-              ellipse 200px 220px at var(--mx) var(--my),
-              transparent 0%,
-              transparent 30%,
-              rgba(0,0,0,0.4) 45%,
-              rgba(0,0,0,0.8) 60%,
-              rgba(0,0,0,1) 75%
-            );
-          mask-image:
-            radial-gradient(
-              ellipse 200px 220px at var(--mx) var(--my),
-              transparent 0%,
-              transparent 30%,
-              rgba(0,0,0,0.4) 45%,
-              rgba(0,0,0,0.8) 60%,
-              rgba(0,0,0,1) 75%
-            );
+          -webkit-mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
+            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
+          mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
+            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
+        }
+        /* MOBILE scroll wipe */
+        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; }
+        .hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay) {
+          -webkit-mask-image: linear-gradient(to bottom,
+            transparent 0%, transparent var(--scroll-reveal,0%),
+            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
+            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
+          mask-image: linear-gradient(to bottom,
+            transparent 0%, transparent var(--scroll-reveal,0%),
+            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
+            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
         }
       `;
       document.head.appendChild(oilCSS);
 
-      // 4. Mouse tracking — smooth with lerp for fluid feel
-      let targetX = -300, targetY = -300;
-      let currentX = -300, currentY = -300;
-      let oilActive = false;
-      let oilRAF = null;
-
-      function lerpOil() {
-        currentX += (targetX - currentX) * 0.12;
-        currentY += (targetY - currentY) * 0.12;
-        heroMega.style.setProperty('--mx', currentX + 'px');
-        heroMega.style.setProperty('--my', currentY + 'px');
-        if (oilActive || Math.abs(targetX - currentX) > 0.5) {
-          oilRAF = requestAnimationFrame(lerpOil);
-        } else {
-          oilRAF = null;
+      if (!isTouch) {
+        // DESKTOP: mouse tracking with lerp
+        let targetX=-300,targetY=-300,currentX=-300,currentY=-300,oilActive=false,oilRAF=null;
+        function lerpOil(){
+          currentX+=(targetX-currentX)*0.12; currentY+=(targetY-currentY)*0.12;
+          heroMega.style.setProperty('--mx',currentX+'px');
+          heroMega.style.setProperty('--my',currentY+'px');
+          if(oilActive||Math.abs(targetX-currentX)>0.5){oilRAF=requestAnimationFrame(lerpOil);}
+          else{oilRAF=null;}
         }
+        heroMega.addEventListener('mouseenter',()=>{oilActive=true;wrapper.classList.add('oil-hover');if(!oilRAF)oilRAF=requestAnimationFrame(lerpOil);});
+        heroMega.addEventListener('mouseleave',()=>{oilActive=false;wrapper.classList.remove('oil-hover');targetX=-300;targetY=-300;});
+        heroMega.addEventListener('mousemove',(e)=>{const r=heroMega.getBoundingClientRect();targetX=e.clientX-r.left;targetY=e.clientY-r.top;if(!oilRAF)oilRAF=requestAnimationFrame(lerpOil);});
+      } else {
+        // MOBILE: scroll-driven wipe — colored text peels away as you scroll
+        let scrollTicking = false;
+        window.addEventListener('scroll', () => {
+          if (!scrollTicking) {
+            requestAnimationFrame(() => {
+              const heroH = hero.offsetHeight;
+              const scrollY = window.scrollY;
+              const progress = Math.min(Math.max((scrollY / heroH - 0.1) / 0.5, 0), 1);
+              if (progress > 0) {
+                wrapper.classList.add('oil-scroll');
+                heroMega.style.setProperty('--scroll-reveal', (progress * 100) + '%');
+              } else {
+                wrapper.classList.remove('oil-scroll');
+              }
+              scrollTicking = false;
+            });
+            scrollTicking = true;
+          }
+        }, { passive: true });
       }
-
-      heroMega.addEventListener('mouseenter', () => {
-        oilActive = true;
-        wrapper.classList.add('oil-hover');
-        if (!oilRAF) oilRAF = requestAnimationFrame(lerpOil);
-      });
-
-      heroMega.addEventListener('mouseleave', () => {
-        oilActive = false;
-        wrapper.classList.remove('oil-hover');
-        targetX = -300;
-        targetY = -300;
-      });
-
-      heroMega.addEventListener('mousemove', (e) => {
-        const rect = heroMega.getBoundingClientRect();
-        targetX = e.clientX - rect.left;
-        targetY = e.clientY - rect.top;
-        if (!oilRAF) oilRAF = requestAnimationFrame(lerpOil);
-      });
     }
+
   }
 
   // ---- PARALLAX ON IMAGES ----
