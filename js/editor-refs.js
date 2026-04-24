@@ -53,6 +53,13 @@
     .jbc-added:hover .jbc-delete-btn{display:flex;}
     .jbc-added .jbc-resize-handle{position:absolute;bottom:-5px;right:-5px;width:14px;height:14px;background:#E8891D;cursor:nwse-resize;z-index:200;border:2px solid #fff;display:none;}
     .jbc-added:hover .jbc-resize-handle{display:block;}
+    .jbc-added .jbc-resize-handle-r{position:absolute;top:50%;right:-4px;width:8px;height:30px;margin-top:-15px;background:#E8891D;cursor:ew-resize;z-index:200;border:2px solid #fff;border-radius:3px;display:none;}
+    .jbc-added .jbc-resize-handle-b{position:absolute;bottom:-4px;left:50%;height:8px;width:30px;margin-left:-15px;background:#E8891D;cursor:ns-resize;z-index:200;border:2px solid #fff;border-radius:3px;display:none;}
+    .jbc-added:hover .jbc-resize-handle-r,.jbc-added:hover .jbc-resize-handle-b{display:block;}
+    .jbc-added[data-box="text"]{border:1px dashed transparent;min-height:30px;}
+    .jbc-added[data-box="text"]:hover{border-color:rgba(232,137,29,0.5);}
+    .jbc-added[data-box="text"].jbc-editing{border-color:#2ecc40;cursor:text!important;}
+    .jbc-added[data-box="text"].jbc-editing *{cursor:text!important;}
 
     /* Toast */
     #jbc-toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:1000002;background:#1a1a1a;color:#fff;font-family:monospace;font-size:13px;padding:12px 24px;border:2px solid #2ecc40;opacity:0;transition:opacity 0.3s;pointer-events:none;}
@@ -470,24 +477,29 @@
 
       /* Make inner text editable if it's a text element */
       var innerText = clone.querySelector('[contenteditable]') || clone.querySelector('p,h1,h2,h3,h4,h5,h6,span');
-      if(innerText && !innerText.querySelector('img')){
+      var hasImg = clone.querySelector('img');
+      if(innerText && !hasImg){
         innerText.setAttribute('contenteditable','true');
         innerText.addEventListener('focus', function(){ showFormatBar(innerText); });
         innerText.addEventListener('blur', function(){
           setTimeout(function(){
             if(document.activeElement !== innerText && !document.activeElement.closest('#jbc-format-bar')){
               hideFormatBar();
+              clone.classList.remove('jbc-editing');
             }
           }, 200);
           changes.text++;
           updateCounter();
         });
+        /* Add text box resize handles + double-click edit */
+        addTextBoxHandles(clone);
+        addDoubleClickEdit(clone);
       }
 
       addedElements.push(clone);
       changes.text++;
       updateCounter();
-      showToast('Pasted');
+      showToast('Pasted — double-click to edit text, drag corners to resize');
 
     } else if(clipboard.isImgWrap){
       /* It's an existing page image — create a new added-image clone */
@@ -582,13 +594,19 @@
 
       section.appendChild(wrapper2);
       makeDraggablePercent(wrapper2, section);
+      addTextBoxHandles(wrapper2);
+      addDoubleClickEdit(wrapper2);
 
       /* Hook up format bar */
-      textEl.addEventListener('focus', function(){ showFormatBar(textEl); });
+      textEl.addEventListener('focus', function(){
+        showFormatBar(textEl);
+        wrapper2.classList.add('jbc-editing');
+      });
       textEl.addEventListener('blur', function(){
         setTimeout(function(){
           if(document.activeElement !== textEl && !document.activeElement.closest('#jbc-format-bar')){
             hideFormatBar();
+            wrapper2.classList.remove('jbc-editing');
           }
         }, 200);
         changes.text++;
@@ -598,7 +616,7 @@
       addedElements.push(wrapper2);
       changes.text++;
       updateCounter();
-      showToast('Text pasted — drag to reposition');
+      showToast('Text pasted — double-click to edit, drag corners to resize');
     }
   }
 
@@ -840,11 +858,21 @@
       target.appendChild(wrapper);
 
       makeDraggablePercent(wrapper, target);
+      addTextBoxHandles(wrapper);
+      addDoubleClickEdit(wrapper);
 
       textEl.focus();
       document.execCommand('selectAll', false, null);
+      wrapper.classList.add('jbc-editing');
 
+      textEl.addEventListener('focus', function(){ showFormatBar(textEl); });
       textEl.addEventListener('blur', function(){
+        setTimeout(function(){
+          if(document.activeElement !== textEl && !document.activeElement.closest('#jbc-format-bar')){
+            hideFormatBar();
+            wrapper.classList.remove('jbc-editing');
+          }
+        }, 200);
         changes.text++;
         updateCounter();
       });
@@ -852,7 +880,7 @@
       addedElements.push(wrapper);
       changes.text++;
       updateCounter();
-      showToast('Text added \u2014 type to edit, drag to move');
+      showToast('Text added \u2014 type to edit, drag to move, corners to resize');
     }
 
     setTimeout(function(){
@@ -941,28 +969,33 @@
   }
 
   /* ========== RESIZE HELPER ========== */
-  function makeResizable(el, handle){
-    var resizing = false, rStartX, rStartW;
+  /* axis: 'both' (corner), 'x' (right edge), 'y' (bottom edge) */
+  function makeResizable(el, handle, axis){
+    axis = axis || 'both';
+    var resizing = false, rStartX, rStartY, rStartW, rStartH;
     handle.addEventListener('mousedown', function(e){
       e.stopPropagation(); e.preventDefault();
       resizing = true;
       rStartX = e.clientX;
+      rStartY = e.clientY;
       rStartW = el.offsetWidth;
+      rStartH = el.offsetHeight;
 
       function onMove(e2){
         if(!resizing) return;
-        var newW = Math.max(50, rStartW + e2.clientX - rStartX);
-        /* If parent uses percent positioning, set width as percent too */
-        if(el.getAttribute('data-pos-type') === 'percent'){
-          var parent = el.parentElement;
-          if(parent){
-            var pct = (newW / parent.offsetWidth * 100).toFixed(2);
-            el.style.width = pct + '%';
-          } else {
-            el.style.width = newW + 'px';
-          }
-        } else {
-          el.style.width = newW + 'px';
+        if(axis === 'both' || axis === 'x'){
+          var newW = Math.max(50, rStartW + e2.clientX - rStartX);
+          if(el.getAttribute('data-pos-type') === 'percent'){
+            var parent = el.parentElement;
+            if(parent){
+              el.style.width = (newW / parent.offsetWidth * 100).toFixed(2) + '%';
+            } else { el.style.width = newW + 'px'; }
+          } else { el.style.width = newW + 'px'; }
+        }
+        if(axis === 'both' || axis === 'y'){
+          var newH = Math.max(30, rStartH + e2.clientY - rStartY);
+          el.style.height = newH + 'px';
+          el.style.overflow = 'visible';
         }
       }
       function onUp(){
@@ -975,6 +1008,60 @@
       }
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  /* Add all three resize handles (corner, right edge, bottom edge) to a text box wrapper */
+  function addTextBoxHandles(wrapper){
+    wrapper.setAttribute('data-box','text');
+
+    var rCorner = wrapper.querySelector('.jbc-resize-handle');
+    if(!rCorner){
+      rCorner = document.createElement('div');
+      rCorner.className = 'jbc-resize-handle';
+      wrapper.appendChild(rCorner);
+    }
+    makeResizable(wrapper, rCorner, 'both');
+
+    var rRight = document.createElement('div');
+    rRight.className = 'jbc-resize-handle-r';
+    wrapper.appendChild(rRight);
+    makeResizable(wrapper, rRight, 'x');
+
+    var rBottom = document.createElement('div');
+    rBottom.className = 'jbc-resize-handle-b';
+    wrapper.appendChild(rBottom);
+    makeResizable(wrapper, rBottom, 'y');
+  }
+
+  /* Double-click on a text wrapper to enter edit mode */
+  function addDoubleClickEdit(wrapper){
+    wrapper.addEventListener('dblclick', function(e){
+      if(e.target.closest('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b')) return;
+      wrapper.classList.add('jbc-editing');
+      var textChild = wrapper.querySelector('[contenteditable]') || wrapper.querySelector('p,h1,h2,h3,h4,h5,h6,span');
+      if(textChild){
+        textChild.setAttribute('contenteditable','true');
+        textChild.focus();
+        /* Select all text for easy replacement */
+        var sel = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(textChild);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        showFormatBar(textChild);
+      }
+    });
+    /* Exit editing mode on blur */
+    var innerEls = wrapper.querySelectorAll('p,h1,h2,h3,h4,h5,h6,span,[contenteditable]');
+    innerEls.forEach(function(el){
+      el.addEventListener('blur', function(){
+        setTimeout(function(){
+          if(!wrapper.contains(document.activeElement) && !document.activeElement.closest('#jbc-format-bar')){
+            wrapper.classList.remove('jbc-editing');
+          }
+        }, 200);
+      });
     });
   }
 
@@ -1447,10 +1534,11 @@
       el.style.outline = '';
       el.style.outlineOffset = '';
       /* Remove editor-only children */
-      el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle').forEach(function(c){ c.remove(); });
+      el.querySelectorAll('.jbc-delete-btn,.jbc-resize-handle,.jbc-resize-handle-r,.jbc-resize-handle-b').forEach(function(c){ c.remove(); });
       /* Remove the editor classes */
-      el.classList.remove('jbc-added','jbc-selected');
+      el.classList.remove('jbc-added','jbc-selected','jbc-editing');
       el.removeAttribute('data-pos-type');
+      el.removeAttribute('data-box');
       if(el.getAttribute('class') === '') el.removeAttribute('class');
     });
 
