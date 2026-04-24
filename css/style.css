@@ -1492,4 +1492,23 @@ section { padding:var(--section-pad) 0; position:relative; }
   .hero .jbc-custom[style*="position: absolute"] {
     transform: translateY(-20%) !important;
   }
+}/* ---- Final mobile hero polish ---- */
+@media (max-width: 768px) {
+  .hero .jbc-custom[style*="position:absolute"],
+  .hero .jbc-custom[style*="position: absolute"] {
+    top: -8% !important;
+  }
+
+  .hero::before {
+    height: 38vh !important;
+  }
+
+  .hero::after {
+    bottom: 260px !important;
+  }
+
+  .hero .tag {
+    font-size: 20px !important;
+    letter-spacing: 4px !important;
+  }
 }
