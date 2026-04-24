@@ -253,54 +253,51 @@ document.addEventListener('DOMContentLoaded', () => {
           width: 100%;
         }
 
-        /* --- Underlay: white patterned text (bottom layer) --- */
+        /* --- Underlay: HIDDEN by default, only visible on hover --- */
         .hero-underlay {
           position: absolute;
           top: 0; left: 0; width: 100%; height: 100%;
           pointer-events: none;
           z-index: 1;
           user-select: none;
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
-        .hero-underlay .l1,
-        .hero-underlay .l2,
-        .hero-underlay .l3 {
-          color: transparent !important;
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
+        .hero-oil-wrap.oil-hover .hero-underlay {
+          opacity: 1;
         }
 
-        /* JUST — Camera lens: aperture rings, iris blades, radial ticks */
+        /* JUST — Camera lens: bold aperture rings, iris geometry */
         .hero-underlay .l1 {
+          color: transparent !important;
           background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cstyle%3Ecircle,line,path%7Bfill:none;stroke:rgba(255,255,255,0.13);stroke-width:0.5%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='60' cy='60' r='55'/%3E%3Ccircle cx='60' cy='60' r='45'/%3E%3Ccircle cx='60' cy='60' r='35'/%3E%3Ccircle cx='60' cy='60' r='24'/%3E%3Ccircle cx='60' cy='60' r='14' stroke-width='0.8'/%3E%3Ccircle cx='60' cy='60' r='6' stroke='rgba(255,255,255,0.18)' stroke-width='1'/%3E%3C!-- aperture blades --%3E%3Cpath d='M60 5 L65 25' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M95 15 L78 33' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M115 60 L95 58' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M95 105 L78 87' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M60 115 L55 95' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M25 105 L42 87' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M5 60 L25 62' stroke='rgba(255,255,255,0.08)'/%3E%3Cpath d='M25 15 L42 33' stroke='rgba(255,255,255,0.08)'/%3E%3C!-- fine tick marks around outer ring --%3E%3Cline x1='60' y1='2' x2='60' y2='8' stroke='rgba(255,255,255,0.1)'/%3E%3Cline x1='90' y1='8' x2='87' y2='13' stroke='rgba(255,255,255,0.06)'/%3E%3Cline x1='112' y1='30' x2='107' y2='33' stroke='rgba(255,255,255,0.06)'/%3E%3Cline x1='118' y1='60' x2='112' y2='60' stroke='rgba(255,255,255,0.1)'/%3E%3Cline x1='112' y1='90' x2='107' y2='87' stroke='rgba(255,255,255,0.06)'/%3E%3Cline x1='90' y1='112' x2='87' y2='107' stroke='rgba(255,255,255,0.06)'/%3E%3Cline x1='60' y1='118' x2='60' y2='112' stroke='rgba(255,255,255,0.1)'/%3E%3Cline x1='30' y1='112' x2='33' y2='107' stroke='rgba(255,255,255,0.06)'/%3E%3Cline x1='8' y1='90' x2='13' y2='87' stroke='rgba(255,255,255,0.06)'/%3E%3Cline x1='2' y1='60' x2='8' y2='60' stroke='rgba(255,255,255,0.1)'/%3E%3C!-- iris blade curves --%3E%3Cpath d='M38 20 Q60 35 82 20' stroke='rgba(255,255,255,0.06)' fill='none'/%3E%3Cpath d='M100 38 Q85 60 100 82' stroke='rgba(255,255,255,0.06)' fill='none'/%3E%3Cpath d='M82 100 Q60 85 38 100' stroke='rgba(255,255,255,0.06)' fill='none'/%3E%3Cpath d='M20 82 Q35 60 20 38' stroke='rgba(255,255,255,0.06)' fill='none'/%3E%3C/svg%3E") 0 0 / 120px 120px repeat,
-            linear-gradient(135deg, #fff 0%, #e8e0d8 40%, #fff 60%, #d4c8b8 100%);
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23fff' stroke-width='1' opacity='0.35'/%3E%3Ccircle cx='50' cy='50' r='36' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23fff' stroke-width='1.2' opacity='0.35'/%3E%3Ccircle cx='50' cy='50' r='16' fill='none' stroke='%23fff' stroke-width='0.6' opacity='0.25'/%3E%3Ccircle cx='50' cy='50' r='7' fill='none' stroke='%23fff' stroke-width='1.5' opacity='0.4'/%3E%3Cline x1='50' y1='2' x2='50' y2='12' stroke='%23fff' stroke-width='0.6' opacity='0.3'/%3E%3Cline x1='50' y1='88' x2='50' y2='98' stroke='%23fff' stroke-width='0.6' opacity='0.3'/%3E%3Cline x1='2' y1='50' x2='12' y2='50' stroke='%23fff' stroke-width='0.6' opacity='0.3'/%3E%3Cline x1='88' y1='50' x2='98' y2='50' stroke='%23fff' stroke-width='0.6' opacity='0.3'/%3E%3Cpath d='M50 4 L54 18 L50 14 L46 18 Z' fill='%23fff' opacity='0.12'/%3E%3Cpath d='M96 50 L82 54 L86 50 L82 46 Z' fill='%23fff' opacity='0.12'/%3E%3Cpath d='M50 96 L46 82 L50 86 L54 82 Z' fill='%23fff' opacity='0.12'/%3E%3Cpath d='M4 50 L18 46 L14 50 L18 54 Z' fill='%23fff' opacity='0.12'/%3E%3Cpath d='M26 10 Q50 28 74 10' fill='none' stroke='%23fff' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M90 26 Q72 50 90 74' fill='none' stroke='%23fff' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M74 90 Q50 72 26 90' fill='none' stroke='%23fff' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M10 74 Q28 50 10 26' fill='none' stroke='%23fff' stroke-width='0.5' opacity='0.2'/%3E%3C/svg%3E") 0 0 / 100px 100px repeat,
+            linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(210,200,185,0.9) 50%, rgba(255,255,255,0.95) 100%);
           -webkit-background-clip: text !important;
           background-clip: text !important;
           -webkit-text-fill-color: transparent !important;
-          color: transparent !important;
         }
 
-        /* BROKEN — Strategy: constellation network, nodes, geometric paths */
+        /* BROKEN — Strategy: constellation nodes, connected network */
         .hero-underlay .l2 {
+          color: transparent !important;
           background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cdefs%3E%3Cstyle%3Ecircle%7Bfill:rgba(255,255,255,0.15)%7Dline,path%7Bfill:none;stroke:rgba(255,255,255,0.08);stroke-width:0.5%7D%3C/style%3E%3C/defs%3E%3C!-- primary nodes --%3E%3Ccircle cx='30' cy='25' r='2.5'/%3E%3Ccircle cx='95' cy='18' r='2'/%3E%3Ccircle cx='70' cy='55' r='3' fill='rgba(255,255,255,0.18)'/%3E%3Ccircle cx='25' cy='80' r='2'/%3E%3Ccircle cx='110' cy='70' r='2.5'/%3E%3Ccircle cx='55' cy='110' r='2'/%3E%3Ccircle cx='120' cy='120' r='2'/%3E%3Ccircle cx='15' cy='130' r='1.5'/%3E%3C!-- secondary micro nodes --%3E%3Ccircle cx='50' cy='35' r='1' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='85' cy='42' r='1' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='42' cy='72' r='1' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='90' cy='95' r='1' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='130' cy='40' r='1' fill='rgba(255,255,255,0.08)'/%3E%3C!-- connecting lines --%3E%3Cline x1='30' y1='25' x2='50' y2='35'/%3E%3Cline x1='50' y1='35' x2='70' y2='55'/%3E%3Cline x1='70' y1='55' x2='95' y2='18'/%3E%3Cline x1='70' y1='55' x2='85' y2='42'/%3E%3Cline x1='85' y1='42' x2='110' y2='70'/%3E%3Cline x1='70' y1='55' x2='42' y2='72'/%3E%3Cline x1='42' y1='72' x2='25' y2='80'/%3E%3Cline x1='25' y1='80' x2='55' y2='110'/%3E%3Cline x1='110' y1='70' x2='120' y2='120'/%3E%3Cline x1='55' y1='110' x2='90' y2='95'/%3E%3Cline x1='90' y1='95' x2='120' y2='120'/%3E%3Cline x1='95' y1='18' x2='130' y2='40'/%3E%3Cline x1='130' y1='40' x2='110' y2='70'/%3E%3Cline x1='15' y1='130' x2='55' y2='110'/%3E%3C!-- dashed orbital arcs --%3E%3Cpath d='M30 25 Q10 50 25 80' stroke='rgba(255,255,255,0.05)' stroke-dasharray='3 4'/%3E%3Cpath d='M95 18 Q120 45 110 70' stroke='rgba(255,255,255,0.05)' stroke-dasharray='3 4'/%3E%3Cpath d='M70 55 Q65 85 55 110' stroke='rgba(255,255,255,0.05)' stroke-dasharray='3 4'/%3E%3C!-- diamond accent at center node --%3E%3Cpath d='M70 49 L76 55 L70 61 L64 55 Z' stroke='rgba(255,255,255,0.1)' stroke-width='0.5' fill='none'/%3E%3C/svg%3E") 0 0 / 140px 140px repeat,
-            linear-gradient(135deg, #fff 0%, #e8e0d8 40%, #fff 60%, #d4c8b8 100%);
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='25' cy='20' r='3.5' fill='%23fff' opacity='0.35'/%3E%3Ccircle cx='80' cy='15' r='3' fill='%23fff' opacity='0.3'/%3E%3Ccircle cx='60' cy='50' r='4.5' fill='%23fff' opacity='0.4'/%3E%3Ccircle cx='20' cy='70' r='3' fill='%23fff' opacity='0.3'/%3E%3Ccircle cx='100' cy='60' r='3.5' fill='%23fff' opacity='0.35'/%3E%3Ccircle cx='45' cy='100' r='3' fill='%23fff' opacity='0.3'/%3E%3Ccircle cx='105' cy='105' r='2.5' fill='%23fff' opacity='0.25'/%3E%3Ccircle cx='45' cy='30' r='1.5' fill='%23fff' opacity='0.2'/%3E%3Ccircle cx='85' cy='38' r='1.5' fill='%23fff' opacity='0.2'/%3E%3Ccircle cx='35' cy='55' r='1.5' fill='%23fff' opacity='0.15'/%3E%3Ccircle cx='80' cy='85' r='1.5' fill='%23fff' opacity='0.2'/%3E%3Cline x1='25' y1='20' x2='45' y2='30' stroke='%23fff' stroke-width='0.8' opacity='0.25'/%3E%3Cline x1='45' y1='30' x2='60' y2='50' stroke='%23fff' stroke-width='0.8' opacity='0.25'/%3E%3Cline x1='60' y1='50' x2='80' y2='15' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='60' y1='50' x2='85' y2='38' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='85' y1='38' x2='100' y2='60' stroke='%23fff' stroke-width='0.8' opacity='0.25'/%3E%3Cline x1='60' y1='50' x2='35' y2='55' stroke='%23fff' stroke-width='0.5' opacity='0.18'/%3E%3Cline x1='35' y1='55' x2='20' y2='70' stroke='%23fff' stroke-width='0.8' opacity='0.25'/%3E%3Cline x1='20' y1='70' x2='45' y2='100' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='100' y1='60' x2='105' y2='105' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='45' y1='100' x2='80' y2='85' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='80' y1='85' x2='105' y2='105' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M60 44 L66 50 L60 56 L54 50 Z' fill='none' stroke='%23fff' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M25 20 Q10 45 20 70' fill='none' stroke='%23fff' stroke-width='0.4' stroke-dasharray='3 5' opacity='0.15'/%3E%3Cpath d='M80 15 Q105 38 100 60' fill='none' stroke='%23fff' stroke-width='0.4' stroke-dasharray='3 5' opacity='0.15'/%3E%3C/svg%3E") 0 0 / 120px 120px repeat,
+            linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(210,200,185,0.9) 50%, rgba(255,255,255,0.95) 100%);
           -webkit-background-clip: text !important;
           background-clip: text !important;
           -webkit-text-fill-color: transparent !important;
-          color: transparent !important;
         }
 
-        /* COOKIES — Writing: calligraphic flourishes, quill curves, ink swashes */
+        /* COOKIES — Writing: quill flourishes, calligraphic swashes */
         .hero-underlay .l3 {
+          color: transparent !important;
           background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='140' viewBox='0 0 160 140'%3E%3Cdefs%3E%3Cstyle%3Epath,line%7Bfill:none;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3C!-- flowing quill flourish --%3E%3Cpath d='M10 70 Q30 30 60 50 T110 35 T150 55' stroke='rgba(255,255,255,0.1)' stroke-width='0.8'/%3E%3Cpath d='M5 95 Q25 75 50 85 T95 70 T140 80' stroke='rgba(255,255,255,0.07)' stroke-width='0.6'/%3E%3C!-- script-like baseline strokes --%3E%3Cpath d='M15 110 Q35 100 55 108 Q75 116 95 105 Q115 94 135 102' stroke='rgba(255,255,255,0.06)' stroke-width='0.5'/%3E%3C!-- quill nib detail --%3E%3Cpath d='M20 45 L25 35 L22 30' stroke='rgba(255,255,255,0.12)' stroke-width='0.7'/%3E%3Cpath d='M25 35 Q28 38 25 42' stroke='rgba(255,255,255,0.1)' stroke-width='0.5'/%3E%3C!-- ink dots (as if freshly written) --%3E%3Ccircle cx='25' cy='42' r='1.2' fill='rgba(255,255,255,0.12)' xmlns='http://www.w3.org/2000/svg'/%3E%3Ccircle cx='110' cy='34' r='0.8' fill='rgba(255,255,255,0.08)' xmlns='http://www.w3.org/2000/svg'/%3E%3Ccircle cx='65' cy='52' r='0.6' fill='rgba(255,255,255,0.06)' xmlns='http://www.w3.org/2000/svg'/%3E%3Ccircle cx='130' cy='78' r='1' fill='rgba(255,255,255,0.09)' xmlns='http://www.w3.org/2000/svg'/%3E%3C!-- elegant spiral flourish --%3E%3Cpath d='M120 20 Q130 15 135 22 Q140 30 132 35 Q124 40 118 33 Q112 26 120 20' stroke='rgba(255,255,255,0.08)' stroke-width='0.5'/%3E%3C!-- feather barb lines --%3E%3Cline x1='18' y1='48' x2='10' y2='55' stroke='rgba(255,255,255,0.05)' stroke-width='0.4'/%3E%3Cline x1='19' y1='50' x2='12' y2='58' stroke='rgba(255,255,255,0.05)' stroke-width='0.4'/%3E%3Cline x1='20' y1='52' x2='14' y2='61' stroke='rgba(255,255,255,0.05)' stroke-width='0.4'/%3E%3Cline x1='21' y1='54' x2='16' y2='64' stroke='rgba(255,255,255,0.05)' stroke-width='0.4'/%3E%3C!-- open book pages hint --%3E%3Cpath d='M75 120 Q80 112 85 120' stroke='rgba(255,255,255,0.07)' stroke-width='0.5'/%3E%3Cpath d='M65 122 Q80 110 95 122' stroke='rgba(255,255,255,0.06)' stroke-width='0.4'/%3E%3Cline x1='80' y1='110' x2='80' y2='125' stroke='rgba(255,255,255,0.05)' stroke-width='0.3'/%3E%3C!-- manuscript text lines --%3E%3Cline x1='45' y1='18' x2='90' y2='18' stroke='rgba(255,255,255,0.04)' stroke-width='0.4'/%3E%3Cline x1='42' y1='23' x2='88' y2='23' stroke='rgba(255,255,255,0.04)' stroke-width='0.4'/%3E%3Cline x1='48' y1='28' x2='85' y2='28' stroke='rgba(255,255,255,0.04)' stroke-width='0.4'/%3E%3C/svg%3E") 0 0 / 160px 140px repeat,
-            linear-gradient(135deg, #fff 0%, #e8e0d8 40%, #fff 60%, #d4c8b8 100%);
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='120' viewBox='0 0 140 120'%3E%3Cpath d='M8 60 Q28 20 55 42 Q70 52 90 30 Q110 10 135 45' fill='none' stroke='%23fff' stroke-width='1' stroke-linecap='round' opacity='0.3'/%3E%3Cpath d='M5 85 Q30 65 55 78 Q75 88 100 62 Q120 42 138 70' fill='none' stroke='%23fff' stroke-width='0.8' stroke-linecap='round' opacity='0.25'/%3E%3Cpath d='M12 100 Q40 90 60 98 Q80 106 100 92 Q120 80 135 95' fill='none' stroke='%23fff' stroke-width='0.5' stroke-linecap='round' opacity='0.18'/%3E%3Cpath d='M18 38 L24 22 L20 15' stroke='%23fff' stroke-width='1.2' stroke-linecap='round' opacity='0.35'/%3E%3Cpath d='M24 22 Q30 28 26 36' stroke='%23fff' stroke-width='0.8' stroke-linecap='round' opacity='0.3'/%3E%3Cline x1='16' y1='42' x2='6' y2='52' stroke='%23fff' stroke-width='0.5' opacity='0.18'/%3E%3Cline x1='17' y1='44' x2='8' y2='55' stroke='%23fff' stroke-width='0.5' opacity='0.18'/%3E%3Cline x1='18' y1='46' x2='10' y2='58' stroke='%23fff' stroke-width='0.5' opacity='0.18'/%3E%3Cline x1='19' y1='48' x2='12' y2='61' stroke='%23fff' stroke-width='0.5' opacity='0.18'/%3E%3Cline x1='20' y1='50' x2='14' y2='64' stroke='%23fff' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='26' cy='36' r='1.8' fill='%23fff' opacity='0.3'/%3E%3Ccircle cx='90' cy='28' r='1' fill='%23fff' opacity='0.2'/%3E%3Ccircle cx='55' cy='44' r='0.8' fill='%23fff' opacity='0.15'/%3E%3Ccircle cx='120' cy='65' r='1.2' fill='%23fff' opacity='0.2'/%3E%3Cpath d='M105 12 Q115 8 120 16 Q125 25 117 30 Q108 34 104 25 Q100 18 105 12' fill='none' stroke='%23fff' stroke-width='0.7' opacity='0.22'/%3E%3Cpath d='M70 108 Q78 98 86 108' fill='none' stroke='%23fff' stroke-width='0.6' opacity='0.2'/%3E%3Cpath d='M62 112 Q78 95 94 112' fill='none' stroke='%23fff' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='78' y1='95' x2='78' y2='115' stroke='%23fff' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E") 0 0 / 140px 120px repeat,
+            linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(210,200,185,0.9) 50%, rgba(255,255,255,0.95) 100%);
           -webkit-background-clip: text !important;
           background-clip: text !important;
           -webkit-text-fill-color: transparent !important;
-          color: transparent !important;
         }
 
         /* --- Top layer: colored text with mask on hover --- */
@@ -309,27 +306,25 @@ document.addEventListener('DOMContentLoaded', () => {
           z-index: 2;
           --mx: -300px;
           --my: -300px;
-          -webkit-mask-image: none;
-          mask-image: none;
         }
-        .hero-oil-wrap .hero-mega.oil-active:not(.hero-underlay) {
+        .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
           -webkit-mask-image:
             radial-gradient(
-              ellipse 180px 200px at var(--mx) var(--my),
+              ellipse 200px 220px at var(--mx) var(--my),
               transparent 0%,
-              transparent 35%,
-              rgba(0,0,0,0.3) 50%,
-              rgba(0,0,0,0.7) 65%,
-              rgba(0,0,0,1) 80%
+              transparent 30%,
+              rgba(0,0,0,0.4) 45%,
+              rgba(0,0,0,0.8) 60%,
+              rgba(0,0,0,1) 75%
             );
           mask-image:
             radial-gradient(
-              ellipse 180px 200px at var(--mx) var(--my),
+              ellipse 200px 220px at var(--mx) var(--my),
               transparent 0%,
-              transparent 35%,
-              rgba(0,0,0,0.3) 50%,
-              rgba(0,0,0,0.7) 65%,
-              rgba(0,0,0,1) 80%
+              transparent 30%,
+              rgba(0,0,0,0.4) 45%,
+              rgba(0,0,0,0.8) 60%,
+              rgba(0,0,0,1) 75%
             );
         }
       `;
@@ -355,13 +350,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       heroMega.addEventListener('mouseenter', () => {
         oilActive = true;
-        heroMega.classList.add('oil-active');
+        wrapper.classList.add('oil-hover');
         if (!oilRAF) oilRAF = requestAnimationFrame(lerpOil);
       });
 
       heroMega.addEventListener('mouseleave', () => {
         oilActive = false;
-        heroMega.classList.remove('oil-active');
+        wrapper.classList.remove('oil-hover');
         targetX = -300;
         targetY = -300;
       });
