@@ -11,10 +11,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="">
 
   <!-- ========== PRELOADER ========== -->
-  <div class="preloader">
+  <div class="preloader loaded">
     <div>
       <div class="preloader-logo">
         <span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span>
@@ -25,8 +25,8 @@
   <div class="page-transition"></div>
 
   <!-- ========== CURSOR ========== -->
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
+  <div class="cursor-dot" style="left: 1428px; top: 705px;"></div>
+  <div class="cursor-ring" style="left: 1428px; top: 705px;"></div>
 
   <!-- ========== NAVIGATION ========== -->
   <nav class="nav" id="navbar">
@@ -62,15 +62,21 @@
       <p class="desc"><br></p>
       <span class="scroll-txt"><br></span>
     </div>
+    <!-- User-added text -->
+    <div class="jbc-custom" style="left:24.33%; top:36.41%; width:51.52%; position:absolute; z-index:5;">
+      <p style="font-size: 26px; font-family: Inter, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-weight: 700; color: rgb(139, 58, 139); text-transform: uppercase; letter-spacing: 8px; padding: 8px; margin: 0px; text-align: right;">
+        DEFINe<br>DESIGN<br>DESCRIBE
+      </p>
+    </div>
     <!-- User-added image -->
     <div class="jbc-custom" style="left:27.05%; top:10.62%; width:63.13%; position:absolute; z-index:1;">
-      <img src="images/added-1777027663072.jpg" style="width:100%; height:auto; display:block; filter:grayscale(100%);">
+      <img src="images/added-1777027663072.jpg" style="width: 100%; height: auto; display: block;">
     </div>
   </section>
 
   <!-- ========== MARQUEE ========== -->
   <div class="manifesto">
-    <div class="manifesto-inner">
+    <div class="manifesto-inner" style="animation-play-state: running;">
       <span>Visuals<span class="manifesto-dot"></span>Strategy<span class="manifesto-dot"></span>Words<span class="manifesto-dot"></span>Stories that move people<span class="manifesto-dot"></span>Visuals<span class="manifesto-dot"></span>Strategy<span class="manifesto-dot"></span>Words<span class="manifesto-dot"></span>Stories that move people</span>
       <span>Visuals<span class="manifesto-dot"></span>Strategy<span class="manifesto-dot"></span>Words<span class="manifesto-dot"></span>Stories that move people<span class="manifesto-dot"></span>Visuals<span class="manifesto-dot"></span>Strategy<span class="manifesto-dot"></span>Words<span class="manifesto-dot"></span>Stories that move people</span>
     </div>
@@ -115,28 +121,28 @@
       </div>
       <div class="portfolio-grid">
         <div class="portfolio-item">
-          <img src="images/portfolio/the-way-home.jpg" alt="The Unfinished Room">
+          <img src="images/portfolio/the-way-home.jpg" alt="The Unfinished Room" style="">
           <div class="overlay">
             <span>Campaign</span>
             <h3>The Unfinished Room</h3>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="images/portfolio/sunset-silk.jpg" alt="Sunset and Silk">
+          <img src="images/portfolio/sunset-silk.jpg" alt="Sunset and Silk" style="">
           <div class="overlay">
             <span>Visual</span>
             <h3>Sunset &amp; Silk</h3>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="images/portfolio/voices-unheard.jpg" alt="Voices Unheard">
+          <img src="images/portfolio/voices-unheard.jpg" alt="Voices Unheard" style="">
           <div class="overlay">
             <span>Editorial</span>
             <h3>Voices Unheard</h3>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="images/portfolio/dust-to-gold.jpg" alt="From Dust to Gold">
+          <img src="images/portfolio/dust-to-gold.jpg" alt="From Dust to Gold" style="">
           <div class="overlay">
             <span>Strategy</span>
             <h3>From Dust to Gold</h3>
@@ -211,6 +217,7 @@
 
   <script src="js/main.js"></script>
   <script src="js/editor-refs.js"></script>
+
 
 
 
