@@ -391,48 +391,57 @@ section { padding:var(--section-pad) 0; position:relative; }
   display: none;
 }
 
-/* ---------- DETAIL CARDS (second row, hidden until parent clicked) ---------- */
-.service-detail-card {
+/* ---------- CINEMATIC DETAIL PANEL (16:9 wide card below service cards) ---------- */
+.service-cinema {
+  grid-column: 1 / -1;
   display: none;
-  background: rgba(30,26,23,0.55);
-  border: var(--border);
-  border-radius: 10px;
-  padding: 40px 38px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
-.service-detail-card.visible {
+.service-cinema.visible {
   display: block;
-  animation: detailFadeIn 0.4s ease forwards;
+  animation: cinemaIn 0.45s ease forwards;
 }
-@keyframes detailFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
+@keyframes cinemaIn {
+  from { opacity: 0; transform: translateY(-14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.service-detail-card h4 {
+.service-cinema-inner {
+  background: rgba(30,26,23,0.6);
+  border: var(--border);
+  border-radius: 12px;
+  padding: 55px 65px;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow-y: auto;
+}
+.service-cinema-inner h4 {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--cream);
-  margin-bottom: 16px;
+  margin-bottom: 22px;
   letter-spacing: -0.3px;
 }
-.service-detail-card h4::after {
+.service-cinema-inner h4::after {
   content: '';
   display: block;
-  width: 36px;
+  width: 50px;
   height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--blush));
-  margin-top: 10px;
+  background: linear-gradient(90deg, var(--gold), var(--blush), var(--dusty-rose));
+  margin-top: 14px;
 }
-.service-detail-card p {
+.service-cinema-inner p {
   color: var(--warm-gray);
-  font-size: 0.82rem;
-  line-height: 1.9;
+  font-size: 0.92rem;
+  line-height: 2;
   font-weight: 300;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  max-width: 800px;
 }
-.service-detail-card p:last-child {
+.service-cinema-inner p:last-child {
   margin-bottom: 0;
 }
 
@@ -1041,7 +1050,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .blog-grid { grid-template-columns:1fr; }
   .cursor-dot, .cursor-ring { display:none; }
 
-  .service-detail-card { padding:28px 22px; }
+  .service-cinema-inner { padding:30px 24px; aspect-ratio: auto; }
 
   /* Hero added image — scale down and reposition for mobile */
   .hero .jbc-custom img { max-height:45vh; object-fit:cover; border-radius:4px; }

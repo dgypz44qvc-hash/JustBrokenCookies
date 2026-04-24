@@ -127,59 +127,39 @@
             <p>When it works, people understand it quickly, but it also stays with them a bit longer. That's the goal. Not just to show something, but to make it land.</p>
           </div>
         </div>
-        <!-- Detail cards (hidden until parent clicked) -->
+        <!-- Cinematic detail panel (one wide 16:9 card, content swaps on click) -->
+        <div class="service-cinema" id="serviceCinema">
+          <div class="service-cinema-inner" id="serviceCinemaContent"></div>
+        </div>
         <script>
         (function(){
-          function hideDetail(d){
-            d.classList.remove('visible');
-            d.style.display = '';
-            d.style.opacity = '';
-            d.style.transform = '';
-          }
-          function hideAll(){
-            document.querySelectorAll('.service-detail-card').forEach(hideDetail);
-          }
+          var cinema = document.getElementById('serviceCinema');
+          var content = document.getElementById('serviceCinemaContent');
+          var activeId = null;
           document.querySelectorAll('.service-card[data-card]').forEach(function(card){
             card.addEventListener('click', function(e){
               e.stopPropagation();
               var id = card.getAttribute('data-card');
-              hideAll();
-              var detail = document.querySelector('.service-detail-card[data-parent="'+id+'"]');
-              if(detail){
-                detail.classList.add('visible');
-                detail.style.display = 'block';
-                detail.style.opacity = '1';
-                detail.style.transform = 'translateY(0)';
+              var expandDiv = card.querySelector('.service-expand');
+              var title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+              if(!expandDiv) return;
+              if(activeId === id){
+                cinema.classList.remove('visible');
+                activeId = null;
+                return;
               }
+              content.innerHTML = '<h4>' + title + '</h4>' + expandDiv.innerHTML;
+              cinema.classList.add('visible');
+              activeId = id;
+              setTimeout(function(){ cinema.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 80);
             });
           });
-          // Hide when cursor leaves the detail card
-          document.querySelectorAll('.service-detail-card').forEach(function(detail){
-            detail.addEventListener('mouseleave', function(){ hideDetail(detail); });
+          cinema.addEventListener('mouseleave', function(){
+            cinema.classList.remove('visible');
+            activeId = null;
           });
         })();
         </script>
-        <div class="service-detail-card" data-parent="1">
-          <h4>Define</h4>
-          <p>What is the subject? A person, a brand, a project. What stage is it at? What is working, what is missing, what is unclear.</p>
-          <p>We ask simple questions, but we go a bit deeper than usual. What do you actually want people to feel? What should change after they see this? Who is it really for?</p>
-          <p>Then we look at the tools. Does this story need photography, video, a website, or written content? Or a mix of them. The choice comes from the goal, not from trends.</p>
-          <p>By the end of this step, things are clearer. We know what we are building, why we are building it, and how we might tell it.</p>
-        </div>
-        <div class="service-detail-card" data-parent="2">
-          <h4>Design</h4>
-          <p>We focus on details. How images are composed. How a video moves. How text sits on a page. How everything works together, not as separate parts, but as one story.</p>
-          <p>We don't add things just to make it look good. Everything needs a reason. If something feels too much, we simplify it. If something feels empty, we build it up.</p>
-          <p>This is also where different media connect. A visual can support a message. A layout can guide attention. A small detail can change how everything is perceived.</p>
-          <p>At the end of this phase, the story is clear, structured, and ready to be experienced.</p>
-        </div>
-        <div class="service-detail-card" data-parent="3">
-          <h4>Describe</h4>
-          <p>We think about flow. What do they see first? What comes next? Where do they pause? What stays with them?</p>
-          <p>We don't try to say everything at once. We let the story unfold in a way that feels natural.</p>
-          <p>If it's a website, it guides you. If it's a video, it carries you through. If it's text, it stays simple and direct.</p>
-          <p>When it works, people understand it quickly, but it also stays with them a bit longer. That's the goal. Not just to show something, but to make it land.</p>
-        </div>
       </div>
     </div>
   </section>
