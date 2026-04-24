@@ -206,6 +206,7 @@ ul { list-style:none; }
 .hero-mega {
   font-family:var(--font-display); font-weight:900;
   line-height:0.85; letter-spacing:-5px;
+  position:relative;
 }
 .hero-mega .l1 { display:block; font-size:clamp(8rem,20vw,18rem); color:var(--gold); }
 .hero-mega .l2 { display:block; font-size:clamp(8rem,20vw,18rem); color:var(--blush); margin-left:clamp(30px,8vw,120px); }

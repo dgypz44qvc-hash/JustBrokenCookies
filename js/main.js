@@ -222,6 +222,100 @@ document.addEventListener('DOMContentLoaded', () => {
         heroTicking = true;
       }
     }, { passive: true });
+
+    // ---- OIL-IN-WATER HERO TEXT EFFECT ----
+    // Creates a white duplicate of the hero mega text, revealed by mouse
+    // with an SVG turbulence filter for an organic, oily feel.
+    if (heroMega) {
+      // 1. Create the SVG turbulence filter
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svgFilter = document.createElementNS(svgNS, 'svg');
+      svgFilter.setAttribute('width', '0');
+      svgFilter.setAttribute('height', '0');
+      svgFilter.style.position = 'absolute';
+      svgFilter.innerHTML = `
+        <defs>
+          <filter id="oil-distort" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence id="oil-turb" type="fractalNoise"
+              baseFrequency="0.015" numOctaves="3" seed="2" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise"
+              scale="18" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>`;
+      document.body.appendChild(svgFilter);
+
+      // 2. Create white text overlay (clone of hero-mega)
+      const oilOverlay = heroMega.cloneNode(true);
+      oilOverlay.classList.add('hero-oil-overlay');
+      oilOverlay.removeAttribute('style');
+      // Insert right after heroMega so it layers on top
+      heroMega.parentElement.insertBefore(oilOverlay, heroMega.nextSibling);
+
+      // 3. Inject the CSS for the effect
+      const oilCSS = document.createElement('style');
+      oilCSS.textContent = `
+        .hero-oil-overlay {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          pointer-events: none;
+          z-index: 3;
+          filter: url(#oil-distort);
+          -webkit-mask-image: radial-gradient(circle 150px at var(--mx, -200px) var(--my, -200px),
+            rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0) 70%);
+          mask-image: radial-gradient(circle 150px at var(--mx, -200px) var(--my, -200px),
+            rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0) 70%);
+          transition: opacity 0.4s ease;
+          opacity: 0;
+        }
+        .hero-oil-overlay.active { opacity: 1; }
+        .hero-oil-overlay .l1,
+        .hero-oil-overlay .l2,
+        .hero-oil-overlay .l3 {
+          color: #fff !important;
+          text-shadow: 0 0 30px rgba(255,255,255,0.15);
+        }
+      `;
+      document.head.appendChild(oilCSS);
+
+      // 4. Animate turbulence seed for constant fluid motion
+      const turbEl = document.getElementById('oil-turb');
+      let turbSeed = 2;
+      let turbRAF = null;
+      function animateTurbulence() {
+        turbSeed += 0.4;
+        turbEl.setAttribute('seed', turbSeed);
+        turbRAF = requestAnimationFrame(animateTurbulence);
+      }
+
+      // 5. Track mouse over the hero-mega area
+      let oilActive = false;
+      heroMega.style.position = 'relative';
+      heroMega.style.cursor = 'default';
+
+      heroMega.addEventListener('mouseenter', () => {
+        oilOverlay.classList.add('active');
+        oilActive = true;
+        animateTurbulence();
+      });
+
+      heroMega.addEventListener('mouseleave', () => {
+        oilOverlay.classList.remove('active');
+        oilActive = false;
+        if (turbRAF) cancelAnimationFrame(turbRAF);
+        // Move mask off-screen
+        oilOverlay.style.setProperty('--mx', '-200px');
+        oilOverlay.style.setProperty('--my', '-200px');
+      });
+
+      heroMega.addEventListener('mousemove', (e) => {
+        if (!oilActive) return;
+        const rect = heroMega.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        oilOverlay.style.setProperty('--mx', x + 'px');
+        oilOverlay.style.setProperty('--my', y + 'px');
+      });
+    }
   }
 
   // ---- PARALLAX ON IMAGES ----
