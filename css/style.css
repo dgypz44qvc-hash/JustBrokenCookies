@@ -117,7 +117,7 @@ body .social-links a, body .social-links a *,
 body .team-card, body .team-card *,
 body .value-card, body .value-card *,
 body .process-card, body .process-card * {
-  cursor: url("../images/orange-cursor-32.png") 10 2, pointer !important;
+  cursor: url("../images/hand-cursor.svg") 8 2, pointer !important;
 }
 
 a { color:var(--dusty-rose); text-decoration:none; transition:all 0.5s var(--ease-out-expo); }
