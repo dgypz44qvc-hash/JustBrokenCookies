@@ -32,37 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---- CUSTOM CURSOR ----
-  const cursorDot = document.querySelector('.cursor-dot');
-  const cursorRing = document.querySelector('.cursor-ring');
-
-  if (cursorDot && cursorRing && window.matchMedia('(hover:hover)').matches) {
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-    });
-
-    // Smooth follow for ring
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      cursorRing.style.left = ringX + 'px';
-      cursorRing.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    // Hover state for interactive elements
-    document.querySelectorAll('a, button, .btn, .filter-btn, .portfolio-item, .service-card, .blog-card').forEach(el => {
-      el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
-    });
-  }
+  // ---- CUSTOM CURSOR (disabled — using CSS flower cursor) ----
 
   // ---- NAVBAR SCROLL EFFECT ----
   const navbar = document.getElementById('navbar');

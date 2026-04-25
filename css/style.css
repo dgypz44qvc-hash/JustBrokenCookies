@@ -89,25 +89,16 @@ body::after {
 }
 
 /* ---- CUSTOM CURSOR ---- */
-.cursor-dot {
-  width:6px; height:6px; background:var(--gold);
-  border-radius:50%; position:fixed; top:0; left:0;
-  pointer-events:none; z-index:99990;
-  transition:transform 0.15s ease, opacity 0.3s;
-  transform:translate(-50%,-50%);
+/* Hide old cursor elements */
+.cursor-dot, .cursor-ring { display:none !important; }
+
+/* Flower cursor via SVG */
+*, *::before, *::after {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg transform='translate(14,14)'%3E%3Cellipse cx='0' cy='-6' rx='3.2' ry='5.5' fill='%23E8891D' opacity='0.85' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-6' rx='3.2' ry='5.5' fill='%23E84848' opacity='0.85' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-6' rx='3.2' ry='5.5' fill='%23C93A6E' opacity='0.85' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-6' rx='3.2' ry='5.5' fill='%238B3A8B' opacity='0.85' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-6' rx='3.2' ry='5.5' fill='%238A9B82' opacity='0.85' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='3' fill='%23E8891D'/%3E%3C/g%3E%3C/svg%3E") 14 14, auto;
 }
-.cursor-ring {
-  width:36px; height:36px;
-  border:1px solid var(--blush);
-  border-radius:50%; position:fixed; top:0; left:0;
-  pointer-events:none; z-index:99989;
-  transition:width 0.4s var(--ease-out-expo), height 0.4s var(--ease-out-expo), border-color 0.3s;
-  transform:translate(-50%,-50%);
+a, button, [data-expandable], .btn, .hamburger, input, textarea, select {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='translate(16,16)'%3E%3Cellipse cx='0' cy='-7' rx='3.8' ry='6.5' fill='%23E8891D' opacity='0.9' transform='rotate(0)'/%3E%3Cellipse cx='0' cy='-7' rx='3.8' ry='6.5' fill='%23E84848' opacity='0.9' transform='rotate(72)'/%3E%3Cellipse cx='0' cy='-7' rx='3.8' ry='6.5' fill='%23C93A6E' opacity='0.9' transform='rotate(144)'/%3E%3Cellipse cx='0' cy='-7' rx='3.8' ry='6.5' fill='%238B3A8B' opacity='0.9' transform='rotate(216)'/%3E%3Cellipse cx='0' cy='-7' rx='3.8' ry='6.5' fill='%238A9B82' opacity='0.9' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='3.5' fill='%23E8891D'/%3E%3C/g%3E%3C/svg%3E") 16 16, pointer;
 }
-.cursor-ring.hover {
-  width:56px; height:56px; border-color:var(--gold);
-}
-@media (hover:none) { .cursor-dot, .cursor-ring { display:none; } }
 
 a { color:var(--dusty-rose); text-decoration:none; transition:all 0.5s var(--ease-out-expo); }
 a:hover { color:var(--wine); }
