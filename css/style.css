@@ -1154,7 +1154,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   pointer-events: none;
 }
 
-.hero::after {
+.hero:not(.jbc-floral-hero)::after {
   content: none !important;
   display: none !important;
   opacity: 0 !important;
@@ -1565,194 +1565,632 @@ section { padding:var(--section-pad) 0; position:relative; }
   }
 }
 
-
-/* ---- JBC FLORAL PATTERN BACKGROUND SYSTEM ---- */
+/* =========================================================
+   JBC EDITORIAL ROSE PATTERN + HIGH-END SECTION SYSTEM
+   Uses: images/jbc-rose-pattern-bg.png
+   ========================================================= */
 :root {
   --jbc-floral-pattern: url("../images/jbc-rose-pattern-bg.png");
+  --jbc-deep: #2A221E;
+  --jbc-card: #231D19;
+  --jbc-gold: #E8891D;
+  --jbc-blush: #E84848;
+  --jbc-pink: #C93A6E;
+  --jbc-purple: #8B3A8B;
+  --jbc-soft-text: rgba(240, 230, 218, 0.78);
+  --jbc-line: rgba(240, 230, 218, 0.13);
 }
-/* Base helpers */
-.floral-bg-section,
-.floral-bg-card,
-.floral-bg-footer,
-.floral-bg-edge {
+
+/* ---------- Global editorial polish, safe ---------- */
+.jbc-editorial-section,
+.jbc-editorial-footer {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
-.floral-bg-section > *,
-.floral-bg-card > *,
-.floral-bg-footer > *,
-.floral-bg-edge > * {
+
+.jbc-editorial-section > *,
+.jbc-editorial-footer > * {
   position: relative;
   z-index: 2;
 }
-/* Make sure hero keeps its existing ::before decorative line.
-   Floral pattern must use ::after only. */
-.hero.floral-bg-edge {
+
+/* Make section headers feel more curated */
+.jbc-editorial-section .sec-header {
+  position: relative;
+  border-bottom: 1px solid rgba(240, 230, 218, 0.14) !important;
+  padding-bottom: 26px;
+  margin-bottom: clamp(36px, 5vw, 64px);
+}
+
+.jbc-editorial-section .sec-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: min(220px, 54vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--jbc-gold),
+    var(--jbc-blush),
+    var(--jbc-pink),
+    transparent
+  );
+}
+
+.jbc-editorial-section .sec-header h2 {
+  letter-spacing: clamp(4px, 1.2vw, 8px);
+}
+
+.jbc-editorial-section .sec-header span {
+  opacity: 0.08;
+}
+
+/* =========================================================
+   HERO, leave layout exactly as is, add only pattern atmosphere
+   ========================================================= */
+.hero.jbc-floral-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden !important;
+}
+
+/* Keep every existing hero element above the floral atmosphere */
+.hero.jbc-floral-hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Floral layer using ::after, now unblocked by :not(.jbc-floral-hero) kill rule */
+.hero.jbc-floral-hero::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  pointer-events: none;
+  z-index: 0 !important;
+  width: min(68vw, 980px) !important;
+  height: min(90vh, 880px) !important;
+  right: -22vw;
+  top: 6vh;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.085 !important;
+  visibility: visible !important;
+  transform: rotate(-4deg);
+  filter: saturate(1.14) contrast(1.05);
+}
+
+/* =========================================================
+   PROCESS SECTION, How We Build Stories
+   ========================================================= */
+#services-overview.jbc-floral-process {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(232, 137, 29, 0.045), transparent 32%),
+    radial-gradient(circle at 92% 18%, rgba(201, 58, 110, 0.055), transparent 36%),
+    var(--charcoal);
+}
+
+#services-overview.jbc-floral-process::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(58vw, 820px);
+  height: 105%;
+  right: -24vw;
+  top: 2%;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center right;
+  opacity: 0.13;
+  filter: saturate(1.18) contrast(1.08);
+  transform: rotate(2deg);
+}
+
+/* Make the services grid feel more gallery/editorial */
+#services-overview .services-grid {
+  gap: clamp(18px, 2vw, 32px);
+  align-items: stretch;
+}
+
+/* Define / Design / Describe boxes, high-end card redesign */
+.service-card.jbc-editorial-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(35, 29, 25, 0.96), rgba(42, 34, 30, 0.92)) !important;
+  border: 1px solid rgba(240, 230, 218, 0.13) !important;
+  border-radius: 18px !important;
+  padding: clamp(34px, 4vw, 58px) clamp(26px, 3.4vw, 44px) !important;
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(240, 230, 218, 0.06);
+  transition:
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Floral printed-paper texture inside card */
+.service-card.jbc-editorial-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: 145%;
+  background-position: right -70px bottom -88px;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  filter: saturate(1.22) contrast(1.12);
+}
+
+/* Gradient hairline on top of each card */
+.service-card.jbc-editorial-card::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--jbc-gold),
+    var(--jbc-blush),
+    var(--jbc-purple),
+    transparent
+  );
+  opacity: 0.75;
+}
+
+.service-card.jbc-editorial-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.service-card.jbc-editorial-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(232, 137, 29, 0.34) !important;
+  box-shadow:
+    0 34px 92px rgba(0, 0, 0, 0.42),
+    0 0 34px rgba(201, 58, 110, 0.10),
+    inset 0 1px 0 rgba(240, 230, 218, 0.08);
+}
+
+/* Keep hover premium, not white-card inversion */
+.service-card.jbc-editorial-card:hover {
+  background:
+    linear-gradient(145deg, rgba(42, 34, 30, 0.98), rgba(35, 29, 25, 0.96)) !important;
+  color: var(--cream) !important;
+}
+
+.service-card.jbc-editorial-card:hover h3 {
+  background: linear-gradient(135deg, var(--jbc-gold), var(--jbc-blush), var(--jbc-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.service-card.jbc-editorial-card:hover p,
+.service-card.jbc-editorial-card:hover div {
+  color: rgba(240, 230, 218, 0.78) !important;
+}
+
+/* Process card typography */
+.service-card.jbc-editorial-card .service-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.56rem;
+  letter-spacing: 5px;
+  color: var(--jbc-gold);
+  margin-bottom: 28px;
+}
+
+.service-card.jbc-editorial-card .service-num::after {
+  content: "";
+  display: inline-block;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--jbc-gold), transparent);
+  opacity: 0.75;
+}
+
+.service-card.jbc-editorial-card h3 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem) !important;
+  line-height: 0.9;
+  margin-bottom: 8px;
+  letter-spacing: -0.045em;
+}
+
+.service-card.jbc-editorial-card .service-sub {
+  font-family: var(--font-script);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  color: var(--jbc-pink) !important;
+  margin-bottom: 26px;
+}
+
+.service-card.jbc-editorial-card p,
+.service-card.jbc-editorial-card div {
+  color: rgba(240, 230, 218, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.86;
+}
+
+/* Add slight difference card by card */
+.service-card.jbc-editorial-card-1::before {
+  background-position: right -80px bottom -85px;
+  opacity: 0.17;
+}
+
+.service-card.jbc-editorial-card-2::before {
+  background-position: left -115px bottom -95px;
+  opacity: 0.15;
+  transform: scaleX(-1);
+}
+
+.service-card.jbc-editorial-card-3::before {
+  background-position: right -90px top -80px;
+  opacity: 0.16;
+}
+
+/* =========================================================
+   SELECTED WORK
+   ========================================================= */
+#featured-work.jbc-floral-work {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 58, 139, 0.045), transparent 38%),
+    var(--charcoal);
+}
+
+#featured-work.jbc-floral-work::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(46vw, 650px);
+  height: 100%;
+  right: -18vw;
+  top: 0;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center right;
+  opacity: 0.11;
+  filter: saturate(1.1) contrast(1.05);
+}
+
+#featured-work .container {
+  position: relative;
+  z-index: 2;
+}
+
+.portfolio-item.jbc-editorial-work-item {
+  border-radius: 18px !important;
+  border: 1px solid rgba(240, 230, 218, 0.10);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+  background: var(--jbc-card);
+}
+
+.portfolio-item.jbc-editorial-work-item img {
+  filter: grayscale(100%) brightness(0.88) contrast(1.05);
+}
+
+.portfolio-item.jbc-editorial-work-item:hover img {
+  filter: grayscale(0%) brightness(1.02) contrast(1.02);
+}
+
+.portfolio-item.jbc-editorial-work-item .overlay {
+  padding: 30px !important;
+  background:
+    linear-gradient(to top, rgba(20, 17, 16, 0.92), rgba(20, 17, 16, 0.08) 78%);
+}
+
+/* =========================================================
+   TESTIMONIAL
+   ========================================================= */
+.testimonial-section.jbc-floral-testimonial {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ivory) !important;
+}
+
+.testimonial-section.jbc-floral-testimonial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.72),
+      rgba(42, 34, 30, 0.34),
+      rgba(42, 34, 30, 0.72)
+    ),
+    var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: 118%;
+  background-position: center right;
+  opacity: 0.20;
+  filter: saturate(1.15) contrast(1.08);
+}
+
+.testimonial-section .testi-brutal {
+  position: relative;
+  z-index: 2;
+}
+
+.testimonial-section .testi-mark {
+  background:
+    linear-gradient(180deg, rgba(201, 58, 110, 0.95), rgba(139, 58, 139, 0.82)) !important;
+}
+
+.testimonial-section .testi-content blockquote {
+  font-size: clamp(1.45rem, 2.8vw, 2.2rem) !important;
+  line-height: 1.45 !important;
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+.cta-section.jbc-floral-cta {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
-.hero.floral-bg-edge > * {
+
+.cta-section.jbc-floral-cta::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(42vw, 620px);
+  height: 120%;
+  left: -18vw;
+  bottom: -36%;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.11;
+  filter: saturate(1.12) contrast(1.06);
+}
+
+.cta-section .container {
   position: relative;
   z-index: 2;
 }
-/* MOBILE */
+
+/* =========================================================
+   COMPRESSED ARTISTIC FOOTER
+   ========================================================= */
+.footer.jbc-editorial-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(35, 29, 25, 1), rgba(26, 21, 18, 1)) !important;
+  border-top: 1px solid rgba(240, 230, 218, 0.14) !important;
+}
+
+.footer.jbc-editorial-footer::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(52vw, 720px);
+  height: 130%;
+  left: -19vw;
+  bottom: -42%;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left bottom;
+  opacity: 0.13;
+  filter: saturate(1.14) contrast(1.08);
+}
+
+.footer.jbc-editorial-footer > * {
+  position: relative;
+  z-index: 2;
+}
+
+.footer.jbc-editorial-footer .footer-grid {
+  grid-template-columns: 1.45fr 0.75fr 0.75fr 1fr !important;
+  gap: 0 !important;
+}
+
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col {
+  padding: clamp(36px, 5vw, 54px) clamp(24px, 3vw, 38px) !important;
+}
+
+.footer.jbc-editorial-footer .footer-brand p {
+  max-width: 340px;
+  font-size: 0.78rem;
+  line-height: 1.72;
+  color: rgba(240, 230, 218, 0.58) !important;
+}
+
+.footer.jbc-editorial-footer .footer-col h4 {
+  color: rgba(240, 230, 218, 0.9) !important;
+  letter-spacing: 4px;
+}
+
+.footer.jbc-editorial-footer .footer-col a {
+  color: rgba(240, 230, 218, 0.54) !important;
+}
+
+.footer.jbc-editorial-footer .footer-col a:hover {
+  color: var(--jbc-blush) !important;
+}
+
+.footer.jbc-editorial-footer .social-links a {
+  border-color: rgba(240, 230, 218, 0.16) !important;
+  background: rgba(42, 34, 30, 0.34);
+}
+
+.footer.jbc-editorial-footer .footer-bottom {
+  padding: 18px 32px !important;
+  border-top: 1px solid rgba(240, 230, 218, 0.10) !important;
+}
+
+/* =========================================================
+   BUTTON REFINEMENT, no busy floral by default
+   ========================================================= */
+.btn {
+  border-radius: 999px !important;
+}
+
+.btn-primary {
+  box-shadow:
+    0 14px 40px rgba(232, 72, 72, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.btn-outline {
+  border-color: rgba(240, 230, 218, 0.28) !important;
+  background: rgba(35, 29, 25, 0.20) !important;
+  backdrop-filter: blur(10px);
+}
+
+.btn-outline:hover,
+.btn-primary:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   MOBILE REFINEMENT
+   ========================================================= */
+@media (max-width: 968px) {
+  .footer.jbc-editorial-footer .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
 @media (max-width: 768px) {
-  /* Hero — no floral pattern, kept clean */
-  /* Selected Work, subtle side/corner texture */
-  .floral-bg-selected::before {
-    content: "";
-    position: absolute;
-    width: 260px;
-    height: 420px;
-    right: -150px;
-    top: 60px;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.06;
-    filter: blur(0.25px);
+  /* Hero: do not move or alter content, only adjust floral scale */
+  .hero.jbc-floral-hero::after {
+    width: 310px !important;
+    height: 520px !important;
+    right: -160px;
+    top: 165px;
+    opacity: 0.055 !important;
+    transform: rotate(-8deg);
   }
-  /* Testimonial, stronger but still readable */
-  .floral-bg-testimonial::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(
-        rgba(42, 34, 30, 0.62),
-        rgba(42, 34, 30, 0.72)
-      ),
-      var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
+
+  #services-overview.jbc-floral-process::before {
+    width: 390px;
+    height: 640px;
+    right: -210px;
+    top: 96px;
+    opacity: 0.13;
+  }
+
+  #services-overview .services-grid {
+    gap: 22px;
+  }
+
+  .service-card.jbc-editorial-card {
+    border-radius: 20px !important;
+    padding: 36px 26px !important;
+  }
+
+  .service-card.jbc-editorial-card::before {
     background-size: 150%;
-    background-position: center;
-    opacity: 0.16;
-    filter: saturate(1.05) contrast(1.04);
+    background-position: right -88px bottom -92px;
+    opacity: 0.23;
   }
-  /* Process / How We Build Stories watermark */
-  .floral-bg-process::before {
-    content: "";
-    position: absolute;
+
+  .service-card.jbc-editorial-card h3 {
+    font-size: clamp(2.4rem, 15vw, 4.6rem) !important;
+  }
+
+  .service-card.jbc-editorial-card .service-sub {
+    font-size: 1.35rem;
+  }
+
+  #featured-work.jbc-floral-work::before {
     width: 330px;
     height: 520px;
-    right: -170px;
-    top: 120px;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.075;
-    filter: blur(0.3px);
+    right: -150px;
+    top: 74px;
+    opacity: 0.13;
   }
-  /* Cards — kill old ::before floral (hidden behind card bg) */
-  .floral-bg-card::before,
-  .process-card::before,
-  .service-card::before,
-  .value-card::before,
-  article[class*="card"]::before,
-  div[class*="card"]::before {
-    background-image: none;
+
+  .portfolio-item.jbc-editorial-work-item {
+    border-radius: 20px !important;
   }
-  /* Cards — floral via ::after, sits ABOVE card background */
-  .process-card,
-  .service-card,
-  .value-card,
-  article[class*="card"],
-  div[class*="card"] {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
+
+  .testimonial-section.jbc-floral-testimonial::before {
+    background-size: 150%;
+    background-position: center right;
+    opacity: 0.24;
   }
-  .process-card.floral-bg-card::after,
-  .service-card.floral-bg-card::after,
-  .value-card.floral-bg-card::after,
-  article[class*="card"].floral-bg-card::after,
-  div[class*="card"].floral-bg-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background-image:
-      linear-gradient(
-        rgba(42, 34, 30, 0.12),
-        rgba(42, 34, 30, 0.12)
-      ),
-      var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: 155%;
-    background-position: right -80px bottom -90px;
-    opacity: 0.22;
-    mix-blend-mode: screen;
-    filter: saturate(1.25) contrast(1.15);
+
+  .testimonial-section .testi-content {
+    padding: 64px 34px !important;
   }
-  .process-card.floral-bg-card > *,
-  .service-card.floral-bg-card > *,
-  .value-card.floral-bg-card > *,
-  article[class*="card"].floral-bg-card > *,
-  div[class*="card"].floral-bg-card > * {
-    position: relative;
-    z-index: 2;
+
+  .testimonial-section .testi-content blockquote {
+    font-size: 1.36rem !important;
   }
-  /* Footer floral corner */
-  .floral-bg-footer::before,
-  footer::before {
-    content: "";
-    position: absolute;
-    width: 320px;
+
+  .cta-section.jbc-floral-cta::before {
+    width: 330px;
     height: 520px;
-    left: -150px;
-    bottom: -180px;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.095;
-    filter: blur(0.25px);
+    left: -160px;
+    bottom: -185px;
+    opacity: 0.10;
   }
-  footer {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
+
+  .footer.jbc-editorial-footer::before {
+    width: 360px;
+    height: 620px;
+    left: -175px;
+    bottom: -235px;
+    opacity: 0.14;
   }
-  footer > * {
-    position: relative;
-    z-index: 2;
+
+  .footer.jbc-editorial-footer .footer-grid {
+    grid-template-columns: 1fr !important;
   }
-  /* Buttons, only a soft floral texture on mobile */
-  a.btn,
-  .btn,
-  button,
-  [class*="button"],
-  [class*="cta"] {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
+
+  .footer.jbc-editorial-footer .footer-brand,
+  .footer.jbc-editorial-footer .footer-col {
+    padding: 34px 28px !important;
   }
-  a.btn::before,
-  .btn::before,
-  button::before,
-  [class*="button"]::before,
-  [class*="cta"]::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-size: 260%;
-    background-position: center;
-    opacity: 0.06;
+
+  .footer.jbc-editorial-footer .footer-bottom {
+    padding: 18px 24px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero.jbc-floral-hero::after {
+    width: 285px !important;
+    right: -155px;
+    top: 145px;
+  }
+
+  .service-card.jbc-editorial-card h3 {
+    font-size: clamp(2.25rem, 14vw, 3.8rem) !important;
+  }
+
+  .service-card.jbc-editorial-card {
+    padding: 32px 22px !important;
   }
 }

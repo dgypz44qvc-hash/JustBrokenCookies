@@ -601,44 +601,41 @@ document.addEventListener('DOMContentLoaded', () => {
     allImages.forEach(img => colorObserver.observe(img));
   }
 
-  // ---- JBC FLORAL PATTERN CLASS ASSIGNER ----
-  // Adds classes to existing sections so CSS can place the floral pattern selectively.
-  (function assignJbcFloralPatternClasses() {
-    function sectionHasText(el, phrases) {
-      const text = (el.textContent || '').toLowerCase();
-      return phrases.some(phrase => text.includes(phrase));
+  // ---- JBC EDITORIAL FLORAL DESIGN CLASS ASSIGNER ----
+  // Selector-based only, no text-search guessing.
+  (function assignJbcEditorialFloralClasses() {
+    const hero = document.querySelector('.hero');
+    const process = document.querySelector('#services-overview');
+    const selectedWork = document.querySelector('#featured-work');
+    const testimonial = document.querySelector('.testimonial-section');
+    const cta = document.querySelector('.cta-section');
+    const footer = document.querySelector('.footer');
+    const serviceCards = document.querySelectorAll('.service-card');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    if (hero) {
+      hero.classList.add('jbc-floral-hero');
     }
-    const sections = Array.from(document.querySelectorAll('section, footer, main > div, .section'));
-    // Hero — no floral pattern, kept clean
-    const selectedWork = sections.find(el =>
-      sectionHasText(el, ['selected work', 'view all work'])
-    );
-    if (selectedWork) {
-      selectedWork.classList.add('floral-bg-section', 'floral-bg-selected');
-    }
-    const testimonial = sections.find(el =>
-      sectionHasText(el, ['testimonial', "they didn't just tell our story", 'creative director'])
-    );
-    if (testimonial) {
-      testimonial.classList.add('floral-bg-section', 'floral-bg-testimonial');
-    }
-    const process = sections.find(el =>
-      sectionHasText(el, ['how we build stories']) ||
-      (sectionHasText(el, ['define']) && sectionHasText(el, ['design']) && sectionHasText(el, ['describe']))
-    );
     if (process) {
-      process.classList.add('floral-bg-section', 'floral-bg-process');
+      process.classList.add('jbc-editorial-section', 'jbc-floral-process');
     }
-    const cards = Array.from(document.querySelectorAll('.process-card, .service-card, .value-card, article[class*="card"], div[class*="card"]'))
-      .filter(card => sectionHasText(card, ['define', 'design', 'describe', 'craft', 'deliver', 'understand']));
-    cards.forEach(card => {
-      card.classList.add('floral-bg-card');
-    });
-    const footer = document.querySelector('footer, .footer, [class*="footer"]');
+    if (selectedWork) {
+      selectedWork.classList.add('jbc-editorial-section', 'jbc-floral-work');
+    }
+    if (testimonial) {
+      testimonial.classList.add('jbc-editorial-section', 'jbc-floral-testimonial');
+    }
+    if (cta) {
+      cta.classList.add('jbc-editorial-section', 'jbc-floral-cta');
+    }
     if (footer) {
-      footer.classList.add('floral-bg-footer');
+      footer.classList.add('jbc-editorial-footer');
     }
+    serviceCards.forEach((card, index) => {
+      card.classList.add('jbc-editorial-card', `jbc-editorial-card-${index + 1}`);
+    });
+    portfolioItems.forEach((item, index) => {
+      item.classList.add('jbc-editorial-work-item', `jbc-editorial-work-item-${index + 1}`);
+    });
   })();
 
-}); // end DOMContentLoaded
-
+});
