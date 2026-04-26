@@ -609,13 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return phrases.some(phrase => text.includes(phrase));
     }
     const sections = Array.from(document.querySelectorAll('section, footer, main > div, .section'));
-    const hero =
-      document.querySelector('.hero') ||
-      document.querySelector('main > section:first-of-type') ||
-      document.querySelector('section:first-of-type');
-    if (hero) {
-      hero.classList.add('floral-bg-edge');
-    }
+    // Hero — no floral pattern, kept clean
     const selectedWork = sections.find(el =>
       sectionHasText(el, ['selected work', 'view all work'])
     );

@@ -1154,7 +1154,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   pointer-events: none;
 }
 
-.hero:not(.floral-bg-edge)::after {
+.hero::after {
   content: none !important;
   display: none !important;
   opacity: 0 !important;
@@ -1599,24 +1599,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 /* MOBILE */
 @media (max-width: 768px) {
-  /* Hero, tiny corner peek only.
-     IMPORTANT: using ::after so .hero::before dashed line remains untouched. */
-  .hero.floral-bg-edge::after {
-    content: "";
-    position: absolute;
-    width: 260px;
-    height: 420px;
-    right: -150px;
-    top: 180px;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.045;
-    filter: blur(0.25px);
-  }
+  /* Hero — no floral pattern, kept clean */
   /* Selected Work, subtle side/corner texture */
   .floral-bg-selected::before {
     content: "";
@@ -1670,25 +1653,16 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.075;
     filter: blur(0.3px);
   }
-  /* Cards, subtle internal floral texture */
+  /* Cards — kill old ::before floral (hidden behind card bg) */
   .floral-bg-card::before,
   .process-card::before,
   .service-card::before,
   .value-card::before,
   article[class*="card"]::before,
   div[class*="card"]::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: 170%;
-    background-position: right -95px bottom -95px;
-    opacity: 0.075;
-    filter: blur(0.25px);
+    background-image: none;
   }
+  /* Cards — floral via ::after, sits ABOVE card background */
   .process-card,
   .service-card,
   .value-card,
@@ -1698,11 +1672,34 @@ section { padding:var(--section-pad) 0; position:relative; }
     isolation: isolate;
     overflow: hidden;
   }
-  .process-card > *,
-  .service-card > *,
-  .value-card > *,
-  article[class*="card"] > *,
-  div[class*="card"] > * {
+  .process-card.floral-bg-card::after,
+  .service-card.floral-bg-card::after,
+  .value-card.floral-bg-card::after,
+  article[class*="card"].floral-bg-card::after,
+  div[class*="card"].floral-bg-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(
+        rgba(42, 34, 30, 0.12),
+        rgba(42, 34, 30, 0.12)
+      ),
+      var(--jbc-floral-pattern);
+    background-repeat: no-repeat;
+    background-size: 155%;
+    background-position: right -80px bottom -90px;
+    opacity: 0.22;
+    mix-blend-mode: screen;
+    filter: saturate(1.25) contrast(1.15);
+  }
+  .process-card.floral-bg-card > *,
+  .service-card.floral-bg-card > *,
+  .value-card.floral-bg-card > *,
+  article[class*="card"].floral-bg-card > *,
+  div[class*="card"].floral-bg-card > * {
     position: relative;
     z-index: 2;
   }
