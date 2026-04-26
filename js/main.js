@@ -601,3 +601,50 @@ document.addEventListener('DOMContentLoaded', () => {
     allImages.forEach(img => colorObserver.observe(img));
   }
 
+  // ---- JBC FLORAL PATTERN CLASS ASSIGNER ----
+  // Adds classes to existing sections so CSS can place the floral pattern selectively.
+  (function assignJbcFloralPatternClasses() {
+    function sectionHasText(el, phrases) {
+      const text = (el.textContent || '').toLowerCase();
+      return phrases.some(phrase => text.includes(phrase));
+    }
+    const sections = Array.from(document.querySelectorAll('section, footer, main > div, .section'));
+    const hero =
+      document.querySelector('.hero') ||
+      document.querySelector('main > section:first-of-type') ||
+      document.querySelector('section:first-of-type');
+    if (hero) {
+      hero.classList.add('floral-bg-edge');
+    }
+    const selectedWork = sections.find(el =>
+      sectionHasText(el, ['selected work', 'view all work'])
+    );
+    if (selectedWork) {
+      selectedWork.classList.add('floral-bg-section', 'floral-bg-selected');
+    }
+    const testimonial = sections.find(el =>
+      sectionHasText(el, ['testimonial', "they didn't just tell our story", 'creative director'])
+    );
+    if (testimonial) {
+      testimonial.classList.add('floral-bg-section', 'floral-bg-testimonial');
+    }
+    const process = sections.find(el =>
+      sectionHasText(el, ['how we build stories']) ||
+      sectionHasText(el, ['define']) && sectionHasText(el, ['design']) && sectionHasText(el, ['describe'])
+    );
+    if (process) {
+      process.classList.add('floral-bg-section', 'floral-bg-process');
+    }
+    const cards = Array.from(document.querySelectorAll('.process-card, .service-card, .value-card, article[class*="card"], div[class*="card"]'))
+      .filter(card => sectionHasText(card, ['define', 'design', 'describe', 'craft', 'deliver', 'understand']));
+    cards.forEach(card => {
+      card.classList.add('floral-bg-card');
+    });
+    const footer = document.querySelector('footer, .footer, [class*="footer"]');
+    if (footer) {
+      footer.classList.add('floral-bg-footer');
+    }
+  })();
+
+}); // end DOMContentLoaded
+
