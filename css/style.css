@@ -1154,7 +1154,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   pointer-events: none;
 }
 
-.hero::after {
+.hero:not(.floral-bg-edge)::after {
   content: none !important;
   display: none !important;
   opacity: 0 !important;
@@ -1565,6 +1565,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   }
 }
 
+
 /* ---- JBC FLORAL PATTERN BACKGROUND SYSTEM ---- */
 :root {
   --jbc-floral-pattern: url("../images/jbc-rose-pattern-bg.png");
@@ -1585,161 +1586,22 @@ section { padding:var(--section-pad) 0; position:relative; }
   position: relative;
   z-index: 2;
 }
-/* DESKTOP AND TABLET */
-@media (min-width: 769px) {
-  /* Keep hero mostly clean, only a faint edge if section is marked */
-  .hero.floral-bg-edge::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: 58%;
-    background-position: right -18vw top 8vh;
-    opacity: 0.055;
-    filter: blur(0.2px);
-  }
-  /* Testimonial, romantic floral band */
-  .floral-bg-testimonial::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(
-        90deg,
-        rgba(42, 34, 30, 0.72),
-        rgba(42, 34, 30, 0.32),
-        rgba(42, 34, 30, 0.72)
-      ),
-      var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: 120%;
-    background-position: center;
-    opacity: 0.16;
-    filter: saturate(1.05) contrast(1.05);
-  }
-  /* Selected Work, very subtle edge ornament */
-  .floral-bg-selected::before {
-    content: "";
-    position: absolute;
-    width: 48vw;
-    height: 100%;
-    right: -18vw;
-    top: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center right;
-    opacity: 0.065;
-    filter: blur(0.25px);
-  }
-  /* Process / How We Build Stories, large soft background ornament */
-  .floral-bg-process::before {
-    content: "";
-    position: absolute;
-    width: 58vw;
-    height: 120%;
-    right: -24vw;
-    top: -10%;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.085;
-    filter: blur(0.35px);
-  }
-  /* Cards, subtle luxury paper texture */
-  .floral-bg-card::before,
-  .process-card::before,
-  .service-card::before,
-  .value-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: 145%;
-    background-position: right -40px bottom -70px;
-    opacity: 0.075;
-    filter: blur(0.25px);
-  }
-  /* Footer, closing floral atmosphere */
-  .floral-bg-footer::before,
-  footer::before {
-    content: "";
-    position: absolute;
-    width: 62vw;
-    height: 120%;
-    left: -22vw;
-    bottom: -35%;
-    z-index: 0;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: left bottom;
-    opacity: 0.095;
-    filter: blur(0.3px);
-  }
-  footer {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-  }
-  footer > * {
-    position: relative;
-    z-index: 2;
-  }
-  /* Buttons, floral appears only on hover */
-  a.btn,
-  .btn,
-  button,
-  [class*="button"],
-  [class*="cta"] {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-  }
-  a.btn::before,
-  .btn::before,
-  button::before,
-  [class*="button"]::before,
-  [class*="cta"]::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: var(--jbc-floral-pattern);
-    background-size: 220%;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 0.45s ease, transform 0.45s ease;
-    transform: scale(1.05);
-  }
-  a.btn:hover::before,
-  .btn:hover::before,
-  button:hover::before,
-  [class*="button"]:hover::before,
-  [class*="cta"]:hover::before {
-    opacity: 0.13;
-    transform: scale(1);
-  }
+/* Make sure hero keeps its existing ::before decorative line.
+   Floral pattern must use ::after only. */
+.hero.floral-bg-edge {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.hero.floral-bg-edge > * {
+  position: relative;
+  z-index: 2;
 }
 /* MOBILE */
 @media (max-width: 768px) {
-  /* Never make mobile hero busy */
-  .hero.floral-bg-edge::before {
+  /* Hero, tiny corner peek only.
+     IMPORTANT: using ::after so .hero::before dashed line remains untouched. */
+  .hero.floral-bg-edge::after {
     content: "";
     position: absolute;
     width: 260px;
@@ -1871,7 +1733,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     position: relative;
     z-index: 2;
   }
-  /* Buttons, only a soft floral texture on active/hover capable devices */
+  /* Buttons, only a soft floral texture on mobile */
   a.btn,
   .btn,
   button,

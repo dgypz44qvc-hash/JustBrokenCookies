@@ -630,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const process = sections.find(el =>
       sectionHasText(el, ['how we build stories']) ||
-      sectionHasText(el, ['define']) && sectionHasText(el, ['design']) && sectionHasText(el, ['describe'])
+      (sectionHasText(el, ['define']) && sectionHasText(el, ['design']) && sectionHasText(el, ['describe']))
     );
     if (process) {
       process.classList.add('floral-bg-section', 'floral-bg-process');
