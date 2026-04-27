@@ -3765,3 +3765,100 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.32;
   }
 }
+/* =========================================================
+   JBC HERO ROSE VIDEO FIX
+   Fixes video sizing and stops it pushing hero text down
+   Keeps hero text/image/layout visually as before
+   ========================================================= */
+
+/* Hero remains the positioning container */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* The video must be absolute, so it does NOT push the hero text down */
+.hero-rose-video {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  /* Shows most of the 16:9 video instead of zooming into the centre */
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  opacity: 0.55 !important;
+  mix-blend-mode: screen !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  filter: saturate(1.14) contrast(1.08) brightness(0.95) !important;
+}
+
+/* Keep all real hero content above the video */
+.hero > *:not(.hero-rose-video) {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Restore hero title area so it does not get pushed down */
+.hero-content {
+  position: relative !important;
+  z-index: 3 !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding-bottom: 20px !important;
+}
+
+/* Keep the big title behaving normally */
+.hero-oil-wrap,
+.hero-mega {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Keep your portrait/custom image above the video */
+.hero .jbc-custom {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+/* Keep vertical StorytellinG above the video */
+.hero .tag {
+  position: absolute !important;
+  z-index: 5 !important;
+}
+
+/* Remove previous hero floral pseudo background if still present */
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Mobile, keep video visible but calmer */
+@media (max-width: 768px) {
+  .hero-rose-video {
+    object-fit: contain !important;
+    object-position: center center !important;
+    opacity: 0.38 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-rose-video {
+    opacity: 0.30 !important;
+  }
+}
