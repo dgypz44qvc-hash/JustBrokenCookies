@@ -4313,7 +4313,7 @@ body {
   background-position: left center !important;
 
   opacity: 1 !important;
-  mix-blend-mode: multiply !important;
+  mix-blend-mode: soft-light !important;
   filter: saturate(1.2) contrast(1.1) !important;
 
   -webkit-mask-image:
@@ -4504,10 +4504,10 @@ body {
     ) !important;
 }
 
-/* Hero left roses — full strength, multiply keeps depth */
+/* Hero left roses — full strength, soft-light keeps depth */
 .hero::before {
   opacity: 1 !important;
-  mix-blend-mode: multiply !important;
+  mix-blend-mode: soft-light !important;
 }
 
 /* Footer — fade upward from bottom */
