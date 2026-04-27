@@ -3699,3 +3699,69 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.28 !important;
   }
 }
+/* =========================================================
+   JBC HERO ROSE VIDEO BACKGROUND
+   Removes current hero floral background/pattern
+   Adds roses animation video behind all hero content
+   File: images/roses animation 1.mp4
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* Kill previous hero rose background layers only */
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Keep existing hero decorative ::before if present, but below content */
+.hero::before {
+  z-index: 1 !important;
+}
+
+/* The video sits behind everything in the hero */
+.hero-rose-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: screen;
+  filter: saturate(1.12) contrast(1.05) brightness(0.9);
+}
+
+/* Keep all existing hero content above video */
+.hero > *:not(.hero-rose-video) {
+  position: relative;
+  z-index: 3;
+}
+
+/* If your portrait is a jbc-custom element, keep it above video too */
+.hero .jbc-custom {
+  z-index: 3;
+}
+
+/* Mobile, slightly softer so it does not crowd the hero */
+@media (max-width: 768px) {
+  .hero-rose-video {
+    opacity: 0.38;
+    object-position: center center;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-rose-video {
+    opacity: 0.32;
+  }
+}
