@@ -1632,14 +1632,6 @@ section { padding:var(--section-pad) 0; position:relative; }
    ========================================================= */
 .hero.jbc-floral-hero {
   position: relative;
-  isolation: isolate;
-  overflow: hidden !important;
-}
-
-/* Keep every existing hero element above the floral atmosphere */
-.hero.jbc-floral-hero > * {
-  position: relative;
-  z-index: 2;
 }
 
 /* Floral layer using ::after, now unblocked by :not(.jbc-floral-hero) kill rule */
@@ -1657,7 +1649,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  opacity: 0.085 !important;
+  opacity: 0.11 !important;
   visibility: visible !important;
   transform: rotate(-4deg);
   filter: saturate(1.14) contrast(1.05);
@@ -1686,7 +1678,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center right;
-  opacity: 0.13;
+  opacity: 0.16;
   filter: saturate(1.18) contrast(1.08);
   transform: rotate(2deg);
 }
@@ -1728,7 +1720,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: 145%;
   background-position: right -70px bottom -88px;
-  opacity: 0.18;
+  opacity: 0.22;
   mix-blend-mode: screen;
   filter: saturate(1.22) contrast(1.12);
 }
@@ -1831,18 +1823,18 @@ section { padding:var(--section-pad) 0; position:relative; }
 /* Add slight difference card by card */
 .service-card.jbc-editorial-card-1::before {
   background-position: right -80px bottom -85px;
-  opacity: 0.17;
+  opacity: 0.21;
 }
 
 .service-card.jbc-editorial-card-2::before {
   background-position: left -115px bottom -95px;
-  opacity: 0.15;
+  opacity: 0.19;
   transform: scaleX(-1);
 }
 
 .service-card.jbc-editorial-card-3::before {
   background-position: right -90px top -80px;
-  opacity: 0.16;
+  opacity: 0.20;
 }
 
 /* =========================================================
@@ -1867,7 +1859,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center right;
-  opacity: 0.11;
+  opacity: 0.14;
   filter: saturate(1.1) contrast(1.05);
 }
 
@@ -1924,7 +1916,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: 118%;
   background-position: center right;
-  opacity: 0.20;
+  opacity: 0.25;
   filter: saturate(1.15) contrast(1.08);
 }
 
@@ -1965,7 +1957,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  opacity: 0.11;
+  opacity: 0.14;
   filter: saturate(1.12) contrast(1.06);
 }
 
@@ -1999,7 +1991,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-repeat: no-repeat;
   background-size: cover;
   background-position: left bottom;
-  opacity: 0.13;
+  opacity: 0.16;
   filter: saturate(1.14) contrast(1.08);
 }
 
@@ -2088,7 +2080,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     height: 520px !important;
     right: -160px;
     top: 165px;
-    opacity: 0.055 !important;
+    opacity: 0.07 !important;
     transform: rotate(-8deg);
   }
 
@@ -2097,7 +2089,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     height: 640px;
     right: -210px;
     top: 96px;
-    opacity: 0.13;
+    opacity: 0.16;
   }
 
   #services-overview .services-grid {
@@ -2112,7 +2104,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .service-card.jbc-editorial-card::before {
     background-size: 150%;
     background-position: right -88px bottom -92px;
-    opacity: 0.23;
+    opacity: 0.28;
   }
 
   .service-card.jbc-editorial-card h3 {
@@ -2128,7 +2120,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     height: 520px;
     right: -150px;
     top: 74px;
-    opacity: 0.13;
+    opacity: 0.16;
   }
 
   .portfolio-item.jbc-editorial-work-item {
@@ -2138,7 +2130,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .testimonial-section.jbc-floral-testimonial::before {
     background-size: 150%;
     background-position: center right;
-    opacity: 0.24;
+    opacity: 0.30;
   }
 
   .testimonial-section .testi-content {
@@ -2154,7 +2146,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     height: 520px;
     left: -160px;
     bottom: -185px;
-    opacity: 0.10;
+    opacity: 0.13;
   }
 
   .footer.jbc-editorial-footer::before {
@@ -2162,7 +2154,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     height: 620px;
     left: -175px;
     bottom: -235px;
-    opacity: 0.14;
+    opacity: 0.18;
   }
 
   .footer.jbc-editorial-footer .footer-grid {
