@@ -4084,6 +4084,29 @@ body {
   position: absolute !important;
   z-index: 1 !important;
   overflow: visible !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 55%,
+      rgba(0, 0, 0, 0.6) 72%,
+      rgba(0, 0, 0, 0.2) 88%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 55%,
+      rgba(0, 0, 0, 0.6) 72%,
+      rgba(0, 0, 0, 0.2) 88%,
+      transparent 100%
+    ) !important;
 }
 
 /* Portrait edge blend — only the very outermost edge fades */
