@@ -223,17 +223,17 @@ ul { list-style:none; }
   position:relative;
 }
 .hero-mega .l1 {
-  display:block; font-size:clamp(8rem,20vw,18rem); color:var(--gold);
+  display:block; font-size:clamp(5.6rem,14vw,12.6rem); color:var(--gold);
   text-shadow: 0 0 30px rgba(232, 137, 29, 0.45), 0 2px 6px rgba(0,0,0,0.5);
   filter: brightness(1.15);
 }
 .hero-mega .l2 {
-  display:block; font-size:clamp(8rem,20vw,18rem); color:var(--blush); margin-left:clamp(30px,8vw,120px);
+  display:block; font-size:clamp(5.6rem,14vw,12.6rem); color:var(--blush); margin-left:clamp(30px,8vw,120px);
   text-shadow: 0 0 30px rgba(232, 72, 72, 0.45), 0 2px 6px rgba(0,0,0,0.5);
   filter: brightness(1.15);
 }
 .hero-mega .l3 {
-  display:block; font-size:clamp(8rem,20vw,18rem); color:var(--wine);
+  display:block; font-size:clamp(5.6rem,14vw,12.6rem); color:var(--wine);
   text-shadow: 0 0 30px rgba(139, 58, 139, 0.5), 0 2px 6px rgba(0,0,0,0.5);
   filter: brightness(1.2);
 }
