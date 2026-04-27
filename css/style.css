@@ -3556,9 +3556,9 @@ section { padding:var(--section-pad) 0; position:relative; }
 
   /*
     Placement logic:
-    start from lower middle,
+    start from upper right,
     travel diagonally behind the portrait,
-    continue toward upper right.
+    continue toward lower left.
   */
   width: min(78vw, 1180px) !important;
   height: 155% !important;
@@ -3568,7 +3568,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-image: var(--jbc-rose-pattern, url("../images/jbc-rose-pattern-bg.png")) !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
-  background-position: center !important;
+  background-position: center and lower left !important;
 
   opacity: 0.78 !important;
   mix-blend-mode: screen !important;
@@ -3638,7 +3638,7 @@ section { padding:var(--section-pad) 0; position:relative; }
     height: 148% !important;
     left: 34% !important;
     top: -25% !important;
-    opacity: 0.72 !important;
+    opacity: 0.99 !important;
     transform: rotate(-21deg) scaleX(-1) !important;
   }
 }
