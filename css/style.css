@@ -4919,3 +4919,111 @@ body {
 .hero-mega {
   transform: translateY(-30%) !important;
 }
+/* =========================================================
+   JBC HERO TITLE FIX + SAFE MOVE UP
+   Fixes previous mistake:
+   DO NOT move .hero-oil-wrap or .hero-mega with transform,
+   because JS uses transform for hero animation/parallax.
+   
+   This restores the title behaviour and moves the title area up safely.
+   ========================================================= */
+
+/* 1. Cancel the previous bad transform override */
+.hero-content,
+.hero-mega {
+  transform: none !important;
+}
+
+/* Important:
+   Do NOT force transform on .hero-oil-wrap.
+   main.js uses .hero-oil-wrap transform for hero parallax/oil effect.
+*/
+.hero-oil-wrap {
+  /* intentionally no !important transform here */
+}
+
+/* 2. Keep hero structure stable */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* 3. Keep the main hero title above background/photo */
+.hero-content {
+  position: relative !important;
+  z-index: 8 !important;
+
+  /*
+    SAFE TITLE MOVE:
+    This moves the Just / Broken / Cookies title upward
+    without breaking JS animations.
+    
+    -8vh = noticeable but not crazy.
+    Use -5vh if too much.
+    Use -10vh if still too low.
+  */
+  margin-top: -8vh !important;
+}
+
+/* 4. Keep the actual title layers above everything */
+.hero-mega,
+.hero-mega .l1,
+.hero-mega .l2,
+.hero-mega .l3 {
+  position: relative !important;
+  z-index: 9 !important;
+}
+
+/* 5. Keep oil wrapper above background, but do not hijack its transform */
+.hero-oil-wrap {
+  position: relative !important;
+  z-index: 9 !important;
+}
+
+/* 6. Keep StorytellinG visible and above layers */
+.hero .tag {
+  position: absolute !important;
+  z-index: 10 !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* 7. Keep portrait behind the title */
+.hero .hero-photo-layer,
+.hero .jbc-custom.hero-photo-layer {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+/* 8. Keep empty custom text block where it was, but below hero title */
+.hero .jbc-custom:not(.hero-photo-layer) {
+  position: absolute !important;
+  z-index: 5 !important;
+}
+
+/* 9. Remove old hero video if still present */
+.hero-rose-video {
+  display: none !important;
+}
+
+/* 10. Remove old hero pseudo rose/video backgrounds */
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* 11. Mobile, use a gentler move so layout does not crowd */
+@media (max-width: 768px) {
+  .hero-content {
+    margin-top: -4vh !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-content {
+    margin-top: -2vh !important;
+  }
+}
