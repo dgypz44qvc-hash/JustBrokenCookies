@@ -2810,3 +2810,59 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.15 !important;
   }
 }
+/* =========================================================
+   JBC ROSE VISIBILITY MAX TEST
+   Pushes rose decorations to full opacity for testing
+   Does not change text, content, images, or layout
+   ========================================================= */
+
+#services-overview::before {
+  opacity: 1 !important;
+}
+
+#services-overview .service-card:nth-child(1)::after {
+  opacity: 1 !important;
+}
+
+#services-overview .service-card:nth-child(2)::after {
+  opacity: 1 !important;
+}
+
+#services-overview .service-card:nth-child(3)::after {
+  opacity: 1 !important;
+}
+
+#featured-work::before {
+  opacity: 1 !important;
+}
+
+.testimonial-section::before {
+  opacity: 1 !important;
+}
+
+.cta-section::after {
+  opacity: 1 !important;
+}
+
+.footer::before {
+  opacity: 1 !important;
+}
+
+.blog-card::after {
+  opacity: 1 !important;
+}
+
+/* Mobile too */
+@media (max-width: 768px) {
+  #services-overview::before,
+  #services-overview .service-card:nth-child(1)::after,
+  #services-overview .service-card:nth-child(2)::after,
+  #services-overview .service-card:nth-child(3)::after,
+  #featured-work::before,
+  .testimonial-section::before,
+  .cta-section::after,
+  .footer::before,
+  .blog-card::after {
+    opacity: 1 !important;
+  }
+}
