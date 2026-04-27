@@ -2988,3 +2988,141 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.32;
   }
 }
+/* =========================================================
+   JBC HERO ROSE, OPTION 2 EXACT PLACEMENT
+   Diagonal flow behind subject
+   Roses only, no layout/text/image changes
+   ========================================================= */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden !important;
+}
+
+/* Keep all real hero content above the rose layer */
+.hero > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Option 2 style:
+   diagonal floral flow from lower-middle/right to upper-right,
+   behind the subject/arm, away from title and face */
+.hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+
+  width: min(64vw, 980px);
+  height: 135%;
+  right: -24vw;
+  top: -16%;
+
+  background-image: var(--jbc-rose-pattern, url("../images/jbc-rose-pattern-bg.png"));
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center right;
+
+  opacity: 0.82;
+  mix-blend-mode: screen;
+  filter: saturate(1.22) contrast(1.08);
+
+  transform: rotate(-16deg) scaleX(-1);
+
+  /* Soft diagonal mask, removes hard rectangular edge */
+  -webkit-mask-image:
+    linear-gradient(
+      118deg,
+      transparent 0%,
+      transparent 19%,
+      rgba(0, 0, 0, 0.10) 29%,
+      rgba(0, 0, 0, 0.62) 43%,
+      rgba(0, 0, 0, 1) 58%,
+      rgba(0, 0, 0, 0.72) 73%,
+      transparent 100%
+    );
+
+  mask-image:
+    linear-gradient(
+      118deg,
+      transparent 0%,
+      transparent 19%,
+      rgba(0, 0, 0, 0.10) 29%,
+      rgba(0, 0, 0, 0.62) 43%,
+      rgba(0, 0, 0, 1) 58%,
+      rgba(0, 0, 0, 0.72) 73%,
+      transparent 100%
+    );
+}
+
+/* Desktop refinement, close to mockup option 2 */
+@media (min-width: 969px) {
+  .hero::after {
+    width: min(58vw, 900px);
+    height: 130%;
+    right: -22vw;
+    top: -14%;
+    opacity: 0.76;
+    transform: rotate(-15deg) scaleX(-1);
+  }
+}
+
+/* Tablet, push further right so it does not cover face/text */
+@media (max-width: 968px) {
+  .hero::after {
+    width: 470px;
+    height: 720px;
+    right: -265px;
+    top: 52px;
+    opacity: 0.44;
+    transform: rotate(-12deg) scaleX(-1);
+  }
+}
+
+/* Mobile, same idea but quieter */
+@media (max-width: 768px) {
+  .hero::after {
+    width: 390px;
+    height: 640px;
+    right: -235px;
+    top: 82px;
+    opacity: 0.36;
+    background-size: cover;
+    background-position: center;
+    transform: rotate(-10deg) scaleX(-1);
+
+    -webkit-mask-image:
+      linear-gradient(
+        118deg,
+        transparent 0%,
+        transparent 28%,
+        rgba(0, 0, 0, 0.18) 42%,
+        rgba(0, 0, 0, 0.84) 62%,
+        rgba(0, 0, 0, 0.58) 76%,
+        transparent 100%
+      );
+
+    mask-image:
+      linear-gradient(
+        118deg,
+        transparent 0%,
+        transparent 28%,
+        rgba(0, 0, 0, 0.18) 42%,
+        rgba(0, 0, 0, 0.84) 62%,
+        rgba(0, 0, 0, 0.58) 76%,
+        transparent 100%
+      );
+  }
+}
+
+@media (max-width: 430px) {
+  .hero::after {
+    width: 330px;
+    height: 560px;
+    right: -205px;
+    top: 80px;
+    opacity: 0.30;
+  }
+}
