@@ -4558,3 +4558,52 @@ body {
   content: none !important;
   display: none !important;
 }
+/* =========================================================
+   JBC HERO PORTRAIT EDGE BLEND
+   Removes the hard rectangle outline from the hero portrait
+   Keeps image position, size, and layout unchanged
+   ========================================================= */
+
+.hero .hero-photo-layer {
+  overflow: visible !important;
+}
+
+/* Fade the actual portrait edges into the brown hero background */
+.hero .hero-photo-layer picture,
+.hero .hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 52%,
+      rgba(0, 0, 0, 0.82) 64%,
+      rgba(0, 0, 0, 0.42) 78%,
+      transparent 96%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 52%,
+      rgba(0, 0, 0, 0.82) 64%,
+      rgba(0, 0, 0, 0.42) 78%,
+      transparent 96%
+    ) !important;
+}
+
+/* Make sure the portrait stays behind the main hero text */
+.hero .hero-photo-layer {
+  z-index: 2 !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  z-index: 6 !important;
+}
