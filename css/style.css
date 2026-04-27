@@ -2717,3 +2717,96 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.10;
   }
 }
+/* =========================================================
+   JBC ROSE VISIBILITY BOOST
+   Makes rose decorations around 50% more visible
+   Does not change content, text, layout, or effects
+   ========================================================= */
+
+#services-overview::before {
+  opacity: 0.165 !important;
+}
+
+#services-overview .service-card:nth-child(1)::after {
+  opacity: 0.33 !important;
+}
+
+#services-overview .service-card:nth-child(2)::after {
+  opacity: 0.27 !important;
+}
+
+#services-overview .service-card:nth-child(3)::after {
+  opacity: 0.30 !important;
+}
+
+#featured-work::before {
+  opacity: 0.12 !important;
+}
+
+.testimonial-section::before {
+  opacity: 0.30 !important;
+}
+
+.cta-section::after {
+  opacity: 0.15 !important;
+}
+
+.footer::before {
+  opacity: 0.195 !important;
+}
+
+@media (max-width: 768px) {
+  #services-overview::before {
+    opacity: 0.15 !important;
+  }
+
+  #services-overview .service-card:nth-child(1)::after {
+    opacity: 0.33 !important;
+  }
+
+  #services-overview .service-card:nth-child(2)::after {
+    opacity: 0.27 !important;
+  }
+
+  #services-overview .service-card:nth-child(3)::after {
+    opacity: 0.30 !important;
+  }
+
+  #featured-work::before {
+    opacity: 0.105 !important;
+  }
+
+  .testimonial-section::before {
+    opacity: 0.27 !important;
+  }
+
+  .cta-section::after {
+    opacity: 0.135 !important;
+  }
+
+  .footer::before {
+    opacity: 0.18 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  #services-overview .service-card:nth-child(1)::after {
+    opacity: 0.30 !important;
+  }
+
+  #services-overview .service-card:nth-child(2)::after {
+    opacity: 0.24 !important;
+  }
+
+  #services-overview .service-card:nth-child(3)::after {
+    opacity: 0.27 !important;
+  }
+
+  .testimonial-section::before {
+    opacity: 0.24 !important;
+  }
+
+  .footer::before {
+    opacity: 0.15 !important;
+  }
+}
