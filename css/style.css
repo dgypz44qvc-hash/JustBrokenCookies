@@ -2414,3 +2414,306 @@ section { padding:var(--section-pad) 0; position:relative; }
   transform: rotate(-12deg);
 }
 .jbc-floral-contact > * { position: relative; z-index: 2; }
+/* =========================================================
+   JBC ROSE PATTERN DECOR ONLY
+   Manual safe version
+   Does not change text, content, or layout
+   Uses: ../images/jbc-rose-pattern-bg.png
+   ========================================================= */
+
+:root {
+  --jbc-rose-pattern: url("../images/jbc-rose-pattern-bg.png");
+}
+
+/* Keep every decorated section safe */
+#services-overview,
+#featured-work,
+.testimonial-section,
+.cta-section,
+.footer,
+#services-overview .service-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Keep real content above rose decorations */
+#services-overview > *,
+#featured-work > *,
+.testimonial-section > *,
+.cta-section > *,
+.footer > *,
+#services-overview .service-card > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* =========================================================
+   HERO SAFETY
+   No rose pattern on hero in this manual version.
+   Hero text, image, tag, animation remain untouched.
+   ========================================================= */
+
+.hero {
+  /* no change, safety comment only */
+}
+
+/* =========================================================
+   PROCESS SECTION BACKGROUND
+   Soft editorial rose atmosphere behind the whole section
+   ========================================================= */
+
+#services-overview::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(58vw, 820px);
+  height: 105%;
+  right: -24vw;
+  top: 2%;
+  background-image: var(--jbc-rose-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center right;
+  opacity: 0.11;
+  filter: saturate(1.16) contrast(1.06);
+  transform: rotate(2deg);
+}
+
+/* =========================================================
+   DEFINE / DESIGN / DESCRIBE CARDS
+   Pattern placement varies per card
+   Text area remains clean
+   ========================================================= */
+
+#services-overview .service-card::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--jbc-rose-pattern);
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  filter: saturate(1.22) contrast(1.12);
+}
+
+/* Card 1, Define, medium bloom from bottom-right */
+#services-overview .service-card:nth-child(1)::after {
+  width: 260px;
+  height: 280px;
+  right: -82px;
+  bottom: -96px;
+  background-size: 150%;
+  background-position: center;
+  opacity: 0.22;
+  transform: rotate(-2deg);
+}
+
+/* Card 2, Design, larger and higher, right/top */
+#services-overview .service-card:nth-child(2)::after {
+  width: 330px;
+  height: 340px;
+  right: -145px;
+  top: -72px;
+  background-size: 138%;
+  background-position: center right;
+  opacity: 0.18;
+  transform: rotate(6deg);
+}
+
+/* Card 3, Describe, lower flourish from left */
+#services-overview .service-card:nth-child(3)::after {
+  width: 310px;
+  height: 260px;
+  left: -118px;
+  bottom: -78px;
+  background-size: 145%;
+  background-position: center left;
+  opacity: 0.20;
+  transform: rotate(-7deg) scaleX(-1);
+}
+
+/* =========================================================
+   SELECTED WORK
+   Keep images clean, rose only at section edge
+   ========================================================= */
+
+#featured-work::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(42vw, 620px);
+  height: 100%;
+  right: -18vw;
+  top: 0;
+  background-image: var(--jbc-rose-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center right;
+  opacity: 0.08;
+  filter: saturate(1.1) contrast(1.04);
+}
+
+/* =========================================================
+   TESTIMONIAL
+   Strongest emotional rose moment, still behind text
+   ========================================================= */
+
+.testimonial-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(35, 29, 25, 0.58),
+      rgba(35, 29, 25, 0.32),
+      rgba(35, 29, 25, 0.68)
+    ),
+    var(--jbc-rose-pattern);
+  background-repeat: no-repeat;
+  background-size: 125%;
+  background-position: center right;
+  opacity: 0.20;
+  filter: saturate(1.14) contrast(1.06);
+}
+
+/* =========================================================
+   CTA
+   Subtle rose atmosphere, not overpowering
+   ========================================================= */
+
+.cta-section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(42vw, 620px);
+  height: 120%;
+  right: -18vw;
+  bottom: -36%;
+  background-image: var(--jbc-rose-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.10;
+  filter: saturate(1.12) contrast(1.06);
+}
+
+/* =========================================================
+   FOOTER
+   Closing floral stamp
+   ========================================================= */
+
+.footer::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: min(52vw, 720px);
+  height: 130%;
+  right: -19vw;
+  bottom: -42%;
+  background-image: var(--jbc-rose-pattern);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right bottom;
+  opacity: 0.13;
+  filter: saturate(1.14) contrast(1.08);
+}
+
+/* =========================================================
+   MOBILE REFINEMENT
+   Less rose on mobile, more breathing room
+   ========================================================= */
+
+@media (max-width: 768px) {
+  #services-overview::before {
+    width: 390px;
+    height: 640px;
+    right: -220px;
+    top: 96px;
+    opacity: 0.10;
+  }
+
+  #services-overview .service-card:nth-child(1)::after {
+    width: 230px;
+    height: 250px;
+    right: -98px;
+    bottom: -88px;
+    opacity: 0.22;
+  }
+
+  #services-overview .service-card:nth-child(2)::after {
+    width: 270px;
+    height: 290px;
+    right: -130px;
+    top: -68px;
+    opacity: 0.18;
+  }
+
+  #services-overview .service-card:nth-child(3)::after {
+    width: 250px;
+    height: 230px;
+    left: -116px;
+    bottom: -70px;
+    opacity: 0.20;
+  }
+
+  #featured-work::before {
+    width: 300px;
+    height: 500px;
+    right: -170px;
+    top: 60px;
+    opacity: 0.07;
+  }
+
+  .testimonial-section::before {
+    background-size: 150%;
+    background-position: center right;
+    opacity: 0.18;
+  }
+
+  .cta-section::after {
+    width: 310px;
+    height: 500px;
+    right: -165px;
+    bottom: -180px;
+    opacity: 0.09;
+  }
+
+  .footer::before {
+    width: 340px;
+    height: 580px;
+    right: -175px;
+    bottom: -220px;
+    opacity: 0.12;
+  }
+}
+
+/* Small phones, reduce slightly again */
+@media (max-width: 430px) {
+  #services-overview .service-card:nth-child(1)::after {
+    opacity: 0.20;
+  }
+
+  #services-overview .service-card:nth-child(2)::after {
+    opacity: 0.16;
+  }
+
+  #services-overview .service-card:nth-child(3)::after {
+    opacity: 0.18;
+  }
+
+  .testimonial-section::before {
+    opacity: 0.16;
+  }
+
+  .footer::before {
+    opacity: 0.10;
+  }
+}
