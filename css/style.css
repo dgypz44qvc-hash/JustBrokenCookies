@@ -4075,32 +4075,33 @@ body {
   overflow: visible !important;
 }
 
-/* Make the photo itself blend softly into the background */
+/* Make the photo fully blend into the background — no visible rectangle */
 .hero .hero-photo-layer picture,
 .hero .hero-photo-layer img {
   display: block !important;
   width: 100% !important;
   height: auto !important;
 
-  /* This removes the hard photo rectangle edge */
   -webkit-mask-image:
     radial-gradient(
       ellipse at center,
       black 0%,
-      black 54%,
-      rgba(0, 0, 0, 0.82) 66%,
-      rgba(0, 0, 0, 0.42) 78%,
-      transparent 96%
+      black 30%,
+      rgba(0, 0, 0, 0.72) 46%,
+      rgba(0, 0, 0, 0.38) 60%,
+      rgba(0, 0, 0, 0.12) 74%,
+      transparent 84%
     ) !important;
 
   mask-image:
     radial-gradient(
       ellipse at center,
       black 0%,
-      black 54%,
-      rgba(0, 0, 0, 0.82) 66%,
-      rgba(0, 0, 0, 0.42) 78%,
-      transparent 96%
+      black 30%,
+      rgba(0, 0, 0, 0.72) 46%,
+      rgba(0, 0, 0, 0.38) 60%,
+      rgba(0, 0, 0, 0.12) 74%,
+      transparent 84%
     ) !important;
 }
 
@@ -4172,18 +4173,22 @@ body {
       radial-gradient(
         ellipse at center,
         black 0%,
-        black 60%,
-        rgba(0, 0, 0, 0.70) 74%,
-        transparent 96%
+        black 28%,
+        rgba(0, 0, 0, 0.65) 44%,
+        rgba(0, 0, 0, 0.30) 58%,
+        rgba(0, 0, 0, 0.10) 72%,
+        transparent 82%
       ) !important;
 
     mask-image:
       radial-gradient(
         ellipse at center,
         black 0%,
-        black 60%,
-        rgba(0, 0, 0, 0.70) 74%,
-        transparent 96%
+        black 28%,
+        rgba(0, 0, 0, 0.65) 44%,
+        rgba(0, 0, 0, 0.30) 58%,
+        rgba(0, 0, 0, 0.10) 72%,
+        transparent 82%
       ) !important;
   }
 }
