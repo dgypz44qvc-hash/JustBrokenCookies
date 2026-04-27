@@ -4600,6 +4600,77 @@ body {
 .hero .hero-photo-layer {
   z-index: 2 !important;
 }
+/* =========================================================
+   JBC HERO PORTRAIT FULL EDGE FADE
+   Fades portrait on sides, top, bottom, and corners
+   Keeps image position, size, and layout unchanged
+   ========================================================= */
+
+.hero .hero-photo-layer {
+  overflow: visible !important;
+  z-index: 2 !important;
+}
+
+.hero .hero-photo-layer picture,
+.hero .hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+
+  /* Fade left/right edges */
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.20) 8%,
+      black 20%,
+      black 80%,
+      rgba(0, 0, 0, 0.20) 92%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.20) 8%,
+      black 20%,
+      black 80%,
+      rgba(0, 0, 0, 0.20) 92%,
+      transparent 100%
+    );
+
+  -webkit-mask-composite: source-in;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.20) 8%,
+      black 20%,
+      black 80%,
+      rgba(0, 0, 0, 0.20) 92%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.20) 8%,
+      black 20%,
+      black 80%,
+      rgba(0, 0, 0, 0.20) 92%,
+      transparent 100%
+    );
+
+  mask-composite: intersect;
+}
+
+/* Keep title and StorytellinG above portrait */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  position: relative !important;
+  z-index: 6 !important;
+}
 
 .hero-content,
 .hero-oil-wrap,
