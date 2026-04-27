@@ -1634,18 +1634,17 @@ section { padding:var(--section-pad) 0; position:relative; }
   position: relative;
 }
 
-/* Floral layer using ::after — full rose composition, fading at edges */
+/* Floral layer using ::after — full rose, soft fade */
 .hero.jbc-floral-hero::after {
   content: "" !important;
   display: block !important;
   position: absolute !important;
   pointer-events: none;
   z-index: 0 !important;
-  /* Large: show the full rose composition, not a crop */
-  width: 110vh !important;
-  height: 110vh !important;
-  right: -18vw;
-  top: -8vh;
+  width: 900px !important;
+  height: 900px !important;
+  right: -120px;
+  top: -60px;
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
@@ -1654,9 +1653,6 @@ section { padding:var(--section-pad) 0; position:relative; }
   visibility: visible !important;
   transform: rotate(-6deg);
   filter: saturate(1.2) contrast(1.08);
-  /* Soft fade at all edges so no hard cut-off */
-  -webkit-mask-image: radial-gradient(ellipse 72% 68% at 55% 50%, black 30%, transparent 78%);
-  mask-image: radial-gradient(ellipse 72% 68% at 55% 50%, black 30%, transparent 78%);
 }
 
 /* =========================================================
@@ -1669,27 +1665,23 @@ section { padding:var(--section-pad) 0; position:relative; }
     var(--charcoal);
 }
 
-/* Rose vine growing in from the right edge */
+/* Rose vine from the right */
 #services-overview.jbc-floral-process::before {
   content: "";
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  /* Full composition, anchored to right edge */
-  width: 90vw;
-  height: 120%;
-  right: -32vw;
-  top: -10%;
+  width: 800px;
+  height: 800px;
+  right: -180px;
+  top: 50%;
+  transform: translateY(-50%) rotate(3deg);
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   opacity: 0.22;
   filter: saturate(1.2) contrast(1.1);
-  transform: rotate(3deg);
-  /* Fade from right to left — visible on right, vanishes toward cards */
-  -webkit-mask-image: linear-gradient(to left, black 10%, rgba(0,0,0,0.5) 35%, transparent 65%);
-  mask-image: linear-gradient(to left, black 10%, rgba(0,0,0,0.5) 35%, transparent 65%);
 }
 
 /* Make the services grid feel more gallery/editorial */
@@ -1718,27 +1710,23 @@ section { padding:var(--section-pad) 0; position:relative; }
     box-shadow 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Full rose watermark behind each card — large, elegant, fading at edges */
+/* Rose watermark behind each card */
 .service-card.jbc-editorial-card::before {
   content: "";
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  /* Oversize so the full composition is visible, not a tiny crop */
-  width: 260%;
-  height: 260%;
-  top: -80%;
-  left: -80%;
+  width: 500px;
+  height: 500px;
+  bottom: -120px;
+  right: -100px;
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  opacity: 0.32;
+  opacity: 0.30;
   mix-blend-mode: screen;
   filter: saturate(1.25) contrast(1.15);
-  /* Vignette fade so it feels embedded, not pasted */
-  -webkit-mask-image: radial-gradient(ellipse 42% 42% at 50% 50%, black 10%, transparent 70%);
-  mask-image: radial-gradient(ellipse 42% 42% at 50% 50%, black 10%, transparent 70%);
 }
 
 /* Gradient hairline on top of each card */
@@ -1836,22 +1824,23 @@ section { padding:var(--section-pad) 0; position:relative; }
   line-height: 1.86;
 }
 
-/* Each card shows the rose from a different angle */
+/* Each card: rose from a different corner */
 .service-card.jbc-editorial-card-1::before {
-  top: -90%;
-  left: -60%;
+  bottom: -140px;
+  right: -80px;
 }
 
 .service-card.jbc-editorial-card-2::before {
-  top: -70%;
-  left: -90%;
-  transform: rotate(180deg);
+  bottom: -100px;
+  right: auto;
+  left: -120px;
+  transform: scaleX(-1);
 }
 
 .service-card.jbc-editorial-card-3::before {
-  top: -85%;
-  left: -75%;
-  transform: rotate(90deg);
+  top: -130px;
+  bottom: auto;
+  right: -90px;
 }
 
 /* =========================================================
@@ -1863,16 +1852,16 @@ section { padding:var(--section-pad) 0; position:relative; }
     var(--charcoal);
 }
 
-/* Rose vine growing from bottom-left, opposite to process section */
+/* Rose from bottom-left */
 #featured-work.jbc-floral-work::before {
   content: "";
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  width: 80vw;
-  height: 130%;
-  left: -30vw;
-  bottom: -15%;
+  width: 750px;
+  height: 750px;
+  left: -200px;
+  bottom: -180px;
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
@@ -1880,8 +1869,6 @@ section { padding:var(--section-pad) 0; position:relative; }
   opacity: 0.18;
   filter: saturate(1.15) contrast(1.08);
   transform: rotate(-5deg);
-  -webkit-mask-image: linear-gradient(to right, black 8%, rgba(0,0,0,0.4) 35%, transparent 60%);
-  mask-image: linear-gradient(to right, black 8%, rgba(0,0,0,0.4) 35%, transparent 60%);
 }
 
 #featured-work .container {
@@ -1920,24 +1907,23 @@ section { padding:var(--section-pad) 0; position:relative; }
   background: var(--ivory) !important;
 }
 
-/* Full rose behind the quote — centered, gentle vignette */
+/* Rose behind the quote — right side */
 .testimonial-section.jbc-floral-testimonial::before {
   content: "";
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  width: 120%;
-  height: 180%;
-  left: -10%;
-  top: -40%;
+  width: 700px;
+  height: 700px;
+  right: -100px;
+  top: 50%;
+  transform: translateY(-50%);
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  opacity: 0.28;
+  opacity: 0.25;
   filter: saturate(1.2) contrast(1.1);
-  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 55% 50%, black 15%, transparent 72%);
-  mask-image: radial-gradient(ellipse 60% 55% at 55% 50%, black 15%, transparent 72%);
 }
 
 .testimonial-section .testi-brutal {
@@ -1964,16 +1950,16 @@ section { padding:var(--section-pad) 0; position:relative; }
   overflow: hidden;
 }
 
-/* Rose vine from bottom-right corner, feels like it's wrapping up */
+/* Rose from bottom-right */
 .cta-section.jbc-floral-cta::before {
   content: "";
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  width: 85vw;
-  height: 140%;
-  right: -28vw;
-  bottom: -30%;
+  width: 800px;
+  height: 800px;
+  right: -160px;
+  bottom: -220px;
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
@@ -1981,8 +1967,6 @@ section { padding:var(--section-pad) 0; position:relative; }
   opacity: 0.20;
   filter: saturate(1.18) contrast(1.08);
   transform: rotate(8deg);
-  -webkit-mask-image: radial-gradient(ellipse 55% 50% at 60% 60%, black 10%, transparent 68%);
-  mask-image: radial-gradient(ellipse 55% 50% at 60% 60%, black 10%, transparent 68%);
 }
 
 .cta-section .container {
@@ -2002,16 +1986,16 @@ section { padding:var(--section-pad) 0; position:relative; }
   border-top: 1px solid rgba(240, 230, 218, 0.14) !important;
 }
 
-/* Rose vine from bottom-left — like it's growing up from the ground */
+/* Rose from bottom-left of footer */
 .footer.jbc-editorial-footer::before {
   content: "";
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  width: 75vw;
-  height: 160%;
-  left: -22vw;
-  bottom: -35%;
+  width: 700px;
+  height: 700px;
+  left: -160px;
+  bottom: -200px;
   background-image: var(--jbc-floral-pattern);
   background-repeat: no-repeat;
   background-size: contain;
@@ -2019,8 +2003,6 @@ section { padding:var(--section-pad) 0; position:relative; }
   opacity: 0.22;
   filter: saturate(1.18) contrast(1.1);
   transform: rotate(-4deg);
-  -webkit-mask-image: linear-gradient(to right, black 5%, rgba(0,0,0,0.45) 30%, transparent 55%);
-  mask-image: linear-gradient(to right, black 5%, rgba(0,0,0,0.45) 30%, transparent 55%);
 }
 
 .footer.jbc-editorial-footer > * {
@@ -2102,120 +2084,386 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 @media (max-width: 768px) {
-  /* Hero — same mask approach, scaled for mobile */
   .hero.jbc-floral-hero::after {
-    width: 90vw !important;
-    height: 80vh !important;
-    right: -30vw;
-    top: 5vh;
+    width: 500px !important;
+    height: 500px !important;
+    right: -140px;
+    top: 40px;
     opacity: 0.14 !important;
-    transform: rotate(-8deg);
   }
 
-  /* Process — vine from right */
   #services-overview.jbc-floral-process::before {
-    width: 110vw;
-    height: 130%;
-    right: -45vw;
-    top: -10%;
+    width: 450px;
+    height: 450px;
+    right: -140px;
   }
 
-  #services-overview .services-grid {
-    gap: 22px;
-  }
+  #services-overview .services-grid { gap: 22px; }
 
   .service-card.jbc-editorial-card {
     border-radius: 20px !important;
     padding: 36px 26px !important;
   }
-
   .service-card.jbc-editorial-card::before {
-    width: 320%;
-    height: 320%;
-    top: -110%;
-    left: -110%;
+    width: 350px;
+    height: 350px;
   }
-
   .service-card.jbc-editorial-card h3 {
     font-size: clamp(2.4rem, 15vw, 4.6rem) !important;
   }
+  .service-card.jbc-editorial-card .service-sub { font-size: 1.35rem; }
 
-  .service-card.jbc-editorial-card .service-sub {
-    font-size: 1.35rem;
-  }
-
-  /* Work — vine from left */
   #featured-work.jbc-floral-work::before {
-    width: 100vw;
-    height: 140%;
-    left: -40vw;
-    bottom: -20%;
+    width: 420px;
+    height: 420px;
+    left: -140px;
+    bottom: -120px;
   }
 
-  .portfolio-item.jbc-editorial-work-item {
-    border-radius: 20px !important;
-  }
+  .portfolio-item.jbc-editorial-work-item { border-radius: 20px !important; }
 
-  /* Testimonial — centered rose */
   .testimonial-section.jbc-floral-testimonial::before {
-    width: 140%;
-    height: 200%;
-    left: -20%;
-    top: -50%;
+    width: 400px;
+    height: 400px;
+    right: -80px;
   }
+  .testimonial-section .testi-content { padding: 64px 34px !important; }
+  .testimonial-section .testi-content blockquote { font-size: 1.36rem !important; }
 
-  .testimonial-section .testi-content {
-    padding: 64px 34px !important;
-  }
-
-  .testimonial-section .testi-content blockquote {
-    font-size: 1.36rem !important;
-  }
-
-  /* CTA — vine from right */
   .cta-section.jbc-floral-cta::before {
-    width: 100vw;
-    height: 150%;
-    right: -35vw;
-    bottom: -30%;
-    left: auto;
+    width: 420px;
+    height: 420px;
+    right: -120px;
+    bottom: -140px;
   }
 
-  /* Footer — vine from left */
   .footer.jbc-editorial-footer::before {
-    width: 95vw;
-    height: 170%;
-    left: -35vw;
-    bottom: -40%;
+    width: 400px;
+    height: 400px;
+    left: -110px;
+    bottom: -130px;
   }
 
-  .footer.jbc-editorial-footer .footer-grid {
-    grid-template-columns: 1fr !important;
-  }
-
+  .footer.jbc-editorial-footer .footer-grid { grid-template-columns: 1fr !important; }
   .footer.jbc-editorial-footer .footer-brand,
-  .footer.jbc-editorial-footer .footer-col {
-    padding: 34px 28px !important;
-  }
+  .footer.jbc-editorial-footer .footer-col { padding: 34px 28px !important; }
+  .footer.jbc-editorial-footer .footer-bottom { padding: 18px 24px !important; }
 
-  .footer.jbc-editorial-footer .footer-bottom {
-    padding: 18px 24px !important;
+  /* Page headers on mobile */
+  .jbc-floral-page-header::before {
+    width: 380px !important;
+    height: 380px !important;
   }
 }
 
 @media (max-width: 430px) {
   .hero.jbc-floral-hero::after {
-    width: 95vw !important;
-    height: 70vh !important;
-    right: -35vw;
-    top: 8vh;
+    width: 380px !important;
+    height: 380px !important;
+    right: -120px;
+    top: 50px;
   }
-
   .service-card.jbc-editorial-card h3 {
     font-size: clamp(2.25rem, 14vw, 3.8rem) !important;
   }
-
-  .service-card.jbc-editorial-card {
-    padding: 32px 22px !important;
-  }
+  .service-card.jbc-editorial-card { padding: 32px 22px !important; }
 }
+
+/* =========================================================
+   PAGE HEADERS — rose on all inner pages
+   ========================================================= */
+.jbc-floral-page-header {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-page-header::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 650px;
+  height: 650px;
+  right: -100px;
+  top: -120px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.15;
+  filter: saturate(1.2) contrast(1.08);
+  transform: rotate(-10deg);
+}
+.jbc-floral-page-header > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   CINEMA PANEL (click-to-expand card) — rose background
+   ========================================================= */
+.service-cinema.visible .service-cinema-inner {
+  position: relative;
+  overflow: hidden;
+}
+.service-cinema.visible .service-cinema-inner::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 600px;
+  height: 600px;
+  right: -100px;
+  bottom: -140px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.20;
+  mix-blend-mode: screen;
+  filter: saturate(1.2) contrast(1.1);
+}
+.service-cinema.visible .service-cinema-inner > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   ABOUT PAGE — unique placements
+   ========================================================= */
+/* Story section — rose from left */
+.jbc-floral-about-story {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-about-story::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 750px;
+  height: 750px;
+  left: -180px;
+  top: -100px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.16;
+  filter: saturate(1.15) contrast(1.08);
+  transform: rotate(5deg);
+}
+.jbc-floral-about-story > * { position: relative; z-index: 2; }
+
+/* Values section — rose from right, rotated */
+.jbc-floral-about-values {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-about-values::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 700px;
+  height: 700px;
+  right: -120px;
+  bottom: -160px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.18;
+  filter: saturate(1.18) contrast(1.1);
+  transform: rotate(-8deg);
+}
+.jbc-floral-about-values > * { position: relative; z-index: 2; }
+
+/* Stats section — centered, subtle */
+.jbc-floral-about-stats {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-about-stats::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 600px;
+  height: 600px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(12deg);
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.12;
+  filter: saturate(1.1) contrast(1.05);
+}
+.jbc-floral-about-stats > * { position: relative; z-index: 2; }
+
+/* =========================================================
+   SERVICES PAGE — unique placements
+   ========================================================= */
+.jbc-floral-service-detail {
+  position: relative;
+  overflow: hidden;
+}
+/* Alternate sides: odd from right, even from left */
+.jbc-floral-service-detail-1::before,
+.jbc-floral-service-detail-3::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 650px;
+  height: 650px;
+  right: -140px;
+  top: -80px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.14;
+  filter: saturate(1.15) contrast(1.08);
+  transform: rotate(-6deg);
+}
+.jbc-floral-service-detail-2::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 650px;
+  height: 650px;
+  left: -140px;
+  bottom: -80px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.14;
+  filter: saturate(1.15) contrast(1.08);
+  transform: rotate(6deg);
+}
+.jbc-floral-service-detail > * { position: relative; z-index: 2; }
+
+/* Process grid section */
+.jbc-floral-service-process::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 800px;
+  height: 800px;
+  left: -200px;
+  bottom: -200px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.16;
+  filter: saturate(1.18) contrast(1.1);
+  transform: rotate(10deg);
+}
+
+/* =========================================================
+   PORTFOLIO PAGE — rose behind the grid
+   ========================================================= */
+.jbc-floral-portfolio-grid {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-portfolio-grid::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 850px;
+  height: 850px;
+  right: -180px;
+  top: 50%;
+  transform: translateY(-50%) rotate(7deg);
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.16;
+  filter: saturate(1.15) contrast(1.08);
+}
+.jbc-floral-portfolio-grid > * { position: relative; z-index: 2; }
+
+/* =========================================================
+   BLOG PAGE — rose behind blog grid
+   ========================================================= */
+.jbc-floral-blog-grid {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-blog-grid::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 750px;
+  height: 750px;
+  left: -160px;
+  top: -100px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.15;
+  filter: saturate(1.15) contrast(1.08);
+  transform: rotate(-7deg);
+}
+.jbc-floral-blog-grid > * { position: relative; z-index: 2; }
+
+/* Blog post page */
+.jbc-floral-blog-post {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-blog-post::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 600px;
+  height: 600px;
+  right: -120px;
+  top: 200px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.12;
+  filter: saturate(1.12) contrast(1.06);
+  transform: rotate(4deg);
+}
+.jbc-floral-blog-post > * { position: relative; z-index: 2; }
+
+/* =========================================================
+   CONTACT PAGE — rose behind form
+   ========================================================= */
+.jbc-floral-contact {
+  position: relative;
+  overflow: hidden;
+}
+.jbc-floral-contact::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 800px;
+  height: 800px;
+  right: -140px;
+  bottom: -180px;
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.18;
+  filter: saturate(1.2) contrast(1.1);
+  transform: rotate(-12deg);
+}
+.jbc-floral-contact > * { position: relative; z-index: 2; }

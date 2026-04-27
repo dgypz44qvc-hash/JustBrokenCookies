@@ -602,40 +602,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- JBC EDITORIAL FLORAL DESIGN CLASS ASSIGNER ----
-  // Selector-based only, no text-search guessing.
+  // Works on ALL pages — homepage + about, services, portfolio, blog, contact
   (function assignJbcEditorialFloralClasses() {
+    // -- Shared elements (every page) --
+    const pageHeader = document.querySelector('.page-header');
+    const cta = document.querySelector('.cta-section');
+    const footer = document.querySelector('.footer');
+
+    if (pageHeader) pageHeader.classList.add('jbc-floral-page-header');
+    if (cta) cta.classList.add('jbc-editorial-section', 'jbc-floral-cta');
+    if (footer) footer.classList.add('jbc-editorial-footer');
+
+    // -- Homepage --
     const hero = document.querySelector('.hero');
     const process = document.querySelector('#services-overview');
     const selectedWork = document.querySelector('#featured-work');
     const testimonial = document.querySelector('.testimonial-section');
-    const cta = document.querySelector('.cta-section');
-    const footer = document.querySelector('.footer');
     const serviceCards = document.querySelectorAll('.service-card');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
-    if (hero) {
-      hero.classList.add('jbc-floral-hero');
-    }
-    if (process) {
-      process.classList.add('jbc-editorial-section', 'jbc-floral-process');
-    }
-    if (selectedWork) {
-      selectedWork.classList.add('jbc-editorial-section', 'jbc-floral-work');
-    }
-    if (testimonial) {
-      testimonial.classList.add('jbc-editorial-section', 'jbc-floral-testimonial');
-    }
-    if (cta) {
-      cta.classList.add('jbc-editorial-section', 'jbc-floral-cta');
-    }
-    if (footer) {
-      footer.classList.add('jbc-editorial-footer');
-    }
+
+    if (hero) hero.classList.add('jbc-floral-hero');
+    if (process) process.classList.add('jbc-editorial-section', 'jbc-floral-process');
+    if (selectedWork) selectedWork.classList.add('jbc-editorial-section', 'jbc-floral-work');
+    if (testimonial) testimonial.classList.add('jbc-editorial-section', 'jbc-floral-testimonial');
     serviceCards.forEach((card, index) => {
       card.classList.add('jbc-editorial-card', `jbc-editorial-card-${index + 1}`);
     });
     portfolioItems.forEach((item, index) => {
       item.classList.add('jbc-editorial-work-item', `jbc-editorial-work-item-${index + 1}`);
     });
+
+    // -- About page --
+    const aboutGrid = document.querySelector('.about-grid');
+    const valuesGrid = document.querySelector('.values-grid');
+    const aboutStats = document.querySelector('.about-stats');
+    if (aboutGrid) aboutGrid.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-about-story');
+    if (valuesGrid) valuesGrid.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-about-values');
+    if (aboutStats) aboutStats.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-about-stats');
+    document.querySelectorAll('.value-card').forEach((card, i) => {
+      card.classList.add('jbc-editorial-card', `jbc-editorial-card-${i + 1}`);
+    });
+
+    // -- Services page --
+    const serviceDetails = document.querySelectorAll('.service-detail');
+    serviceDetails.forEach((detail, i) => {
+      detail.classList.add('jbc-floral-service-detail', `jbc-floral-service-detail-${i + 1}`);
+    });
+    const processGrid = document.querySelector('.process-grid');
+    if (processGrid) processGrid.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-service-process');
+
+    // -- Portfolio page --
+    const portfolioFull = document.querySelector('.portfolio-grid-full');
+    if (portfolioFull) portfolioFull.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-portfolio-grid');
+
+    // -- Blog page --
+    const blogGrid = document.querySelector('.blog-grid');
+    if (blogGrid) blogGrid.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-blog-grid');
+    const blogPost = document.querySelector('.blog-post');
+    if (blogPost) blogPost.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-blog-post');
+
+    // -- Contact page --
+    const contactGrid = document.querySelector('.contact-grid');
+    if (contactGrid) contactGrid.closest('section').classList.add('jbc-editorial-section', 'jbc-floral-contact');
   })();
 
 });
