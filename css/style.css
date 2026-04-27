@@ -4197,3 +4197,66 @@ body {
   opacity: 1 !important;
   mix-blend-mode: screen !important;
 }
+/* =========================================================
+   JBC HERO STATIC BACKGROUND IMAGE
+   Replaces hero rose video with image background
+   File: images/hero back image.png
+   Keeps hero text, portrait, and layout unchanged
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.18) 0%,
+      rgba(42, 34, 30, 0.04) 45%,
+      rgba(42, 34, 30, 0.10) 100%
+    ),
+    url("../images/hero%20back%20image.png") !important;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* Hide video if it is still in the HTML */
+.hero-rose-video {
+  display: none !important;
+}
+
+/* Remove old hero pseudo rose backgrounds */
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Keep hero content above background */
+.hero > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Keep portrait/custom image in its existing absolute position */
+.hero .jbc-custom {
+  position: absolute !important;
+}
+
+/* Keep vertical StorytellinG above background */
+.hero .tag {
+  position: absolute !important;
+  z-index: 5 !important;
+}
+
+/* Mobile, keep image nicely framed */
+@media (max-width: 768px) {
+  .hero {
+    background-size: cover !important;
+    background-position: center top !important;
+  }
+}
