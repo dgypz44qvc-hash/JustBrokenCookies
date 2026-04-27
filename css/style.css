@@ -4047,3 +4047,149 @@ body {
     opacity: 0.30 !important;
   }
 }
+/* =========================================================
+   JBC HERO PHOTO + ROSE VIDEO LAYERING FIX
+   Photo returns, photo edges fade, video flowers overlay photo,
+   hero text remains above everything.
+   ========================================================= */
+
+/* Hero stays as the main stage */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* Remove old hero rose pseudo image/background */
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Portrait/photo layer, behind video, above hero background */
+.hero .hero-photo-layer {
+  position: absolute !important;
+  z-index: 2 !important;
+  overflow: visible !important;
+}
+
+/* Make the photo itself blend softly into the background */
+.hero .hero-photo-layer picture,
+.hero .hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+
+  /* This removes the hard photo rectangle edge */
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 54%,
+      rgba(0, 0, 0, 0.82) 66%,
+      rgba(0, 0, 0, 0.42) 78%,
+      transparent 96%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 54%,
+      rgba(0, 0, 0, 0.82) 66%,
+      rgba(0, 0, 0, 0.42) 78%,
+      transparent 96%
+    ) !important;
+}
+
+/* Rose video sits above photo, so flowers can pass over it */
+.hero-rose-video {
+  position: absolute !important;
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  z-index: 3 !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  opacity: 0.48 !important;
+  mix-blend-mode: screen !important;
+
+  pointer-events: none !important;
+  user-select: none !important;
+
+  filter: saturate(1.08) contrast(1.04) brightness(0.92) !important;
+  transform: none !important;
+}
+
+/* Big hero title and oil-wrap must stay above both photo and video */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-mega .l1,
+.hero-mega .l2,
+.hero-mega .l3 {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+/* Vertical StorytellinG stays on top */
+.hero .tag {
+  position: absolute !important;
+  z-index: 7 !important;
+}
+
+/* Hero bottom text, if used, stays above video */
+.hero-bottom {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+/* Nav stays above everything */
+.nav {
+  z-index: 1000 !important;
+  background: rgba(42, 34, 30, 0.42) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Mobile, calmer video and slightly stronger portrait */
+@media (max-width: 768px) {
+  .hero-rose-video {
+    opacity: 0.34 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+
+  .hero .hero-photo-layer picture,
+  .hero .hero-photo-layer img {
+    -webkit-mask-image:
+      radial-gradient(
+        ellipse at center,
+        black 0%,
+        black 60%,
+        rgba(0, 0, 0, 0.70) 74%,
+        transparent 96%
+      ) !important;
+
+    mask-image:
+      radial-gradient(
+        ellipse at center,
+        black 0%,
+        black 60%,
+        rgba(0, 0, 0, 0.70) 74%,
+        transparent 96%
+      ) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-rose-video {
+    opacity: 0.28 !important;
+  }
+}
