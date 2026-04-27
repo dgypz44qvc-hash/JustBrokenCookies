@@ -4193,3 +4193,7 @@ body {
     opacity: 0.28 !important;
   }
 }
+.hero-rose-video {
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+}
