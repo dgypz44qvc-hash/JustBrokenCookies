@@ -173,9 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroTag = hero.querySelector('.tag');
     const heroBottom = hero.querySelector('.hero-bottom');
 
-    // Wait for the fade-in animations to finish before enabling parallax
+    // Wait for the fade-in animations to complete before enabling parallax
     let heroParallaxReady = false;
-    setTimeout(() => { heroParallaxReady = true; }, 6000);
+    setTimeout(() => { heroParallaxReady = true; }, 7000);
 
     let heroTicking = false;
     window.addEventListener('scroll', () => {
@@ -189,18 +189,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const oilWrap = hero.querySelector('.hero-oil-wrap');
             const parallaxTarget = oilWrap || heroMega;
             if (parallaxTarget) {
-              parallaxTarget.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
-              parallaxTarget.style.transform = `translateY(${scrollY * 0.12}px)`;
-              parallaxTarget.style.opacity = 1 - ratio * 0.5;
+              parallaxTarget.style.transition = 'transform 1.2s ease-out, opacity 1.2s ease-out';
+              parallaxTarget.style.transform = `translateY(${scrollY * 0.1}px)`;
+              parallaxTarget.style.opacity = 1 - ratio * 0.4;
             }
             if (heroTag) {
-              heroTag.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
-              heroTag.style.transform = `translateY(${scrollY * 0.08}px)`;
-              heroTag.style.opacity = 1 - ratio * 0.4;
+              heroTag.style.transition = 'transform 1.2s ease-out, opacity 1.2s ease-out';
+              heroTag.style.transform = `translateY(${scrollY * 0.06}px)`;
+              heroTag.style.opacity = 1 - ratio * 0.3;
             }
             if (heroBottom) {
-              heroBottom.style.transition = 'opacity 0.6s ease';
-              heroBottom.style.opacity = 1 - ratio * 1.2;
+              heroBottom.style.transition = 'opacity 1.2s ease-out';
+              heroBottom.style.opacity = 1 - ratio * 1;
             }
           }
           heroTicking = false;
