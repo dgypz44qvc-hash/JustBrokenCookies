@@ -173,27 +173,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroTag = hero.querySelector('.tag');
     const heroBottom = hero.querySelector('.hero-bottom');
 
+    // Wait for the fade-in animations to finish before enabling parallax
+    let heroParallaxReady = false;
+    setTimeout(() => { heroParallaxReady = true; }, 6000);
+
     let heroTicking = false;
     window.addEventListener('scroll', () => {
+      if (!heroParallaxReady) return;
       if (!heroTicking) {
         requestAnimationFrame(() => {
           const scrollY = window.scrollY;
           const heroHeight = hero.offsetHeight;
           if (scrollY < heroHeight) {
             const ratio = scrollY / heroHeight;
-            // Apply parallax to the oil-wrap wrapper so both layers move together
             const oilWrap = hero.querySelector('.hero-oil-wrap');
             const parallaxTarget = oilWrap || heroMega;
             if (parallaxTarget) {
-              parallaxTarget.style.transform = `translateY(${scrollY * 0.18}px)`;
-              parallaxTarget.style.opacity = 1 - ratio * 0.7;
+              parallaxTarget.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+              parallaxTarget.style.transform = `translateY(${scrollY * 0.12}px)`;
+              parallaxTarget.style.opacity = 1 - ratio * 0.5;
             }
             if (heroTag) {
-              heroTag.style.transform = `translateY(${scrollY * 0.1}px)`;
-              heroTag.style.opacity = 1 - ratio * 0.5;
+              heroTag.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+              heroTag.style.transform = `translateY(${scrollY * 0.08}px)`;
+              heroTag.style.opacity = 1 - ratio * 0.4;
             }
             if (heroBottom) {
-              heroBottom.style.opacity = 1 - ratio * 1.5;
+              heroBottom.style.transition = 'opacity 0.6s ease';
+              heroBottom.style.opacity = 1 - ratio * 1.2;
             }
           }
           heroTicking = false;
@@ -232,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .hero-underlay {
           position:absolute; top:0; left:0; width:100%; height:100%;
           pointer-events:none; z-index:1; user-select:none;
-          opacity:0; visibility:hidden; transition:opacity 0.4s ease, visibility 0.4s;
+          opacity:0; visibility:hidden; transition:opacity 2s ease, visibility 2s;
         }
         .hero-underlay .l1 {
           color:transparent !important;
@@ -282,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // DESKTOP: mouse tracking with lerp
         let targetX=-300,targetY=-300,currentX=-300,currentY=-300,oilActive=false,oilRAF=null;
         function lerpOil(){
-          currentX+=(targetX-currentX)*0.4; currentY+=(targetY-currentY)*0.4;
+          currentX+=(targetX-currentX)*0.08; currentY+=(targetY-currentY)*0.08;
           heroMega.style.setProperty('--mx',currentX+'px');
           heroMega.style.setProperty('--my',currentY+'px');
           if(oilActive||Math.abs(targetX-currentX)>0.5){oilRAF=requestAnimationFrame(lerpOil);}
