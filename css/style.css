@@ -4678,3 +4678,107 @@ body {
 .hero .tag {
   z-index: 6 !important;
 }
+/* =========================================================
+   JBC HERO PORTRAIT STRONG RECTANGLE REMOVAL
+   Stronger fade on all image edges, especially bottom/right
+   Keeps hero image position and layout unchanged
+   ========================================================= */
+
+.hero .hero-photo-layer {
+  position: absolute !important;
+  z-index: 2 !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+/* Apply the fade to the wrapper AND the image */
+.hero .hero-photo-layer picture,
+.hero .hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  background: transparent !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.25) 7%,
+      #000 18%,
+      #000 72%,
+      rgba(0, 0, 0, 0.35) 84%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.20) 8%,
+      #000 18%,
+      #000 66%,
+      rgba(0, 0, 0, 0.26) 78%,
+      transparent 100%
+    );
+
+  -webkit-mask-composite: source-in !important;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.25) 7%,
+      #000 18%,
+      #000 72%,
+      rgba(0, 0, 0, 0.35) 84%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.20) 8%,
+      #000 18%,
+      #000 66%,
+      rgba(0, 0, 0, 0.26) 78%,
+      transparent 100%
+    );
+
+  mask-composite: intersect !important;
+}
+
+/* Add a very subtle brown veil over the photo edges to hide any remaining rectangle */
+.hero .hero-photo-layer::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  z-index: 4;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2A221E 0%,
+      rgba(42, 34, 30, 0.72) 5%,
+      transparent 17%,
+      transparent 72%,
+      rgba(42, 34, 30, 0.55) 86%,
+      #2A221E 100%
+    ),
+    linear-gradient(
+      180deg,
+      #2A221E 0%,
+      rgba(42, 34, 30, 0.55) 8%,
+      transparent 20%,
+      transparent 64%,
+      rgba(42, 34, 30, 0.70) 82%,
+      #2A221E 100%
+    );
+}
+
+/* Keep main title and StorytellinG above portrait */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom,
+.hero .tag {
+  position: relative !important;
+  z-index: 8 !important;
+}
