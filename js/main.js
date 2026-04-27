@@ -174,13 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroTag = hero.querySelector('.tag');
     const heroBottom = hero.querySelector('.hero-bottom');
 
-    // Wait for the fade-in animations to complete before enabling parallax
-    let heroParallaxReady = false;
-    setTimeout(() => { heroParallaxReady = true; }, 7000);
-
+    // Gentle opacity fade on scroll only — NO transform/sliding
     let heroTicking = false;
     window.addEventListener('scroll', () => {
-      if (!heroParallaxReady) return;
       if (!heroTicking) {
         requestAnimationFrame(() => {
           const scrollY = window.scrollY;
@@ -190,17 +186,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const oilWrap = hero.querySelector('.hero-oil-wrap');
             const parallaxTarget = oilWrap || heroMega;
             if (parallaxTarget) {
-              parallaxTarget.style.transition = 'transform 1.2s ease-out, opacity 1.2s ease-out';
-              parallaxTarget.style.transform = `translateY(${scrollY * 0.1}px)`;
+              parallaxTarget.style.transition = 'opacity 1.5s ease-out';
               parallaxTarget.style.opacity = 1 - ratio * 0.4;
             }
             if (heroTag) {
-              heroTag.style.transition = 'transform 1.2s ease-out, opacity 1.2s ease-out';
-              heroTag.style.transform = `translateY(${scrollY * 0.06}px)`;
+              heroTag.style.transition = 'opacity 1.5s ease-out';
               heroTag.style.opacity = 1 - ratio * 0.3;
             }
             if (heroBottom) {
-              heroBottom.style.transition = 'opacity 1.2s ease-out';
+              heroBottom.style.transition = 'opacity 1.5s ease-out';
               heroBottom.style.opacity = 1 - ratio * 1;
             }
           }
