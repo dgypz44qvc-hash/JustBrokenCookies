@@ -4408,3 +4408,208 @@ body {
     opacity: 0.5 !important;
   }
 }
+
+/* =========================================================
+   MASTER ROSE OVERRIDE — 100% OPACITY + SOFT EDGE FADE
+   Every rose decoration layer across all pages
+   ========================================================= */
+
+/* ---- HOMEPAGE SECTIONS ---- */
+#services-overview.jbc-floral-process::before,
+.service-card.jbc-editorial-card::before,
+#featured-work.jbc-floral-work::before,
+.testimonial-section.jbc-floral-testimonial::before,
+.cta-section.jbc-floral-cta::before,
+.footer.jbc-editorial-footer::before,
+
+/* ---- HERO LEFT ROSES ---- */
+.hero::before,
+
+/* ---- PAGE HEADER ---- */
+.jbc-floral-page-header::before,
+
+/* ---- ABOUT PAGE ---- */
+.jbc-floral-about-story::before,
+.jbc-floral-about-values::before,
+.jbc-floral-about-stats::before,
+
+/* ---- SERVICES PAGE ---- */
+.jbc-floral-service-detail-1::before,
+.jbc-floral-service-detail-2::before,
+.jbc-floral-service-detail-3::before,
+.jbc-floral-service-process::before,
+
+/* ---- PORTFOLIO PAGE ---- */
+.jbc-floral-portfolio-grid::before,
+
+/* ---- BLOG PAGE ---- */
+.jbc-floral-blog-grid::before,
+.jbc-floral-blog-post::before,
+
+/* ---- CONTACT PAGE ---- */
+.jbc-floral-contact::before,
+
+/* ---- CINEMA PANEL ---- */
+.service-cinema.visible .service-cinema-inner::before {
+  opacity: 1 !important;
+  filter: saturate(1.2) contrast(1.1) !important;
+
+  /* Soft feathered edges — roses flow in from centre, dissolve at boundaries */
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 35%,
+      rgba(0, 0, 0, 0.7) 52%,
+      rgba(0, 0, 0, 0.35) 68%,
+      rgba(0, 0, 0, 0.12) 82%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 35%,
+      rgba(0, 0, 0, 0.7) 52%,
+      rgba(0, 0, 0, 0.35) 68%,
+      rgba(0, 0, 0, 0.12) 82%,
+      transparent 100%
+    ) !important;
+}
+
+/* Testimonial is full-width, fade left/right edges instead */
+.testimonial-section.jbc-floral-testimonial::before {
+  opacity: 1 !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 6%,
+      rgba(0, 0, 0, 0.6) 18%,
+      black 32%,
+      black 68%,
+      rgba(0, 0, 0, 0.6) 82%,
+      rgba(0, 0, 0, 0.15) 94%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 6%,
+      rgba(0, 0, 0, 0.6) 18%,
+      black 32%,
+      black 68%,
+      rgba(0, 0, 0, 0.6) 82%,
+      rgba(0, 0, 0, 0.15) 94%,
+      transparent 100%
+    ) !important;
+}
+
+/* Hero left roses — fade from left to right */
+.hero::before {
+  opacity: 1 !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      black 12%,
+      black 30%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.25) 70%,
+      rgba(0, 0, 0, 0.06) 85%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      black 12%,
+      black 30%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.25) 70%,
+      rgba(0, 0, 0, 0.06) 85%,
+      transparent 100%
+    ) !important;
+}
+
+/* Footer — fade upward from bottom */
+.footer.jbc-editorial-footer::before {
+  opacity: 1 !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 8%,
+      rgba(0, 0, 0, 0.5) 22%,
+      black 42%,
+      black 100%
+    ) !important;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 8%,
+      rgba(0, 0, 0, 0.5) 22%,
+      black 42%,
+      black 100%
+    ) !important;
+}
+
+/* Cards — tighter radial fade since they're smaller containers */
+.service-card.jbc-editorial-card::before {
+  opacity: 1 !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 40%,
+      rgba(0, 0, 0, 0.6) 60%,
+      rgba(0, 0, 0, 0.2) 78%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 0%,
+      black 40%,
+      rgba(0, 0, 0, 0.6) 60%,
+      rgba(0, 0, 0, 0.2) 78%,
+      transparent 100%
+    ) !important;
+}
+
+/* Mobile — same 100%, same feathered edges */
+@media (max-width: 768px) {
+  #services-overview.jbc-floral-process::before,
+  .service-card.jbc-editorial-card::before,
+  #featured-work.jbc-floral-work::before,
+  .testimonial-section.jbc-floral-testimonial::before,
+  .cta-section.jbc-floral-cta::before,
+  .footer.jbc-editorial-footer::before,
+  .hero::before,
+  .jbc-floral-page-header::before,
+  .jbc-floral-about-story::before,
+  .jbc-floral-about-values::before,
+  .jbc-floral-about-stats::before,
+  .jbc-floral-service-detail-1::before,
+  .jbc-floral-service-detail-2::before,
+  .jbc-floral-service-detail-3::before,
+  .jbc-floral-service-process::before,
+  .jbc-floral-portfolio-grid::before,
+  .jbc-floral-blog-grid::before,
+  .jbc-floral-blog-post::before,
+  .jbc-floral-contact::before,
+  .service-cinema.visible .service-cinema-inner::before {
+    opacity: 1 !important;
+  }
+}
