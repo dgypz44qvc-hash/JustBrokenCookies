@@ -3556,9 +3556,9 @@ section { padding:var(--section-pad) 0; position:relative; }
 
   /*
     Placement logic:
-    start from upper right,
+    start from upper left,
     travel diagonally behind the portrait,
-    continue toward lower left.
+    continue toward lower right.
   */
   width: min(78vw, 1180px) !important;
   height: 155% !important;
@@ -3568,7 +3568,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-image: var(--jbc-rose-pattern, url("../images/jbc-rose-pattern-bg.png")) !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
-  background-position: center and lower left !important;
+  background-position: center and lower right !important;
 
   opacity: 0.78 !important;
   mix-blend-mode: screen !important;
