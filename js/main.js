@@ -208,11 +208,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (heroMega) {
       const isTouch = !window.matchMedia('(hover:hover)').matches;
 
-      // 1. Wrap heroMega
+      // 1. Wrap heroMega — preserve exact layout to prevent any bounce
       const wrapper = document.createElement('div');
       wrapper.classList.add('hero-oil-wrap');
+      const rect = heroMega.getBoundingClientRect();
+      wrapper.style.width = rect.width + 'px';
+      wrapper.style.height = rect.height + 'px';
       heroMega.parentElement.insertBefore(wrapper, heroMega);
       wrapper.appendChild(heroMega);
+      // Release fixed size after a frame so it flows normally
+      requestAnimationFrame(() => {
+        wrapper.style.width = '';
+        wrapper.style.height = '';
+      });
 
       // 2. Clone underlay
       const underlay = heroMega.cloneNode(true);
