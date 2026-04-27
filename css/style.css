@@ -2901,3 +2901,90 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0;
   }
 }
+/* =========================================================
+   JBC HERO ROSE ATMOSPHERE
+   Adds mirrored right-side floral flow to hero only
+   Does not change hero text, image, layout, or animation
+   ========================================================= */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden !important;
+}
+
+/* Keep hero content safely above the floral layer */
+.hero > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Right-side mirrored floral atmosphere */
+.hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+
+  width: min(58vw, 860px);
+  height: 115%;
+  right: -18vw;
+  top: -4%;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.92) 0%,
+      rgba(42, 34, 30, 0.42) 46%,
+      rgba(42, 34, 30, 0.12) 100%
+    ),
+    var(--jbc-rose-pattern, url("../images/jbc-rose-pattern-bg.png"));
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center right;
+
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  filter: saturate(1.18) contrast(1.08);
+  transform: scaleX(-1) rotate(-2deg);
+}
+
+/* Add a soft dark veil so the portrait and title stay dominant */
+.hero::before {
+  z-index: 2;
+}
+
+/* Desktop only, protect the face/photo area a bit more */
+@media (min-width: 769px) {
+  .hero::after {
+    width: min(52vw, 780px);
+    right: -16vw;
+    top: -2%;
+    opacity: 0.68;
+  }
+}
+
+/* Mobile, much lighter so the hero doesn't get crowded */
+@media (max-width: 768px) {
+  .hero::after {
+    width: 360px;
+    height: 620px;
+    right: -205px;
+    top: 90px;
+    opacity: 0.38;
+    background-size: cover;
+    background-position: center;
+    transform: scaleX(-1) rotate(-6deg);
+  }
+}
+
+@media (max-width: 430px) {
+  .hero::after {
+    width: 320px;
+    height: 560px;
+    right: -190px;
+    top: 90px;
+    opacity: 0.32;
+  }
+}
