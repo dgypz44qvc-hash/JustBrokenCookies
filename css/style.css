@@ -4197,3 +4197,62 @@ body {
   opacity: 1 !important;
   mix-blend-mode: screen !important;
 }
+/* =========================================================
+   JBC HERO STATIC BACKGROUND IMAGE
+   File: images/hero back image.png
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.18) 0%,
+      rgba(42, 34, 30, 0.04) 45%,
+      rgba(42, 34, 30, 0.12) 100%
+    ),
+    url("../images/hero%20back%20image.png") !important;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* Hide video if it is still anywhere in the HTML */
+.hero-rose-video {
+  display: none !important;
+}
+
+/* Remove old hero rose pseudo backgrounds */
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Keep hero content above background */
+.hero > * {
+  position: relative;
+  z-index: 3;
+}
+
+.hero .jbc-custom,
+.hero .tag {
+  position: absolute !important;
+}
+
+.hero .tag {
+  z-index: 8 !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom {
+  position: relative !important;
+  z-index: 6 !important;
+}
