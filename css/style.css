@@ -3862,3 +3862,88 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 0.30 !important;
   }
 }
+/* =========================================================
+   JBC HERO VIDEO EXTEND BEHIND NAV
+   Lets rose video overflow behind the top navigation bar
+   Does not move hero text or nav
+   ========================================================= */
+
+/* Allow the video to visually extend upward */
+.hero {
+  overflow: visible !important;
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+/* But avoid horizontal page overflow */
+body {
+  overflow-x: hidden !important;
+}
+
+/* Extend the video above the hero into the navbar area */
+.hero-rose-video {
+  position: absolute !important;
+  top: -110px !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+
+  width: 100% !important;
+  height: calc(100% + 110px) !important;
+
+  z-index: 0 !important;
+  object-fit: contain !important;
+  object-position: center top !important;
+
+  opacity: 0.55 !important;
+  mix-blend-mode: screen !important;
+  pointer-events: none !important;
+}
+
+/* Keep hero content above the video */
+.hero > *:not(.hero-rose-video) {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Keep the nav above the video, but let video be visible behind it */
+.nav {
+  background: rgba(42, 34, 30, 0.78) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  z-index: 1000 !important;
+}
+
+/* Keep nav content readable */
+.nav .container,
+.nav-logo,
+.nav-links,
+.hamburger {
+  position: relative !important;
+  z-index: 1001 !important;
+}
+
+/* If the video feels too visible under the nav, darken nav slightly */
+.nav.scrolled {
+  background: rgba(42, 34, 30, 0.90) !important;
+}
+
+/* Mobile, less intense behind nav */
+@media (max-width: 768px) {
+  .hero-rose-video {
+    top: -90px !important;
+    height: calc(100% + 90px) !important;
+    opacity: 0.38 !important;
+    object-position: center top !important;
+  }
+
+  .nav {
+    background: rgba(42, 34, 30, 0.86) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-rose-video {
+    opacity: 0.30 !important;
+  }
+}
