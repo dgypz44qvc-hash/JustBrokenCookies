@@ -2866,3 +2866,38 @@ section { padding:var(--section-pad) 0; position:relative; }
     opacity: 1 !important;
   }
 }
+/* =========================================================
+   JBC ROSE PATTERN PRELOAD HELPER
+   Keeps decorative rose asset loaded before CSS backgrounds need it
+   Does not affect layout or content
+   ========================================================= */
+
+.jbc-rose-preload {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+/* =========================================================
+   JBC ROSE DECOR SOFT ENTRANCE
+   Gives rose layers a smooth first-load reveal
+   ========================================================= */
+
+#services-overview::before,
+#services-overview .service-card::after,
+#featured-work::before,
+.testimonial-section::before,
+.cta-section::after,
+.footer::before {
+  animation: jbcRoseDecorReveal 900ms ease-out both;
+}
+
+@keyframes jbcRoseDecorReveal {
+  from {
+    opacity: 0;
+  }
+}
