@@ -90,8 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (revealElements.length > 0) {
     revealElements.forEach(el => {
-      /* Never touch user-added custom elements */
+      /* Never touch user-added custom elements or hero elements */
       if (el.classList.contains('jbc-custom') || el.closest('.jbc-custom')) return;
+      if (el.closest('.hero')) return;
       if (!el.classList.contains('fade-up') && !el.classList.contains('reveal')) {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
