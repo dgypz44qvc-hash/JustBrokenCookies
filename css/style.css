@@ -212,10 +212,7 @@ ul { list-style:none; }
   font-size:0.65rem; letter-spacing:8px; text-transform:uppercase; font-weight:600;
   color:var(--dusty-rose); writing-mode:vertical-rl; text-orientation:mixed;
   font-family:var(--font-body);
-  text-shadow: 0 0 18px rgba(201, 58, 110, 0.4);
-  filter: brightness(1.12);
-  opacity: 0;
-  animation: heroFadeIn 5s ease 1s forwards;
+  opacity: 1;
 }
 .hero-mega {
   font-family:var(--font-display); font-weight:900;
@@ -224,29 +221,12 @@ ul { list-style:none; }
 }
 .hero-mega .l1 {
   display:block; font-size:clamp(5.6rem,14vw,12.6rem); color:var(--gold);
-  text-shadow: 0 0 30px rgba(232, 137, 29, 0.45), 0 2px 6px rgba(0,0,0,0.5);
-  filter: brightness(1.15);
 }
 .hero-mega .l2 {
   display:block; font-size:clamp(5.6rem,14vw,12.6rem); color:var(--blush); margin-left:clamp(30px,8vw,120px);
-  text-shadow: 0 0 30px rgba(232, 72, 72, 0.45), 0 2px 6px rgba(0,0,0,0.5);
-  filter: brightness(1.15);
 }
 .hero-mega .l3 {
   display:block; font-size:clamp(5.6rem,14vw,12.6rem); color:var(--wine);
-  text-shadow: 0 0 30px rgba(139, 58, 139, 0.5), 0 2px 6px rgba(0,0,0,0.5);
-  filter: brightness(1.2);
-}
-
-/* All three titles fade in together — one slow, smooth breath */
-.hero-mega {
-  opacity: 0;
-  animation: heroFadeIn 6s ease 0.4s forwards;
-}
-
-@keyframes heroFadeIn {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
 }
 .hero-bottom {
   display:flex; justify-content:space-between; align-items:flex-end;

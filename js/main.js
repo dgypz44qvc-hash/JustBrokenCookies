@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 4. Inject CSS
       const oilCSS = document.createElement('style');
       oilCSS.textContent = `
-        .hero-oil-wrap { position:relative; display:inline-block; width:100%; overflow:hidden; }
+        .hero-oil-wrap { position:relative; display:block; width:100%; }
         .hero { overflow:hidden !important; }
         .hero-underlay {
           position:absolute; top:0; left:0; width:100%; height:100%;
