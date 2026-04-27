@@ -4909,3 +4909,13 @@ body {
   position: relative !important;
   z-index: 8 !important;
 }
+/* =========================================================
+   JBC HERO TITLE MOVE UP 30%
+   Moves Just / Broken / Cookies upward without changing size
+   ========================================================= */
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega {
+  transform: translateY(-30%) !important;
+}
