@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .hero-underlay {
           position:absolute; top:0; left:0; width:100%; height:100%;
           pointer-events:none; z-index:1; user-select:none;
-          opacity:0; visibility:hidden; transition:opacity 2s ease, visibility 2s;
+          opacity:0; visibility:hidden; transition:opacity 0.7s ease, visibility 0.7s;
         }
         .hero-underlay .l1 {
           color:transparent !important;

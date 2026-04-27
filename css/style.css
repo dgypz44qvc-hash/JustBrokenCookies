@@ -1193,9 +1193,9 @@ section { padding:var(--section-pad) 0; position:relative; }
   display: block;
   width: max-content;
   transition:
-    color 2s ease,
-    -webkit-text-fill-color 2s ease,
-    text-shadow 2s ease;
+    color 0.7s ease,
+    -webkit-text-fill-color 0.7s ease,
+    text-shadow 0.7s ease;
 }
 
 /* Create the hidden replacement word */
@@ -1229,9 +1229,9 @@ section { padding:var(--section-pad) 0; position:relative; }
   filter: blur(8px);
 
   transition:
-    opacity 2s ease,
-    filter 2s ease,
-    transform 2s ease;
+    opacity 0.7s ease,
+    filter 0.7s ease,
+    transform 0.7s ease;
 }
 
 /* Hidden text content */
