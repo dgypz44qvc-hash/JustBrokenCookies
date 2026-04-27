@@ -4279,7 +4279,7 @@ body {
   background-size: 520px 520px !important;
   background-position: left center !important;
 
-  opacity: 0.16 !important;
+  opacity: 0.28 !important;
   mix-blend-mode: screen !important;
   filter: saturate(1.18) contrast(1.06) !important;
 
@@ -4306,7 +4306,7 @@ body {
 @media (max-width: 968px) {
   .hero::before {
     width: 60% !important;
-    opacity: 0.13 !important;
+    opacity: 0.22 !important;
     background-size: 440px 440px !important;
   }
 }
@@ -4315,7 +4315,7 @@ body {
 @media (max-width: 768px) {
   .hero::before {
     width: 65% !important;
-    opacity: 0.11 !important;
+    opacity: 0.18 !important;
     background-size: 380px 380px !important;
   }
 }
@@ -4323,7 +4323,7 @@ body {
 /* Small phones */
 @media (max-width: 430px) {
   .hero::before {
-    opacity: 0.09 !important;
+    opacity: 0.15 !important;
     background-size: 320px 320px !important;
   }
 }
