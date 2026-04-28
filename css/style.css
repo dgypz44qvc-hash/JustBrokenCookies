@@ -6058,7 +6058,7 @@ body {
     height: 430px !important;
     right: -115px !important;
     bottom: -120px !important;
-    opacity: 0.22 !important;
+    opacity: 0.45 !important;
     background-size: cover !important;
     background-position: right bottom !important;
     transform: rotate(-6deg) scale(1) !important;
@@ -6072,6 +6072,6 @@ body {
     height: 380px !important;
     right: -105px !important;
     bottom: -110px !important;
-    opacity: 0.20 !important;
+    opacity: 0.45 !important;
   }
 }
