@@ -3573,5 +3573,116 @@
 
   /* ========== LOG ========== */
   console.log('JBC Editor V2 loaded — EDITOR MODE active with side panel, undo/redo, section editing');
+/* =========================================================
+   JBC EDITOR PATCH, REMOVE HERO TITLE CONTAINER BOXES
+   Stops editor from selecting/moving .hero-content/.hero-mega.
+   Keeps Just / Broken / Cookies independently editable.
+   ========================================================= */
 
+(function removeHeroTitleContainersFromEditor() {
+  const blockedSelectors = [
+    '.hero-content',
+    '.hero-mega',
+    '.hero-oil-wrap'
+  ];
+
+  function isHeroTitleContainer(el) {
+    return el && blockedSelectors.some(function(sel) {
+      return el.matches && el.matches(sel);
+    });
+  }
+
+  function stripEditorState(el) {
+    if (!el) return;
+
+    el.classList.remove(
+      'jbc-editable',
+      'jbc-selected',
+      'jbc-grabbed',
+      'jbc-move-active',
+      'jbc-moved',
+      'jbc-text-changed'
+    );
+
+    el.removeAttribute('contenteditable');
+    el.removeAttribute('data-orig-z');
+
+    el.style.outline = 'none';
+    el.style.boxShadow = 'none';
+    el.style.cursor = 'default';
+    el.style.pointerEvents = 'none';
+  }
+
+  function restoreHeroWords() {
+    document.querySelectorAll('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3').forEach(function(word) {
+      word.setAttribute('contenteditable', 'true');
+      word.classList.add('jbc-editable');
+      word.style.pointerEvents = 'auto';
+      word.style.cursor = 'text';
+    });
+  }
+
+  function cleanHeroContainers() {
+    document.querySelectorAll('.hero-content, .hero-mega, .hero-oil-wrap').forEach(function(el) {
+      stripEditorState(el);
+    });
+
+    restoreHeroWords();
+  }
+
+  cleanHeroContainers();
+
+  document.addEventListener('mouseover', function(e) {
+    const container = e.target.closest('.hero-content, .hero-mega, .hero-oil-wrap');
+    if (!container) return;
+
+    stripEditorState(container);
+    restoreHeroWords();
+  }, true);
+
+  document.addEventListener('mousedown', function(e) {
+    const word = e.target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3');
+
+    if (word) {
+      word.style.pointerEvents = 'auto';
+      word.setAttribute('contenteditable', 'true');
+      word.classList.add('jbc-editable');
+      return;
+    }
+
+    const container = e.target.closest('.hero-content, .hero-mega, .hero-oil-wrap');
+
+    if (isHeroTitleContainer(e.target) || container) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+
+      stripEditorState(container || e.target);
+      restoreHeroWords();
+    }
+  }, true);
+
+  document.addEventListener('contextmenu', function(e) {
+    const word = e.target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3');
+    if (word) return;
+
+    const container = e.target.closest('.hero-content, .hero-mega, .hero-oil-wrap');
+
+    if (container) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+
+      stripEditorState(container);
+      restoreHeroWords();
+    }
+  }, true);
+
+  const observer = new MutationObserver(function() {
+    cleanHeroContainers();
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    subtree: true,
+    attributeFilter: ['class', 'style', 'contenteditable']
+  });
 })();
