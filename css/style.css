@@ -1057,7 +1057,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .hero-mega .l1, .hero-mega .l2, .hero-mega .l3 { font-size:clamp(3.5rem,14vw,7rem); }
   .hero-mega .l2 { margin-left:15px; }
   .hero-mega { letter-spacing:-3px; }
-  .hero .tag { font-size:0.55rem; right:76px; top:75px; letter-spacing:4px; font-size:24px !important; }
+  .hero .tag { right:76px !important; top:75px !important; letter-spacing:4px !important; font-size:24px !important; }
   .hero-bottom { flex-direction:column; align-items:flex-start; gap:12px; padding-top:14px; }
   .hero-bottom .scroll-txt { align-self:flex-end; }
   .page-header .container { flex-direction:column; align-items:flex-start; }
@@ -1116,7 +1116,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .hero-mega .l1, .hero-mega .l2, .hero-mega .l3 { font-size:clamp(2.8rem,12vw,5rem); }
   .hero-mega .l2 { margin-left:10px; }
   .hero-mega { letter-spacing:-2px; }
-  .hero .tag { font-size:18px !important; right:50px; top:70px; }
+  .hero .tag { font-size:18px !important; right:50px !important; top:70px !important; }
 
   /* Footer compact */
   .footer-brand p { font-size:0.85rem; }
@@ -4923,4 +4923,30 @@ body {
 .hero-oil-wrap,
 .hero-mega {
   transform: translateY(-30%) !important;
+}
+
+/* =========================================================
+   DEFINITIVE .tag FIX — tight container, absolute position
+   Overrides ALL previous .tag rules. Keep font-size: 48px
+   on the inline style. This just shrinks the BOX.
+   ========================================================= */
+.hero .tag {
+  position: absolute !important;
+  width: min-content !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+  top: 110px !important;
+  right: 190px !important;
+  writing-mode: vertical-rl !important;
+  text-orientation: mixed !important;
+  letter-spacing: 8px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  color: var(--dusty-rose) !important;
+  font-family: var(--font-body) !important;
+  font-size: 48px !important;
+  opacity: 1 !important;
 }
