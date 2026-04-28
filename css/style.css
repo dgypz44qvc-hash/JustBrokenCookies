@@ -7212,3 +7212,37 @@ body {
     bottom: 24px !important;
   }
 }
+/* =========================================================
+   JBC PUSH UP JUST / BROKEN / COOKIES TITLE ONLY
+   Does not move StorytellinG
+   ========================================================= */
+
+.hero-content {
+  position: absolute !important;
+  left: 60px !important;
+  right: 60px !important;
+
+  /* Smaller number = title goes UP
+     Bigger number = title goes DOWN */
+  top: 80px !important;
+
+  bottom: auto !important;
+  z-index: 10 !important;
+
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: block !important;
+}
+
+.hero-mega,
+.hero-oil-wrap {
+  position: relative !important;
+  z-index: 10 !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
