@@ -6559,3 +6559,112 @@ body {
     opacity: 1 !important;
   }
 }
+/* =========================================================
+   JBC HERO CORNER ROSE, REAL LAYER VERSION
+   Bottom-right only, full opacity, true pattern size
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* Kill old hero pseudo rose attempts */
+.hero::before,
+.hero::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hide old video if still anywhere */
+.hero-rose-video {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Real rose corner layer */
+.hero-corner-rose {
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+
+  right: -30px !important;
+  bottom: -40px !important;
+
+  width: 820px !important;
+  height: 700px !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 620px 620px !important;
+  background-position: right bottom !important;
+
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+  filter: saturate(1.2) contrast(1.12) brightness(0.95) !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 80% 82%,
+      #000 0%,
+      #000 60%,
+      rgba(0, 0, 0, 0.78) 72%,
+      rgba(0, 0, 0, 0.34) 86%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 80% 82%,
+      #000 0%,
+      #000 60%,
+      rgba(0, 0, 0, 0.78) 72%,
+      rgba(0, 0, 0, 0.34) 86%,
+      transparent 100%
+    ) !important;
+}
+
+/* Keep portrait above roses but below text */
+.hero .hero-photo-layer,
+.hero .jbc-custom.hero-photo-layer {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+/* Keep text above everything */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom,
+.hero .tag {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+.hero .tag {
+  z-index: 8 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-corner-rose {
+    right: -80px !important;
+    bottom: -75px !important;
+    width: 430px !important;
+    height: 430px !important;
+    background-size: 390px 390px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-corner-rose {
+    right: -80px !important;
+    bottom: -80px !important;
+    width: 360px !important;
+    height: 360px !important;
+    background-size: 330px 330px !important;
+  }
+}
