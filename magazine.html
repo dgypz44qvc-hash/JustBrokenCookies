@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Magazine — JustBrokenCookies</title>
+  <meta name="description" content="Thoughts on storytelling, branding, and the creative process from the JustBrokenCookies team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preload" href="images/jbc-rose-pattern-bg.png" as="image" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== MAGAZINE EDITORIAL LAYOUT ===== */
+
+    .mag-header {
+      text-align: center;
+      padding: 120px 40px 40px;
+      border-bottom: 2px solid #fff;
+      position: relative;
+    }
+    .mag-header .mag-issue {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .mag-header h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -3px;
+      margin-bottom: 14px;
+    }
+    .mag-header .mag-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: var(--sage);
+      letter-spacing: 1px;
+    }
+    .mag-header::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--blush);
+      margin: 28px auto 0;
+    }
+
+    /* --- FEATURED HERO ARTICLE --- */
+    .mag-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+      border-bottom: 2px solid #fff;
+    }
+    .mag-featured-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .mag-featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .mag-featured:hover .mag-featured-image img {
+      transform: scale(1.03);
+    }
+    .mag-featured-image .mag-cat-badge {
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      font-family: var(--font-body);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: rgba(42, 34, 30, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 8px 18px;
+      border: 1px solid rgba(184, 173, 160, 0.2);
+    }
+    .mag-featured-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 50px;
+      border-left: 2px solid #fff;
+    }
+    .mag-featured-content .mag-meta {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-bottom: 22px;
+    }
+    .mag-featured-content h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 22px;
+      letter-spacing: -1px;
+    }
+    .mag-featured-content h2 a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .mag-featured-content h2 a:hover {
+      color: var(--gold);
+    }
+    .mag-featured-content .mag-excerpt {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--light-gray);
+      margin-bottom: 30px;
+      max-width: 480px;
+    }
+    .mag-featured-content .mag-read-link {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      transition: letter-spacing 0.3s ease, color 0.3s ease;
+    }
+    .mag-featured-content .mag-read-link:hover {
+      letter-spacing: 7px;
+      color: var(--blush);
+    }
+
+    /* --- PULL QUOTE DIVIDER --- */
+    .mag-pullquote {
+      text-align: center;
+      padding: 60px 40px;
+      border-bottom: 2px solid #fff;
+      position: relative;
+    }
+    .mag-pullquote blockquote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.3rem, 3vw, 2.2rem);
+      line-height: 1.5;
+      color: var(--cream);
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .mag-pullquote blockquote::before {
+      content: '\201C';
+      font-size: 5rem;
+      color: var(--blush);
+      position: absolute;
+      top: -40px;
+      left: -30px;
+      line-height: 1;
+      opacity: 0.5;
+    }
+    .mag-pullquote .pq-attr {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+      margin-top: 20px;
+      display: block;
+    }
+
+    /* --- EDITORIAL GRID --- */
+    .mag-grid-section {
+      padding: 60px 0 0;
+    }
+    .mag-grid-section .mag-section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0 40px 20px;
+      border-bottom: 1px solid rgba(184, 173, 160, 0.15);
+      margin-bottom: 0;
+    }
+    .mag-section-head h3 {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--blush);
+    }
+    .mag-section-head .mag-issue-num {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--light-gray);
+      font-style: italic;
+    }
+
+    .mag-editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .mag-article {
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+    .mag-article:nth-child(3n) {
+      border-right: none;
+    }
+    .mag-article:hover {
+      background: rgba(184, 173, 160, 0.04);
+    }
+    .mag-article-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(184, 173, 160, 0.12);
+    }
+    .mag-article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+    .mag-article:hover .mag-article-image img {
+      transform: scale(1.04);
+    }
+    .mag-article-body {
+      padding: 28px 30px 36px;
+    }
+    .mag-article-body .mag-cat {
+      font-family: var(--font-body);
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .mag-article-body h4 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.3rem;
+      line-height: 1.25;
+      color: var(--cream);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .mag-article-body h4 a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .mag-article-body h4 a:hover {
+      color: var(--gold);
+    }
+    .mag-article-body .mag-snippet {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--light-gray);
+      margin-bottom: 16px;
+    }
+    .mag-article-body .mag-date {
+      font-family: var(--font-body);
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dusty-rose);
+    }
+
+    /* --- TWO-UP ROW (wider articles) --- */
+    .mag-two-up {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid #fff;
+    }
+    .mag-two-up .mag-article {
+      border-bottom: none;
+    }
+    .mag-two-up .mag-article:last-child {
+      border-right: none;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 968px) {
+      .mag-featured {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .mag-featured-image {
+        aspect-ratio: 16/9;
+      }
+      .mag-featured-content {
+        border-left: none;
+        border-top: 2px solid #fff;
+        padding: 40px 30px;
+      }
+      .mag-editorial-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .mag-article:nth-child(3n) {
+        border-right: 2px solid #fff;
+      }
+      .mag-article:nth-child(2n) {
+        border-right: none;
+      }
+      .mag-header {
+        padding: 100px 24px 30px;
+      }
+    }
+    @media (max-width: 600px) {
+      .mag-editorial-grid,
+      .mag-two-up {
+        grid-template-columns: 1fr;
+      }
+      .mag-article {
+        border-right: none !important;
+      }
+      .mag-featured-content {
+        padding: 30px 20px;
+      }
+      .mag-featured-content h2 {
+        font-size: 1.6rem;
+      }
+      .mag-pullquote blockquote {
+        font-size: 1.1rem;
+      }
+      .mag-article-body {
+        padding: 22px 20px 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== PRELOADER ========== -->
+  <div class="preloader">
+    <div>
+      <div class="preloader-logo">
+        <span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span>
+      </div>
+      <div class="preloader-line"></div>
+    </div>
+  </div>
+  <div class="page-transition"></div>
+
+  <!-- ========== CURSOR ========== -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <nav class="nav" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Work</a>
+        <a href="magazine.html" class="active">Magazine</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- ===== MAGAZINE MASTHEAD ===== -->
+  <section class="mag-header jbc-floral-page-header">
+    <span class="mag-issue">Issue No. 01 &mdash; Spring 2026</span>
+    <h1><span style="color:var(--gold);">The</span> <span style="color:var(--blush);">Magazine</span></h1>
+    <p class="mag-tagline">Stories, strategy &amp; the creative edge &mdash; from the JBC desk</p>
+  </section>
+
+  <!-- ===== FEATURED HERO ARTICLE ===== -->
+  <article class="mag-featured jbc-editorial-section jbc-floral-blog-grid">
+    <div class="mag-featured-image">
+      <img src="images/blog/blog-1.jpg" alt="Why the Best Brand Stories Are the Ones You Almost Didn't Tell">
+      <span class="mag-cat-badge">Storytelling</span>
+    </div>
+    <div class="mag-featured-content">
+      <p class="mag-meta">Cover Story &mdash; April 15, 2026</p>
+      <h2><a href="magazine/post-01.html">Why the Best Brand Stories Are the Ones You Almost Didn't Tell</a></h2>
+      <p class="mag-excerpt">The stories that resonate most are rarely the ones you planned from the start. They're the ones you hesitated to share &mdash; and that hesitation is the signal.</p>
+      <a href="magazine/post-01.html" class="mag-read-link">Read the full story &rarr;</a>
+    </div>
+  </article>
+
+  <!-- ===== PULL QUOTE ===== -->
+  <div class="mag-pullquote">
+    <blockquote>The brands we remember are the ones brave enough to show their cracks.</blockquote>
+    <span class="pq-attr">&mdash; JustBrokenCookies</span>
+  </div>
+
+  <!-- ===== EDITORIAL GRID ===== -->
+  <section class="mag-grid-section">
+    <div class="mag-section-head">
+      <h3>Latest Stories</h3>
+      <span class="mag-issue-num">Vol. 1</span>
+    </div>
+    <div class="mag-editorial-grid">
+
+      <div class="mag-article">
+        <div class="mag-article-image">
+          <img src="images/blog/blog-2.jpg" alt="Content Strategy Is Not a Calendar">
+        </div>
+        <div class="mag-article-body">
+          <span class="mag-cat">Design</span>
+          <h4><a href="#">Content Strategy Is Not a Calendar &mdash; It's a Compass</a></h4>
+          <p class="mag-snippet">Stop thinking of content strategy as a schedule to fill. Start thinking of it as a direction to follow.</p>
+          <span class="mag-date">April 8, 2026</span>
+        </div>
+      </div>
+
+      <div class="mag-article">
+        <div class="mag-article-image">
+          <img src="images/blog/blog-3.jpg" alt="The Art of the Imperfect Frame">
+        </div>
+        <div class="mag-article-body">
+          <span class="mag-cat">Define</span>
+          <h4><a href="#">The Art of the Imperfect Frame: Why Raw Visuals Win</a></h4>
+          <p class="mag-snippet">Over-polished content feels hollow. We make a case for visuals that feel alive.</p>
+          <span class="mag-date">March 28, 2026</span>
+        </div>
+      </div>
+
+      <div class="mag-article">
+        <div class="mag-article-image">
+          <img src="images/blog/blog-4.jpg" alt="How to Write a Brand Voice">
+        </div>
+        <div class="mag-article-body">
+          <span class="mag-cat">Describe</span>
+          <h4><a href="#">How to Write a Brand Voice That Doesn't Sound Like Everyone Else</a></h4>
+          <p class="mag-snippet">If your brand voice could belong to any company, it belongs to no one.</p>
+          <span class="mag-date">March 15, 2026</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== TWO-UP WIDER ARTICLES ===== -->
+  <div class="mag-two-up">
+    <div class="mag-article">
+      <div class="mag-article-image">
+        <img src="images/blog/blog-5.jpg" alt="Broken Cookies Taste Better">
+      </div>
+      <div class="mag-article-body">
+        <span class="mag-cat">Culture</span>
+        <h4><a href="#">Broken Cookies Taste Better: Our Manifesto</a></h4>
+        <p class="mag-snippet">Why we named ourselves after broken cookies, and what it means for how we create.</p>
+        <span class="mag-date">March 2, 2026</span>
+      </div>
+    </div>
+    <div class="mag-article">
+      <div class="mag-article-image">
+        <img src="images/blog/blog-6.jpg" alt="Behind the Scenes">
+      </div>
+      <div class="mag-article-body">
+        <span class="mag-cat">Process</span>
+        <h4><a href="#">Behind the Scenes: How We Build a Campaign from Zero</a></h4>
+        <p class="mag-snippet">A transparent look at our creative process &mdash; from first client call to final deliverable.</p>
+        <span class="mag-date">February 18, 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section jbc-editorial-section jbc-floral-cta">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title"><span style="color:var(--gold);">Got a </span><span style="color:var(--blush);">Story </span><span style="color:var(--wine);">to Tell?</span></h2>
+      <p class="section-subtitle">we'd love to help you tell it</p>
+      <a href="contact.html" class="btn btn-primary">Start a Project</a>
+    </div>
+  </section>
+
+  <footer class="footer jbc-editorial-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></div>
+        <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+          <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navigate</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="magazine.html">Magazine</a></div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html">Define</a><a href="services.html">Design</a><a href="services.html">Describe</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="mailto:hello@justbrokencookies.com">hello@justbrokencookies.com</a><a href="contact.html">Send a Message</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span><span style="color:var(--gold);">JUST</span><span style="color:var(--blush);">BROKEN</span><span style="color:var(--wine);">COOKIES</span></span>
+      <span>&copy; 2026</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/editor-refs.js"></script>
+</body>
+</html>
