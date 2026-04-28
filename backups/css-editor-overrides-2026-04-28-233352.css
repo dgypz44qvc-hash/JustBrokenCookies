@@ -1,0 +1,29 @@
+/* JBC local editor overrides */
+
+
+
+[data-editor-id="hero-storytelling-tag"] {
+  left: 1031px !important;
+  top: 82px !important;
+  width: 143px !important;
+  height: 671px !important;
+  opacity: 0.972863 !important;
+}
+
+[data-editor-id="decor-001"] {
+  left: -208px !important;
+  top: -88px !important;
+  width: 1521px !important;
+  height: 1149px !important;
+}
+
+[data-editor-id="manifesto-inner"] {
+  position: relative !important;
+  left: 98px !important;
+  top: -258px !important;
+}
+
+[data-editor-id="hero-section"] {
+  left: 0px !important;
+  top: -1px !important;
+}

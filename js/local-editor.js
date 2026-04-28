@@ -5,6 +5,7 @@
   const imageList = document.getElementById('image-list');
   const floatingToolbar = document.getElementById('floating-toolbar');
   const floatLabel = document.getElementById('float-label');
+  const contextMenu = document.getElementById('context-menu');
   const prop = id => document.getElementById(id);
   function on(id, event, handler) {
     const el = prop(id);
@@ -41,6 +42,10 @@
   let handlesBox = null;
   let assetMode = null;
   let assetCounter = 1;
+  let textEditingEl = null;
+  let copiedStyle = null;
+  let panelResize = null;
+  let suppressNextClick = false;
 
   const managedStyles = [
     'position', 'left', 'top', 'right', 'bottom', 'width', 'height', 'opacity',
@@ -54,9 +59,9 @@
       ['Hero', '[data-editor-id="hero-section"], section.hero'],
       ['Storytelling Tag', '[data-editor-id="hero-storytelling-tag"], .hero .tag'],
       ['Hero Content', '[data-editor-id="hero-content"], .hero-content'],
-      ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega .l1'],
-      ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega .l2'],
-      ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega .l3'],
+      ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega:not(.hero-underlay) .l1'],
+      ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega:not(.hero-underlay) .l2'],
+      ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega:not(.hero-underlay) .l3'],
       ['Hero Image', '[data-editor-id="hero-image-wrap"], .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img'],
       ['Corner Rose', '[data-editor-id="hero-corner-rose"], .hero-corner-rose']
     ]},
@@ -78,8 +83,23 @@
     ]},
     { title: 'Testimonial', items: [['Testimonial', '[data-editor-id="testimonial-section"], .testimonial-section']] },
     { title: 'CTA', items: [['CTA', '[data-editor-id="cta-section"], .cta-section']] },
-    { title: 'Footer', items: [['Footer', '[data-editor-id="footer-section"], footer.footer']] }
+    { title: 'Footer', items: [
+      ['Footer', '[data-editor-id="footer-section"], footer.footer'],
+      ['Footer Grid', 'footer.footer .footer-grid'],
+      ['Footer Brand', 'footer.footer .footer-brand'],
+      ['Footer Column 1', 'footer.footer .footer-col:nth-of-type(1)'],
+      ['Footer Column 2', 'footer.footer .footer-col:nth-of-type(2)'],
+      ['Footer Column 3', 'footer.footer .footer-col:nth-of-type(3)'],
+      ['Footer Bottom', 'footer.footer .footer-bottom']
+    ] }
   ];
+
+  const editableTextSelector = [
+    '.hero .tag', '.hero-mega .l1', '.hero-mega .l2', '.hero-mega .l3',
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'cite',
+    'a[href]', 'button', '.btn', '.section-title', '.footer-brand', '.footer-col h4',
+    '.footer-col a', '.footer-bottom span'
+  ].join(',');
 
   const auditSelectors = [
     ['Sections', 'section'],
@@ -139,7 +159,7 @@
 
   function isTextElement(el) {
     if (!el || el.querySelector('img, picture, video, iframe')) return false;
-    return el.childElementCount === 0 || ['H1', 'H2', 'H3', 'H4', 'P', 'SPAN', 'A', 'BUTTON', 'CITE', 'BLOCKQUOTE'].includes(el.tagName);
+    return el.matches(editableTextSelector) || el.childElementCount === 0 || ['H1', 'H2', 'H3', 'H4', 'P', 'SPAN', 'A', 'BUTTON', 'CITE', 'BLOCKQUOTE'].includes(el.tagName);
   }
 
   function selectedImage(el) {
@@ -151,14 +171,17 @@
 
   function pickEditable(target) {
     if (!target || target.nodeType !== 1) return null;
-    const priority = ['.jbc-editor-handle', '.editor-decoration', '.hero-mega .l1', '.hero-mega .l2', '.hero-mega .l3', '.hero .tag', '.hero .jbc-custom.hero-photo-layer', '.hero .jbc-custom img', '.hero-corner-rose', '.service-card', '.portfolio-item', '.testi-brutal', '.cta-section .btn', '.cta-section .section-title', '.manifesto-inner'];
+    if (target.closest('.jbc-editor-handle')) return null;
+    const exactText = target.closest(editableTextSelector);
+    if (exactText && !exactText.matches('footer.footer, section.hero, .hero-content, .hero-mega')) return exactText;
+    const priority = ['.editor-decoration', '.hero-mega:not(.hero-underlay) .l1', '.hero-mega:not(.hero-underlay) .l2', '.hero-mega:not(.hero-underlay) .l3', '.hero .tag', '.hero .jbc-custom.hero-photo-layer', '.hero .jbc-custom img', '.hero-corner-rose', '.service-card h3', '.service-card p', '.service-card', '.portfolio-item h3', '.portfolio-item p', '.portfolio-item', '.testi-brutal', '.cta-section .btn', '.cta-section .section-title', '.manifesto-inner h2', '.manifesto-inner p', '.manifesto-inner'];
     for (const sel of priority) {
       const found = target.closest(sel);
-      if (found) return found.classList.contains('jbc-editor-handle') ? null : found;
+      if (found) return found;
     }
-    const fallback = target.closest('[data-editor-id], section.hero, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer, .hero-content');
+    const fallback = target.closest('[data-editor-id], .footer-grid, .footer-brand, .footer-col, .footer-bottom, section.hero, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer');
     if (!fallback) return null;
-    if (fallback.matches('.hero-mega') && target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3')) return target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3');
+    if (fallback.matches('section.hero, .hero-content, .hero-mega')) return target.closest('.hero-mega:not(.hero-underlay) .l1, .hero-mega:not(.hero-underlay) .l2, .hero-mega:not(.hero-underlay) .l3, .hero .tag, .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img, .hero-corner-rose') || fallback;
     return fallback;
   }
 
@@ -182,6 +205,7 @@
 
   function onFrameLoad() {
     doc = frame.contentDocument;
+    doc.body.classList.remove('jbc-editor-preview', 'jbc-is-dragging', 'jbc-text-edit-mode');
     wireCanvas();
     buildLayers();
     loadImages();
@@ -202,6 +226,9 @@
       'body.jbc-is-dragging,body.jbc-is-dragging *{user-select:none!important;cursor:grabbing!important;}',
       'body.jbc-editor-preview [data-jbc-selected="true"],body.jbc-editor-preview .jbc-editor-hover{outline:none!important;}',
       'body.jbc-editor-preview .jbc-editor-box{display:none!important;}',
+      'body:not(.jbc-editor-preview) .hero .tag,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l1,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l2,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l3,body:not(.jbc-editor-preview) .hero .jbc-custom,body:not(.jbc-editor-preview) .hero .jbc-custom img,body:not(.jbc-editor-preview) .hero-corner-rose{pointer-events:auto!important;}',
+      '[contenteditable="true"].jbc-text-editing{outline:2px solid #2ecc40!important;outline-offset:4px!important;cursor:text!important;user-select:text!important;-webkit-user-select:text!important;}',
+      'body.jbc-text-edit-mode .jbc-editor-box{display:none!important;}',
       '.editor-decoration{position:absolute;display:block;pointer-events:auto;z-index:4;touch-action:none;}',
       '.editor-decoration img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;}',
       '</style>',
@@ -216,6 +243,7 @@
     clone.querySelector('#jbc-editor-overrides-live')?.remove();
     clone.querySelectorAll('.jbc-editor-box').forEach(el => el.remove());
     clone.querySelectorAll('[data-jbc-selected], .jbc-editor-hover').forEach(el => { el.removeAttribute('data-jbc-selected'); el.classList.remove('jbc-editor-hover'); });
+    clone.querySelector('body')?.classList.remove('jbc-editor-preview', 'jbc-is-dragging', 'jbc-text-edit-mode');
     clone.querySelectorAll('[data-editor-bound], [contenteditable]').forEach(el => { el.removeAttribute('data-editor-bound'); if (el.getAttribute('contenteditable') === 'true') el.removeAttribute('contenteditable'); });
     clone.querySelectorAll('[data-editor-id]').forEach(el => stripManagedInlineStyles(el));
     return '<!DOCTYPE html>\n' + clone.outerHTML;
@@ -237,10 +265,16 @@
   function markDirty(msg) { dirty = true; setStatus(msg || 'Unsaved changes'); updateFloatingToolbar(); }
 
   function wireShell() {
-    on('btn-layers', 'click', () => document.body.classList.toggle('left-collapsed'));
-    on('btn-properties', 'click', () => document.body.classList.toggle('right-collapsed'));
-    on('btn-close-layers', 'click', () => document.body.classList.add('left-collapsed'));
-    on('btn-close-properties', 'click', () => document.body.classList.add('right-collapsed'));
+    applyPanelLayout();
+    on('btn-layers', 'click', () => setLeftCollapsed(!document.body.classList.contains('left-collapsed')));
+    on('btn-properties', 'click', () => { document.body.classList.remove('clean-canvas'); document.body.classList.toggle('right-collapsed'); savePanelLayout(); });
+    on('btn-close-layers', 'click', () => setLeftCollapsed(true));
+    on('btn-close-properties', 'click', () => { document.body.classList.add('right-collapsed'); savePanelLayout(); });
+    on('btn-clean-canvas', 'click', toggleCleanCanvas);
+    on('btn-collapse-left', 'click', () => setLeftCollapsed(!document.body.classList.contains('left-collapsed')));
+    on('btn-collapse-right', 'click', () => { document.body.classList.toggle('right-collapsed'); savePanelLayout(); });
+    on('left-gutter', 'pointerdown', e => startPanelResize(e, 'left'));
+    on('right-gutter', 'pointerdown', e => startPanelResize(e, 'right'));
     on('btn-preview', 'click', togglePreview);
     on('btn-undo', 'click', undo);
     on('btn-redo', 'click', redo);
@@ -261,18 +295,28 @@
     on('btn-apply-src', 'click', applyImageSource);
     on('btn-hero-mobile', 'click', replaceHeroMobile);
     on('btn-hide', 'click', hideSelected);
+    on('btn-hide-top', 'click', hideSelected);
     on('btn-delete', 'click', deleteSelected);
+    on('btn-delete-top', 'click', deleteSelected);
     on('btn-duplicate', 'click', duplicateSelected);
+    on('btn-duplicate-top', 'click', duplicateSelected);
     on('btn-reset-selected', 'click', resetSelected);
     on('btn-bring-forward', 'click', bringForward);
+    on('btn-forward-top', 'click', bringForward);
     on('btn-send-backward', 'click', sendBackward);
+    on('btn-backward-top', 'click', sendBackward);
+    on('btn-text-edit', 'click', () => beginTextEdit(selected));
     on('float-replace', 'click', () => prop('upload-image')?.click());
+    on('float-edit-text', 'click', () => beginTextEdit(selected));
     on('float-duplicate', 'click', duplicateSelected);
     on('float-hide', 'click', hideSelected);
     on('float-forward', 'click', bringForward);
     on('float-backward', 'click', sendBackward);
     on('float-delete', 'click', deleteSelected);
     on('upload-image', 'change', uploadReplacement);
+    document.addEventListener('pointerdown', e => { if (!contextMenu?.contains(e.target)) hideContextMenu(); });
+    window.addEventListener('pointermove', onPanelResizeMove);
+    window.addEventListener('pointerup', endPanelResize);
     window.addEventListener('resize', updateSelectionUI);
     window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
     ['prop-left','prop-top','prop-width','prop-height','prop-opacity','prop-z','prop-rotate','prop-radius','prop-color','prop-bg','prop-font-size','prop-font-family','prop-letter','prop-blend','prop-text'].forEach(id => on(id, 'change', applyPanel));
@@ -283,6 +327,8 @@
     doc.addEventListener('mouseout', e => { const el = pickEditable(e.target); if (el) el.classList.remove('jbc-editor-hover'); }, true);
     doc.addEventListener('click', e => {
       if (!editMode || dragState) return;
+      if (suppressNextClick) { suppressNextClick = false; e.preventDefault(); e.stopPropagation(); return; }
+      hideContextMenu();
       if (assetMode) {
         e.preventDefault();
         e.stopPropagation();
@@ -295,7 +341,8 @@
       e.stopPropagation();
       selectElement(el);
     }, true);
-    doc.addEventListener('dblclick', e => { if (!editMode) return; const el = pickEditable(e.target); if (!el || !isTextElement(el)) return; selectElement(el); beginTextEdit(el); }, true);
+    doc.addEventListener('contextmenu', onCanvasContextMenu, true);
+    doc.addEventListener('dblclick', e => { if (!editMode) return; const el = pickEditable(e.target); if (!el || !isTextElement(el)) return; e.preventDefault(); e.stopPropagation(); selectElement(el); beginTextEdit(el, e); }, true);
     doc.addEventListener('input', e => { if (selected && e.target === selected && isTextElement(selected)) { setValue('prop-text', selected.innerHTML); markDirty('Text edited'); } }, true);
     doc.addEventListener('pointerdown', onPointerDown, true);
     doc.addEventListener('pointermove', onPointerMove, true);
@@ -312,6 +359,8 @@
     selected = el;
     selectorFor(selected);
     selected.setAttribute('data-jbc-selected', 'true');
+    document.body.classList.add('has-selection');
+    if (document.body.classList.contains('clean-canvas')) document.body.classList.remove('right-collapsed');
     hydratePanel();
     buildLayers();
     ensureHandles();
@@ -362,6 +411,7 @@
       return;
     }
     if (cs.position === 'static') el.style.position = 'relative';
+    if (isTextElement(el) && cs.display === 'inline') el.style.display = 'inline-block';
   }
 
   function ensurePositionedParent(parent) {
@@ -374,12 +424,14 @@
   }
 
   function onPointerDown(e) {
-    if (!editMode || e.button !== 0 || assetMode) return;
+    if (!editMode || e.button !== 0 || assetMode || textEditingEl || e.detail > 1) return;
     const handle = e.target.closest?.('.jbc-editor-handle');
     if (handle && selected) { startTransform(e, handle.dataset.handle); return; }
+    if (selected && (e.target === selected || selected.contains(e.target))) { startTransform(e, 'move'); return; }
     const el = pickEditable(e.target);
-    if (!el || e.target.closest?.('a, button, input, textarea, select') || el.isContentEditable) return;
-    selectElement(el);
+    if (!el || e.target.closest?.('input, textarea, select') || el.isContentEditable) return;
+    if (el !== selected) selectElement(el);
+    else if (selected && !(e.target === selected || selected.contains(e.target))) return;
     startTransform(e, 'move');
   }
 
@@ -391,6 +443,7 @@
     const cs = frame.contentWindow.getComputedStyle(selected);
     dragState = { mode, pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, left: parseFloat(selected.style.left || (cs.left !== 'auto' ? cs.left : '0')) || 0, top: parseFloat(selected.style.top || (cs.top !== 'auto' ? cs.top : '0')) || 0, width: rect.width, height: rect.height, centerX: rect.left + rect.width / 2, centerY: rect.top + rect.height / 2, startRotate: parseFloat(getRotate(selected)) || 0, next: null };
     doc.body.classList.add('jbc-is-dragging');
+    dragState.didMove = false;
     e.preventDefault();
     e.stopPropagation();
     e.target.setPointerCapture?.(e.pointerId);
@@ -408,6 +461,7 @@
     if (!dragState || !dragState.next || !selected) return;
     const dx = dragState.next.x - dragState.startX;
     const dy = dragState.next.y - dragState.startY;
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) dragState.didMove = true;
     if (dragState.mode === 'move') {
       selected.style.left = Math.round(dragState.left + dx) + 'px';
       selected.style.top = Math.round(dragState.top + dy) + 'px';
@@ -440,6 +494,7 @@
     doc.body.classList.remove('jbc-is-dragging');
     saveStyleFor(selected, true);
     markDirty(dragState.mode === 'move' ? 'Moved' : dragState.mode === 'rotate' ? 'Rotated' : 'Resized');
+    suppressNextClick = !!dragState.didMove;
     dragState = null;
   }
 
@@ -465,10 +520,10 @@
   }
 
   function updateFloatingToolbar() {
-    if (!selected || !editMode || document.body.classList.contains('preview-mode')) { floatingToolbar.classList.remove('visible'); return; }
+    if (!floatingToolbar || !selected || !editMode || textEditingEl || document.body.classList.contains('preview-mode')) { floatingToolbar?.classList.remove('visible'); return; }
     const frameRect = frame.getBoundingClientRect();
     const rect = selected.getBoundingClientRect();
-    floatLabel.textContent = describe(selected);
+    if (floatLabel) floatLabel.textContent = describe(selected);
     const x = Math.min(window.innerWidth - 260, Math.max(8, frameRect.left + rect.left));
     const y = Math.max(50, frameRect.top + rect.top - 42);
     floatingToolbar.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(y) + 'px)';
@@ -539,6 +594,7 @@
     });
     layersEl.appendChild(wrap);
 
+    appendFooterTextLayers(included);
     const audit = auditEditableLayers(included);
     if (audit.other.length) {
       const otherWrap = document.createElement('div');
@@ -551,6 +607,23 @@
       layersEl.appendChild(otherWrap);
     }
     window.__jbcLayerAudit = audit;
+  }
+
+  function appendFooterTextLayers(included) {
+    const footerItems = Array.from(doc?.querySelectorAll('footer.footer h4, footer.footer a, footer.footer .footer-bottom span') || []).filter(isVisibleEditable);
+    if (!footerItems.length) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'layer-group';
+    const title = document.createElement('div');
+    title.className = 'layer-group-title';
+    title.textContent = 'Footer Text';
+    wrap.appendChild(title);
+    footerItems.forEach((el, i) => {
+      selectorFor(el);
+      included.add(el);
+      wrap.appendChild(layerButton(layerNameFor(el, 'Footer Text ' + (i + 1)), selectorFor(el), el));
+    });
+    layersEl.appendChild(wrap);
   }
 
   function layerButton(name, sel, el) {
@@ -789,6 +862,8 @@
     pushHistory();
     const old = selected;
     selected = null;
+    document.body.classList.remove('has-selection');
+    if (document.body.classList.contains('clean-canvas')) document.body.classList.add('right-collapsed');
     old.remove();
     if (handlesBox) handlesBox.style.display = 'none';
     hydratePanel();
@@ -831,15 +906,120 @@
     markDirty('Sent backward');
   }
 
-  function beginTextEdit(el) {
+  function onCanvasContextMenu(e) {
+    if (!editMode || assetMode) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const el = pickEditable(e.target);
+    if (el) selectElement(el);
+    showContextMenu(e.clientX, e.clientY, el || selected);
+  }
+
+  function showContextMenu(frameX, frameY, target) {
+    if (!contextMenu || !target) return;
+    const frameRect = frame.getBoundingClientRect();
+    const pageX = frameRect.left + frameX;
+    const pageY = frameRect.top + frameY;
+    contextMenu.innerHTML = '';
+    const addItem = (label, handler, enabled = true) => {
+      if (!enabled) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = label;
+      button.onclick = () => { hideContextMenu(); handler(); };
+      contextMenu.appendChild(button);
+    };
+    const separator = () => {
+      const div = document.createElement('div');
+      div.className = 'separator';
+      contextMenu.appendChild(div);
+    };
+    addItem('Edit Text', () => beginTextEdit(target), isTextElement(target));
+    addItem('Replace Image', () => prop('upload-image')?.click(), !!selectedImage(target));
+    separator();
+    addItem('Duplicate', duplicateSelected);
+    addItem(frame.contentWindow.getComputedStyle(target).display === 'none' ? 'Show' : 'Hide', hideSelected);
+    addItem('Delete', deleteSelected);
+    separator();
+    addItem('Bring Forward', bringForward);
+    addItem('Send Backward', sendBackward);
+    addItem('Reset Style', resetSelected);
+    separator();
+    addItem('Add Decoration Here', () => insertAsset(assetConfig('decoration'), target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
+    addItem('Add Rose Here', () => insertAsset(assetConfig('rose'), target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
+    addItem('Copy Style', () => { copiedStyle = selected ? selected.getAttribute('style') || '' : ''; });
+    addItem('Select Parent', () => { const parent = target.parentElement?.closest('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content'); if (parent) selectElement(parent); }, !!target.parentElement);
+    const maxX = window.innerWidth - 210;
+    const maxY = window.innerHeight - 330;
+    contextMenu.style.transform = 'translate(' + Math.max(8, Math.min(maxX, Math.round(pageX))) + 'px,' + Math.max(8, Math.min(maxY, Math.round(pageY))) + 'px)';
+    contextMenu.classList.add('visible');
+  }
+
+  function hideContextMenu() { contextMenu?.classList.remove('visible'); }
+
+  function localPointFor(target, frameX, frameY) {
+    const parent = target.closest('section, footer') || doc.body;
+    const rect = parent.getBoundingClientRect();
+    return { x: frameX - rect.left + parent.scrollLeft, y: frameY - rect.top + parent.scrollTop };
+  }
+
+  function beginTextEdit(el, sourceEvent) {
+    if (!el || !isTextElement(el)) return;
+    hideContextMenu();
+    if (textEditingEl && textEditingEl !== el) finishTextEdit();
     pushHistory();
+    textEditingEl = el;
+    selectElement(el);
     el.contentEditable = 'true';
+    el.classList.add('jbc-text-editing');
+    doc.body.classList.add('jbc-text-edit-mode');
+    if (handlesBox) handlesBox.style.display = 'none';
+    floatingToolbar?.classList.remove('visible');
     el.focus();
-    doc.getSelection()?.selectAllChildren(el);
-    el.addEventListener('blur', () => { el.removeAttribute('contenteditable'); setValue('prop-text', el.innerHTML); markDirty('Text edited'); }, { once: true });
+    placeCaret(el, sourceEvent);
+    el.addEventListener('blur', finishTextEdit, { once: true });
+  }
+
+  function placeCaret(el, sourceEvent) {
+    const selection = doc.getSelection();
+    if (!selection) return;
+    selection.removeAllRanges();
+    let range = null;
+    if (sourceEvent && doc.caretRangeFromPoint) range = doc.caretRangeFromPoint(sourceEvent.clientX, sourceEvent.clientY);
+    if (!range && sourceEvent && doc.caretPositionFromPoint) {
+      const pos = doc.caretPositionFromPoint(sourceEvent.clientX, sourceEvent.clientY);
+      if (pos) { range = doc.createRange(); range.setStart(pos.offsetNode, pos.offset); }
+    }
+    if (!range || !el.contains(range.startContainer)) {
+      range = doc.createRange();
+      range.selectNodeContents(el);
+      range.collapse(false);
+    }
+    selection.addRange(range);
+  }
+
+  function finishTextEdit() {
+    if (!textEditingEl) return;
+    const el = textEditingEl;
+    textEditingEl = null;
+    el.removeAttribute('contenteditable');
+    el.classList.remove('jbc-text-editing');
+    doc?.body.classList.remove('jbc-text-edit-mode');
+    if (selected === el) setValue('prop-text', el.innerHTML);
+    saveTextFor(el);
+    markDirty('Text edited');
+    updateSelectionUI();
+  }
+
+  function saveTextFor(el) {
+    selectorFor(el);
   }
 
   function onKeyDown(e) {
+    if (textEditingEl) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); textEditingEl.blur(); }
+      return;
+    }
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
     if (!selected || selected.isContentEditable || !['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
     e.preventDefault();
@@ -876,13 +1056,88 @@
     markDirty('Fine adjusted');
   }
 
+  function applyPanelLayout() {
+    const saved = JSON.parse(localStorage.getItem('jbc-editor-layout') || '{}');
+    if (saved.leftWidth) document.documentElement.style.setProperty('--left-panel-width', saved.leftWidth + 'px');
+    if (saved.rightWidth) document.documentElement.style.setProperty('--right-panel-width', saved.rightWidth + 'px');
+    document.body.classList.toggle('clean-canvas', saved.cleanCanvas !== false);
+    document.body.classList.toggle('left-collapsed', saved.leftCollapsed !== false);
+    document.body.classList.toggle('right-collapsed', saved.rightCollapsed !== false);
+    toggleClass('btn-clean-canvas', 'active', document.body.classList.contains('clean-canvas'));
+  }
+
+  function savePanelLayout() {
+    const styles = getComputedStyle(document.documentElement);
+    localStorage.setItem('jbc-editor-layout', JSON.stringify({
+      leftWidth: parseInt(styles.getPropertyValue('--left-panel-width'), 10) || 196,
+      rightWidth: parseInt(styles.getPropertyValue('--right-panel-width'), 10) || 256,
+      cleanCanvas: document.body.classList.contains('clean-canvas'),
+      leftCollapsed: document.body.classList.contains('left-collapsed'),
+      rightCollapsed: document.body.classList.contains('right-collapsed')
+    }));
+  }
+
+  function toggleCleanCanvas() {
+    document.body.classList.toggle('clean-canvas');
+    if (document.body.classList.contains('clean-canvas')) document.body.classList.add('left-collapsed');
+    if (document.body.classList.contains('clean-canvas') && !selected) document.body.classList.add('right-collapsed');
+    toggleClass('btn-clean-canvas', 'active', document.body.classList.contains('clean-canvas'));
+    savePanelLayout();
+    updateSelectionUI();
+  }
+
+  function setLeftCollapsed(collapsed) {
+    document.body.classList.remove('clean-canvas');
+    document.body.classList.toggle('left-collapsed', collapsed);
+    savePanelLayout();
+    updateSelectionUI();
+  }
+
+  function startPanelResize(e, side) {
+    if (e.target.tagName === 'BUTTON') return;
+    panelResize = { side, startX: e.clientX, startLeft: panelWidth('left'), startRight: panelWidth('right') };
+    document.body.classList.add('resizing-panels');
+    e.preventDefault();
+  }
+
+  function panelWidth(side) {
+    const name = side === 'left' ? '--left-panel-width' : '--right-panel-width';
+    return parseInt(getComputedStyle(document.documentElement).getPropertyValue(name), 10) || (side === 'left' ? 196 : 256);
+  }
+
+  function onPanelResizeMove(e) {
+    if (!panelResize) return;
+    const dx = e.clientX - panelResize.startX;
+    if (panelResize.side === 'left') {
+      const width = Math.max(150, Math.min(360, panelResize.startLeft + dx));
+      document.documentElement.style.setProperty('--left-panel-width', width + 'px');
+      document.body.classList.remove('left-collapsed', 'clean-canvas');
+    } else {
+      const width = Math.max(190, Math.min(420, panelResize.startRight - dx));
+      document.documentElement.style.setProperty('--right-panel-width', width + 'px');
+      document.body.classList.remove('right-collapsed');
+      document.body.classList.remove('clean-canvas');
+    }
+    updateSelectionUI();
+  }
+
+  function endPanelResize() {
+    if (!panelResize) return;
+    panelResize = null;
+    document.body.classList.remove('resizing-panels');
+    savePanelLayout();
+  }
+
   function togglePreview() {
+    hideContextMenu();
+    if (textEditingEl) finishTextEdit();
     editMode = !editMode;
     document.body.classList.toggle('preview-mode', !editMode);
     toggleClass('btn-preview', 'active', !editMode);
     doc?.body.classList.toggle('jbc-editor-preview', !editMode);
     if (selected) selected.toggleAttribute('data-jbc-selected', editMode);
     if (handlesBox) handlesBox.style.display = editMode ? 'block' : 'none';
+    if (!editMode) contextMenu?.classList.remove('visible');
     updateFloatingToolbar();
   }
 
@@ -892,6 +1147,7 @@
 
   async function saveAll() {
     try {
+      if (textEditingEl) finishTextEdit();
       const html = serializeHtml();
       await api('/api/save-all', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ html, css: editorCss }) });
       dirty = false;

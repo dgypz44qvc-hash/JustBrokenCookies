@@ -1,0 +1,32 @@
+/* JBC local editor overrides */
+
+[data-editor-id="hero-section"] {
+  left: 105px !important;
+  top: -9px !important;
+}
+
+[data-editor-id="cta-button"] {
+  left: 0px !important;
+  top: 0px !important;
+  width: 251px !important;
+  height: 50px !important;
+  opacity: 1 !important;
+  color: rgb(42, 34, 30) !important;
+  background-color: rgb(232, 137, 29) !important;
+  font-size: 10.4px !important;
+  letter-spacing: 4px !important;
+  border-radius: 999px !important;
+}
+
+[data-editor-id="cta-section"] {
+  left: 0px !important;
+  top: 0px !important;
+  width: 1225px !important;
+  height: 549px !important;
+  opacity: 1 !important;
+  color: rgb(240, 230, 218) !important;
+  background-color: rgb(35, 29, 25) !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  border-radius: 0px !important;
+}

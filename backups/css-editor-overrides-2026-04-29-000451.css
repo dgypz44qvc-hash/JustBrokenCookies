@@ -1,0 +1,6 @@
+/* JBC local editor overrides */
+
+[data-editor-id="hero-section"] {
+  left: 105px !important;
+  top: -9px !important;
+}
