@@ -6932,3 +6932,283 @@ body {
     height: 150px !important;
   }
 }
+/* =========================================================
+   JBC HERO FIX, TITLE BACK + ROSES RIGHT-SIDE ONLY
+   Put this at the VERY BOTTOM of css/style.css
+   ========================================================= */
+
+/* HERO STAGE */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+  padding: 100px 60px 60px !important;
+  background: var(--charcoal) !important;
+}
+
+/* Kill old hero pseudo layers so they don't fight us */
+.hero::before,
+.hero::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hide old video if still present anywhere */
+.hero-rose-video {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   1. ROSE ORNAMENT, RIGHT SIDE / BOTTOM RIGHT ONLY
+   ========================================================= */
+
+.hero-corner-rose {
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+
+  /* Push the whole ornament to the RIGHT side */
+  left: auto !important;
+  top: auto !important;
+  right: -260px !important;
+  bottom: -170px !important;
+
+  /* Smaller stage so it cannot sit in the centre */
+  width: 620px !important;
+  height: 620px !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+
+  /* Keep true pattern size, no stretch */
+  background-size: 620px 620px !important;
+  background-position: right bottom !important;
+
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+  filter: saturate(1.2) contrast(1.12) brightness(0.95) !important;
+
+  transform: none !important;
+
+  /* Fade into brown, but keep the visible rose area strong */
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 78% 78%,
+      #000 0%,
+      #000 58%,
+      rgba(0, 0, 0, 0.70) 72%,
+      rgba(0, 0, 0, 0.25) 86%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 78% 78%,
+      #000 0%,
+      #000 58%,
+      rgba(0, 0, 0, 0.70) 72%,
+      rgba(0, 0, 0, 0.25) 86%,
+      transparent 100%
+    ) !important;
+}
+
+/* =========================================================
+   2. PORTRAIT ABOVE ROSES, BELOW TEXT
+   ========================================================= */
+
+.hero .jbc-custom.hero-photo-layer {
+  position: absolute !important;
+  left: 27.05% !important;
+  top: 10.62% !important;
+  width: 63.13% !important;
+  z-index: 3 !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.hero .jbc-custom.hero-photo-layer picture,
+.hero .jbc-custom.hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Empty editor block must not interfere */
+.hero .jbc-custom:not(.hero-photo-layer) {
+  pointer-events: none !important;
+  z-index: 4 !important;
+}
+
+/* =========================================================
+   3. TITLE BACK INTO PLACE
+   ========================================================= */
+
+.hero-content {
+  position: absolute !important;
+  z-index: 10 !important;
+
+  left: 60px !important;
+  right: 60px !important;
+
+  /* This is the main vertical title control */
+  top: 155px !important;
+  bottom: auto !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: block !important;
+  pointer-events: none !important;
+}
+
+.hero-oil-wrap,
+.hero-mega {
+  position: relative !important;
+  z-index: 10 !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  top: auto !important;
+  left: auto !important;
+
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hero-mega .l1,
+.hero-mega .l2,
+.hero-mega .l3 {
+  transform: none !important;
+}
+
+/* =========================================================
+   4. STORYTELLING WORD + DOTTED LINE
+   ========================================================= */
+
+.hero .tag {
+  position: absolute !important;
+  top: 110px !important;
+  right: 190px !important;
+  z-index: 12 !important;
+
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  writing-mode: vertical-rl !important;
+  text-orientation: mixed !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 88px !important;
+  font-weight: 700 !important;
+  line-height: 0.9 !important;
+  letter-spacing: 0 !important;
+  color: var(--dusty-rose) !important;
+}
+
+.hero .tag::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 105% !important;
+  width: 1px !important;
+  height: 230px !important;
+  transform: translateX(-50%) !important;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgba(201, 58, 110, 0.55) 0 3px,
+    transparent 3px 10px
+  ) !important;
+  background-size: 1px 10px !important;
+  background-repeat: repeat-y !important;
+}
+
+/* Restore bottom line */
+.hero-bottom {
+  position: absolute !important;
+  left: 60px !important;
+  right: 60px !important;
+  bottom: 60px !important;
+  z-index: 10 !important;
+
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+
+  padding-top: 28px !important;
+  border-top: var(--border) !important;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh !important;
+    padding: 92px 20px 24px !important;
+  }
+
+  .hero-corner-rose {
+    right: -170px !important;
+    bottom: -120px !important;
+    width: 390px !important;
+    height: 390px !important;
+    background-size: 390px 390px !important;
+    opacity: 0.85 !important;
+  }
+
+  .hero .jbc-custom.hero-photo-layer {
+    left: 10% !important;
+    top: 12% !important;
+    width: 80% !important;
+    z-index: 3 !important;
+    opacity: 0.72 !important;
+  }
+
+  .hero-content {
+    left: 20px !important;
+    right: 20px !important;
+    top: 230px !important;
+    bottom: auto !important;
+  }
+
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(4rem, 21vw, 7rem) !important;
+    transform: none !important;
+  }
+
+  .hero-mega .l2 {
+    margin-left: 15px !important;
+  }
+
+  .hero .tag {
+    top: 95px !important;
+    right: 16px !important;
+    font-size: 24px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .hero .tag::after {
+    height: 150px !important;
+  }
+
+  .hero-bottom {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 24px !important;
+  }
+}
