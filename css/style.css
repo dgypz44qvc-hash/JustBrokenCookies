@@ -7586,3 +7586,244 @@ top: auto !important;
     bottom: 24px !important;
   }
 }
+/* =========================================================
+   JBC RESTORE HERO ROSE PATTERN LAYER
+   Keeps the current hero layout/title position.
+   Restores rose pattern overlay.
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* Make sure old pseudo layers/video do not interfere */
+.hero::before,
+.hero::after,
+.hero-rose-video {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Restore the real rose layer */
+.hero-corner-rose {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.82 !important;
+
+  position: absolute !important;
+  pointer-events: none !important;
+
+  /* Behind title, above/around portrait */
+  z-index: 4 !important;
+
+  /* Placement like your mockup */
+  left: 13% !important;
+  top: 4% !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  width: 74% !important;
+  height: 86% !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 760px 760px !important;
+  background-position: center center !important;
+
+  mix-blend-mode: screen !important;
+  filter: saturate(1.25) contrast(1.12) brightness(0.98) !important;
+
+  transform: none !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 48% 50%,
+      #000 0%,
+      #000 48%,
+      rgba(0, 0, 0, 0.70) 62%,
+      rgba(0, 0, 0, 0.26) 80%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 48% 50%,
+      #000 0%,
+      #000 48%,
+      rgba(0, 0, 0, 0.70) 62%,
+      rgba(0, 0, 0, 0.26) 80%,
+      transparent 100%
+    ) !important;
+}
+
+/* Keep portrait below title but visible */
+.hero .jbc-custom.hero-photo-layer {
+  z-index: 2 !important;
+}
+
+/* Keep main title and StorytellinG above roses */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom,
+.hero .tag {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.hero .tag {
+  z-index: 12 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-corner-rose {
+    left: 0% !important;
+    top: 8% !important;
+    width: 100% !important;
+    height: 70% !important;
+
+    background-size: 520px 520px !important;
+    background-position: center top !important;
+
+    opacity: 0.72 !important;
+    z-index: 4 !important;
+  }
+}
+/* =========================================================
+   JBC RESTORE HERO ROSE PATTERN LAYER
+   Keeps the current hero layout/title position.
+   Restores rose pattern overlay.
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+/* Make sure old pseudo layers/video do not interfere */
+.hero::before,
+.hero::after,
+.hero-rose-video {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Restore the real rose layer */
+.hero-corner-rose {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.82 !important;
+
+  position: absolute !important;
+  pointer-events: none !important;
+
+  /* Behind title, above/around portrait */
+  z-index: 4 !important;
+
+  /* Placement like your mockup */
+  left: 13% !important;
+  top: 4% !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  width: 74% !important;
+  height: 86% !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 760px 760px !important;
+  background-position: center center !important;
+
+  mix-blend-mode: screen !important;
+  filter: saturate(1.25) contrast(1.12) brightness(0.98) !important;
+
+  transform: none !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 48% 50%,
+      #000 0%,
+      #000 48%,
+      rgba(0, 0, 0, 0.70) 62%,
+      rgba(0, 0, 0, 0.26) 80%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 48% 50%,
+      #000 0%,
+      #000 48%,
+      rgba(0, 0, 0, 0.70) 62%,
+      rgba(0, 0, 0, 0.26) 80%,
+      transparent 100%
+    ) !important;
+}
+
+/* Keep portrait below title but visible */
+.hero .jbc-custom.hero-photo-layer {
+  z-index: 2 !important;
+}
+
+/* Keep main title and StorytellinG above roses */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom,
+.hero .tag {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.hero .tag {
+  z-index: 12 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-corner-rose {
+    left: 0% !important;
+    top: 8% !important;
+    width: 100% !important;
+    height: 70% !important;
+
+    background-size: 520px 520px !important;
+    background-position: center top !important;
+
+    opacity: 0.72 !important;
+    z-index: 4 !important;
+  }
+}
+/* =========================================================
+   JBC HERO STORYTELLING MOVE UP
+   Moves only the vertical StorytellinG word
+   ========================================================= */
+
+.hero .tag {
+  position: absolute !important;
+
+  /* smaller number = higher */
+  top: 82px !important;
+
+  right: 92px !important;
+  z-index: 12 !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Keep dotted line attached under it */
+.hero .tag::after {
+  top: 105% !important;
+}
