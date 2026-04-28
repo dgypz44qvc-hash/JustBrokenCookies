@@ -8,74 +8,167 @@
 </head>
 <body>
   <div id="editor-shell">
-    <header id="topbar">
-      <div class="brand">JBC Local Editor</div>
-      <button id="btn-edit" class="active">Edit Mode</button>
-      <button id="btn-preview">Preview</button>
-      <button id="btn-undo">Undo</button>
-      <button id="btn-redo">Redo</button>
-      <button id="btn-add-decoration">Add Decoration</button>
-      <button id="btn-replace-image">Replace Image</button>
-      <button id="btn-reset-selected">Reset Selected</button>
-      <button id="btn-save" class="save">Save</button>
-      <span id="status">Loading…</span>
+    <header id="topbar" aria-label="Editor toolbar">
+      <div class="brand" aria-label="JBC Local Editor">JBC</div>
+      <nav class="tool-group" aria-label="Panels">
+        <button id="btn-layers" type="button" class="icon-btn" title="Layers" aria-label="Layers">Layers</button>
+        <button id="btn-properties" type="button" class="icon-btn" title="Properties" aria-label="Properties">Properties</button>
+      </nav>
+      <nav class="tool-group" aria-label="Editing">
+        <button id="btn-preview" type="button" class="icon-btn" title="Preview" aria-label="Preview">Preview</button>
+        <button id="btn-undo" type="button" class="icon-btn" title="Undo" aria-label="Undo">Undo</button>
+        <button id="btn-redo" type="button" class="icon-btn" title="Redo" aria-label="Redo">Redo</button>
+      </nav>
+      <nav class="tool-group primary-tools" aria-label="Create and media">
+        <button id="btn-add-image" type="button" title="Add Image">Add Image</button>
+        <button id="btn-add-decoration" type="button" title="Add Decoration">Add Decoration</button>
+        <button id="btn-add-rose-top" type="button" title="Add Rose Pattern">Add Rose</button>
+        <button id="btn-add-vector" type="button" title="Add SVG or Vector">Add SVG</button>
+        <button id="btn-replace-image" type="button" title="Replace Image">Replace Image</button>
+      </nav>
+      <span id="status">Loading...</span>
+      <button id="btn-save" type="button" class="save" title="Save">Save</button>
     </header>
-    <aside id="left-panel">
-      <h3>Layers</h3>
-      <div id="layers"></div>
-      <h3>Images</h3>
-      <div class="mini-row"><button id="btn-refresh-images">Refresh</button></div>
-      <div id="image-list"></div>
+
+    <aside id="left-panel" class="panel panel-left" aria-label="Layers and images">
+      <div class="panel-head">
+        <h2>Layers</h2>
+        <button id="btn-close-layers" type="button" class="ghost-btn" title="Collapse layers">Hide</button>
+      </div>
+      <div id="layers" class="layers-tree"></div>
+
+      <div class="panel-head image-head">
+        <h2>Images</h2>
+        <button id="btn-refresh-images" type="button" class="ghost-btn">Refresh</button>
+      </div>
+      <div id="image-list" class="image-list"></div>
     </aside>
+
     <main id="canvas-wrap">
       <iframe id="site-frame" title="Website canvas"></iframe>
     </main>
-    <aside id="right-panel">
-      <h3>Selected</h3>
-      <div id="selected-label">Nothing selected</div>
-      <div class="group">
-        <label>Text</label>
-        <textarea id="prop-text" rows="4"></textarea>
+
+    <aside id="right-panel" class="panel panel-right" aria-label="Properties">
+      <div class="panel-head">
+        <h2>Properties</h2>
+        <button id="btn-close-properties" type="button" class="ghost-btn" title="Collapse properties">Hide</button>
       </div>
-      <div class="group image-tools">
-        <label>Image src</label>
-        <input id="prop-src" type="text">
-        <input id="upload-image" type="file" accept="image/*">
-        <button id="btn-apply-src">Apply src</button>
-        <button id="btn-hero-mobile">Replace hero mobile source</button>
-      </div>
-      <div class="grid2">
-        <label>Left <input id="prop-left" type="text"></label>
-        <label>Top <input id="prop-top" type="text"></label>
-        <label>Width <input id="prop-width" type="text"></label>
-        <label>Height <input id="prop-height" type="text"></label>
-        <label>Opacity <input id="prop-opacity" type="number" step="0.05" min="0" max="1"></label>
-        <label>Z-index <input id="prop-z" type="number" step="1"></label>
-        <label>Rotate <input id="prop-rotate" type="text"></label>
-        <label>Radius <input id="prop-radius" type="text"></label>
-      </div>
-      <div class="grid2">
-        <label>Colour <input id="prop-color" type="color"></label>
-        <label>Background <input id="prop-bg" type="color"></label>
-      </div>
-      <div class="grid2">
-        <label>Font size <input id="prop-font-size" type="text"></label>
+
+      <section class="selected-card">
+        <div class="eyebrow">Selected</div>
+        <div id="selected-name">Nothing selected</div>
+        <div id="selected-meta"></div>
+      </section>
+
+      <section class="property-section text-tools">
+        <h3>Text</h3>
+        <textarea id="prop-text" rows="4" aria-label="Selected text"></textarea>
+      </section>
+
+      <section class="property-section asset-tools">
+        <h3>Add Assets</h3>
+        <label>Place in
+          <select id="asset-placement">
+            <option value="selected">Selected section</option>
+            <option value="hero">Hero</option>
+            <option value="manifesto">Manifesto</option>
+            <option value="process">Process</option>
+            <option value="work">Selected Work</option>
+            <option value="testimonial">Testimonial</option>
+            <option value="cta">CTA</option>
+            <option value="footer">Footer</option>
+            <option value="click">Click to place</option>
+          </select>
+        </label>
+        <div class="inline-actions">
+          <button id="btn-add-image-panel" type="button">Add Image</button>
+          <button id="btn-add-decoration-panel" type="button">Add Decoration</button>
+          <button id="btn-add-rose" type="button">Rose Pattern</button>
+          <button id="btn-add-vector-panel" type="button">SVG / Vector</button>
+        </div>
+        <div class="inline-actions">
+          <button id="btn-upload-asset" type="button">Upload Asset</button>
+          <button id="btn-add-selected-as-decoration" type="button">Use Picked Image</button>
+        </div>
+      </section>
+
+      <section class="property-section image-tools">
+        <h3>Image</h3>
+        <label>Source <input id="prop-src" type="text"></label>
+        <input id="upload-image" type="file" accept=".png,.jpg,.jpeg,.webp,.gif,.svg,image/png,image/jpeg,image/webp,image/gif,image/svg+xml">
+        <div class="inline-actions">
+          <button id="btn-apply-src" type="button">Apply Source</button>
+          <button id="btn-hero-mobile" type="button">Hero Mobile</button>
+        </div>
+      </section>
+
+      <section class="property-section">
+        <h3>Position</h3>
+        <div class="field-grid">
+          <label>Left <input id="prop-left" type="text"></label>
+          <label>Top <input id="prop-top" type="text"></label>
+          <label>Width <input id="prop-width" type="text"></label>
+          <label>Height <input id="prop-height" type="text"></label>
+          <label>Z-index <input id="prop-z" type="number" step="1"></label>
+          <label>Rotate <input id="prop-rotate" type="text"></label>
+        </div>
+      </section>
+
+      <section class="property-section">
+        <h3>Style</h3>
+        <div class="field-grid">
+          <label>Opacity <input id="prop-opacity" type="number" step="0.05" min="0" max="1"></label>
+          <label>Radius <input id="prop-radius" type="text"></label>
+          <label>Text <input id="prop-color" type="color"></label>
+          <label>Fill <input id="prop-bg" type="color"></label>
+          <label>Font size <input id="prop-font-size" type="text"></label>
+          <label>Spacing <input id="prop-letter" type="text"></label>
+        </div>
         <label>Font family <input id="prop-font-family" type="text"></label>
-        <label>Letter spacing <input id="prop-letter" type="text"></label>
-        <label>Blend mode <select id="prop-blend"><option value="">default</option><option>normal</option><option>screen</option><option>multiply</option><option>overlay</option><option>soft-light</option><option>hard-light</option></select></label>
-      </div>
-      <div class="grid2">
-        <label>Padding <input id="prop-padding" type="text"></label>
-        <label>Margin <input id="prop-margin" type="text"></label>
-      </div>
-      <div class="buttons">
-        <button id="btn-hide">Hide/Show</button>
-        <button id="btn-duplicate">Duplicate</button>
-        <button id="btn-delete" class="danger">Delete</button>
-      </div>
-      <p class="hint">Drag selected elements on the canvas. Use corner handles to resize decorative/absolute elements.</p>
+        <label>Blend mode
+          <select id="prop-blend">
+            <option value="">Default</option>
+            <option>normal</option>
+            <option>screen</option>
+            <option>multiply</option>
+            <option>overlay</option>
+            <option>soft-light</option>
+            <option>hard-light</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="property-section decoration-tools">
+        <h3>Selected Asset</h3>
+        <div class="inline-actions">
+          <button id="btn-add-image-decoration" type="button">Use Image</button>
+          <button id="btn-bring-forward" type="button">Forward</button>
+          <button id="btn-send-backward" type="button">Backward</button>
+        </div>
+      </section>
+
+      <section class="property-section">
+        <h3>Actions</h3>
+        <div class="action-grid">
+          <button id="btn-hide" type="button">Hide</button>
+          <button id="btn-duplicate" type="button">Duplicate</button>
+          <button id="btn-reset-selected" type="button">Reset</button>
+          <button id="btn-delete" type="button" class="danger">Delete</button>
+        </div>
+      </section>
     </aside>
+
+    <div id="floating-toolbar" aria-label="Selection tools">
+      <span id="float-label"></span>
+      <button id="float-replace" type="button">Replace</button>
+      <button id="float-duplicate" type="button">Duplicate</button>
+      <button id="float-hide" type="button">Hide</button>
+      <button id="float-forward" type="button">Forward</button>
+      <button id="float-backward" type="button">Backward</button>
+      <button id="float-delete" type="button">Delete</button>
+    </div>
   </div>
+
   <script src="/js/local-editor.js"></script>
 </body>
 </html>

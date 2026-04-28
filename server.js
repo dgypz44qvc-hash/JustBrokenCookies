@@ -123,13 +123,18 @@ const upload = multer({
       } catch (e) { cb(e); }
     },
     filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+      const ext = path.extname(file.originalname).toLowerCase();
+      const allowed = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg']);
+      if (!allowed.has(ext)) return cb(new Error('Unsupported image type'));
       const name = path.basename(file.originalname, ext).replace(/[^a-z0-9-_]+/gi, '-').slice(0, 48);
       cb(null, `${name || 'image'}-${Date.now()}${ext}`);
     }
   }),
   fileFilter: (req, file, cb) => {
-    if (!/^image\//.test(file.mimetype)) return cb(new Error('Only image uploads allowed'));
+    const ext = path.extname(file.originalname).toLowerCase();
+    const allowed = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg']);
+    const allowedMime = /^image\/(png|jpe?g|webp|gif|svg\+xml)$/.test(file.mimetype);
+    if (!allowed.has(ext) || !allowedMime) return cb(new Error('Only PNG, JPG, WebP, GIF, and SVG uploads allowed'));
     cb(null, true);
   },
   limits: { fileSize: 30 * 1024 * 1024 }

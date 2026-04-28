@@ -3,233 +3,902 @@
   const status = document.getElementById('status');
   const layersEl = document.getElementById('layers');
   const imageList = document.getElementById('image-list');
-  const shell = document.body;
+  const floatingToolbar = document.getElementById('floating-toolbar');
+  const floatLabel = document.getElementById('float-label');
   const prop = id => document.getElementById(id);
-  let doc, selected = null, htmlSource = '', editorCss = '', history = [], future = [], dirty = false, editMode = true;
+  function on(id, event, handler) {
+    const el = prop(id);
+    if (el) el.addEventListener(event, handler);
+  }
+  function setValue(id, value) {
+    const el = prop(id);
+    if (el) el.value = value;
+  }
+  function getValue(id) {
+    const el = prop(id);
+    return el ? el.value : '';
+  }
+  function setText(id, value) {
+    const el = prop(id);
+    if (el) el.textContent = value;
+  }
+  function toggleClass(id, className, force) {
+    const el = prop(id);
+    if (el) el.classList.toggle(className, force);
+  }
 
-  const knownLayers = [
-    ['Hero', '[data-editor-id="hero-section"], section.hero'],
-    ['StorytellinG', '[data-editor-id="hero-storytelling-tag"], .hero .tag'],
-    ['Hero title group', '[data-editor-id="hero-title-group"], .hero-mega'],
-    ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega .l1'],
-    ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega .l2'],
-    ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega .l3'],
-    ['Hero image', '[data-editor-id="hero-image-wrap"], .hero .hero-photo-layer'],
-    ['Rose/decorations', '.editor-decoration, .hero-corner-rose'],
-    ['Manifesto', '[data-editor-id="manifesto-section"], .manifesto'],
-    ['Process', '[data-editor-id="process-section"], #services-overview'],
-    ['How We Build Stories', '[data-editor-id="process-heading"], #services-overview .sec-header h2'],
-    ['Define card', '[data-editor-id="process-card-1"], #services-overview .service-card:nth-of-type(1)'],
-    ['Design card', '[data-editor-id="process-card-2"], #services-overview .service-card:nth-of-type(2)'],
-    ['Describe card', '[data-editor-id="process-card-3"], #services-overview .service-card:nth-of-type(3)'],
-    ['Service cinema', '[data-editor-id="service-cinema-panel"], #serviceCinema'],
-    ['Selected Work', '[data-editor-id="featured-work-section"], #featured-work'],
-    ['Portfolio grid', '[data-editor-id="portfolio-grid"], .portfolio-grid'],
-    ['Testimonial', '[data-editor-id="testimonial-section"], .testimonial-section'],
-    ['CTA', '[data-editor-id="cta-section"], .cta-section'],
-    ['Footer', '[data-editor-id="footer-section"], footer.footer']
+  let doc;
+  let selected = null;
+  let selectedImagePath = '';
+  let htmlSource = '';
+  let editorCss = '';
+  let history = [];
+  let future = [];
+  let dirty = false;
+  let editMode = true;
+  let dragState = null;
+  let rafPending = false;
+  let handlesBox = null;
+  let assetMode = null;
+  let assetCounter = 1;
+
+  const managedStyles = [
+    'position', 'left', 'top', 'right', 'bottom', 'width', 'height', 'opacity',
+    'z-index', 'color', 'background-color', 'font-size', 'font-family',
+    'letter-spacing', 'padding', 'margin', 'border-radius', 'mix-blend-mode',
+    'transform', 'display'
   ];
 
-  function setStatus(msg) { status.textContent = msg; }
-  function uid(prefix='el') { return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`; }
-  function cssEscape(s) { return (window.CSS && CSS.escape) ? CSS.escape(s) : String(s).replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
+  const layerGroups = [
+    { title: 'Hero', items: [
+      ['Hero', '[data-editor-id="hero-section"], section.hero'],
+      ['Storytelling Tag', '[data-editor-id="hero-storytelling-tag"], .hero .tag'],
+      ['Hero Content', '[data-editor-id="hero-content"], .hero-content'],
+      ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega .l1'],
+      ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega .l2'],
+      ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega .l3'],
+      ['Hero Image', '[data-editor-id="hero-image-wrap"], .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img'],
+      ['Corner Rose', '[data-editor-id="hero-corner-rose"], .hero-corner-rose']
+    ]},
+    { title: 'Manifesto', items: [['Manifesto', '[data-editor-id="manifesto-section"], .manifesto']] },
+    { title: 'Process', items: [
+      ['Process Section', '[data-editor-id="process-section"], #services-overview'],
+      ['Process Heading', '[data-editor-id="process-heading"], #services-overview .sec-header h2'],
+      ['Card 1', '[data-editor-id="process-card-1"], #services-overview .service-card:nth-of-type(1)'],
+      ['Card 2', '[data-editor-id="process-card-2"], #services-overview .service-card:nth-of-type(2)'],
+      ['Card 3', '[data-editor-id="process-card-3"], #services-overview .service-card:nth-of-type(3)']
+    ]},
+    { title: 'Selected Work', items: [
+      ['Work Section', '[data-editor-id="featured-work-section"], #featured-work'],
+      ['Portfolio Grid', '[data-editor-id="portfolio-grid"], #featured-work .portfolio-grid'],
+      ['Work Item 1', '[data-editor-id="portfolio-item-1"], #featured-work .portfolio-item:nth-of-type(1)'],
+      ['Work Item 2', '[data-editor-id="portfolio-item-2"], #featured-work .portfolio-item:nth-of-type(2)'],
+      ['Work Item 3', '[data-editor-id="portfolio-item-3"], #featured-work .portfolio-item:nth-of-type(3)'],
+      ['Work Item 4', '[data-editor-id="portfolio-item-4"], #featured-work .portfolio-item:nth-of-type(4)']
+    ]},
+    { title: 'Testimonial', items: [['Testimonial', '[data-editor-id="testimonial-section"], .testimonial-section']] },
+    { title: 'CTA', items: [['CTA', '[data-editor-id="cta-section"], .cta-section']] },
+    { title: 'Footer', items: [['Footer', '[data-editor-id="footer-section"], footer.footer']] }
+  ];
+
+  const auditSelectors = [
+    ['Sections', 'section'],
+    ['Hero Elements', '.hero, .hero .tag, .hero-content, .hero-mega, .hero-mega .l1, .hero-mega .l2, .hero-mega .l3, .hero .jbc-custom, .hero .jbc-custom img, .hero-corner-rose'],
+    ['Images', 'img, picture'],
+    ['Buttons and Links', 'a[href], button'],
+    ['Headings', 'h1, h2, h3, h4, h5, h6'],
+    ['Service Cards', '.service-card'],
+    ['Portfolio Items', '.portfolio-item'],
+    ['Decorations', '.editor-decoration, .hero-corner-rose'],
+    ['Data Editor IDs', '[data-editor-id]']
+  ];
+
+  const ignoredEditableSelectors = [
+    'html', 'body', 'head', 'script', 'style', 'meta', 'link', 'title',
+    '#jbc-editor-runtime-css', '#jbc-editor-overrides-live', '.jbc-editor-box',
+    '.jbc-editor-handle'
+  ].join(',');
+
+  const sectionTargets = {
+    hero: 'section.hero',
+    manifesto: '.manifesto',
+    process: '#services-overview',
+    work: '#featured-work',
+    testimonial: '.testimonial-section',
+    cta: '.cta-section',
+    footer: 'footer.footer'
+  };
+
+  const assetDefaults = {
+    image: { src: '', prefix: 'image', className: 'editor-decoration editor-image', blend: 'normal', width: 320, height: 220 },
+    decoration: { src: '', prefix: 'decor', className: 'editor-decoration', blend: 'normal', width: 280, height: 280 },
+    rose: { src: 'images/jbc-rose-pattern-bg.png', prefix: 'rose', className: 'editor-decoration editor-rose', blend: 'screen', width: 300, height: 300 },
+    vector: { src: '', prefix: 'vector', className: 'editor-decoration editor-vector', blend: 'normal', width: 280, height: 280 }
+  };
+
+  const allowedAssetExt = /\.(png|jpe?g|webp|gif|svg)$/i;
+
+  function setStatus(msg) { if (status) status.textContent = msg; }
+  function uid(prefix) { return (prefix || 'el') + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6); }
+  function cssEscape(value) { return window.CSS && CSS.escape ? CSS.escape(value) : String(value).replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
+
   function selectorFor(el) {
     if (!el) return '';
-    if (!el.dataset.editorId) el.dataset.editorId = uid('jbc');
-    return `[data-editor-id="${cssEscape(el.dataset.editorId)}"]`;
+    if (!el.dataset.editorId) el.dataset.editorId = uid(el.dataset.assetType || (el.classList.contains('editor-decoration') ? 'decor' : 'jbc'));
+    return '[data-editor-id="' + cssEscape(el.dataset.editorId) + '"]';
   }
-  function isTextElement(el) { return el && !el.querySelector('img, picture, video') && (el.childElementCount === 0 || ['H1','H2','H3','H4','P','SPAN','A','BUTTON','CITE','BLOCKQUOTE'].includes(el.tagName)); }
-  function nearestEditable(target) {
-    return target.closest('.editor-decoration, [data-editor-id], img, picture, section, .service-card, .portfolio-item, .testi-brutal, .cta-section, footer, .manifesto, .hero-mega .l1, .hero-mega .l2, .hero-mega .l3, .tag');
-  }
-  function pushHistory() { if (!doc) return; history.push({ html: serializeBody(), css: editorCss }); if (history.length > 40) history.shift(); future = []; }
-  function markDirty(msg='Unsaved changes') { dirty = true; setStatus(msg); buildLayers(); }
 
-  async function api(url, opts={}) {
-    const r = await fetch(url, opts);
-    const j = await r.json().catch(()=>({ok:false,error:'Bad JSON response'}));
-    if (!r.ok || !j.ok) throw new Error(j.error || r.statusText);
-    return j;
+  function describe(el) {
+    if (!el) return 'Nothing selected';
+    let name = el.tagName.toLowerCase();
+    if (el.id) name += '#' + el.id;
+    const classes = String(el.className || '').trim().split(/\s+/).filter(Boolean).slice(0, 3);
+    if (classes.length) name += '.' + classes.join('.');
+    return name;
+  }
+
+  function isTextElement(el) {
+    if (!el || el.querySelector('img, picture, video, iframe')) return false;
+    return el.childElementCount === 0 || ['H1', 'H2', 'H3', 'H4', 'P', 'SPAN', 'A', 'BUTTON', 'CITE', 'BLOCKQUOTE'].includes(el.tagName);
+  }
+
+  function selectedImage(el) {
+    if (!el) return null;
+    if (el.tagName === 'IMG') return el;
+    if (el.tagName === 'PICTURE') return el.querySelector('img');
+    return el.querySelector?.('img') || null;
+  }
+
+  function pickEditable(target) {
+    if (!target || target.nodeType !== 1) return null;
+    const priority = ['.jbc-editor-handle', '.editor-decoration', '.hero-mega .l1', '.hero-mega .l2', '.hero-mega .l3', '.hero .tag', '.hero .jbc-custom.hero-photo-layer', '.hero .jbc-custom img', '.hero-corner-rose', '.service-card', '.portfolio-item', '.testi-brutal', '.cta-section .btn', '.cta-section .section-title', '.manifesto-inner'];
+    for (const sel of priority) {
+      const found = target.closest(sel);
+      if (found) return found.classList.contains('jbc-editor-handle') ? null : found;
+    }
+    const fallback = target.closest('[data-editor-id], section.hero, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer, .hero-content');
+    if (!fallback) return null;
+    if (fallback.matches('.hero-mega') && target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3')) return target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3');
+    return fallback;
+  }
+
+  async function api(url, opts = {}) {
+    const res = await fetch(url, opts);
+    const json = await res.json().catch(() => ({ ok: false, error: 'Bad JSON response' }));
+    if (!res.ok || !json.ok) throw new Error(json.error || res.statusText);
+    return json;
   }
 
   async function init() {
+    wireShell();
     try {
       const [htmlRes, cssRes] = await Promise.all([api('/api/site-html'), api('/api/editor-css')]);
-      htmlSource = htmlRes.html; editorCss = cssRes.css || '';
+      htmlSource = htmlRes.html;
+      editorCss = cssRes.css || '';
       frame.srcdoc = injectEditorRuntime(htmlSource, editorCss);
-      frame.addEventListener('load', () => { doc = frame.contentDocument; wireCanvas(); buildLayers(); loadImages(); pushHistory(); setStatus('Ready'); });
-    } catch(e) { setStatus('Error: ' + e.message); }
+      frame.addEventListener('load', onFrameLoad);
+    } catch (err) { setStatus('Error: ' + err.message); }
+  }
+
+  function onFrameLoad() {
+    doc = frame.contentDocument;
+    wireCanvas();
+    buildLayers();
+    loadImages();
+    pushHistory();
+    setStatus('Ready');
   }
 
   function injectEditorRuntime(html, overrides) {
-    const runtime = `
-<style id="jbc-editor-runtime-css">
-  [data-jbc-selected="true"]{outline:2px solid #2ecc40!important;outline-offset:3px!important;}
-  .jbc-editor-hover{outline:1px dashed #E8891D!important;outline-offset:2px!important;}
-  .jbc-editor-handle{position:absolute;width:12px;height:12px;background:#2ecc40;border:2px solid #fff;z-index:2147483647;pointer-events:auto;}
-  .jbc-editor-handle.br{cursor:nwse-resize;}
-  body.jbc-editor-preview [data-jbc-selected="true"], body.jbc-editor-preview .jbc-editor-hover{outline:none!important;}
-  .editor-decoration{position:absolute;display:block;pointer-events:auto;z-index:4;}
-  .editor-decoration img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;}
-</style>
-<style id="jbc-editor-overrides-live">${overrides.replace(/<\/style/gi, '<\\/style')}</style>`;
-    if (html.includes('</head>')) return html.replace('</head>', runtime + '</head>');
-    return runtime + html;
+    const runtimeCss = [
+      '<style id="jbc-editor-runtime-css">',
+      '[data-jbc-selected="true"]{outline:2px solid rgba(232,137,29,.95)!important;outline-offset:3px!important;}',
+      '.jbc-editor-hover{outline:1px solid rgba(232,137,29,.5)!important;outline-offset:3px!important;}',
+      '.jbc-editor-box{position:absolute;z-index:2147483646;pointer-events:none;border:1px solid rgba(232,137,29,.65);box-shadow:0 0 0 1px rgba(20,16,14,.45);}',
+      '.jbc-editor-handle{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#e8891d;border:2px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.28);pointer-events:auto;touch-action:none;}',
+      '.jbc-editor-handle.nw{left:0;top:0;cursor:nwse-resize}.jbc-editor-handle.n{left:50%;top:0;cursor:ns-resize}.jbc-editor-handle.ne{left:100%;top:0;cursor:nesw-resize}.jbc-editor-handle.e{left:100%;top:50%;cursor:ew-resize}.jbc-editor-handle.se{left:100%;top:100%;cursor:nwse-resize}.jbc-editor-handle.s{left:50%;top:100%;cursor:ns-resize}.jbc-editor-handle.sw{left:0;top:100%;cursor:nesw-resize}.jbc-editor-handle.w{left:0;top:50%;cursor:ew-resize}',
+      '.jbc-editor-handle.rotate{left:50%;top:-34px;background:#2ecc40;cursor:grab;}',
+      '.jbc-editor-handle.rotate:after{content:"";position:absolute;left:50%;top:16px;width:1px;height:18px;background:rgba(255,255,255,.85);}',
+      'body.jbc-is-dragging,body.jbc-is-dragging *{user-select:none!important;cursor:grabbing!important;}',
+      'body.jbc-editor-preview [data-jbc-selected="true"],body.jbc-editor-preview .jbc-editor-hover{outline:none!important;}',
+      'body.jbc-editor-preview .jbc-editor-box{display:none!important;}',
+      '.editor-decoration{position:absolute;display:block;pointer-events:auto;z-index:4;touch-action:none;}',
+      '.editor-decoration img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;}',
+      '</style>',
+      '<style id="jbc-editor-overrides-live">' + String(overrides).replace(/<\/style/gi, '<\\/style') + '</style>'
+    ].join('\n');
+    return html.includes('</head>') ? html.replace('</head>', runtimeCss + '</head>') : runtimeCss + html;
   }
 
-  function serializeBody() {
+  function serializeHtml() {
     const clone = doc.documentElement.cloneNode(true);
     clone.querySelector('#jbc-editor-runtime-css')?.remove();
     clone.querySelector('#jbc-editor-overrides-live')?.remove();
+    clone.querySelectorAll('.jbc-editor-box').forEach(el => el.remove());
     clone.querySelectorAll('[data-jbc-selected], .jbc-editor-hover').forEach(el => { el.removeAttribute('data-jbc-selected'); el.classList.remove('jbc-editor-hover'); });
-    clone.querySelectorAll('.jbc-editor-handle').forEach(el => el.remove());
+    clone.querySelectorAll('[data-editor-bound], [contenteditable]').forEach(el => { el.removeAttribute('data-editor-bound'); if (el.getAttribute('contenteditable') === 'true') el.removeAttribute('contenteditable'); });
+    clone.querySelectorAll('[data-editor-id]').forEach(el => stripManagedInlineStyles(el));
     return '<!DOCTYPE html>\n' + clone.outerHTML;
   }
 
+  function stripManagedInlineStyles(el) {
+    if (!el.hasAttribute('style')) return;
+    managedStyles.forEach(name => el.style.removeProperty(name));
+    if (!el.getAttribute('style').trim()) el.removeAttribute('style');
+  }
+
+  function pushHistory() {
+    if (!doc) return;
+    history.push({ html: serializeHtml(), css: editorCss });
+    if (history.length > 50) history.shift();
+    future = [];
+  }
+
+  function markDirty(msg) { dirty = true; setStatus(msg || 'Unsaved changes'); updateFloatingToolbar(); }
+
+  function wireShell() {
+    on('btn-layers', 'click', () => document.body.classList.toggle('left-collapsed'));
+    on('btn-properties', 'click', () => document.body.classList.toggle('right-collapsed'));
+    on('btn-close-layers', 'click', () => document.body.classList.add('left-collapsed'));
+    on('btn-close-properties', 'click', () => document.body.classList.add('right-collapsed'));
+    on('btn-preview', 'click', togglePreview);
+    on('btn-undo', 'click', undo);
+    on('btn-redo', 'click', redo);
+    on('btn-save', 'click', saveAll);
+    on('btn-add-image', 'click', () => beginAssetAdd('image'));
+    on('btn-add-image-panel', 'click', () => beginAssetAdd('image'));
+    on('btn-add-decoration', 'click', () => beginAssetAdd('decoration'));
+    on('btn-add-decoration-panel', 'click', () => beginAssetAdd('decoration'));
+    on('btn-add-rose', 'click', () => beginAssetAdd('rose'));
+    on('btn-add-rose-top', 'click', () => beginAssetAdd('rose'));
+    on('btn-add-vector', 'click', () => beginAssetAdd('vector'));
+    on('btn-add-vector-panel', 'click', () => beginAssetAdd('vector'));
+    on('btn-add-image-decoration', 'click', () => beginAssetAdd('decoration'));
+    on('btn-add-selected-as-decoration', 'click', () => beginAssetAdd('decoration'));
+    on('btn-upload-asset', 'click', () => prop('upload-image')?.click());
+    on('btn-replace-image', 'click', () => prop('upload-image')?.click());
+    on('btn-refresh-images', 'click', loadImages);
+    on('btn-apply-src', 'click', applyImageSource);
+    on('btn-hero-mobile', 'click', replaceHeroMobile);
+    on('btn-hide', 'click', hideSelected);
+    on('btn-delete', 'click', deleteSelected);
+    on('btn-duplicate', 'click', duplicateSelected);
+    on('btn-reset-selected', 'click', resetSelected);
+    on('btn-bring-forward', 'click', bringForward);
+    on('btn-send-backward', 'click', sendBackward);
+    on('float-replace', 'click', () => prop('upload-image')?.click());
+    on('float-duplicate', 'click', duplicateSelected);
+    on('float-hide', 'click', hideSelected);
+    on('float-forward', 'click', bringForward);
+    on('float-backward', 'click', sendBackward);
+    on('float-delete', 'click', deleteSelected);
+    on('upload-image', 'change', uploadReplacement);
+    window.addEventListener('resize', updateSelectionUI);
+    window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+    ['prop-left','prop-top','prop-width','prop-height','prop-opacity','prop-z','prop-rotate','prop-radius','prop-color','prop-bg','prop-font-size','prop-font-family','prop-letter','prop-blend','prop-text'].forEach(id => on(id, 'change', applyPanel));
+  }
+
   function wireCanvas() {
-    doc.addEventListener('mouseover', e => { if (!editMode) return; const el = nearestEditable(e.target); if (el && el !== selected) el.classList.add('jbc-editor-hover'); }, true);
-    doc.addEventListener('mouseout', e => { const el = nearestEditable(e.target); if (el) el.classList.remove('jbc-editor-hover'); }, true);
-    doc.addEventListener('click', e => { if (!editMode) return; const el = nearestEditable(e.target); if (!el) return; e.preventDefault(); e.stopPropagation(); selectElement(el.tagName === 'IMG' ? el : el); }, true);
-    doc.addEventListener('dblclick', e => { if (!editMode || !selected || !isTextElement(selected)) return; selected.contentEditable = 'true'; selected.focus(); }, true);
-    doc.addEventListener('input', e => { if (selected && e.target === selected) { prop('prop-text').value = selected.innerHTML; markDirty('Text edited'); }}, true);
-    doc.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); } });
+    doc.addEventListener('mouseover', e => { if (!editMode) return; const el = pickEditable(e.target); if (el && el !== selected) el.classList.add('jbc-editor-hover'); }, true);
+    doc.addEventListener('mouseout', e => { const el = pickEditable(e.target); if (el) el.classList.remove('jbc-editor-hover'); }, true);
+    doc.addEventListener('click', e => {
+      if (!editMode || dragState) return;
+      if (assetMode) {
+        e.preventDefault();
+        e.stopPropagation();
+        placeAssetFromClick(e);
+        return;
+      }
+      const el = pickEditable(e.target);
+      if (!el) return;
+      e.preventDefault();
+      e.stopPropagation();
+      selectElement(el);
+    }, true);
+    doc.addEventListener('dblclick', e => { if (!editMode) return; const el = pickEditable(e.target); if (!el || !isTextElement(el)) return; selectElement(el); beginTextEdit(el); }, true);
+    doc.addEventListener('input', e => { if (selected && e.target === selected && isTextElement(selected)) { setValue('prop-text', selected.innerHTML); markDirty('Text edited'); } }, true);
+    doc.addEventListener('pointerdown', onPointerDown, true);
+    doc.addEventListener('pointermove', onPointerMove, true);
+    doc.addEventListener('pointerup', endPointerGesture, true);
+    doc.addEventListener('pointercancel', endPointerGesture, true);
+    doc.addEventListener('keydown', onKeyDown, true);
+    doc.addEventListener('wheel', onWheel, { capture: true, passive: false });
+    doc.addEventListener('scroll', updateSelectionUI, true);
   }
 
   function selectElement(el) {
+    if (!el) return;
     if (selected) selected.removeAttribute('data-jbc-selected');
     selected = el;
-    selectorFor(el);
+    selectorFor(selected);
     selected.setAttribute('data-jbc-selected', 'true');
     hydratePanel();
-    addDragAndResize(selected);
     buildLayers();
+    ensureHandles();
+    updateSelectionUI();
   }
 
   function hydratePanel() {
-    document.body.classList.toggle('has-image', !!selected?.querySelector?.('img') || selected?.tagName === 'IMG' || selected?.tagName === 'PICTURE');
-    prop('selected-label').textContent = selected ? `${selected.tagName.toLowerCase()} ${selected.id ? '#'+selected.id : ''} ${selected.className ? '.'+String(selected.className).trim().replace(/\s+/g,'.') : ''} ${selectorFor(selected)}` : 'Nothing selected';
-    prop('prop-text').value = selected && isTextElement(selected) ? selected.innerHTML : '';
-    const img = selected?.tagName === 'IMG' ? selected : selected?.querySelector?.('img');
-    prop('prop-src').value = img ? img.getAttribute('src') || '' : '';
-    const cs = selected ? frame.contentWindow.getComputedStyle(selected) : {};
-    prop('prop-left').value = inlineOrComputed('left', cs);
-    prop('prop-top').value = inlineOrComputed('top', cs);
-    prop('prop-width').value = selected?.style.width || (selected ? Math.round(selected.getBoundingClientRect().width)+'px' : '');
-    prop('prop-height').value = selected?.style.height || (selected ? Math.round(selected.getBoundingClientRect().height)+'px' : '');
-    prop('prop-opacity').value = selected?.style.opacity || cs.opacity || '';
-    prop('prop-z').value = selected?.style.zIndex || (cs.zIndex === 'auto' ? '' : cs.zIndex) || '';
-    prop('prop-radius').value = selected?.style.borderRadius || cs.borderRadius || '';
-    prop('prop-color').value = rgbToHex(cs.color || '#ffffff');
-    prop('prop-bg').value = rgbToHex(cs.backgroundColor || '#000000');
-    prop('prop-font-size').value = selected?.style.fontSize || cs.fontSize || '';
-    prop('prop-font-family').value = selected?.style.fontFamily || '';
-    prop('prop-letter').value = selected?.style.letterSpacing || cs.letterSpacing || '';
-    prop('prop-padding').value = selected?.style.padding || cs.padding || '';
-    prop('prop-margin').value = selected?.style.margin || cs.margin || '';
-    prop('prop-blend').value = selected?.style.mixBlendMode || '';
-    prop('prop-rotate').value = getRotate(selected);
+    const img = selectedImage(selected);
+    const text = selected && isTextElement(selected);
+    document.body.classList.toggle('has-image', !!img);
+    document.body.classList.toggle('has-text', !!text);
+    document.body.classList.toggle('selected-decoration', !!selected?.classList.contains('editor-decoration') || !!selected?.classList.contains('hero-corner-rose'));
+    setText('selected-name', selected ? describe(selected) : 'Nothing selected');
+    setText('selected-meta', selected ? selectorFor(selected) : '');
+    setValue('prop-text', text ? selected.innerHTML : '');
+    setValue('prop-src', img ? img.getAttribute('src') || '' : '');
+    const cs = selected ? frame.contentWindow.getComputedStyle(selected) : null;
+    setValue('prop-left', selected ? selected.style.left || (cs.left !== 'auto' ? cs.left : '') : '');
+    setValue('prop-top', selected ? selected.style.top || (cs.top !== 'auto' ? cs.top : '') : '');
+    setValue('prop-width', selected ? selected.style.width || Math.round(selected.getBoundingClientRect().width) + 'px' : '');
+    setValue('prop-height', selected ? selected.style.height || Math.round(selected.getBoundingClientRect().height) + 'px' : '');
+    setValue('prop-opacity', selected ? selected.style.opacity || cs.opacity || '' : '');
+    setValue('prop-z', selected ? selected.style.zIndex || (cs.zIndex === 'auto' ? '' : cs.zIndex) : '');
+    setValue('prop-rotate', selected ? getRotate(selected) : '');
+    setValue('prop-radius', selected ? selected.style.borderRadius || cs.borderRadius || '' : '');
+    setValue('prop-color', cs ? rgbToHex(cs.color) : '#ffffff');
+    setValue('prop-bg', cs ? rgbToHex(cs.backgroundColor) : '#000000');
+    setValue('prop-font-size', selected ? selected.style.fontSize || cs.fontSize || '' : '');
+    setValue('prop-font-family', selected ? selected.style.fontFamily || '' : '');
+    setValue('prop-letter', selected ? selected.style.letterSpacing || cs.letterSpacing || '' : '');
+    setValue('prop-blend', selected ? selected.style.mixBlendMode || '' : '');
+    updateFloatingToolbar();
   }
-  function inlineOrComputed(name, cs) { return selected?.style[name] || (cs[name] && cs[name] !== 'auto' ? cs[name] : ''); }
-  function rgbToHex(rgb) { const m = String(rgb).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/); if(!m) return '#000000'; return '#' + [m[1],m[2],m[3]].map(n=>(+n).toString(16).padStart(2,'0')).join(''); }
-  function getRotate(el) { const t = el?.style.transform || ''; const m = t.match(/rotate\(([^)]+)\)/); return m ? m[1] : ''; }
 
-  function addDragAndResize(el) {
-    if (!el || el.dataset.editorBound) return; el.dataset.editorBound = '1';
-    el.addEventListener('mousedown', e => {
-      if (!editMode || e.target.contentEditable === 'true' || e.button !== 0) return;
-      if (['INPUT','TEXTAREA','SELECT','BUTTON'].includes(e.target.tagName)) return;
-      const target = el;
-      pushHistory();
-      e.preventDefault();
-      const parent = target.offsetParent || target.parentElement;
-      if (frame.contentWindow.getComputedStyle(target).position === 'static') target.style.position = target.classList.contains('editor-decoration') || target.closest('.hero') ? 'absolute' : 'relative';
-      const start = { x:e.clientX, y:e.clientY, left:target.offsetLeft, top:target.offsetTop };
-      function move(ev){ target.style.left = start.left + (ev.clientX-start.x) + 'px'; target.style.top = start.top + (ev.clientY-start.y) + 'px'; hydratePanel(); markDirty('Moved'); }
-      function up(){ doc.removeEventListener('mousemove', move, true); doc.removeEventListener('mouseup', up, true); saveStyleFor(target); }
-      doc.addEventListener('mousemove', move, true); doc.addEventListener('mouseup', up, true);
-    }, true);
+  function rgbToHex(value) {
+    const m = String(value || '').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+    if (!m) return '#000000';
+    return '#' + [m[1], m[2], m[3]].map(n => Number(n).toString(16).padStart(2, '0')).join('');
+  }
+
+  function getRotate(el) { const m = String(el?.style.transform || '').match(/rotate\(([^)]+)\)/); return m ? m[1] : ''; }
+
+  function ensureEditablePosition(el) {
+    const cs = frame.contentWindow.getComputedStyle(el);
+    if (el.classList.contains('editor-decoration')) {
+      ensurePositionedParent(el.parentElement);
+      if (cs.position === 'static') el.style.position = 'absolute';
+      return;
+    }
+    if (cs.position === 'static') el.style.position = 'relative';
+  }
+
+  function ensurePositionedParent(parent) {
+    if (!parent || parent === doc.body) return;
+    const cs = frame.contentWindow.getComputedStyle(parent);
+    if (cs.position === 'static') {
+      parent.style.position = 'relative';
+      saveStyleFor(parent, false);
+    }
+  }
+
+  function onPointerDown(e) {
+    if (!editMode || e.button !== 0 || assetMode) return;
+    const handle = e.target.closest?.('.jbc-editor-handle');
+    if (handle && selected) { startTransform(e, handle.dataset.handle); return; }
+    const el = pickEditable(e.target);
+    if (!el || e.target.closest?.('a, button, input, textarea, select') || el.isContentEditable) return;
+    selectElement(el);
+    startTransform(e, 'move');
+  }
+
+  function startTransform(e, mode) {
+    if (!selected) return;
+    pushHistory();
+    ensureEditablePosition(selected);
+    const rect = selected.getBoundingClientRect();
+    const cs = frame.contentWindow.getComputedStyle(selected);
+    dragState = { mode, pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, left: parseFloat(selected.style.left || (cs.left !== 'auto' ? cs.left : '0')) || 0, top: parseFloat(selected.style.top || (cs.top !== 'auto' ? cs.top : '0')) || 0, width: rect.width, height: rect.height, centerX: rect.left + rect.width / 2, centerY: rect.top + rect.height / 2, startRotate: parseFloat(getRotate(selected)) || 0, next: null };
+    doc.body.classList.add('jbc-is-dragging');
+    e.preventDefault();
+    e.stopPropagation();
+    e.target.setPointerCapture?.(e.pointerId);
+  }
+
+  function onPointerMove(e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    dragState.next = { x: e.clientX, y: e.clientY };
+    e.preventDefault();
+    if (!rafPending) { rafPending = true; frame.contentWindow.requestAnimationFrame(applyPointerFrame); }
+  }
+
+  function applyPointerFrame() {
+    rafPending = false;
+    if (!dragState || !dragState.next || !selected) return;
+    const dx = dragState.next.x - dragState.startX;
+    const dy = dragState.next.y - dragState.startY;
+    if (dragState.mode === 'move') {
+      selected.style.left = Math.round(dragState.left + dx) + 'px';
+      selected.style.top = Math.round(dragState.top + dy) + 'px';
+    } else if (dragState.mode === 'rotate') {
+      const a0 = Math.atan2(dragState.startY - dragState.centerY, dragState.startX - dragState.centerX);
+      const a1 = Math.atan2(dragState.next.y - dragState.centerY, dragState.next.x - dragState.centerX);
+      selected.style.transform = 'rotate(' + Math.round(dragState.startRotate + (a1 - a0) * 180 / Math.PI) + 'deg)';
+    } else {
+      resizeSelected(dragState.mode, dx, dy);
+    }
+    saveStyleFor(selected, false);
+    hydratePanel();
+    updateSelectionUI();
+  }
+
+  function resizeSelected(mode, dx, dy) {
+    let width = dragState.width, height = dragState.height, left = dragState.left, top = dragState.top;
+    if (mode.includes('e')) width += dx;
+    if (mode.includes('s')) height += dy;
+    if (mode.includes('w')) { width -= dx; left += dx; }
+    if (mode.includes('n')) { height -= dy; top += dy; }
+    selected.style.width = Math.max(24, Math.round(width)) + 'px';
+    selected.style.height = Math.max(24, Math.round(height)) + 'px';
+    selected.style.left = Math.round(left) + 'px';
+    selected.style.top = Math.round(top) + 'px';
+  }
+
+  function endPointerGesture(e) {
+    if (!dragState || e.pointerId !== dragState.pointerId) return;
+    doc.body.classList.remove('jbc-is-dragging');
+    saveStyleFor(selected, true);
+    markDirty(dragState.mode === 'move' ? 'Moved' : dragState.mode === 'rotate' ? 'Rotated' : 'Resized');
+    dragState = null;
+  }
+
+  function ensureHandles() {
+    if (!doc) return;
+    if (!handlesBox) {
+      handlesBox = doc.createElement('div');
+      handlesBox.className = 'jbc-editor-box';
+      ['nw','n','ne','e','se','s','sw','w','rotate'].forEach(name => { const handle = doc.createElement('div'); handle.className = 'jbc-editor-handle ' + name; handle.dataset.handle = name; handlesBox.appendChild(handle); });
+      doc.body.appendChild(handlesBox);
+    }
+  }
+
+  function updateSelectionUI() {
+    if (!selected || !doc || !handlesBox) return;
+    const rect = selected.getBoundingClientRect();
+    handlesBox.style.left = rect.left + doc.defaultView.scrollX + 'px';
+    handlesBox.style.top = rect.top + doc.defaultView.scrollY + 'px';
+    handlesBox.style.width = rect.width + 'px';
+    handlesBox.style.height = rect.height + 'px';
+    handlesBox.style.display = editMode ? 'block' : 'none';
+    updateFloatingToolbar();
+  }
+
+  function updateFloatingToolbar() {
+    if (!selected || !editMode || document.body.classList.contains('preview-mode')) { floatingToolbar.classList.remove('visible'); return; }
+    const frameRect = frame.getBoundingClientRect();
+    const rect = selected.getBoundingClientRect();
+    floatLabel.textContent = describe(selected);
+    const x = Math.min(window.innerWidth - 260, Math.max(8, frameRect.left + rect.left));
+    const y = Math.max(50, frameRect.top + rect.top - 42);
+    floatingToolbar.style.transform = 'translate(' + Math.round(x) + 'px,' + Math.round(y) + 'px)';
+    floatingToolbar.classList.add('visible');
+  }
+
+  function applyPanel() {
+    if (!selected) return;
+    pushHistory();
+    const values = { left: getValue('prop-left'), top: getValue('prop-top'), width: getValue('prop-width'), height: getValue('prop-height'), opacity: getValue('prop-opacity'), zIndex: getValue('prop-z'), borderRadius: getValue('prop-radius'), color: getValue('prop-color'), backgroundColor: getValue('prop-bg'), fontSize: getValue('prop-font-size'), fontFamily: getValue('prop-font-family'), letterSpacing: getValue('prop-letter'), mixBlendMode: getValue('prop-blend') };
+    Object.entries(values).forEach(([name, value]) => { if (value !== '') selected.style[name] = value; });
+    const rotate = getValue('prop-rotate');
+    if (rotate) selected.style.transform = 'rotate(' + rotate + ')';
+    if (isTextElement(selected)) selected.innerHTML = getValue('prop-text');
+    saveStyleFor(selected, true);
+    hydratePanel();
+    updateSelectionUI();
+    markDirty('Properties changed');
+  }
+
+  function saveStyleFor(el, rebuildLayers = false) {
+    if (!el) return;
+    const selector = selectorFor(el);
+    const decl = managedStyles.map(name => { const value = el.style.getPropertyValue(name); return value ? '  ' + name + ': ' + value + ' !important;' : ''; }).filter(Boolean).join('\n');
+    const escaped = selector.replace(/[.*+?^\${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(escaped + '\\s*\\{[\\s\\S]*?\\}', 'm');
+    if (!decl) editorCss = editorCss.replace(re, '').trim() + '\n';
+    else {
+      const block = selector + ' {\n' + decl + '\n}';
+      editorCss = re.test(editorCss) ? editorCss.replace(re, block) : (editorCss.trim() + '\n\n' + block + '\n').trim() + '\n';
+    }
+    const live = doc.getElementById('jbc-editor-overrides-live');
+    if (live) live.textContent = editorCss;
+    if (rebuildLayers) buildLayers();
   }
 
   function buildLayers() {
     layersEl.innerHTML = '';
-    knownLayers.forEach(([name, sel]) => {
-      const el = doc?.querySelector(sel); if (!el) return;
-      const b = document.createElement('button'); b.className = 'layer' + (el===selected?' active':''); b.innerHTML = `${name}<span class="sub">${sel}</span>`;
-      b.onclick = () => { selectElement(el); el.scrollIntoView({block:'center', behavior:'smooth'}); };
-      layersEl.appendChild(b);
+    const included = new Set();
+    layerGroups.forEach(group => {
+      const wrap = document.createElement('div');
+      wrap.className = 'layer-group';
+      const title = document.createElement('div');
+      title.className = 'layer-group-title';
+      title.textContent = group.title;
+      wrap.appendChild(title);
+      group.items.forEach(([name, sel]) => {
+        const el = doc?.querySelector(sel);
+        if (el && isVisibleEditable(el)) {
+          selectorFor(el);
+          included.add(el);
+          wrap.appendChild(layerButton(name, sel, el));
+        }
+      });
+      layersEl.appendChild(wrap);
     });
-    doc?.querySelectorAll('.editor-decoration,[data-editor-id^="rose"],.hero-corner-rose').forEach((el,i)=>{
-      const b = document.createElement('button'); b.className = 'layer' + (el===selected?' active':''); b.innerHTML = `Decoration ${i+1}<span class="sub">${selectorFor(el)}</span>`;
-      b.onclick = () => selectElement(el); layersEl.appendChild(b);
+    const decorations = Array.from(doc?.querySelectorAll('.editor-decoration, .hero-corner-rose') || []).filter(isVisibleEditable);
+    const wrap = document.createElement('div');
+    wrap.className = 'layer-group';
+    const title = document.createElement('div');
+    title.className = 'layer-group-title';
+    title.textContent = 'Decorations / Added Assets';
+    wrap.appendChild(title);
+    decorations.forEach((el, i) => {
+      selectorFor(el);
+      included.add(el);
+      wrap.appendChild(layerButton(assetLayerName(el), selectorFor(el), el));
     });
+    layersEl.appendChild(wrap);
+
+    const audit = auditEditableLayers(included);
+    if (audit.other.length) {
+      const otherWrap = document.createElement('div');
+      otherWrap.className = 'layer-group';
+      const otherTitle = document.createElement('div');
+      otherTitle.className = 'layer-group-title';
+      otherTitle.textContent = 'Other Editable Elements';
+      otherWrap.appendChild(otherTitle);
+      audit.other.forEach((el, i) => otherWrap.appendChild(layerButton(layerNameFor(el, 'Element ' + (i + 1)), selectorFor(el), el)));
+      layersEl.appendChild(otherWrap);
+    }
+    window.__jbcLayerAudit = audit;
   }
 
-  function setStyle(name, value) { if (!selected) return; pushHistory(); selected.style[name] = value; saveStyleFor(selected); hydratePanel(); markDirty('Style changed'); }
-  function applyPanel() {
-    if (!selected) return; pushHistory();
-    const map = { 'prop-left':'left','prop-top':'top','prop-width':'width','prop-height':'height','prop-opacity':'opacity','prop-z':'zIndex','prop-radius':'borderRadius','prop-color':'color','prop-bg':'backgroundColor','prop-font-size':'fontSize','prop-font-family':'fontFamily','prop-letter':'letterSpacing','prop-padding':'padding','prop-margin':'margin','prop-blend':'mixBlendMode' };
-    Object.entries(map).forEach(([id, css]) => { const v = prop(id).value; if (v !== '') selected.style[css] = v; });
-    const rot = prop('prop-rotate').value; if (rot) selected.style.transform = `rotate(${rot})`;
-    if (prop('prop-text').value && isTextElement(selected)) selected.innerHTML = prop('prop-text').value;
-    saveStyleFor(selected); markDirty('Properties applied');
+  function layerButton(name, sel, el) {
+    selectorFor(el);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'layer' + (el === selected ? ' active' : '');
+    button.innerHTML = '<span class="name">' + name + '</span><span class="sub">' + (el.dataset.editorId || sel) + '</span>';
+    button.onclick = () => { selectElement(el); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
+    return button;
   }
-  ['prop-left','prop-top','prop-width','prop-height','prop-opacity','prop-z','prop-radius','prop-color','prop-bg','prop-font-size','prop-font-family','prop-letter','prop-padding','prop-margin','prop-blend','prop-rotate','prop-text'].forEach(id => prop(id).addEventListener('change', applyPanel));
 
-  function saveStyleFor(el) {
-    const selector = selectorFor(el);
-    const styles = ['position','left','top','right','bottom','width','height','opacity','z-index','color','background-color','font-size','font-family','letter-spacing','padding','margin','border-radius','mix-blend-mode','transform','display'];
-    const decl = styles.map(s => { const v = el.style.getPropertyValue(s); return v ? `  ${s}: ${v} !important;` : ''; }).filter(Boolean).join('\n');
-    if (!decl) return;
-    const block = `${selector} {\n${decl}\n}`;
-    const re = new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\s*\\{[\\s\\S]*?\\}`, 'm');
-    editorCss = re.test(editorCss) ? editorCss.replace(re, block) : `${editorCss.trim()}\n\n${block}\n`;
-    const live = doc.getElementById('jbc-editor-overrides-live'); if (live) live.textContent = editorCss;
+  function auditEditableLayers(included) {
+    const buckets = {};
+    const all = new Set();
+    auditSelectors.forEach(([label, selector]) => {
+      const found = Array.from(doc.querySelectorAll(selector)).filter(isVisibleEditable).map(normalizeAuditElement).filter(Boolean);
+      buckets[label] = found;
+      found.forEach(el => all.add(el));
+    });
+    const normalized = Array.from(all);
+    const other = normalized.filter(el => !included.has(el) && !hasIncludedAncestor(el, included) && !isHugeHeroTitleParent(el));
+    other.forEach(selectorFor);
+    return { buckets, other };
+  }
+
+  function normalizeAuditElement(el) {
+    if (!el || el.matches(ignoredEditableSelectors)) return null;
+    if (el.matches('.hero-mega') && el.querySelector('.l1, .l2, .l3')) return null;
+    if (el.matches('picture')) return el.querySelector('img') || el;
+    return el;
+  }
+
+  function isVisibleEditable(el) {
+    el = normalizeAuditElement(el);
+    if (!el || el.matches(ignoredEditableSelectors)) return false;
+    const cs = frame.contentWindow.getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width > 1 && rect.height > 1;
+  }
+
+  function hasIncludedAncestor(el, included) {
+    let parent = el.parentElement;
+    while (parent && parent !== doc.body) {
+      if (included.has(parent)) return true;
+      parent = parent.parentElement;
+    }
+    return false;
+  }
+
+  function isHugeHeroTitleParent(el) {
+    return el?.matches?.('.hero-mega, .hero-content') && el.querySelector('.l1, .l2, .l3');
+  }
+
+  function assetLayerName(el) {
+    const type = el.dataset.assetType || (el.classList.contains('editor-vector') ? 'svg' : el.classList.contains('editor-rose') ? 'rose' : el.classList.contains('editor-image') ? 'image' : 'decoration');
+    return type + ' / ' + sectionLabel(el.closest('section, footer')) + ' / ' + selectorFor(el).replace('[data-editor-id="', '').replace('"]', '');
+  }
+
+  function layerNameFor(el, fallback) {
+    if (!el) return fallback;
+    if (el.dataset.editorId) return el.dataset.editorId;
+    if (el.matches('img')) return 'Image';
+    if (el.matches('a[href]')) return 'Link: ' + (el.textContent || el.getAttribute('href') || '').trim().slice(0, 40);
+    if (el.matches('button')) return 'Button: ' + (el.textContent || '').trim().slice(0, 40);
+    if (el.matches('h1,h2,h3,h4,h5,h6')) return el.tagName.toLowerCase() + ': ' + (el.textContent || '').trim().slice(0, 44);
+    if (el.matches('section')) return 'Section: ' + (el.id || Array.from(el.classList).slice(0, 2).join('.'));
+    return describe(el);
   }
 
   async function loadImages() {
-    try { const res = await api('/api/images'); imageList.innerHTML = ''; res.images.forEach(src => { const d = document.createElement('div'); d.className='img-tile'; d.innerHTML=`<img src="/${src}"><div>${src}</div>`; d.onclick=()=>{ prop('prop-src').value=src; }; imageList.appendChild(d); }); } catch(e) { setStatus(e.message); }
+    try {
+      const res = await api('/api/images');
+      imageList.innerHTML = '';
+      res.images.forEach(src => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'img-tile' + (src === selectedImagePath ? ' active' : '');
+        tile.innerHTML = '<img src="/' + src + '" alt=""><div>' + src + '</div>';
+        tile.onclick = () => { selectedImagePath = src; setValue('prop-src', src); loadImages(); };
+        imageList.appendChild(tile);
+      });
+    } catch (err) { setStatus(err.message); }
   }
 
-  async function uploadImage(file, folder='images') {
-    const fd = new FormData(); fd.append('image', file); fd.append('folder', folder);
-    const r = await fetch('/api/upload-image', { method:'POST', body: fd }); const j = await r.json(); if(!j.ok) throw new Error(j.error); await loadImages(); return j.path;
+  async function uploadImage(file, folder = 'images') {
+    const form = new FormData();
+    form.append('image', file);
+    form.append('folder', folder);
+    const res = await fetch('/api/upload-image', { method: 'POST', body: form });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || 'Upload failed');
+    selectedImagePath = json.path;
+    await loadImages();
+    return json.path;
   }
 
-  prop('upload-image').addEventListener('change', async e => {
-    try { if(!selected || !e.target.files[0]) return; const src = await uploadImage(e.target.files[0]); const img = selected.tagName === 'IMG' ? selected : selected.querySelector('img'); if(img) { pushHistory(); img.setAttribute('src', src); prop('prop-src').value = src; markDirty('Image replaced'); } } catch(err){ setStatus(err.message); }
-  });
-  prop('btn-apply-src').onclick = () => { const img = selected?.tagName === 'IMG' ? selected : selected?.querySelector?.('img'); if(img) { pushHistory(); img.setAttribute('src', prop('prop-src').value); markDirty('Image src applied'); } };
-  prop('btn-hero-mobile').onclick = async () => { const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*'; inp.onchange = async () => { const src = await uploadImage(inp.files[0]); const source = doc.querySelector('.hero picture source'); if(source){ pushHistory(); source.setAttribute('srcset', src); markDirty('Hero mobile source replaced'); } }; inp.click(); };
-  prop('btn-refresh-images').onclick = loadImages;
-
-  function addDecoration() {
-    const src = prop('prop-src').value || 'images/jbc-rose-pattern-bg.png';
-    const hero = doc.querySelector('.hero') || doc.body;
-    const div = doc.createElement('div'); div.className='editor-decoration'; div.dataset.editorId = uid('rose');
-    div.style.cssText='left:55%;top:18%;width:420px;height:420px;opacity:.85;z-index:4;mix-blend-mode:screen;position:absolute;';
-    div.innerHTML = `<img src="${src}" alt="">`;
-    hero.insertBefore(div, hero.firstChild);
-    selectElement(div); saveStyleFor(div); markDirty('Decoration added');
+  async function uploadReplacement(e) {
+    try {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      const src = await uploadImage(file, 'images/editor-assets');
+      const kind = assetMode?.kind || (src.toLowerCase().endsWith('.svg') ? 'vector' : 'decoration');
+      if (selectedImage(selected) && !assetMode) replaceSelectedImage(src);
+      else beginAssetAdd(kind, src);
+    } catch (err) { setStatus(err.message); }
   }
-  prop('btn-add-decoration').onclick = addDecoration;
-  prop('btn-replace-image').onclick = () => prop('upload-image').click();
-  prop('btn-hide').onclick = () => { if(!selected) return; pushHistory(); selected.style.display = frame.contentWindow.getComputedStyle(selected).display === 'none' ? '' : 'none'; saveStyleFor(selected); markDirty('Hidden/shown'); };
-  prop('btn-delete').onclick = () => { if(!selected) return; if(!confirm('Delete selected element?')) return; pushHistory(); selected.remove(); selected=null; hydratePanel(); markDirty('Deleted'); };
-  prop('btn-duplicate').onclick = () => { if(!selected) return; pushHistory(); const c=selected.cloneNode(true); c.dataset.editorId=uid('copy'); c.style.left=(selected.offsetLeft+30)+'px'; c.style.top=(selected.offsetTop+30)+'px'; selected.parentElement.appendChild(c); selectElement(c); saveStyleFor(c); markDirty('Duplicated'); };
-  prop('btn-reset-selected').onclick = () => { if(!selected) return; pushHistory(); selected.removeAttribute('style'); saveStyleFor(selected); hydratePanel(); markDirty('Reset selected'); };
 
-  function undo(){ if(history.length<2) return; future.push(history.pop()); const prev=history[history.length-1]; frame.srcdoc=injectEditorRuntime(prev.html, prev.css); editorCss=prev.css; setStatus('Undo'); }
-  function redo(){ if(!future.length) return; const next=future.pop(); history.push(next); frame.srcdoc=injectEditorRuntime(next.html, next.css); editorCss=next.css; setStatus('Redo'); }
-  prop('btn-undo').onclick = undo; prop('btn-redo').onclick = redo;
+  function applyImageSource() { const src = getValue('prop-src').trim(); if (src) replaceSelectedImage(src); }
+  function replaceSelectedImage(src) { const img = selectedImage(selected); if (!img) return; pushHistory(); img.setAttribute('src', src); setValue('prop-src', src); markDirty('Image replaced'); }
 
-  prop('btn-edit').onclick = () => { editMode=true; prop('btn-edit').classList.add('active'); prop('btn-preview').classList.remove('active'); doc?.body.classList.remove('jbc-editor-preview'); };
-  prop('btn-preview').onclick = () => { editMode=false; prop('btn-preview').classList.add('active'); prop('btn-edit').classList.remove('active'); if(selected) selected.removeAttribute('data-jbc-selected'); doc?.body.classList.add('jbc-editor-preview'); };
+  function replaceHeroMobile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async () => {
+      try {
+        if (!input.files[0]) return;
+        const src = await uploadImage(input.files[0]);
+        const source = doc.querySelector('.hero picture source');
+        if (source) { pushHistory(); source.setAttribute('srcset', src); markDirty('Hero mobile image replaced'); }
+      } catch (err) { setStatus(err.message); }
+    };
+    input.click();
+  }
+
+  function beginAssetAdd(kind, src) {
+    const config = assetConfig(kind, src);
+    if (!config.src) {
+      prop('upload-image')?.click();
+      assetMode = { kind, config };
+      return;
+    }
+    const placement = getValue('asset-placement') || 'selected';
+    if (placement === 'click') {
+      assetMode = { kind, config };
+      document.body.classList.add('asset-place-mode');
+      setStatus('Click the page to place ' + kind);
+      return;
+    }
+    insertAsset(config, resolvePlacementParent(placement), null);
+  }
+
+  function assetConfig(kind, src) {
+    const base = assetDefaults[kind] || assetDefaults.decoration;
+    const picked = src || getValue('prop-src') || selectedImagePath || base.src;
+    const normalizedKind = picked && picked.toLowerCase().endsWith('.svg') ? 'vector' : kind;
+    const normalizedBase = normalizedKind === kind ? base : assetDefaults.vector;
+    return {
+      kind: normalizedKind,
+      src: picked,
+      prefix: normalizedBase.prefix,
+      className: normalizedBase.className,
+      blend: normalizedBase.blend,
+      width: normalizedBase.width,
+      height: normalizedBase.height
+    };
+  }
+
+  function resolvePlacementParent(placement) {
+    if (placement === 'selected') return selected?.closest?.('section, footer') || doc.querySelector('section.hero') || doc.body;
+    return doc.querySelector(sectionTargets[placement]) || selected?.closest?.('section, footer') || doc.querySelector('section.hero') || doc.body;
+  }
+
+  function placeAssetFromClick(e) {
+    const targetParent = pickAssetParentAtPoint(e.clientX, e.clientY);
+    insertAsset(assetMode.config, targetParent, { x: e.clientX, y: e.clientY });
+    assetMode = null;
+    document.body.classList.remove('asset-place-mode');
+  }
+
+  function pickAssetParentAtPoint(x, y) {
+    const el = doc.elementFromPoint(x, y);
+    return el?.closest?.('section, footer') || selected?.closest?.('section, footer') || doc.querySelector('section.hero') || doc.body;
+  }
+
+  function insertAsset(config, parent, point) {
+    if (!doc || !config.src || !allowedAssetExt.test(config.src)) {
+      setStatus('Choose a PNG, JPG, WebP, GIF, or SVG asset first');
+      return;
+    }
+    pushHistory();
+    parent = parent || doc.querySelector('section.hero') || doc.body;
+    ensurePositionedParent(parent);
+    const div = doc.createElement('div');
+    div.className = config.className;
+    div.dataset.assetType = config.kind;
+    div.dataset.assetParent = sectionLabel(parent);
+    div.dataset.editorId = nextAssetId(config.prefix);
+    div.innerHTML = '<img src="' + config.src + '" alt="">';
+    const parentRect = parent.getBoundingClientRect();
+    const left = point ? point.x - parentRect.left + parent.scrollLeft : 48;
+    const top = point ? point.y - parentRect.top + parent.scrollTop : 48;
+    div.style.position = 'absolute';
+    div.style.left = Math.max(0, Math.round(left)) + 'px';
+    div.style.top = Math.max(0, Math.round(top)) + 'px';
+    div.style.width = config.width + 'px';
+    div.style.height = config.height + 'px';
+    div.style.opacity = '0.9';
+    div.style.zIndex = '5';
+    div.style.mixBlendMode = config.blend;
+    parent.insertBefore(div, parent.firstChild);
+    selectElement(div);
+    saveStyleFor(div, true);
+    markDirty('Asset added');
+  }
+
+  function nextAssetId(prefix) {
+    let id;
+    do {
+      id = prefix + '-' + String(assetCounter++).padStart(3, '0');
+    } while (doc.querySelector('[data-editor-id="' + id + '"]'));
+    return id;
+  }
+
+  function sectionLabel(el) {
+    if (!el) return 'page';
+    if (el.matches('section.hero')) return 'Hero';
+    if (el.matches('.manifesto')) return 'Manifesto';
+    if (el.matches('#services-overview')) return 'Process';
+    if (el.matches('#featured-work')) return 'Selected Work';
+    if (el.matches('.testimonial-section')) return 'Testimonial';
+    if (el.matches('.cta-section')) return 'CTA';
+    if (el.matches('footer.footer')) return 'Footer';
+    return el.id || Array.from(el.classList).slice(0, 2).join('.') || el.tagName.toLowerCase();
+  }
+
+  function hideSelected() { if (!selected) return; pushHistory(); selected.style.display = frame.contentWindow.getComputedStyle(selected).display === 'none' ? '' : 'none'; saveStyleFor(selected, true); markDirty('Visibility changed'); }
+
+  function deleteSelected() {
+    if (!selected) return;
+    const removable = selected.classList.contains('editor-decoration') || selected.classList.contains('hero-corner-rose') || confirm('Delete selected element?');
+    if (!removable) return;
+    pushHistory();
+    const old = selected;
+    selected = null;
+    old.remove();
+    if (handlesBox) handlesBox.style.display = 'none';
+    hydratePanel();
+    buildLayers();
+    markDirty('Deleted');
+  }
+
+  function duplicateSelected() {
+    if (!selected) return;
+    pushHistory();
+    const copy = selected.cloneNode(true);
+    copy.dataset.editorId = uid(selected.classList.contains('editor-decoration') ? 'rose' : 'copy');
+    copy.style.left = (selected.offsetLeft + 28) + 'px';
+    copy.style.top = (selected.offsetTop + 28) + 'px';
+    selected.parentElement.appendChild(copy);
+    selectElement(copy);
+    saveStyleFor(copy, true);
+    markDirty('Duplicated');
+  }
+
+  function resetSelected() { if (!selected) return; pushHistory(); managedStyles.forEach(name => selected.style.removeProperty(name)); saveStyleFor(selected, true); hydratePanel(); updateSelectionUI(); markDirty('Reset selected'); }
+
+  function bringForward() {
+    if (!selected) return;
+    pushHistory();
+    const z = parseInt(selected.style.zIndex || frame.contentWindow.getComputedStyle(selected).zIndex || '0', 10) || 0;
+    selected.style.zIndex = String(z + 1);
+    saveStyleFor(selected, true);
+    hydratePanel();
+    markDirty('Brought forward');
+  }
+
+  function sendBackward() {
+    if (!selected) return;
+    pushHistory();
+    const z = parseInt(selected.style.zIndex || frame.contentWindow.getComputedStyle(selected).zIndex || '0', 10) || 0;
+    selected.style.zIndex = String(Math.max(0, z - 1));
+    saveStyleFor(selected, true);
+    hydratePanel();
+    markDirty('Sent backward');
+  }
+
+  function beginTextEdit(el) {
+    pushHistory();
+    el.contentEditable = 'true';
+    el.focus();
+    doc.getSelection()?.selectAllChildren(el);
+    el.addEventListener('blur', () => { el.removeAttribute('contenteditable'); setValue('prop-text', el.innerHTML); markDirty('Text edited'); }, { once: true });
+  }
+
+  function onKeyDown(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
+    if (!selected || selected.isContentEditable || !['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
+    e.preventDefault();
+    pushHistory();
+    ensureEditablePosition(selected);
+    const step = e.shiftKey ? 10 : 1;
+    const left = parseFloat(selected.style.left || '0') || 0;
+    const top = parseFloat(selected.style.top || '0') || 0;
+    if (e.key === 'ArrowLeft') selected.style.left = left - step + 'px';
+    if (e.key === 'ArrowRight') selected.style.left = left + step + 'px';
+    if (e.key === 'ArrowUp') selected.style.top = top - step + 'px';
+    if (e.key === 'ArrowDown') selected.style.top = top + step + 'px';
+    saveStyleFor(selected, false);
+    hydratePanel();
+    updateSelectionUI();
+    markDirty('Nudged');
+  }
+
+  function onWheel(e) {
+    if (!selected || !e.altKey || selected.isContentEditable) return;
+    e.preventDefault();
+    ensureEditablePosition(selected);
+    const amount = Math.round(e.deltaY > 0 ? 4 : -4);
+    const left = parseFloat(selected.style.left || '0') || 0;
+    const top = parseFloat(selected.style.top || '0') || 0;
+    const width = parseFloat(selected.style.width || selected.getBoundingClientRect().width) || 0;
+    const height = parseFloat(selected.style.height || selected.getBoundingClientRect().height) || 0;
+    if (e.metaKey) { selected.style.width = Math.max(24, width + amount) + 'px'; selected.style.height = Math.max(24, height + amount) + 'px'; }
+    else if (e.shiftKey) selected.style.left = left + amount + 'px';
+    else selected.style.top = top + amount + 'px';
+    saveStyleFor(selected, false);
+    hydratePanel();
+    updateSelectionUI();
+    markDirty('Fine adjusted');
+  }
+
+  function togglePreview() {
+    editMode = !editMode;
+    document.body.classList.toggle('preview-mode', !editMode);
+    toggleClass('btn-preview', 'active', !editMode);
+    doc?.body.classList.toggle('jbc-editor-preview', !editMode);
+    if (selected) selected.toggleAttribute('data-jbc-selected', editMode);
+    if (handlesBox) handlesBox.style.display = editMode ? 'block' : 'none';
+    updateFloatingToolbar();
+  }
+
+  function undo() { if (history.length < 2) return; future.push(history.pop()); restoreSnapshot(history[history.length - 1], 'Undo'); }
+  function redo() { if (!future.length) return; const next = future.pop(); history.push(next); restoreSnapshot(next, 'Redo'); }
+  function restoreSnapshot(snapshot, label) { selected = null; handlesBox = null; editorCss = snapshot.css; frame.srcdoc = injectEditorRuntime(snapshot.html, snapshot.css); setStatus(label); }
 
   async function saveAll() {
-    try { const html = serializeBody(); await api('/api/save-all', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ html, css: editorCss }) }); dirty=false; setStatus('Saved to index.html and css/editor-overrides.css'); pushHistory(); } catch(e){ setStatus('Save failed: ' + e.message); }
+    try {
+      const html = serializeHtml();
+      await api('/api/save-all', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ html, css: editorCss }) });
+      dirty = false;
+      setStatus('Saved');
+      pushHistory();
+    } catch (err) { setStatus('Save failed: ' + err.message); }
   }
-  prop('btn-save').onclick = saveAll;
-  window.addEventListener('beforeunload', e => { if(dirty) { e.preventDefault(); e.returnValue=''; } });
 
   init();
 })();
