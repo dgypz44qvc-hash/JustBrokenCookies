@@ -4915,14 +4915,28 @@ body {
   z-index: 8 !important;
 }
 /* =========================================================
-   JBC HERO TITLE MOVE UP 30%
-   Moves Just / Broken / Cookies upward without changing size
+   JBC HERO TITLE MOVE UP — desktop only
+   On mobile the titles stay in natural flex position
    ========================================================= */
 
-.hero-content,
-.hero-oil-wrap,
-.hero-mega {
-  transform: translateY(-30%) !important;
+@media (min-width: 961px) {
+  .hero-content,
+  .hero-oil-wrap,
+  .hero-mega {
+    transform: translateY(-30%) !important;
+  }
+}
+
+/* Mobile: no vertical shift, let flex handle placement */
+@media (max-width: 960px) {
+  .hero-content {
+    transform: none !important;
+    justify-content: center !important;
+  }
+  .hero-oil-wrap,
+  .hero-mega {
+    transform: none !important;
+  }
 }
 
 /* =========================================================
@@ -4949,4 +4963,19 @@ body {
   font-family: var(--font-body) !important;
   font-size: 48px !important;
   opacity: 1 !important;
+}
+@media (max-width: 960px) {
+  .hero .tag {
+    right: 76px !important;
+    top: 75px !important;
+    letter-spacing: 4px !important;
+    font-size: 24px !important;
+  }
+}
+@media (max-width: 768px) {
+  .hero .tag {
+    right: 50px !important;
+    top: 70px !important;
+    font-size: 18px !important;
+  }
 }
