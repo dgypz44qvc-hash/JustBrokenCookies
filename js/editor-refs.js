@@ -2382,7 +2382,169 @@
       if(nav.getAttribute('style') && nav.getAttribute('style').replace(/;\s*/g,'').trim() === '') nav.removeAttribute('style');
     }
 
+    /* ================================================================
+       STEP 6 — Strip inline styles from elements that now live in CSS.
+       Elements with data-jbc-id have their styles in editor-overrides.css.
+       For existing page elements, remove style entirely.
+       For .jbc-custom (added), keep only positioning (left,top,width,position,z-index).
+       ================================================================ */
+    clone.querySelectorAll('[data-jbc-id]').forEach(function(el){
+      if(el.classList.contains('jbc-custom')){
+        /* Added elements: keep structural positioning inline, rest goes to CSS */
+        var keepProps = {};
+        ['left','top','width','height','position','z-index','overflow','pointer-events'].forEach(function(p){
+          var v = el.style.getPropertyValue(p);
+          if(v) keepProps[p] = v;
+        });
+        el.removeAttribute('style');
+        var newStyle = '';
+        for(var p in keepProps) newStyle += p + ':' + keepProps[p] + ';';
+        if(newStyle) el.setAttribute('style', newStyle);
+      } else {
+        /* Existing page elements: all styles now in CSS, remove inline */
+        el.removeAttribute('style');
+      }
+    });
+
     return '<!DOCTYPE html>\n<html lang="en">\n' + clone.innerHTML + '\n</html>';
+  }
+
+  /* ========== CSS EXTRACTION — saves editor styles to css/editor-overrides.css ========== */
+
+  /* Generate a unique stable ID for any element based on its position in the DOM tree */
+  function getJbcId(el){
+    if(el.getAttribute('data-jbc-id')) return el.getAttribute('data-jbc-id');
+
+    /* For .jbc-custom elements, use a numbered ID */
+    if(el.classList.contains('jbc-custom') || el.classList.contains('jbc-added')){
+      var allCustom = Array.from(document.querySelectorAll('.jbc-custom,.jbc-added'));
+      var idx = allCustom.indexOf(el);
+      var id = 'jbc-el-' + (idx + 1);
+      el.setAttribute('data-jbc-id', id);
+      return id;
+    }
+
+    /* For existing page elements, build a selector path */
+    var parts = [];
+    var node = el;
+    while(node && node !== document.body && parts.length < 4){
+      var tag = node.tagName.toLowerCase();
+      if(node.id && node.id.indexOf('jbc-') === -1){
+        parts.unshift('#' + node.id);
+        break;
+      }
+      var cls = Array.from(node.classList)
+        .filter(function(c){ return c.indexOf('jbc-') === -1 && c.indexOf('loaded') === -1 && c.indexOf('scrolled') === -1 && c.indexOf('active') === -1; })
+        .slice(0, 2)
+        .join('.');
+      if(cls){
+        parts.unshift(tag + '.' + cls);
+      } else {
+        /* Use nth-child for elements without classes */
+        var parent = node.parentElement;
+        if(parent){
+          var siblings = Array.from(parent.children).filter(function(s){ return s.tagName === node.tagName; });
+          if(siblings.length > 1){
+            var nth = siblings.indexOf(node) + 1;
+            parts.unshift(tag + ':nth-of-type(' + nth + ')');
+          } else {
+            parts.unshift(tag);
+          }
+        } else {
+          parts.unshift(tag);
+        }
+      }
+      node = node.parentElement;
+    }
+    var id = parts.join(' > ').replace(/[^a-zA-Z0-9\-_#.>:\s()]/g, '');
+    el.setAttribute('data-jbc-id', id);
+    return id;
+  }
+
+  /* Collect all style changes and generate CSS rules */
+  function buildEditorCSS(){
+    var rules = [];
+    var timestamp = new Date().toISOString().split('T')[0];
+    rules.push('/* JBC Editor Overrides — auto-generated ' + timestamp + ' */');
+    rules.push('/* Do not edit manually — this file is overwritten on each save */');
+    rules.push('');
+
+    /* Find all elements marked as changed */
+    var changed = document.querySelectorAll('.jbc-text-changed');
+    changed.forEach(function(el){
+      /* Skip editor UI */
+      if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-panel')) return;
+
+      var styleAttr = el.getAttribute('style');
+      if(!styleAttr || styleAttr.trim() === '') return;
+
+      /* For .jbc-custom (added elements), use data-jbc-id selector */
+      var selector;
+      if(el.classList.contains('jbc-custom') || el.classList.contains('jbc-added')){
+        var jid = getJbcId(el);
+        selector = '[data-jbc-id="' + jid + '"]';
+      } else {
+        /* For existing page elements, build a CSS selector */
+        selector = getJbcId(el);
+      }
+
+      /* Parse inline styles into CSS properties */
+      var cssProps = [];
+      var style = el.style;
+      for(var i = 0; i < style.length; i++){
+        var prop = style[i];
+        var val = style.getPropertyValue(prop);
+        var priority = style.getPropertyPriority(prop);
+        /* Skip animation/transition props that main.js sets — these are runtime-only */
+        if(prop === 'animation-play-state' || prop === 'transition') continue;
+        /* Skip cursor, outline, user-select — editor UI props */
+        if(prop === 'cursor' || prop === 'outline' || prop === 'outline-offset' || prop === 'user-select') continue;
+
+        if(val){
+          cssProps.push('  ' + prop + ': ' + val + (priority ? ' !' + priority : '') + ';');
+        }
+      }
+
+      if(cssProps.length > 0){
+        rules.push(selector + ' {');
+        rules.push(cssProps.join('\n'));
+        rules.push('}');
+        rules.push('');
+      }
+    });
+
+    /* Also handle section background changes */
+    document.querySelectorAll('section,footer,.hero,.manifesto').forEach(function(sec){
+      if(!sec.classList.contains('jbc-text-changed')) return;
+      var bg = sec.style.backgroundColor;
+      var bgImg = sec.style.backgroundImage;
+      var padding = sec.style.padding || sec.style.paddingTop;
+      if(!bg && !bgImg && !padding) return;
+
+      var secSelector;
+      if(sec.id) secSelector = '#' + sec.id;
+      else if(sec.classList.contains('hero')) secSelector = '.hero';
+      else if(sec.tagName === 'FOOTER') secSelector = 'footer';
+      else {
+        var cls = Array.from(sec.classList).filter(function(c){ return c.indexOf('jbc-') === -1; })[0];
+        secSelector = cls ? 'section.' + cls : 'section';
+      }
+
+      var props = [];
+      if(bg) props.push('  background-color: ' + bg + ' !important;');
+      if(bgImg) props.push('  background-image: ' + bgImg + ' !important;');
+      if(sec.style.paddingTop) props.push('  padding-top: ' + sec.style.paddingTop + ' !important;');
+      if(sec.style.paddingBottom) props.push('  padding-bottom: ' + sec.style.paddingBottom + ' !important;');
+
+      if(props.length > 0){
+        rules.push(secSelector + ' {');
+        rules.push(props.join('\n'));
+        rules.push('}');
+        rules.push('');
+      }
+    });
+
+    return rules.join('\n');
   }
 
   /* ========== SAVE — uses File System Access API (no server needed) ========== */
@@ -2428,11 +2590,30 @@
         console.log('Saved image:', pi.targetPath);
       }
 
-      /* 2. Build clean HTML */
+      /* 2. Build editor CSS overrides */
+      var editorCSS = buildEditorCSS();
+
+      /* 3. Save CSS overrides file */
+      var cssDir = await folderHandle.getDirectoryHandle('css', {create:true});
+      var cssFileHandle = await cssDir.getFileHandle('editor-overrides.css', {create:true});
+      var cssWritable = await cssFileHandle.createWritable();
+      await cssWritable.write(editorCSS);
+      await cssWritable.close();
+      console.log('[SAVE] Saved css/editor-overrides.css (' + editorCSS.length + ' bytes)');
+
+      /* 4. Build clean HTML */
       var pageInfo = getPageInfo();
       var cleanHTML = buildCleanHTML(imagePaths);
 
-      /* 3. Save HTML file */
+      /* 5. Ensure HTML links to editor-overrides.css */
+      if(cleanHTML.indexOf('editor-overrides.css') === -1){
+        cleanHTML = cleanHTML.replace(
+          'href="css/style.css"',
+          'href="css/style.css">\n  <link rel="stylesheet" href="css/editor-overrides.css"'
+        );
+      }
+
+      /* 6. Save HTML file */
       var htmlDir = folderHandle;
       if(pageInfo.subdir){
         htmlDir = await folderHandle.getDirectoryHandle(pageInfo.subdir, {create:true});
@@ -2442,7 +2623,7 @@
       await htmlWritable.write(cleanHTML);
       await htmlWritable.close();
 
-      showToast('Saved! ' + pageInfo.filename + ' \u2014 ready to git push', 'success');
+      showToast('Saved! ' + pageInfo.filename + ' + css/editor-overrides.css', 'success');
 
       /* Reset state */
       changes = {text:0, images:0};
@@ -2466,14 +2647,30 @@
   /* ========== DOWNLOAD (fallback) ========== */
   function downloadPage(){
     var pageInfo = getPageInfo();
+
+    /* Download CSS overrides */
+    var css = buildEditorCSS();
+    if(css.trim().split('\n').length > 3){
+      var cssBlob = new Blob([css],{type:'text/css'});
+      var cssA = document.createElement('a');
+      cssA.href = URL.createObjectURL(cssBlob);
+      cssA.download = 'editor-overrides.css';
+      cssA.click();
+      URL.revokeObjectURL(cssA.href);
+    }
+
+    /* Download HTML */
     var html = buildCleanHTML({});
+    if(html.indexOf('editor-overrides.css') === -1){
+      html = html.replace('href="css/style.css"', 'href="css/style.css">\n  <link rel="stylesheet" href="css/editor-overrides.css"');
+    }
     var blob = new Blob([html],{type:'text/html'});
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = pageInfo.filename;
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('Downloaded '+pageInfo.filename);
+    showToast('Downloaded '+pageInfo.filename+' + editor-overrides.css');
   }
 
   /* ========================================================================
