@@ -4919,14 +4919,30 @@ body {
    On mobile the titles stay in natural flex position
    ========================================================= */
 
-/* Titles centered via flexbox — no transform hacks */
-.hero-content {
+/* Titles centered in hero — simple flexbox, no transforms */
+.hero {
   justify-content: center !important;
+}
+.hero-content {
+  flex: none !important;
   transform: none !important;
+}
+.hero-bottom {
+  position: absolute !important;
+  bottom: 60px !important;
+  left: 60px !important;
+  right: 60px !important;
 }
 .hero-oil-wrap,
 .hero-mega {
   transform: none !important;
+}
+@media (max-width: 960px) {
+  .hero-bottom {
+    bottom: 20px !important;
+    left: 20px !important;
+    right: 20px !important;
+  }
 }
 
 /* =========================================================
