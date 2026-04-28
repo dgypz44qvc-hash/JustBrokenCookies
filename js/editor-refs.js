@@ -136,7 +136,7 @@
     .jbc-move-mode h1,.jbc-move-mode h2,.jbc-move-mode h3,.jbc-move-mode h4,.jbc-move-mode h5,.jbc-move-mode h6,
     .jbc-move-mode p,.jbc-move-mode span,.jbc-move-mode a,.jbc-move-mode button,.jbc-move-mode img,
     .jbc-move-mode figure,.jbc-move-mode blockquote,.jbc-move-mode li,
-    .jbc-move-mode .hero-mega,.jbc-move-mode .hero-content,.jbc-move-mode .hero-bottom,
+    .jbc-move-mode .hero-mega .l1,.jbc-move-mode .hero-mega .l2,.jbc-move-mode .hero-mega .l3,.jbc-move-mode .hero-bottom,
     .jbc-move-mode .tag,.jbc-move-mode .manifesto-text,.jbc-move-mode .cta-box,
     .jbc-move-mode .service-card,.jbc-move-mode .portfolio-item,.jbc-move-mode .value-card,
     .jbc-move-mode .process-card,.jbc-move-mode .blog-card,.jbc-move-mode .testimonial-card,
@@ -146,7 +146,7 @@
     .jbc-move-mode h1:hover,.jbc-move-mode h2:hover,.jbc-move-mode h3:hover,.jbc-move-mode h4:hover,
     .jbc-move-mode p:hover,.jbc-move-mode span:hover,.jbc-move-mode a:hover,.jbc-move-mode button:hover,
     .jbc-move-mode img:hover,.jbc-move-mode figure:hover,.jbc-move-mode blockquote:hover,
-    .jbc-move-mode .hero-mega:hover,.jbc-move-mode .hero-content:hover,.jbc-move-mode .hero-bottom:hover,
+    .jbc-move-mode .hero-mega .l1:hover,.jbc-move-mode .hero-mega .l2:hover,.jbc-move-mode .hero-mega .l3:hover,.jbc-move-mode .hero-bottom:hover,
     .jbc-move-mode .tag:hover,.jbc-move-mode .manifesto-text:hover,.jbc-move-mode .cta-box:hover,
     .jbc-move-mode .service-card:hover,.jbc-move-mode .portfolio-item:hover,.jbc-move-mode .value-card:hover,
     .jbc-move-mode .process-card:hover,.jbc-move-mode .blog-card:hover{
@@ -159,7 +159,7 @@
     body:not(.jbc-move-mode) figure:hover,body:not(.jbc-move-mode) blockquote:hover,
     body:not(.jbc-move-mode) .service-card:hover,body:not(.jbc-move-mode) .portfolio-item:hover,
     body:not(.jbc-move-mode) .value-card:hover,body:not(.jbc-move-mode) .process-card:hover,
-    body:not(.jbc-move-mode) .blog-card:hover,body:not(.jbc-move-mode) .hero-mega:hover,
+    body:not(.jbc-move-mode) .blog-card:hover,body:not(.jbc-move-mode) .hero-mega .l1:hover,body:not(.jbc-move-mode) .hero-mega .l2:hover,body:not(.jbc-move-mode) .hero-mega .l3:hover,
     body:not(.jbc-move-mode) .jbc-custom:hover,body:not(.jbc-move-mode) .tag:hover{
       outline:1px dashed rgba(46,204,64,0.4)!important;outline-offset:2px!important;cursor:pointer!important;
     }
@@ -167,58 +167,23 @@
     .jbc-moved{outline:2px dashed rgba(232,137,29,0.5)!important;outline-offset:3px;}
     #jbc-toolbar .jbc-move-btn{background:#E8891D;border-color:#E8891D;color:#000;}
     #jbc-toolbar .jbc-move-btn.active{background:#2ecc40;border-color:#2ecc40;color:#000;animation:jbc-pulse 1.5s infinite;}
-    @keyframes jbc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,204,64,0.4);}50%{box-shadow:0 0 0 8px rgba(46,204,64,0);}}
 
-
-    /* =========================================================
-       JBC EDITOR FIX — HERO TITLE WORDS ONLY
-       Do not show or grab the invisible title containers.
-       Only Just / Broken / Cookies spans should act like targets.
-       ========================================================= */
-
+    /* ---- JBC WIX MODE, HERO WRAPPER SHIELD ---- */
     .jbc-move-mode .hero-content,
     .jbc-move-mode .hero-mega,
+    .jbc-move-mode .hero-oil-wrap,
     body:not(.jbc-move-mode) .hero-content:hover,
     body:not(.jbc-move-mode) .hero-mega:hover,
-    .hero-content.jbc-selected,
-    .hero-mega.jbc-selected,
-    .hero-content.jbc-grabbed,
-    .hero-mega.jbc-grabbed,
-    .hero-content.jbc-move-active,
-    .hero-mega.jbc-move-active {
-      outline: none !important;
-      box-shadow: none !important;
+    body:not(.jbc-move-mode) .hero-oil-wrap:hover,
+    .hero-content.jbc-selected,.hero-mega.jbc-selected,.hero-oil-wrap.jbc-selected,
+    .hero-content.jbc-grabbed,.hero-mega.jbc-grabbed,.hero-oil-wrap.jbc-grabbed,
+    .hero-content.jbc-move-active,.hero-mega.jbc-move-active,.hero-oil-wrap.jbc-move-active{
+      outline:none!important;box-shadow:none!important;cursor:default!important;
     }
-
-    .jbc-move-mode .hero-content,
-    .jbc-move-mode .hero-mega {
-      cursor: default !important;
-      pointer-events: none !important;
-    }
-
-    .jbc-move-mode .hero-mega .l1,
-    .jbc-move-mode .hero-mega .l2,
-    .jbc-move-mode .hero-mega .l3 {
-      cursor: move !important;
-      pointer-events: all !important;
-    }
-
-    .jbc-move-mode .hero-mega .l1:hover,
-    .jbc-move-mode .hero-mega .l2:hover,
-    .jbc-move-mode .hero-mega .l3:hover,
-    body:not(.jbc-move-mode) .hero-mega .l1:hover,
-    body:not(.jbc-move-mode) .hero-mega .l2:hover,
-    body:not(.jbc-move-mode) .hero-mega .l3:hover {
-      outline: 2px dashed #E8891D !important;
-      outline-offset: 3px !important;
-    }
-
-    body:not(.jbc-move-mode) .hero-mega:hover,
-    body:not(.jbc-move-mode) .hero-content:hover {
-      outline: none !important;
-      box-shadow: none !important;
-    }
-
+    .jbc-move-mode .hero-content,.jbc-move-mode .hero-mega,.jbc-move-mode .hero-oil-wrap{pointer-events:none!important;}
+    .jbc-move-mode .hero-mega .l1,.jbc-move-mode .hero-mega .l2,.jbc-move-mode .hero-mega .l3{pointer-events:all!important;cursor:move!important;}
+    .hero-mega .l1:hover,.hero-mega .l2:hover,.hero-mega .l3:hover{outline:2px dashed #E8891D!important;outline-offset:3px!important;}
+    @keyframes jbc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,204,64,0.4);}50%{box-shadow:0 0 0 8px rgba(46,204,64,0);}}
   `;
   document.head.appendChild(css);
 
@@ -1935,7 +1900,7 @@
                    e.target.closest('.jbc-added') || e.target.closest('.jbc-custom') ||
                    e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.testimonial-card,.team-card,.pricing-card') ||
                    e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,figure,blockquote,ul,ol,li') ||
-                   e.target.closest('.hero-mega,.hero-content,.hero-bottom,.tag,.manifesto-text,.marquee,.cta-box') ||
+                   e.target.closest('.hero-mega .l1,.hero-mega .l2,.hero-mega .l3,.hero-bottom,.tag,.manifesto-text,.marquee,.cta-box') ||
                    e.target.closest('div[class]:not(section):not(.hero):not(body):not(html):not(nav):not(footer):not(.preloader)');
       if(!target) return;
       /* Don't drag the body, html, main wrappers, or sections themselves */
@@ -2557,84 +2522,84 @@
     var rules = [];
     var timestamp = new Date().toISOString().split('T')[0];
     rules.push('/* JBC Editor Overrides — auto-generated ' + timestamp + ' */');
-    rules.push('/* Do not edit manually — this file is overwritten on each save */');
+    rules.push('/* Saved by the visual editor. This file is overwritten on each editor save. */');
     rules.push('');
 
-    /* Find all elements marked as changed */
-    var changed = document.querySelectorAll('.jbc-text-changed');
-    changed.forEach(function(el){
-      /* Skip editor UI */
-      if(el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-panel')) return;
+    var seen = new Set();
 
-      var styleAttr = el.getAttribute('style');
-      if(!styleAttr || styleAttr.trim() === '') return;
+    function isEditorUI(el){
+      return !!(el.closest && el.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-panel,#jbc-panel-toggle,#jbc-toast,#jbc-placement-hint,#jbc-guides,#jbc-snap-line,#jbc-rose-panel'));
+    }
 
-      /* For .jbc-custom (added elements), use data-jbc-id selector */
-      var selector;
+    function selectorFor(el){
+      if(el.classList.contains('hero-corner-rose')) return '.hero-corner-rose';
+      if(el.classList.contains('tag') && el.closest('.hero')) return '.hero .tag';
+      if(el.classList.contains('l1') && el.closest('.hero-mega')) return '.hero-mega .l1';
+      if(el.classList.contains('l2') && el.closest('.hero-mega')) return '.hero-mega .l2';
+      if(el.classList.contains('l3') && el.closest('.hero-mega')) return '.hero-mega .l3';
+      if(el.classList.contains('hero-photo-layer')) return '.hero .jbc-custom.hero-photo-layer';
       if(el.classList.contains('jbc-custom') || el.classList.contains('jbc-added')){
         var jid = getJbcId(el);
-        selector = '[data-jbc-id="' + jid + '"]';
-      } else {
-        /* For existing page elements, build a CSS selector */
-        selector = getJbcId(el);
+        return '[data-jbc-id="' + jid + '"]';
       }
+      return getJbcId(el);
+    }
 
-      /* Parse inline styles into CSS properties */
+    function pushRule(el){
+      if(!el || isEditorUI(el)) return;
+      var styleAttr = el.getAttribute('style');
+      if(!styleAttr || styleAttr.trim() === '') return;
+      var selector = selectorFor(el);
+      if(!selector || seen.has(selector)) return;
       var cssProps = [];
       var style = el.style;
       for(var i = 0; i < style.length; i++){
         var prop = style[i];
         var val = style.getPropertyValue(prop);
-        var priority = style.getPropertyPriority(prop);
-        /* Skip animation/transition props that main.js sets — these are runtime-only */
+        if(!val) continue;
+        if(prop === 'cursor' || prop === 'outline' || prop === 'outline-offset' || prop === 'user-select' || prop === 'box-shadow') continue;
         if(prop === 'animation-play-state' || prop === 'transition') continue;
-        /* Skip cursor, outline, user-select — editor UI props */
-        if(prop === 'cursor' || prop === 'outline' || prop === 'outline-offset' || prop === 'user-select') continue;
-
-        if(val){
-          cssProps.push('  ' + prop + ': ' + val + (priority ? ' !' + priority : '') + ';');
-        }
+        cssProps.push('  ' + prop + ': ' + val + ' !important;');
       }
-
       if(cssProps.length > 0){
+        seen.add(selector);
         rules.push(selector + ' {');
         rules.push(cssProps.join('\n'));
         rules.push('}');
         rules.push('');
       }
-    });
+    }
 
-    /* Also handle section background changes */
+    document.querySelectorAll('.jbc-text-changed,.jbc-moved,.jbc-custom,.jbc-added,.hero-corner-rose,.hero .tag,.hero-mega .l1,.hero-mega .l2,.hero-mega .l3,.hero .jbc-custom.hero-photo-layer').forEach(pushRule);
+
     document.querySelectorAll('section,footer,.hero,.manifesto').forEach(function(sec){
-      if(!sec.classList.contains('jbc-text-changed')) return;
-      var bg = sec.style.backgroundColor;
-      var bgImg = sec.style.backgroundImage;
-      var padding = sec.style.padding || sec.style.paddingTop;
-      if(!bg && !bgImg && !padding) return;
-
+      if(!sec.classList.contains('jbc-text-changed') && !sec.hasAttribute('style')) return;
+      if(isEditorUI(sec)) return;
       var secSelector;
       if(sec.id) secSelector = '#' + sec.id;
       else if(sec.classList.contains('hero')) secSelector = '.hero';
+      else if(sec.classList.contains('manifesto')) secSelector = '.manifesto';
       else if(sec.tagName === 'FOOTER') secSelector = 'footer';
       else {
         var cls = Array.from(sec.classList).filter(function(c){ return c.indexOf('jbc-') === -1; })[0];
         secSelector = cls ? 'section.' + cls : 'section';
       }
-
+      if(seen.has(secSelector)) return;
       var props = [];
-      if(bg) props.push('  background-color: ' + bg + ' !important;');
-      if(bgImg) props.push('  background-image: ' + bgImg + ' !important;');
-      if(sec.style.paddingTop) props.push('  padding-top: ' + sec.style.paddingTop + ' !important;');
-      if(sec.style.paddingBottom) props.push('  padding-bottom: ' + sec.style.paddingBottom + ' !important;');
-
+      var style = sec.style;
+      var allow = ['background','background-color','background-image','background-size','background-position','background-repeat','padding','padding-top','padding-bottom','margin','margin-top','margin-bottom','min-height','height','overflow','display'];
+      allow.forEach(function(prop){
+        var val = style.getPropertyValue(prop);
+        if(val) props.push('  ' + prop + ': ' + val + ' !important;');
+      });
       if(props.length > 0){
+        seen.add(secSelector);
         rules.push(secSelector + ' {');
         rules.push(props.join('\n'));
         rules.push('}');
         rules.push('');
       }
     });
-
     return rules.join('\n');
   }
 
@@ -3341,7 +3306,7 @@
     if(!target){
       /* Allow selecting any visible element in ALL modes (edit, move, panel open) */
       target = e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,blockquote,figure,video,ul,ol,li,div[class]');
-      if(!target) target = e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.team-member,.testi-brutal,.tag,.hero-mega,.hero-content,.hero-bottom,.manifesto-text,.cta-box,.marquee');
+      if(!target) target = e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.team-member,.testi-brutal,.tag,.hero-mega .l1,.hero-mega .l2,.hero-mega .l3,.hero-bottom,.manifesto-text,.cta-box,.marquee');
       /* Don't select structural wrappers */
       if(target && (target.tagName==='SECTION'||target.tagName==='NAV'||target.tagName==='FOOTER'||target.tagName==='BODY'||target.tagName==='HTML'||target.tagName==='MAIN')) target = null;
     }
@@ -3354,7 +3319,7 @@
   document.addEventListener('mousedown', function(e){
     if(e.target.closest('#jbc-panel,#jbc-panel-toggle,#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-toast,.jbc-universal-handles,.jbc-added,.jbc-custom,.jbc-img-wrap,.jbc-editable,.jbc-arr-btn,.jbc-resize-handle')) return;
     /* Don't deselect if clicking on a selectable element */
-    if(e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,blockquote,figure,.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.tag,.hero-mega,.hero-content')) return;
+    if(e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,blockquote,figure,.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.tag,.hero-mega .l1,.hero-mega .l2,.hero-mega .l3')) return;
     if(selectedElement && !moveMode){
       selectedElement.classList.remove('jbc-selected');
       removeUniversalHandles();
@@ -3573,582 +3538,125 @@
 
   /* ========== LOG ========== */
   console.log('JBC Editor V2 loaded — EDITOR MODE active with side panel, undo/redo, section editing');
-/* =========================================================
-   JBC EDITOR PATCH, REMOVE HERO TITLE CONTAINER BOXES
-   Stops editor from selecting/moving .hero-content/.hero-mega.
-   Keeps Just / Broken / Cookies independently editable.
-   ========================================================= */
 
-(function removeHeroTitleContainersFromEditor() {
-  const blockedSelectors = [
-    '.hero-content',
-    '.hero-mega',
-    '.hero-oil-wrap'
-  ];
 
-  function isHeroTitleContainer(el) {
-    return el && blockedSelectors.some(function(sel) {
-      return el.matches && el.matches(sel);
-    });
-  }
-
-  function stripEditorState(el) {
-    if (!el) return;
-
-    el.classList.remove(
-      'jbc-editable',
-      'jbc-selected',
-      'jbc-grabbed',
-      'jbc-move-active',
-      'jbc-moved',
-      'jbc-text-changed'
-    );
-
-    el.removeAttribute('contenteditable');
-    el.removeAttribute('data-orig-z');
-
-    el.style.outline = 'none';
-    el.style.boxShadow = 'none';
-    el.style.cursor = 'default';
-    el.style.pointerEvents = 'none';
-  }
-
-  function restoreHeroWords() {
-    document.querySelectorAll('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3').forEach(function(word) {
-      word.setAttribute('contenteditable', 'true');
-      word.classList.add('jbc-editable');
-      word.style.pointerEvents = 'auto';
-      word.style.cursor = 'text';
-    });
-  }
-
-  function cleanHeroContainers() {
-    document.querySelectorAll('.hero-content, .hero-mega, .hero-oil-wrap').forEach(function(el) {
-      stripEditorState(el);
-    });
-
-    restoreHeroWords();
-  }
-
-  cleanHeroContainers();
-
-  document.addEventListener('mouseover', function(e) {
-    const container = e.target.closest('.hero-content, .hero-mega, .hero-oil-wrap');
-    if (!container) return;
-
-    stripEditorState(container);
-    restoreHeroWords();
-  }, true);
-
-  document.addEventListener('mousedown', function(e) {
-    const word = e.target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3');
-
-    if (word) {
-      word.style.pointerEvents = 'auto';
-      word.setAttribute('contenteditable', 'true');
-      word.classList.add('jbc-editable');
-      return;
-    }
-
-    const container = e.target.closest('.hero-content, .hero-mega, .hero-oil-wrap');
-
-    if (isHeroTitleContainer(e.target) || container) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
-
-      stripEditorState(container || e.target);
-      restoreHeroWords();
-    }
-  }, true);
-
-  document.addEventListener('contextmenu', function(e) {
-    const word = e.target.closest('.hero-mega .l1, .hero-mega .l2, .hero-mega .l3');
-    if (word) return;
-
-    const container = e.target.closest('.hero-content, .hero-mega, .hero-oil-wrap');
-
-    if (container) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
-
-      stripEditorState(container);
-      restoreHeroWords();
-    }
-  }, true);
-
-  const observer = new MutationObserver(function() {
-    cleanHeroContainers();
-  });
-
-  observer.observe(document.documentElement, {
-    attributes: true,
-    subtree: true,
-    attributeFilter: ['class', 'style', 'contenteditable']
-  });
-})();
-/* =========================================================
-   JBC EMERGENCY EDITOR PATCH
-   Remove big yellow hero title container boxes.
-   Keep only Just / Broken / Cookies selectable.
-   Paste at the VERY END of js/editor-refs.js
-   ========================================================= */
-
-(function jbcKillHeroTitleWrapperBoxes() {
-  if (window.__jbcHeroWrapperPatchApplied) return;
-  window.__jbcHeroWrapperPatchApplied = true;
-
-  const blocked = [
-    '.hero-content',
-    '.hero-mega',
-    '.hero-oil-wrap'
-  ];
-
-  const words = '.hero-mega .l1, .hero-mega .l2, .hero-mega .l3';
-
-  function isBlocked(el) {
-    return el && blocked.some(function(sel) {
-      return el.matches && el.matches(sel);
-    });
-  }
-
-  function getBlocked(el) {
-    return el && el.closest ? el.closest(blocked.join(',')) : null;
-  }
-
-  function cleanOne(el) {
-    if (!el) return;
-
-    el.classList.remove(
-      'jbc-editable',
-      'jbc-selected',
-      'jbc-grabbed',
-      'jbc-move-active',
-      'jbc-moved',
-      'jbc-text-changed'
-    );
-
-    el.removeAttribute('contenteditable');
-    el.removeAttribute('data-orig-z');
-
-    el.style.outline = 'none';
-    el.style.boxShadow = 'none';
-    el.style.cursor = 'default';
-    el.style.pointerEvents = 'none';
-  }
-
-  function restoreWords() {
-    document.querySelectorAll(words).forEach(function(word) {
-      word.classList.add('jbc-editable');
-      word.setAttribute('contenteditable', 'true');
-      word.style.pointerEvents = 'auto';
-      word.style.cursor = document.body.classList.contains('jbc-move-mode') ? 'move' : 'text';
-    });
-  }
-
-  function cleanAll() {
-    document.querySelectorAll(blocked.join(',')).forEach(cleanOne);
-    restoreWords();
-  }
-
-  /* Add CSS shield */
-  const style = document.createElement('style');
-  style.id = 'jbc-hero-title-wrapper-killer';
-  style.textContent = `
-    /* Kill editor boxes on hero title parent wrappers */
-    .hero-content,
-    .hero-mega,
-    .hero-oil-wrap,
-    .hero-content:hover,
-    .hero-mega:hover,
-    .hero-oil-wrap:hover,
-    .hero-content.jbc-selected,
-    .hero-mega.jbc-selected,
-    .hero-oil-wrap.jbc-selected,
-    .hero-content.jbc-grabbed,
-    .hero-mega.jbc-grabbed,
-    .hero-oil-wrap.jbc-grabbed,
-    .hero-content.jbc-move-active,
-    .hero-mega.jbc-move-active,
-    .hero-oil-wrap.jbc-move-active,
-    body.jbc-move-mode .hero-content,
-    body.jbc-move-mode .hero-mega,
-    body.jbc-move-mode .hero-oil-wrap,
-    body.jbc-move-mode .hero-content:hover,
-    body.jbc-move-mode .hero-mega:hover,
-    body.jbc-move-mode .hero-oil-wrap:hover {
-      outline: none !important;
-      box-shadow: none !important;
-      cursor: default !important;
-    }
-
-    body.jbc-move-mode .hero-content,
-    body.jbc-move-mode .hero-mega,
-    body.jbc-move-mode .hero-oil-wrap {
-      pointer-events: none !important;
-    }
-
-    body.jbc-move-mode .hero-mega .l1,
-    body.jbc-move-mode .hero-mega .l2,
-    body.jbc-move-mode .hero-mega .l3 {
-      pointer-events: auto !important;
-      cursor: move !important;
-    }
-
-    .hero-mega .l1:hover,
-    .hero-mega .l2:hover,
-    .hero-mega .l3:hover {
-      outline: 2px dashed rgba(232, 137, 29, 0.75) !important;
-      outline-offset: 3px !important;
-    }
-  `;
-  document.head.appendChild(style);
-
-  /* Stop editor events from grabbing the wrappers */
-  document.addEventListener('mousedown', function(e) {
-    const word = e.target.closest(words);
-    if (word) {
-      restoreWords();
-      return;
-    }
-
-    const badBox = getBlocked(e.target);
-
-    if (badBox || isBlocked(e.target)) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-
-      cleanAll();
-      return false;
-    }
-  }, true);
-
-  document.addEventListener('mouseover', function(e) {
-    const badBox = getBlocked(e.target);
-
-    if (badBox) {
-      cleanAll();
-    }
-  }, true);
-
-  document.addEventListener('contextmenu', function(e) {
-    const word = e.target.closest(words);
-    if (word) return;
-
-    const badBox = getBlocked(e.target);
-
-    if (badBox || isBlocked(e.target)) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-
-      cleanAll();
-      return false;
-    }
-  }, true);
-
-  /* Keep cleaning, because the editor keeps re-adding classes */
-  const observer = new MutationObserver(cleanAll);
-
-  observer.observe(document.documentElement, {
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['class', 'style', 'contenteditable']
-  });
-
-  setInterval(cleanAll, 400);
-
-  cleanAll();
-})();
-/* =========================================================
-   JBC EDITOR PATCH, ROSE PATTERN MOVE / DELETE / RESTORE
-   Makes .hero-corner-rose editable in ?edit mode.
-   Paste at the VERY END of js/editor-refs.js
-   ========================================================= */
-
-(function jbcEditableHeroRosePattern() {
-  if (window.__jbcEditableHeroRoseApplied) return;
-  window.__jbcEditableHeroRoseApplied = true;
-
-  if (window.location.search.indexOf('edit') === -1) return;
-
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
-
-  let rose = document.querySelector('.hero-corner-rose');
-
-  function ensureRose() {
-    rose = document.querySelector('.hero-corner-rose');
-
-    if (!rose) {
-      rose = document.createElement('div');
-      rose.className = 'hero-corner-rose';
-      rose.setAttribute('aria-hidden', 'true');
-      hero.insertBefore(rose, hero.firstChild);
-    }
-
-    rose.setAttribute('data-jbc-rose-editor', 'true');
-    rose.style.pointerEvents = 'auto';
-    rose.style.cursor = 'move';
-
-    if (!rose.querySelector('.jbc-rose-delete-btn')) {
-      const del = document.createElement('button');
-      del.className = 'jbc-rose-delete-btn';
-      del.type = 'button';
-      del.textContent = '×';
-      del.title = 'Delete rose pattern';
-
-      del.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        rose.remove();
-        rose = null;
-        showRoseToast('Rose pattern deleted');
-      });
-
-      rose.appendChild(del);
-    }
-
-    return rose;
-  }
-
-  function showRoseToast(message) {
-    let toast = document.getElementById('jbc-toast');
-
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'jbc-toast';
-      document.body.appendChild(toast);
-    }
-
-    toast.textContent = message;
-    toast.className = 'show success';
-
-    clearTimeout(toast._jbcRoseTimer);
-    toast._jbcRoseTimer = setTimeout(function() {
-      toast.className = '';
-    }, 2500);
-  }
-
-  function makeRoseDraggable() {
-    const r = ensureRose();
-
-    let dragging = false;
-    let startX = 0;
-    let startY = 0;
-    let startRight = 0;
-    let startBottom = 0;
-
-    r.addEventListener('mousedown', function(e) {
-      if (e.target.closest('.jbc-rose-delete-btn')) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      dragging = true;
-
-      const computed = getComputedStyle(r);
-      startRight = parseFloat(computed.right) || 0;
-      startBottom = parseFloat(computed.bottom) || 0;
-
-      startX = e.clientX;
-      startY = e.clientY;
-
-      r.classList.add('jbc-rose-selected');
-      document.body.classList.add('jbc-rose-dragging');
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (!dragging || !rose) return;
-
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-
-      /*
-        Moving mouse right means right value decreases.
-        Moving mouse down means bottom value decreases.
-      */
-      rose.style.right = (startRight - dx) + 'px';
-      rose.style.bottom = (startBottom - dy) + 'px';
-      rose.style.left = 'auto';
-      rose.style.top = 'auto';
-    });
-
-    document.addEventListener('mouseup', function() {
-      if (!dragging) return;
-
-      dragging = false;
-
-      if (rose) {
-        rose.classList.remove('jbc-rose-selected');
+  /* =========================================================
+     JBC WIX-LIKE PATCH — persistent visual edits
+     Keeps existing editor, but makes saved CSS more faithful.
+     ========================================================= */
+
+  if(saveBtn){ saveBtn.innerHTML = '<i class="fas fa-save"></i> SAVE TO SITE FOLDER'; }
+
+  (function jbcEditableHeroRosePattern(){
+    var hero = document.querySelector('.hero');
+    if(!hero) return;
+    var rose = document.querySelector('.hero-corner-rose');
+
+    function ensureRose(){
+      rose = document.querySelector('.hero-corner-rose');
+      if(!rose){
+        rose = document.createElement('div');
+        rose.className = 'hero-corner-rose';
+        rose.setAttribute('aria-hidden','true');
+        hero.insertBefore(rose, hero.firstChild);
       }
-
-      document.body.classList.remove('jbc-rose-dragging');
-      showRoseToast('Rose pattern moved');
-    });
-  }
-
-  function addRoseControlPanel() {
-    if (document.getElementById('jbc-rose-panel')) return;
-
-    const panel = document.createElement('div');
-    panel.id = 'jbc-rose-panel';
-
-    panel.innerHTML = `
-      <button type="button" data-rose-action="restore">Rose On</button>
-      <button type="button" data-rose-action="delete">Rose Off</button>
-      <button type="button" data-rose-action="smaller">Smaller</button>
-      <button type="button" data-rose-action="bigger">Bigger</button>
-      <button type="button" data-rose-action="more">More Visible</button>
-      <button type="button" data-rose-action="less">Less Visible</button>
-    `;
-
-    document.body.appendChild(panel);
-
-    panel.addEventListener('click', function(e) {
-      const btn = e.target.closest('button');
-      if (!btn) return;
-
-      const action = btn.getAttribute('data-rose-action');
-
-      if (action === 'restore') {
-        const r = ensureRose();
-
-        r.style.right = '-40px';
-        r.style.bottom = '-55px';
-        r.style.width = '820px';
-        r.style.height = '700px';
-        r.style.backgroundSize = '620px 620px';
-        r.style.opacity = '1';
-
-        makeRoseDraggable();
-        showRoseToast('Rose pattern restored');
-        return;
+      rose.setAttribute('data-jbc-rose-editor','true');
+      rose.style.pointerEvents = 'auto';
+      rose.style.cursor = 'move';
+      if(!rose.querySelector('.jbc-rose-delete-btn')){
+        var del = document.createElement('button');
+        del.className = 'jbc-rose-delete-btn';
+        del.type = 'button';
+        del.textContent = '×';
+        del.title = 'Delete rose pattern';
+        del.addEventListener('click', function(e){
+          e.preventDefault(); e.stopPropagation();
+          rose.style.display = 'none';
+          rose.setAttribute('data-jbc-deleted','true');
+          markChanged(rose);
+          showToast('Rose hidden, save to keep it hidden');
+        });
+        rose.appendChild(del);
       }
+      return rose;
+    }
 
-      if (action === 'delete') {
-        if (rose) {
-          rose.remove();
-          rose = null;
-          showRoseToast('Rose pattern deleted');
+    function addRosePanel(){
+      if(document.getElementById('jbc-rose-panel')) return;
+      var panel = document.createElement('div');
+      panel.id = 'jbc-rose-panel';
+      panel.innerHTML = '<button type="button" data-rose-action="on">Rose On</button><button type="button" data-rose-action="off">Rose Off</button><button type="button" data-rose-action="smaller">Smaller</button><button type="button" data-rose-action="bigger">Bigger</button><button type="button" data-rose-action="more">More Visible</button><button type="button" data-rose-action="less">Less Visible</button>';
+      document.body.appendChild(panel);
+      panel.addEventListener('click', function(e){
+        var btn = e.target.closest('button'); if(!btn) return;
+        var r = ensureRose();
+        var action = btn.getAttribute('data-rose-action');
+        var cs = getComputedStyle(r);
+        var w = parseFloat(cs.width)||820;
+        var h = parseFloat(cs.height)||700;
+        var op = parseFloat(cs.opacity)||1;
+        if(action === 'on'){
+          r.style.display = 'block'; r.style.visibility = 'visible'; r.style.opacity = r.style.opacity || '0.82'; r.removeAttribute('data-jbc-deleted');
         }
-        return;
-      }
-
-      const r = ensureRose();
-
-      const currentWidth = parseFloat(getComputedStyle(r).width) || 820;
-      const currentHeight = parseFloat(getComputedStyle(r).height) || 700;
-      const currentOpacity = parseFloat(getComputedStyle(r).opacity) || 1;
-
-      if (action === 'smaller') {
-        r.style.width = Math.max(220, currentWidth - 80) + 'px';
-        r.style.height = Math.max(220, currentHeight - 80) + 'px';
-        r.style.backgroundSize = Math.max(220, currentWidth - 200) + 'px ' + Math.max(220, currentWidth - 200) + 'px';
-        showRoseToast('Rose pattern smaller');
-      }
-
-      if (action === 'bigger') {
-        r.style.width = (currentWidth + 80) + 'px';
-        r.style.height = (currentHeight + 80) + 'px';
-        r.style.backgroundSize = (currentWidth - 40) + 'px ' + (currentWidth - 40) + 'px';
-        showRoseToast('Rose pattern bigger');
-      }
-
-      if (action === 'more') {
-        r.style.opacity = Math.min(1, currentOpacity + 0.15).toFixed(2);
-        showRoseToast('Rose pattern more visible');
-      }
-
-      if (action === 'less') {
-        r.style.opacity = Math.max(0.05, currentOpacity - 0.15).toFixed(2);
-        showRoseToast('Rose pattern less visible');
-      }
-    });
-  }
-
-  const style = document.createElement('style');
-  style.id = 'jbc-rose-editor-style';
-
-  style.textContent = `
-    .hero-corner-rose[data-jbc-rose-editor="true"] {
-      pointer-events: auto !important;
-      cursor: move !important;
+        if(action === 'off'){
+          r.style.display = 'none'; r.setAttribute('data-jbc-deleted','true');
+        }
+        if(action === 'smaller'){
+          r.style.width = Math.max(220,w-80)+'px'; r.style.height = Math.max(220,h-80)+'px';
+        }
+        if(action === 'bigger'){
+          r.style.width = (w+80)+'px'; r.style.height = (h+80)+'px';
+        }
+        if(action === 'more') r.style.opacity = Math.min(1,op+0.12).toFixed(2);
+        if(action === 'less') r.style.opacity = Math.max(0.05,op-0.12).toFixed(2);
+        markChanged(r);
+        showToast('Rose updated, save to keep changes');
+      });
     }
 
-    .hero-corner-rose[data-jbc-rose-editor="true"]:hover,
-    .hero-corner-rose.jbc-rose-selected {
-      outline: 2px dashed #E8891D !important;
-      outline-offset: 4px !important;
+    function makeRoseDraggable(){
+      var r = ensureRose();
+      var dragging=false, startX=0, startY=0, startLeft=0, startTop=0;
+      r.addEventListener('mousedown', function(e){
+        if(e.target.closest('.jbc-rose-delete-btn')) return;
+        if(e.button !== 0) return;
+        e.preventDefault(); e.stopPropagation();
+        dragging=true;
+        var rect = r.getBoundingClientRect();
+        var heroRect = hero.getBoundingClientRect();
+        startLeft = rect.left - heroRect.left;
+        startTop = rect.top - heroRect.top;
+        startX = e.clientX; startY = e.clientY;
+        r.classList.add('jbc-rose-selected');
+      }, true);
+      document.addEventListener('mousemove', function(e){
+        if(!dragging || !rose) return;
+        var dx=e.clientX-startX, dy=e.clientY-startY;
+        rose.style.left = (startLeft+dx)+'px';
+        rose.style.top = (startTop+dy)+'px';
+        rose.style.right = 'auto'; rose.style.bottom = 'auto';
+      }, true);
+      document.addEventListener('mouseup', function(){
+        if(!dragging) return;
+        dragging=false;
+        if(rose){ rose.classList.remove('jbc-rose-selected'); markChanged(rose); }
+        showToast('Rose moved, save to keep position');
+      }, true);
     }
 
-    .jbc-rose-delete-btn {
-      position: absolute !important;
-      top: 12px !important;
-      right: 12px !important;
-      width: 28px !important;
-      height: 28px !important;
-      border-radius: 50% !important;
-      border: 2px solid #fff !important;
-      background: #E84848 !important;
-      color: #fff !important;
-      font-size: 18px !important;
-      line-height: 20px !important;
-      font-weight: 700 !important;
-      cursor: pointer !important;
-      z-index: 999999 !important;
-      display: none !important;
-      align-items: center !important;
-      justify-content: center !important;
-    }
+    var roseStyle = document.createElement('style');
+    roseStyle.textContent = `
+      .hero-corner-rose[data-jbc-rose-editor="true"]{pointer-events:auto!important;cursor:move!important;}
+      .hero-corner-rose[data-jbc-rose-editor="true"]:hover,.hero-corner-rose.jbc-rose-selected{outline:2px dashed #E8891D!important;outline-offset:4px!important;}
+      .jbc-rose-delete-btn{position:absolute!important;top:12px!important;right:12px!important;width:28px!important;height:28px!important;border-radius:50%!important;border:2px solid #fff!important;background:#E84848!important;color:#fff!important;font-size:18px!important;font-weight:700!important;cursor:pointer!important;z-index:999999!important;display:none!important;align-items:center!important;justify-content:center!important;}
+      .hero-corner-rose:hover .jbc-rose-delete-btn,.hero-corner-rose.jbc-rose-selected .jbc-rose-delete-btn{display:flex!important;}
+      #jbc-rose-panel{position:fixed!important;left:20px!important;bottom:20px!important;z-index:1000002!important;display:flex!important;flex-wrap:wrap!important;gap:6px!important;max-width:540px!important;padding:8px!important;background:rgba(17,17,17,.92)!important;border:2px solid #E8891D!important;font-family:monospace!important;}
+      #jbc-rose-panel button{background:#1a1a1a!important;color:#fff!important;border:1px solid #E8891D!important;padding:8px 10px!important;font-family:monospace!important;font-size:11px!important;font-weight:700!important;text-transform:uppercase!important;cursor:pointer!important;letter-spacing:.8px!important;}
+      #jbc-rose-panel button:hover{background:#E8891D!important;color:#000!important;}
+    `;
+    document.head.appendChild(roseStyle);
+    ensureRose(); makeRoseDraggable(); addRosePanel();
+  })();
 
-    .hero-corner-rose[data-jbc-rose-editor="true"]:hover .jbc-rose-delete-btn,
-    .hero-corner-rose.jbc-rose-selected .jbc-rose-delete-btn {
-      display: flex !important;
-    }
 
-    #jbc-rose-panel {
-      position: fixed !important;
-      left: 20px !important;
-      bottom: 20px !important;
-      z-index: 1000002 !important;
-      display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 6px !important;
-      max-width: 520px !important;
-      padding: 8px !important;
-      background: rgba(17, 17, 17, 0.92) !important;
-      border: 2px solid #E8891D !important;
-      font-family: monospace !important;
-    }
-
-    #jbc-rose-panel button {
-      background: #1a1a1a !important;
-      color: #fff !important;
-      border: 1px solid #E8891D !important;
-      padding: 8px 10px !important;
-      font-family: monospace !important;
-      font-size: 11px !important;
-      font-weight: 700 !important;
-      text-transform: uppercase !important;
-      cursor: pointer !important;
-      letter-spacing: 0.8px !important;
-    }
-
-    #jbc-rose-panel button:hover {
-      background: #E8891D !important;
-      color: #000 !important;
-    }
-
-    body.jbc-rose-dragging {
-      cursor: move !important;
-      user-select: none !important;
-    }
-  `;
-
-  document.head.appendChild(style);
-
-  ensureRose();
-  makeRoseDraggable();
-  addRoseControlPanel();
 })();
