@@ -5989,8 +5989,10 @@ body {
 
   width: min(58vw, 780px) !important;
   height: min(70vh, 720px) !important;
-  Left: 180px !important;
-  bottom: -150px !important;
+right: -260px !important;
+bottom: -170px !important;
+left: auto !important;
+top: auto !important;
 
   background-image: var(--jbc-floral-pattern) !important;
   background-repeat: no-repeat !important;

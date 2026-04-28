@@ -168,6 +168,57 @@
     #jbc-toolbar .jbc-move-btn{background:#E8891D;border-color:#E8891D;color:#000;}
     #jbc-toolbar .jbc-move-btn.active{background:#2ecc40;border-color:#2ecc40;color:#000;animation:jbc-pulse 1.5s infinite;}
     @keyframes jbc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,204,64,0.4);}50%{box-shadow:0 0 0 8px rgba(46,204,64,0);}}
+
+
+    /* =========================================================
+       JBC EDITOR FIX — HERO TITLE WORDS ONLY
+       Do not show or grab the invisible title containers.
+       Only Just / Broken / Cookies spans should act like targets.
+       ========================================================= */
+
+    .jbc-move-mode .hero-content,
+    .jbc-move-mode .hero-mega,
+    body:not(.jbc-move-mode) .hero-content:hover,
+    body:not(.jbc-move-mode) .hero-mega:hover,
+    .hero-content.jbc-selected,
+    .hero-mega.jbc-selected,
+    .hero-content.jbc-grabbed,
+    .hero-mega.jbc-grabbed,
+    .hero-content.jbc-move-active,
+    .hero-mega.jbc-move-active {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .jbc-move-mode .hero-content,
+    .jbc-move-mode .hero-mega {
+      cursor: default !important;
+      pointer-events: none !important;
+    }
+
+    .jbc-move-mode .hero-mega .l1,
+    .jbc-move-mode .hero-mega .l2,
+    .jbc-move-mode .hero-mega .l3 {
+      cursor: move !important;
+      pointer-events: all !important;
+    }
+
+    .jbc-move-mode .hero-mega .l1:hover,
+    .jbc-move-mode .hero-mega .l2:hover,
+    .jbc-move-mode .hero-mega .l3:hover,
+    body:not(.jbc-move-mode) .hero-mega .l1:hover,
+    body:not(.jbc-move-mode) .hero-mega .l2:hover,
+    body:not(.jbc-move-mode) .hero-mega .l3:hover {
+      outline: 2px dashed #E8891D !important;
+      outline-offset: 3px !important;
+    }
+
+    body:not(.jbc-move-mode) .hero-mega:hover,
+    body:not(.jbc-move-mode) .hero-content:hover {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
   `;
   document.head.appendChild(css);
 
