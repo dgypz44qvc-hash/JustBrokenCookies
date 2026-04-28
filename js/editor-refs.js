@@ -3860,3 +3860,295 @@
 
   cleanAll();
 })();
+/* =========================================================
+   JBC EDITOR PATCH, ROSE PATTERN MOVE / DELETE / RESTORE
+   Makes .hero-corner-rose editable in ?edit mode.
+   Paste at the VERY END of js/editor-refs.js
+   ========================================================= */
+
+(function jbcEditableHeroRosePattern() {
+  if (window.__jbcEditableHeroRoseApplied) return;
+  window.__jbcEditableHeroRoseApplied = true;
+
+  if (window.location.search.indexOf('edit') === -1) return;
+
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  let rose = document.querySelector('.hero-corner-rose');
+
+  function ensureRose() {
+    rose = document.querySelector('.hero-corner-rose');
+
+    if (!rose) {
+      rose = document.createElement('div');
+      rose.className = 'hero-corner-rose';
+      rose.setAttribute('aria-hidden', 'true');
+      hero.insertBefore(rose, hero.firstChild);
+    }
+
+    rose.setAttribute('data-jbc-rose-editor', 'true');
+    rose.style.pointerEvents = 'auto';
+    rose.style.cursor = 'move';
+
+    if (!rose.querySelector('.jbc-rose-delete-btn')) {
+      const del = document.createElement('button');
+      del.className = 'jbc-rose-delete-btn';
+      del.type = 'button';
+      del.textContent = '×';
+      del.title = 'Delete rose pattern';
+
+      del.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        rose.remove();
+        rose = null;
+        showRoseToast('Rose pattern deleted');
+      });
+
+      rose.appendChild(del);
+    }
+
+    return rose;
+  }
+
+  function showRoseToast(message) {
+    let toast = document.getElementById('jbc-toast');
+
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'jbc-toast';
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.className = 'show success';
+
+    clearTimeout(toast._jbcRoseTimer);
+    toast._jbcRoseTimer = setTimeout(function() {
+      toast.className = '';
+    }, 2500);
+  }
+
+  function makeRoseDraggable() {
+    const r = ensureRose();
+
+    let dragging = false;
+    let startX = 0;
+    let startY = 0;
+    let startRight = 0;
+    let startBottom = 0;
+
+    r.addEventListener('mousedown', function(e) {
+      if (e.target.closest('.jbc-rose-delete-btn')) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      dragging = true;
+
+      const computed = getComputedStyle(r);
+      startRight = parseFloat(computed.right) || 0;
+      startBottom = parseFloat(computed.bottom) || 0;
+
+      startX = e.clientX;
+      startY = e.clientY;
+
+      r.classList.add('jbc-rose-selected');
+      document.body.classList.add('jbc-rose-dragging');
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging || !rose) return;
+
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+
+      /*
+        Moving mouse right means right value decreases.
+        Moving mouse down means bottom value decreases.
+      */
+      rose.style.right = (startRight - dx) + 'px';
+      rose.style.bottom = (startBottom - dy) + 'px';
+      rose.style.left = 'auto';
+      rose.style.top = 'auto';
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (!dragging) return;
+
+      dragging = false;
+
+      if (rose) {
+        rose.classList.remove('jbc-rose-selected');
+      }
+
+      document.body.classList.remove('jbc-rose-dragging');
+      showRoseToast('Rose pattern moved');
+    });
+  }
+
+  function addRoseControlPanel() {
+    if (document.getElementById('jbc-rose-panel')) return;
+
+    const panel = document.createElement('div');
+    panel.id = 'jbc-rose-panel';
+
+    panel.innerHTML = `
+      <button type="button" data-rose-action="restore">Rose On</button>
+      <button type="button" data-rose-action="delete">Rose Off</button>
+      <button type="button" data-rose-action="smaller">Smaller</button>
+      <button type="button" data-rose-action="bigger">Bigger</button>
+      <button type="button" data-rose-action="more">More Visible</button>
+      <button type="button" data-rose-action="less">Less Visible</button>
+    `;
+
+    document.body.appendChild(panel);
+
+    panel.addEventListener('click', function(e) {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const action = btn.getAttribute('data-rose-action');
+
+      if (action === 'restore') {
+        const r = ensureRose();
+
+        r.style.right = '-40px';
+        r.style.bottom = '-55px';
+        r.style.width = '820px';
+        r.style.height = '700px';
+        r.style.backgroundSize = '620px 620px';
+        r.style.opacity = '1';
+
+        makeRoseDraggable();
+        showRoseToast('Rose pattern restored');
+        return;
+      }
+
+      if (action === 'delete') {
+        if (rose) {
+          rose.remove();
+          rose = null;
+          showRoseToast('Rose pattern deleted');
+        }
+        return;
+      }
+
+      const r = ensureRose();
+
+      const currentWidth = parseFloat(getComputedStyle(r).width) || 820;
+      const currentHeight = parseFloat(getComputedStyle(r).height) || 700;
+      const currentOpacity = parseFloat(getComputedStyle(r).opacity) || 1;
+
+      if (action === 'smaller') {
+        r.style.width = Math.max(220, currentWidth - 80) + 'px';
+        r.style.height = Math.max(220, currentHeight - 80) + 'px';
+        r.style.backgroundSize = Math.max(220, currentWidth - 200) + 'px ' + Math.max(220, currentWidth - 200) + 'px';
+        showRoseToast('Rose pattern smaller');
+      }
+
+      if (action === 'bigger') {
+        r.style.width = (currentWidth + 80) + 'px';
+        r.style.height = (currentHeight + 80) + 'px';
+        r.style.backgroundSize = (currentWidth - 40) + 'px ' + (currentWidth - 40) + 'px';
+        showRoseToast('Rose pattern bigger');
+      }
+
+      if (action === 'more') {
+        r.style.opacity = Math.min(1, currentOpacity + 0.15).toFixed(2);
+        showRoseToast('Rose pattern more visible');
+      }
+
+      if (action === 'less') {
+        r.style.opacity = Math.max(0.05, currentOpacity - 0.15).toFixed(2);
+        showRoseToast('Rose pattern less visible');
+      }
+    });
+  }
+
+  const style = document.createElement('style');
+  style.id = 'jbc-rose-editor-style';
+
+  style.textContent = `
+    .hero-corner-rose[data-jbc-rose-editor="true"] {
+      pointer-events: auto !important;
+      cursor: move !important;
+    }
+
+    .hero-corner-rose[data-jbc-rose-editor="true"]:hover,
+    .hero-corner-rose.jbc-rose-selected {
+      outline: 2px dashed #E8891D !important;
+      outline-offset: 4px !important;
+    }
+
+    .jbc-rose-delete-btn {
+      position: absolute !important;
+      top: 12px !important;
+      right: 12px !important;
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 50% !important;
+      border: 2px solid #fff !important;
+      background: #E84848 !important;
+      color: #fff !important;
+      font-size: 18px !important;
+      line-height: 20px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      z-index: 999999 !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .hero-corner-rose[data-jbc-rose-editor="true"]:hover .jbc-rose-delete-btn,
+    .hero-corner-rose.jbc-rose-selected .jbc-rose-delete-btn {
+      display: flex !important;
+    }
+
+    #jbc-rose-panel {
+      position: fixed !important;
+      left: 20px !important;
+      bottom: 20px !important;
+      z-index: 1000002 !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+      max-width: 520px !important;
+      padding: 8px !important;
+      background: rgba(17, 17, 17, 0.92) !important;
+      border: 2px solid #E8891D !important;
+      font-family: monospace !important;
+    }
+
+    #jbc-rose-panel button {
+      background: #1a1a1a !important;
+      color: #fff !important;
+      border: 1px solid #E8891D !important;
+      padding: 8px 10px !important;
+      font-family: monospace !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      cursor: pointer !important;
+      letter-spacing: 0.8px !important;
+    }
+
+    #jbc-rose-panel button:hover {
+      background: #E8891D !important;
+      color: #000 !important;
+    }
+
+    body.jbc-rose-dragging {
+      cursor: move !important;
+      user-select: none !important;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  ensureRose();
+  makeRoseDraggable();
+  addRoseControlPanel();
+})();
