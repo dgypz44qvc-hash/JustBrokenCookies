@@ -5068,6 +5068,8 @@ body {
   transform: none !important;
   justify-content: center !important;
   padding-bottom: 0 !important;
+  width: 100% !important;
+  align-self: stretch !important;
 }
 .hero-bottom {
   position: absolute !important;

@@ -90,7 +90,10 @@
     #jbc-toast.error{border-color:#E84848;background:#3a0a0a;}
 
     /* Right-click context menu */
-    #jbc-context-menu{position:fixed;z-index:1000010;background:#1a1a1a;border:2px solid #E8891D;display:none;min-width:220px;max-height:80vh;overflow-y:auto;font-family:monospace;box-shadow:0 8px 30px rgba(0,0,0,0.6);}
+    #jbc-context-menu{position:fixed;z-index:1000010;background:#1a1a1a;border:2px solid #E8891D;display:none;min-width:220px;max-height:80vh;overflow-y:auto;font-family:monospace;box-shadow:0 8px 30px rgba(0,0,0,0.6);border-radius:6px;}
+    #jbc-context-menu .jbc-ctx-dragbar{padding:5px 16px;background:#E8891D;color:#000;font-size:9px;font-weight:bold;text-transform:uppercase;letter-spacing:2px;cursor:grab;user-select:none;display:flex;justify-content:space-between;align-items:center;}
+    #jbc-context-menu .jbc-ctx-dragbar:active{cursor:grabbing;}
+    #jbc-context-menu .jbc-ctx-dragbar .jbc-ctx-grip{font-size:11px;opacity:0.5;}
     #jbc-context-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 16px;background:none;border:none;border-bottom:1px solid #333;color:#fff;font-family:monospace;font-size:12px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;text-align:left;}
     #jbc-context-menu button:last-child{border-bottom:none;}
     #jbc-context-menu button:hover{background:#E8891D;color:#000;}
@@ -150,6 +153,16 @@
       outline:2px dashed #E8891D!important;outline-offset:3px!important;
     }
     .jbc-move-active{outline:2px solid #2ecc40!important;outline-offset:2px!important;opacity:0.9;}
+    /* Edit mode — subtle hover on any element so users know it's selectable/resizable */
+    body:not(.jbc-move-mode) h1:hover,body:not(.jbc-move-mode) h2:hover,body:not(.jbc-move-mode) h3:hover,
+    body:not(.jbc-move-mode) h4:hover,body:not(.jbc-move-mode) p:hover,body:not(.jbc-move-mode) img:hover,
+    body:not(.jbc-move-mode) figure:hover,body:not(.jbc-move-mode) blockquote:hover,
+    body:not(.jbc-move-mode) .service-card:hover,body:not(.jbc-move-mode) .portfolio-item:hover,
+    body:not(.jbc-move-mode) .value-card:hover,body:not(.jbc-move-mode) .process-card:hover,
+    body:not(.jbc-move-mode) .blog-card:hover,body:not(.jbc-move-mode) .hero-mega:hover,
+    body:not(.jbc-move-mode) .jbc-custom:hover,body:not(.jbc-move-mode) .tag:hover{
+      outline:1px dashed rgba(46,204,64,0.4)!important;outline-offset:2px!important;cursor:pointer!important;
+    }
     .jbc-move-active{opacity:0.7!important;outline:2px solid #E8891D!important;outline-offset:4px!important;}
     .jbc-moved{outline:2px dashed rgba(232,137,29,0.5)!important;outline-offset:3px;}
     #jbc-toolbar .jbc-move-btn{background:#E8891D;border-color:#E8891D;color:#000;}
@@ -257,7 +270,7 @@
   }
 
   function buildContextMenu(section, clickX, clickY){
-    var html = '';
+    var html = '<div class="jbc-ctx-dragbar"><span>MENU</span><span class="jbc-ctx-grip">&#9776; drag</span></div>';
     var layers = getSectionElements(section);
 
     /* ---- SECTION DESIGN (always shown at top) ---- */
@@ -391,6 +404,25 @@
       document.querySelectorAll('.jbc-selected').forEach(function(el){ el.classList.remove('jbc-selected'); });
     }
   });
+
+  /* Make context menu draggable via the drag bar */
+  (function(){
+    var dragging = false, dStartX, dStartY, mStartL, mStartT;
+    ctxMenu.addEventListener('mousedown', function(e){
+      if(!e.target.closest('.jbc-ctx-dragbar')) return;
+      e.preventDefault();
+      dragging = true;
+      dStartX = e.clientX; dStartY = e.clientY;
+      mStartL = parseInt(ctxMenu.style.left) || 0;
+      mStartT = parseInt(ctxMenu.style.top) || 0;
+    });
+    document.addEventListener('mousemove', function(e){
+      if(!dragging) return;
+      ctxMenu.style.left = (mStartL + e.clientX - dStartX) + 'px';
+      ctxMenu.style.top = (mStartT + e.clientY - dStartY) + 'px';
+    });
+    document.addEventListener('mouseup', function(){ dragging = false; });
+  })();
 
   /* Live section background color from the inline color picker */
   ctxMenu.addEventListener('input', function(e){
@@ -3015,14 +3047,15 @@
     /* Ignore clicks on universal handles */
     if(e.target.closest('.jbc-universal-handles')) return;
 
-    /* Find the nearest meaningful element — works on ALL elements */
+    /* Find the nearest meaningful element — works on ALL elements in any mode */
     var target = e.target.closest('.jbc-added') || e.target.closest('.jbc-custom') || e.target.closest('.jbc-img-wrap');
     if(!target) target = e.target.closest('.jbc-editable');
     if(!target){
-      /* In move mode or with panel open, allow selecting any visible element */
-      if(moveMode || panelOpen){
-        target = e.target.closest('h1,h2,h3,h4,h5,h6,p,img,blockquote,figure,video,.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.team-member,.testi-brutal,.tag');
-      }
+      /* Allow selecting any visible element in ALL modes (edit, move, panel open) */
+      target = e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,blockquote,figure,video,ul,ol,li,div[class]');
+      if(!target) target = e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.team-member,.testi-brutal,.tag,.hero-mega,.hero-content,.hero-bottom,.manifesto-text,.cta-box,.marquee');
+      /* Don't select structural wrappers */
+      if(target && (target.tagName==='SECTION'||target.tagName==='NAV'||target.tagName==='FOOTER'||target.tagName==='BODY'||target.tagName==='HTML'||target.tagName==='MAIN')) target = null;
     }
     if(target){
       selectElement(target);
@@ -3031,7 +3064,9 @@
 
   /* Deselect on click in empty area */
   document.addEventListener('mousedown', function(e){
-    if(e.target.closest('#jbc-panel,#jbc-panel-toggle,#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-toast,.jbc-universal-handles,.jbc-added,.jbc-custom,.jbc-img-wrap,.jbc-editable')) return;
+    if(e.target.closest('#jbc-panel,#jbc-panel-toggle,#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-toast,.jbc-universal-handles,.jbc-added,.jbc-custom,.jbc-img-wrap,.jbc-editable,.jbc-arr-btn,.jbc-resize-handle')) return;
+    /* Don't deselect if clicking on a selectable element */
+    if(e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,blockquote,figure,.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.tag,.hero-mega,.hero-content')) return;
     if(selectedElement && !moveMode){
       selectedElement.classList.remove('jbc-selected');
       removeUniversalHandles();
