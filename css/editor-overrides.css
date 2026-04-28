@@ -1,3 +1,94 @@
-/* JBC Editor Overrides — auto-generated */
-/* This file is overwritten each time you save from the editor */
-/* Do not edit manually — use the visual editor instead */
+/* JBC Editor Overrides — auto-generated 2026-04-28 */
+/* Do not edit manually — this file is overwritten on each save */
+
+section.hero {
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+section.hero > div.tag {
+  font-size: 88px;
+  font-weight: 700;
+  z-index: 5;
+  opacity: 0.834282;
+  filter: blur(0px);
+  transition-behavior: normal;
+  transition-duration: 1.5s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: opacity;
+  transform: translate(43px, -63px) !important;
+  position: absolute;
+}
+
+section.hero > div.hero-content {
+  transform: translate(-12px, -36px) !important;
+}
+
+section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega {
+  --mx: -299.5095736113826px;
+  --my: -299.99077567921097px;
+  position: relative;
+  transform: translate(-43px, -465px) !important;
+}
+
+div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1 {
+  opacity: 1;
+  transform: translate(107px, -250px) !important;
+  filter: blur(0px);
+  transition-behavior: normal, normal, normal;
+  transition-duration: 1s, 1s, 1s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 940ms, 940ms, 940ms;
+  transition-property: opacity, transform, filter;
+  position: relative;
+  font-size: 158px;
+}
+
+div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2 {
+  opacity: 1;
+  transform: translate(-125px, -218px) !important;
+  filter: blur(0px);
+  transition-behavior: normal, normal, normal;
+  transition-duration: 1s, 1s, 1s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 1120ms, 1120ms, 1120ms;
+  transition-property: opacity, transform, filter;
+  position: relative;
+  font-size: 170px;
+}
+
+div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3 {
+  opacity: 1;
+  transform: translate(56px, -172px) !important;
+  filter: blur(0px);
+  transition-behavior: normal, normal, normal;
+  transition-duration: 1s, 1s, 1s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 1300ms, 1300ms, 1300ms;
+  transition-property: opacity, transform, filter;
+  position: relative;
+  font-size: 180px;
+}
+
+[data-jbc-id="jbc-el-2"] {
+  left: 27.05%;
+  top: 10.62%;
+  width: 63.13%;
+  position: absolute;
+  z-index: 1;
+  transform: translate(0px, -72px) !important;
+}
+
+section.hero > div.hero-photo-layer > picture > div {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: translate(163px, -23px) !important;
+}
+
+.hero {
+  padding-top: 80px !important;
+  padding-bottom: 40px !important;
+}
