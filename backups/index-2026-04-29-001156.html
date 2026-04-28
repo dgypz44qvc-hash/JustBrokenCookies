@@ -210,56 +210,6 @@
             rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
             rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
         }
-      </style>
-<style>
-        .hero-oil-wrap { position:relative; display:block; width:100%; }
-        .hero { overflow:hidden !important; }
-        .hero-underlay {
-          position:absolute; top:0; left:0; width:100%; height:100%;
-          pointer-events:none; z-index:1; user-select:none;
-          opacity:0; visibility:hidden; transition:opacity 0.7s ease, visibility 0.7s;
-        }
-        .hero-underlay .l1 {
-          color:transparent !important;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cdefs%3E%3Cstyle%3E*%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='55' cy='55' r='50' stroke-width='0.6' opacity='0.5'/%3E%3Ccircle cx='55' cy='55' r='42' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='34' stroke-width='0.7' opacity='0.55'/%3E%3Ccircle cx='55' cy='55' r='25' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='17' stroke-width='0.8' opacity='0.6'/%3E%3Ccircle cx='55' cy='55' r='9' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='55' cy='55' r='3' stroke-width='0.6' opacity='0.5'/%3E%3Cline x1='55' y1='2' x2='55' y2='10' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='55' y1='100' x2='55' y2='108' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='2' y1='55' x2='10' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='100' y1='55' x2='108' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='16' y1='16' x2='22' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='16' x2='88' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='16' y1='94' x2='22' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='94' x2='88' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M55 5 L58 15 L55 12 L52 15Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M105 55 L95 58 L98 55 L95 52Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M30 12 Q55 32 80 12' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M98 30 Q78 55 98 80' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M80 98 Q55 78 30 98' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M12 80 Q32 55 12 30' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M36 22 Q44 34 55 30 Q66 26 72 18' stroke-width='0.35' opacity='0.28'/%3E%3Cpath d='M88 36 Q76 44 80 55 Q84 66 92 72' stroke-width='0.35' opacity='0.28'/%3E%3C/svg%3E") 0 0/110px 110px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
-          -webkit-background-clip:text !important; background-clip:text !important;
-          -webkit-text-fill-color:transparent !important;
-        }
-        .hero-underlay .l2 {
-          color:transparent !important;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130'%3E%3Cdefs%3E%3Cstyle%3Eline,path%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='28' cy='22' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='28' cy='22' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='85' cy='16' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='85' cy='16' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='65' cy='52' r='4' fill='none' stroke='%23111' stroke-width='0.8' opacity='0.65'/%3E%3Ccircle cx='65' cy='52' r='1.5' fill='%23111' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='105' cy='62' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='105' cy='62' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='48' cy='105' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='48' cy='105' r='0.8' fill='%23111' opacity='0.45'/%3E%3Cline x1='28' y1='22' x2='65' y2='52' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='85' y2='16' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='65' y1='52' x2='105' y2='62' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='22' y2='75' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='22' y1='75' x2='48' y2='105' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='105' y1='62' x2='110' y2='110' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M65 46 L71 52 L65 58 L59 52Z' stroke-width='0.5' opacity='0.45'/%3E%3Cpath d='M28 22 Q12 48 22 75' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3Cpath d='M85 16 Q110 38 105 62' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3C/svg%3E") 0 0/130px 130px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
-          -webkit-background-clip:text !important; background-clip:text !important;
-          -webkit-text-fill-color:transparent !important;
-        }
-        .hero-underlay .l3 {
-          color:transparent !important;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='130' viewBox='0 0 150 130'%3E%3Cdefs%3E%3Cstyle%3Epath,line%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Cpath d='M20 42 L28 18 L24 8' stroke-width='1' opacity='0.6'/%3E%3Cpath d='M28 18 Q36 28 30 42' stroke-width='0.7' opacity='0.5'/%3E%3Cpath d='M22 44 L24 42 L20 42 L22 44Z' fill='%23111' opacity='0.5'/%3E%3Cline x1='18' y1='46' x2='6' y2='60' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='19' y1='49' x2='8' y2='64' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='20' y1='52' x2='10' y2='68' stroke-width='0.35' opacity='0.28'/%3E%3Cline x1='21' y1='55' x2='12' y2='72' stroke-width='0.3' opacity='0.25'/%3E%3Ccircle cx='30' cy='42' r='1.5' fill='%23111' opacity='0.45'/%3E%3Cpath d='M10 65 Q35 22 62 48 Q78 62 98 32 Q115 8 142 50' stroke-width='0.6' opacity='0.4'/%3E%3Cpath d='M5 92 Q32 68 58 82 Q80 95 108 62 Q128 38 145 72' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M15 112 Q45 98 65 106 Q88 116 108 96 Q128 78 142 100' stroke-width='0.35' opacity='0.25'/%3E%3Cpath d='M112 10 Q124 4 128 16 Q134 30 124 36 Q112 42 108 30 Q104 18 112 10' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='95' cy='30' r='0.8' fill='%23111' opacity='0.35'/%3E%3Ccircle cx='58' cy='50' r='0.6' fill='%23111' opacity='0.3'/%3E%3Ccircle cx='128' cy='65' r='0.8' fill='%23111' opacity='0.3'/%3E%3Cpath d='M72 112 Q80 100 88 112' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M64 116 Q80 96 96 116' stroke-width='0.4' opacity='0.3'/%3E%3Cline x1='80' y1='96' x2='80' y2='120' stroke-width='0.3' opacity='0.25'/%3E%3C/svg%3E") 0 0/150px 130px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
-          -webkit-background-clip:text !important; background-clip:text !important;
-          -webkit-text-fill-color:transparent !important;
-        }
-        .hero-oil-wrap .hero-mega:not(.hero-underlay) {
-          position:relative; z-index:2; --mx:-300px; --my:-300px;
-        }
-        /* DESKTOP hover reveal */
-        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; visibility:visible; }
-        .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
-          -webkit-mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
-            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
-          mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
-            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
-        }
-        /* MOBILE scroll wipe */
-        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; visibility:visible; }
-        .hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay) {
-          -webkit-mask-image: linear-gradient(to bottom,
-            transparent 0%, transparent var(--scroll-reveal,0%),
-            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
-            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
-          mask-image: linear-gradient(to bottom,
-            transparent 0%, transparent var(--scroll-reveal,0%),
-            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
-            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
-        }
       </style></head>
 <body class="">
 
@@ -279,18 +229,18 @@
   <div class="cursor-ring"></div>
 
   <!-- ========== NAVIGATION ========== -->
-  <nav class="nav" id="navbar" style="transform: translateY(0px);">
+  <nav class="nav scrolled" id="navbar" style="transform: translateY(-100%);">
     <div class="container">
-      <a href="index.html" class="nav-logo" data-editor-id="jbc-1777417664795-8bts">
+      <a href="index.html" class="nav-logo">
         <span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span>
       </a>
       <div class="nav-links" id="navLinks">
-        <a href="index.html" class="active" data-editor-id="jbc-1777417664795-1exi">Home</a>
-        <a href="about.html" data-editor-id="jbc-1777417664795-tv08">About</a>
-        <a href="services.html" data-editor-id="jbc-1777417664795-ov9o">Services</a>
-        <a href="portfolio.html" data-editor-id="jbc-1777417664795-bpj5" class="">Work</a>
-        <a href="magazine.html" data-editor-id="jbc-1777417664795-tyji">Magazine</a>
-        <a href="contact.html" data-editor-id="jbc-1777417664795-0tlf">Contact</a>
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Work</a>
+        <a href="magazine.html">Magazine</a>
+        <a href="contact.html">Contact</a>
       </div>
       <div class="hamburger" id="hamburger">
         <span></span><span></span><span></span>
@@ -299,42 +249,41 @@
   </nav>
 
   <!-- ========== HERO — Brutalist oversized type ========== -->
-  <section class="hero jbc-floral-hero" data-jbc-id="section.hero" data-editor-id="hero-section"><div class="editor-decoration" data-editor-id="rose-1777417462368-smmlm"><img src="images/jbc-rose-pattern-bg.png" alt=""></div><div class="editor-decoration" data-editor-id="rose-1777417460898-jbc36"><img src="images/jbc-rose-pattern-bg.png" alt=""></div><div class="editor-decoration" data-editor-id="rose-1777417457688-b9dcu"><img src="images/jbc-rose-pattern-bg.png" alt=""></div><div class="editor-decoration" data-editor-id="rose-1777417437621-oy3d2"><img src="images/jbc-rose-pattern-bg.png" alt=""></div>
-    <div class="hero-corner-rose" aria-hidden="true" data-jbc-rose-editor="true" style="pointer-events: auto; cursor: move; visibility: visible;" data-editor-id="hero-corner-rose"></div>
+  <section class="hero jbc-floral-hero" data-jbc-id="section.hero" data-editor-id="hero-section" data-editor-bound="1" style="left: 0px; top: 0px;"><div class="editor-decoration" data-editor-id="rose-1777417462368-smmlm" style="left: -144px; top: 149px; width: 420px; height: 420px; opacity: 0.85; z-index: 4; mix-blend-mode: screen; position: absolute;" data-editor-bound="1"><img src="images/jbc-rose-pattern-bg.png" alt=""></div><div class="editor-decoration" data-editor-id="rose-1777417460898-jbc36" style="left: 55%; top: 18%; width: 420px; height: 420px; opacity: 0.85; z-index: 4; mix-blend-mode: screen; position: absolute;" data-editor-bound="1"><img src="images/jbc-rose-pattern-bg.png" alt=""></div><div class="editor-decoration" data-editor-id="rose-1777417457688-b9dcu" style="left: 55%; top: 18%; width: 420px; height: 420px; opacity: 0.85; z-index: 4; mix-blend-mode: screen; position: absolute;" data-editor-bound="1"><img src="images/jbc-rose-pattern-bg.png" alt=""></div><div class="editor-decoration" data-editor-id="rose-1777417437621-oy3d2" style="left: 55%; top: 18%; width: 420px; height: 420px; opacity: 0.85; z-index: 4; mix-blend-mode: screen; position: absolute;" data-editor-bound="1"><img src="images/jbc-rose-pattern-bg.png" alt=""></div>
+    <div class="hero-corner-rose" aria-hidden="true" data-jbc-rose-editor="true" style="pointer-events: auto; cursor: move; display: block; visibility: visible;" data-editor-id="hero-corner-rose"><button class="jbc-rose-delete-btn" type="button" title="Delete rose pattern">×</button></div>
 
-    <div class="tag" data-jbc-id="section.hero > div.tag" data-editor-id="hero-storytelling-tag" style="filter: blur(0px); transition: opacity 1.5s ease-out;">StorytellinG</div>
+    <div class="tag" data-jbc-id="section.hero > div.tag" data-editor-id="hero-storytelling-tag" style="opacity: 1; filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1.6s, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1.6s;">StorytellinG</div>
 
     <div class="hero-content" data-jbc-id="section.hero > div.hero-content" data-editor-id="hero-content">
-      <div class="hero-oil-wrap" style="transition: opacity 1.5s ease-out; opacity: 1;"><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms;" data-editor-id="hero-title-line-2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      <div class="hero-oil-wrap" style="transition: opacity 1.5s ease-out; opacity: 0.789392;"><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms;" data-editor-id="hero-title-line-3">Cookies</span>
       </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms;" data-editor-id="hero-title-line-2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms;" data-editor-id="hero-title-line-3">Cookies</span>
-      </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms;" data-editor-id="hero-title-line-2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms;" data-editor-id="hero-title-line-3">Cookies</span>
-      </div><div class="hero-mega" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group" style="--mx: -299.5208116153982px; --my: -301.2239097254797px;">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms;" data-editor-id="hero-title-line-2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms;" data-editor-id="hero-title-line-3">Cookies</span>
-      </div></div></div></div>
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      </div><div class="hero-mega" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      </div></div></div>
     </div>
 
-    
+    <div class="hero-bottom" data-editor-id="hero-bottom" style="opacity: 1; transform: translateY(0px); filter: blur(0px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, filter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;">
+      <p class="desc"><br></p>
+      <span class="scroll-txt"><br></span>
+    </div>
 
     <!-- User-added text -->
     <div class="jbc-custom" data-jbc-id="jbc-el-1" style="left:24.33%;top:36.41%;width:51.52%;position:absolute;z-index:5;pointer-events:none;">
     </div>
 
     <!-- User-added image -->
-    <div class="jbc-custom hero-photo-layer" data-editor-transform="translate(-1px, -6px)" data-jbc-id="jbc-el-2" data-editor-id="hero-image-wrap">
+    <div class="jbc-custom hero-photo-layer" data-editor-transform="translate(-1px, -6px)" data-jbc-id="jbc-el-2" style="left:27.05%;top:10.62%;width:63.13%;position:absolute;z-index:1;" data-editor-id="hero-image-wrap">
       <picture>
         <source media="(max-width: 768px)" srcset="images/added-1777027663072%20copy.webp" type="image/webp">
-        <img src="images/added-1777027663072.jpg" alt="JustBrokenCookies editorial portrait" width="1600" height="900" fetchpriority="high" decoding="async" data-editor-id="hero-image-desktop">
+        <img src="images/added-1777027663072.jpg" alt="JustBrokenCookies editorial portrait" width="1600" height="900" fetchpriority="high" decoding="async" style="width: 100%; height: auto; display: block;" data-editor-id="hero-image-desktop">
       </picture>
     </div>
   </section>
@@ -380,13 +329,13 @@
   <!-- ========== SERVICES ========== -->
   <section id="services-overview" class="jbc-editorial-section jbc-floral-process" style="border-top:2px solid #fff;" data-editor-id="process-section">
     <div class="container">
-      <div class="sec-header" style="">
+      <div class="sec-header" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
         <h2 data-editor-id="process-heading" class="">How We Build Stories</h2>
         <span>The 3D Process</span>
       </div>
 
       <div class="services-grid">
-        <div class="service-card jbc-editorial-card jbc-editorial-card-1" data-expandable="" data-card="1" data-editor-id="process-card-1">
+        <div class="service-card jbc-editorial-card jbc-editorial-card-1" data-expandable="" data-card="1" data-editor-id="process-card-1" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <div class="service-num">NO. 01</div>
           <h3>Define</h3>
           <span class="service-sub">understand</span>
@@ -404,7 +353,7 @@
           </div>
         </div>
 
-        <div class="service-card jbc-editorial-card jbc-editorial-card-2" data-expandable="" data-card="2" data-editor-id="process-card-2">
+        <div class="service-card jbc-editorial-card jbc-editorial-card-2" data-expandable="" data-card="2" data-editor-id="process-card-2" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <div class="service-num">NO. 02</div>
           <h3>Design</h3>
           <span class="service-sub">craft</span>
@@ -417,7 +366,7 @@
           </div>
         </div>
 
-        <div class="service-card jbc-editorial-card jbc-editorial-card-3" data-expandable="" data-card="3" data-editor-id="process-card-3">
+        <div class="service-card jbc-editorial-card jbc-editorial-card-3" data-expandable="" data-card="3" data-editor-id="process-card-3" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <div class="service-num">NO. 03</div>
           <h3>Describe</h3>
           <span class="service-sub">deliver</span>
@@ -452,28 +401,28 @@
       </div>
 
       <div class="portfolio-grid" data-editor-id="portfolio-grid">
-        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-1" data-editor-id="portfolio-item-1" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-1" data-editor-id="portfolio-item-1" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <img src="images/portfolio/the-way-home.jpg" alt="The Unfinished Room" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;">
           <div class="overlay">
             <span>Campaign</span>
             <h3>The Unfinished Room</h3>
           </div>
         </div>
-        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-2" data-editor-id="portfolio-item-2" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-2" data-editor-id="portfolio-item-2" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <img src="images/portfolio/sunset-silk.jpg" alt="Sunset and Silk" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;">
           <div class="overlay">
             <span>Visual</span>
             <h3>Sunset &amp; Silk</h3>
           </div>
         </div>
-        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-3" data-editor-id="portfolio-item-3" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-3" data-editor-id="portfolio-item-3" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <img src="images/portfolio/voices-unheard.jpg" alt="Voices Unheard" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;">
           <div class="overlay">
             <span>Editorial</span>
             <h3>Voices Unheard</h3>
           </div>
         </div>
-        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-4" data-editor-id="portfolio-item-4" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-4" data-editor-id="portfolio-item-4" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
           <img src="images/portfolio/dust-to-gold.jpg" alt="From Dust to Gold" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;">
           <div class="overlay">
             <span>Strategy</span>
@@ -494,7 +443,7 @@
       <div class="testi-mark" data-editor-id="testimonial-mark">
         <span>Testimonial</span>
       </div>
-      <div class="testi-content" data-editor-id="testimonial-content" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+      <div class="testi-content" data-editor-id="testimonial-content" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
         <blockquote>"They didn't just tell our story — they found a story we didn't even know we had. JustBrokenCookies made us fall in love with our own brand again."</blockquote>
         <cite>Creative Director, Placeholder Brand</cite>
       </div>
@@ -504,7 +453,7 @@
   <!-- ========== CTA ========== -->
   <section class="cta-section jbc-floral-cta jbc-editorial-section" data-editor-id="cta-section">
     <div class="container" style="text-align:center;">
-      <h2 class="section-title" data-editor-id="cta-title" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+      <h2 class="section-title" data-editor-id="cta-title" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
         <span style="color:var(--gold);">Let's </span>
         <span style="color:var(--blush);">Break </span>
         <span style="color:var(--dusty-rose);">Some </span>
@@ -524,38 +473,38 @@
         </div>
         <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary. Define. Design. Describe.</p>
         <div class="social-links">
-          <a href="#" aria-label="Instagram" data-editor-id="jbc-1777417664794-6kkn"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="LinkedIn" data-editor-id="jbc-1777417664794-zztz"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" aria-label="Vimeo" data-editor-id="jbc-1777417664794-lyy1"><i class="fab fa-vimeo-v"></i></a>
-          <a href="#" aria-label="Behance" data-editor-id="jbc-1777417664794-kv0r"><i class="fab fa-behance"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+          <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
         </div>
       </div>
 
-      <div class="footer-col" data-editor-id="jbc-1777417664794-15i4">
-        <h4 data-editor-id="jbc-1777417664794-vbj3">Navigate</h4>
-        <a href="about.html" data-editor-id="jbc-1777417664794-bri4">About</a>
-        <a href="services.html" data-editor-id="jbc-1777417664794-7cyu">Services</a>
-        <a href="portfolio.html" data-editor-id="jbc-1777417664794-0mud">Portfolio</a>
-        <a href="magazine.html" data-editor-id="jbc-1777417664794-jdnp">Magazine</a>
-      </div>
-
-      <div class="footer-col" data-editor-id="jbc-1777417664794-8x6z">
-        <h4 data-editor-id="jbc-1777417664794-0sc0">Services</h4>
-        <a href="services.html" data-editor-id="jbc-1777417664794-p046">Define</a>
-        <a href="services.html" data-editor-id="jbc-1777417664794-44sv">Design</a>
-        <a href="services.html" data-editor-id="jbc-1777417664794-m361">Describe</a>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="magazine.html">Magazine</a>
       </div>
 
       <div class="footer-col">
-        <h4 data-editor-id="jbc-1777417664794-4g0j">Contact</h4>
-        <a href="mailto:hello@justbrokencookies.com" data-editor-id="jbc-1777417664794-65f8">hello@justbrokencookies.com</a>
-        <a href="contact.html" data-editor-id="jbc-1777417664794-kmep">Send a Message</a>
+        <h4>Services</h4>
+        <a href="services.html">Define</a>
+        <a href="services.html">Design</a>
+        <a href="services.html">Describe</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:hello@justbrokencookies.com">hello@justbrokencookies.com</a>
+        <a href="contact.html">Send a Message</a>
       </div>
     </div>
 
     <div class="footer-bottom" data-editor-id="footer-bottom">
-      <span data-editor-id="jbc-1777417664794-xy3f"><span data-editor-id="jbc-1777417664794-jlok">JUST</span><span data-editor-id="jbc-1777417664794-33jo">BROKEN</span><span data-editor-id="jbc-1777417664794-2md5">COOKIES</span></span>
-      <span data-editor-id="jbc-1777417664794-twkw">© 2026</span>
+      <span><span style="color:var(--gold);">JUST</span><span style="color:var(--blush);">BROKEN</span><span style="color:var(--wine);">COOKIES</span></span>
+      <span>© 2026</span>
     </div>
   </footer>
 

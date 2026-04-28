@@ -1,0 +1,50 @@
+/* JBC local editor overrides */
+
+[data-editor-id="rose-1777417437621-oy3d2"] {
+  position: absolute !important;
+  left: 55% !important;
+  top: 18% !important;
+  width: 420px !important;
+  height: 420px !important;
+  opacity: 0.85 !important;
+  z-index: 4 !important;
+  mix-blend-mode: screen !important;
+}
+
+[data-editor-id="hero-section"] {
+  left: 0px !important;
+  top: 0px !important;
+}
+
+[data-editor-id="rose-1777417457688-b9dcu"] {
+  position: absolute !important;
+  left: 55% !important;
+  top: 18% !important;
+  width: 420px !important;
+  height: 420px !important;
+  opacity: 0.85 !important;
+  z-index: 4 !important;
+  mix-blend-mode: screen !important;
+}
+
+[data-editor-id="rose-1777417460898-jbc36"] {
+  position: absolute !important;
+  left: 55% !important;
+  top: 18% !important;
+  width: 420px !important;
+  height: 420px !important;
+  opacity: 0.85 !important;
+  z-index: 4 !important;
+  mix-blend-mode: screen !important;
+}
+
+[data-editor-id="rose-1777417462368-smmlm"] {
+  position: absolute !important;
+  left: -144px !important;
+  top: 149px !important;
+  width: 420px !important;
+  height: 420px !important;
+  opacity: 0.85 !important;
+  z-index: 4 !important;
+  mix-blend-mode: screen !important;
+}
