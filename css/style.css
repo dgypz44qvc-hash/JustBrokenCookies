@@ -6202,3 +6202,179 @@ body {
     opacity: 0.24 !important;
   }
 }
+/* =========================================================
+   JBC HERO FINAL CORNER ROSE ORNAMENT
+   Uses same rose pattern as How We Build Stories.
+   Keeps pattern true-size, not stretched.
+   Places it only bottom-right as a corner holder.
+   Restores portrait position.
+   Paste at VERY BOTTOM of style.css.
+   ========================================================= */
+
+/* Keep floral asset variable available */
+:root {
+  --jbc-floral-pattern: url("../images/jbc-rose-pattern-bg.png");
+}
+
+/* Hero stage, no layout pushing */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+
+  background:
+    radial-gradient(circle at 88% 86%, rgba(201, 58, 110, 0.045), transparent 34%),
+    radial-gradient(circle at 92% 94%, rgba(232, 137, 29, 0.035), transparent 30%),
+    var(--charcoal) !important;
+}
+
+/* Kill video if any old code is still there */
+.hero-rose-video {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Do not use old full hero floral pseudo layer */
+.hero::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Bottom-right corner rose ornament only */
+.hero::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+
+  /* The ornament box sits bottom-right */
+  right: -40px !important;
+  bottom: -35px !important;
+  left: auto !important;
+  top: auto !important;
+
+  /* Big enough to show the motif, but not all over hero */
+  width: 760px !important;
+  height: 620px !important;
+
+  background-image: var(--jbc-floral-pattern) !important;
+  background-repeat: no-repeat !important;
+
+  /*
+    TRUE SIZE FEEL:
+    Do not use cover. Cover stretches/crops too aggressively.
+    This keeps the pattern closer to natural scale.
+  */
+  background-size: 580px 580px !important;
+  background-position: right bottom !important;
+
+  opacity: 0.34 !important;
+  mix-blend-mode: screen !important;
+  filter: saturate(1.18) contrast(1.08) brightness(0.94) !important;
+
+  transform: none !important;
+  transform-origin: right bottom !important;
+
+  /* Fade into brown, no rectangle edge */
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 78% 78%,
+      #000 0%,
+      #000 46%,
+      rgba(0, 0, 0, 0.74) 60%,
+      rgba(0, 0, 0, 0.30) 76%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 78% 78%,
+      #000 0%,
+      #000 46%,
+      rgba(0, 0, 0, 0.74) 60%,
+      rgba(0, 0, 0, 0.30) 76%,
+      transparent 100%
+    ) !important;
+}
+
+/* Keep title/content above the rose ornament */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+/* Restore portrait to the original placement */
+.hero .jbc-custom.hero-photo-layer {
+  position: absolute !important;
+  left: 27.05% !important;
+  top: 10.62% !important;
+  width: 63.13% !important;
+  z-index: 2 !important;
+  transform: none !important;
+}
+
+/* Keep image from becoming a layout block */
+.hero .jbc-custom.hero-photo-layer picture,
+.hero .jbc-custom.hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Empty custom block should not interfere */
+.hero .jbc-custom:not(.hero-photo-layer) {
+  pointer-events: none !important;
+}
+
+/* StorytellinG above everything */
+.hero .tag {
+  position: absolute !important;
+  z-index: 8 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Mobile, smaller corner ornament, still bottom-right */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh !important;
+    padding: 92px 20px 24px !important;
+  }
+
+  .hero::after {
+    right: -80px !important;
+    bottom: -75px !important;
+    width: 390px !important;
+    height: 390px !important;
+
+    background-size: 360px 360px !important;
+    background-position: right bottom !important;
+
+    opacity: 0.24 !important;
+  }
+
+  .hero .jbc-custom.hero-photo-layer {
+    left: 18% !important;
+    top: 15% !important;
+    width: 78% !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero::after {
+    right: -85px !important;
+    bottom: -80px !important;
+    width: 330px !important;
+    height: 330px !important;
+    background-size: 310px 310px !important;
+    opacity: 0.22 !important;
+  }
+}
