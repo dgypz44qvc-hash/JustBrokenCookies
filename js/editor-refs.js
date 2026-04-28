@@ -1671,15 +1671,18 @@
   }
 
   /* ========== MOVE MODE — DRAG EXISTING ELEMENTS ========== */
+  /* Uses setProperty with !important so CSS !important rules don't block the drag */
   function initMoveModeDrag(){
     var dragEl = null, dragStartX, dragStartY, origTx, origTy;
 
     document.addEventListener('mousedown', function(e){
       if(!moveMode) return;
-      /* Find the element to drag */
-      var target = e.target.closest('.jbc-editable') || e.target.closest('.jbc-img-wrap');
+      /* Find the element to drag — works on any editable, image, or container */
+      var target = e.target.closest('.jbc-editable') || e.target.closest('.jbc-img-wrap') ||
+                   e.target.closest('.jbc-added') || e.target.closest('.jbc-custom') ||
+                   e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card');
       if(!target) return;
-      if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar')) return;
+      if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-panel,#jbc-panel-toggle')) return;
       if(e.button !== 0) return;
       e.preventDefault();
 
@@ -1688,30 +1691,45 @@
       dragStartX = e.clientX;
       dragStartY = e.clientY;
 
-      /* Parse existing transform translate */
-      var curTransform = dragEl.style.transform || '';
-      var txMatch = curTransform.match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
-      origTx = txMatch ? parseFloat(txMatch[1]) : 0;
-      origTy = txMatch ? parseFloat(txMatch[2]) : 0;
+      /* Parse existing transform translate — handle both translate(x,y) and translateY(y) formats */
+      var curTransform = getComputedStyle(dragEl).transform || dragEl.style.transform || '';
+      origTx = 0; origTy = 0;
+      /* matrix(a,b,c,d,tx,ty) from getComputedStyle */
+      var matMatch = curTransform.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*(-?[\d.]+),\s*(-?[\d.]+)\)/);
+      if(matMatch){
+        origTx = parseFloat(matMatch[1]);
+        origTy = parseFloat(matMatch[2]);
+      } else {
+        var txMatch = curTransform.match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
+        if(txMatch){ origTx = parseFloat(txMatch[1]); origTy = parseFloat(txMatch[2]); }
+        var tyMatch = curTransform.match(/translateY\(\s*(-?[\d.]+)px\s*\)/);
+        if(tyMatch){ origTy = parseFloat(tyMatch[1]); }
+      }
     });
 
     document.addEventListener('mousemove', function(e){
       if(!dragEl) return;
       var dx = e.clientX - dragStartX;
       var dy = e.clientY - dragStartY;
-      dragEl.style.transform = 'translate(' + (origTx + dx) + 'px, ' + (origTy + dy) + 'px)';
+      /* Use setProperty with 'important' to override CSS !important rules */
+      dragEl.style.setProperty('transform', 'translate(' + (origTx + dx) + 'px, ' + (origTy + dy) + 'px)', 'important');
     });
 
     document.addEventListener('mouseup', function(){
       if(!dragEl) return;
       dragEl.classList.remove('jbc-move-active');
-      /* Mark as moved if it was actually displaced from start */
-      var finalTransform = dragEl.style.transform || '';
-      var m = finalTransform.match(/translate\(\s*(-?[\d.]+)px\s*,\s*(-?[\d.]+)px\s*\)/);
-      if(m && (Math.abs(parseFloat(m[1])) > 2 || Math.abs(parseFloat(m[2])) > 2)){
+      /* Mark as moved if it was actually displaced */
+      var cs = getComputedStyle(dragEl);
+      var mat = cs.transform || '';
+      var fm = mat.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*(-?[\d.]+),\s*(-?[\d.]+)\)/);
+      var finalTx = fm ? parseFloat(fm[1]) : 0;
+      var finalTy = fm ? parseFloat(fm[2]) : 0;
+      if(Math.abs(finalTx) > 2 || Math.abs(finalTy) > 2){
         dragEl.classList.add('jbc-moved');
+        /* Store the move as a data attribute so save can preserve it */
+        dragEl.setAttribute('data-editor-transform', dragEl.style.transform);
         markChanged(dragEl);
-        showToast('Element repositioned');
+        showToast('Element repositioned — saved with page');
       }
       dragEl = null;
     });
@@ -2001,6 +2019,21 @@
 
       /* Only strip animation props that main.js sets dynamically */
       var hadStyle = el.hasAttribute('style');
+
+      /* If this element was explicitly MOVED by the user in the editor,
+         preserve its transform but clean everything else */
+      if(el.classList.contains('jbc-moved')){
+        var savedTransform = el.getAttribute('data-editor-transform') || el.style.transform;
+        el.style.opacity = '';
+        el.style.filter = '';
+        el.style.clipPath = '';
+        el.style.transition = '';
+        if(savedTransform) el.style.setProperty('transform', savedTransform);
+        el.classList.remove('jbc-moved','jbc-move-active');
+        el.removeAttribute('data-editor-transform');
+        return;
+      }
+
       el.style.opacity = '';
       el.style.transform = '';
       el.style.filter = '';

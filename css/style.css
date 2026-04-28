@@ -4919,30 +4919,14 @@ body {
    On mobile the titles stay in natural flex position
    ========================================================= */
 
-@media (min-width: 961px) {
-  /* ONLY on .hero-content — NOT on nested children.
-     oil-wrap and mega are INSIDE hero-content, so they
-     inherit the parent shift. Applying to all three
-     compounds the transform (~90% total shift). */
-  .hero-content {
-    transform: translateY(-30%) !important;
-  }
-  .hero-oil-wrap,
-  .hero-mega {
-    transform: none !important;
-  }
+/* Titles centered via flexbox — no transform hacks */
+.hero-content {
+  justify-content: center !important;
+  transform: none !important;
 }
-
-/* Mobile: no vertical shift, let flex handle placement */
-@media (max-width: 960px) {
-  .hero-content {
-    transform: none !important;
-    justify-content: center !important;
-  }
-  .hero-oil-wrap,
-  .hero-mega {
-    transform: none !important;
-  }
+.hero-oil-wrap,
+.hero-mega {
+  transform: none !important;
 }
 
 /* =========================================================
