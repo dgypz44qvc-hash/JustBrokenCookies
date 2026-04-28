@@ -6070,7 +6070,7 @@ body {
   .hero.jbc-floral-hero::after {
     width: 310px !important;
     height: 380px !important;
-    right: -105px !important;
+    right: 105px !important;
     bottom: -110px !important;
     opacity: 0.45 !important;
   }
