@@ -4479,7 +4479,128 @@ body {
   filter: saturate(1.4) contrast(1.2) brightness(1.6) !important;
 }
 
-/* Footer — fade upward from bottom */
+/* ---- SEAMLESS SECTION FLOW — soft edge fades ---- */
+
+/* Process section — fade top and bottom edges */
+#services-overview.jbc-floral-process::before {
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 3%,
+      rgba(0, 0, 0, 0.35) 8%,
+      rgba(0, 0, 0, 0.7) 14%,
+      black 22%,
+      black 78%,
+      rgba(0, 0, 0, 0.7) 86%,
+      rgba(0, 0, 0, 0.35) 92%,
+      rgba(0, 0, 0, 0.08) 97%,
+      transparent 100%
+    ) !important;
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 3%,
+      rgba(0, 0, 0, 0.35) 8%,
+      rgba(0, 0, 0, 0.7) 14%,
+      black 22%,
+      black 78%,
+      rgba(0, 0, 0, 0.7) 86%,
+      rgba(0, 0, 0, 0.35) 92%,
+      rgba(0, 0, 0, 0.08) 97%,
+      transparent 100%
+    ) !important;
+}
+
+/* Featured work — fade top and bottom edges */
+#featured-work.jbc-floral-work::before {
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 3%,
+      rgba(0, 0, 0, 0.35) 8%,
+      rgba(0, 0, 0, 0.7) 14%,
+      black 22%,
+      black 78%,
+      rgba(0, 0, 0, 0.7) 86%,
+      rgba(0, 0, 0, 0.35) 92%,
+      rgba(0, 0, 0, 0.08) 97%,
+      transparent 100%
+    ) !important;
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 3%,
+      rgba(0, 0, 0, 0.35) 8%,
+      rgba(0, 0, 0, 0.7) 14%,
+      black 22%,
+      black 78%,
+      rgba(0, 0, 0, 0.7) 86%,
+      rgba(0, 0, 0, 0.35) 92%,
+      rgba(0, 0, 0, 0.08) 97%,
+      transparent 100%
+    ) !important;
+}
+
+/* CTA "Let's Break Some Cookies" — fade all edges for seamless blend */
+.cta-section.jbc-floral-cta::before {
+  opacity: 1 !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 4%,
+      rgba(0, 0, 0, 0.3) 10%,
+      rgba(0, 0, 0, 0.65) 18%,
+      black 28%,
+      black 72%,
+      rgba(0, 0, 0, 0.65) 82%,
+      rgba(0, 0, 0, 0.3) 90%,
+      rgba(0, 0, 0, 0.06) 96%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 5%,
+      black 15%,
+      black 85%,
+      rgba(0, 0, 0, 0.3) 95%,
+      transparent 100%
+    ) !important;
+  -webkit-mask-composite: destination-in !important;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.06) 4%,
+      rgba(0, 0, 0, 0.3) 10%,
+      rgba(0, 0, 0, 0.65) 18%,
+      black 28%,
+      black 72%,
+      rgba(0, 0, 0, 0.65) 82%,
+      rgba(0, 0, 0, 0.3) 90%,
+      rgba(0, 0, 0, 0.06) 96%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 5%,
+      black 15%,
+      black 85%,
+      rgba(0, 0, 0, 0.3) 95%,
+      transparent 100%
+    ) !important;
+  mask-composite: intersect !important;
+}
+
+/* Footer — fade top edge into page, bottom stays full */
 .footer.jbc-editorial-footer::before {
   opacity: 1 !important;
 
@@ -4487,21 +4608,45 @@ body {
     linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.12) 8%,
-      rgba(0, 0, 0, 0.5) 22%,
-      black 42%,
+      rgba(0, 0, 0, 0.05) 3%,
+      rgba(0, 0, 0, 0.25) 8%,
+      rgba(0, 0, 0, 0.55) 16%,
+      rgba(0, 0, 0, 0.8) 26%,
+      black 38%,
       black 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.25) 4%,
+      black 14%,
+      black 86%,
+      rgba(0, 0, 0, 0.25) 96%,
+      transparent 100%
     ) !important;
+  -webkit-mask-composite: destination-in !important;
 
   mask-image:
     linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.12) 8%,
-      rgba(0, 0, 0, 0.5) 22%,
-      black 42%,
+      rgba(0, 0, 0, 0.05) 3%,
+      rgba(0, 0, 0, 0.25) 8%,
+      rgba(0, 0, 0, 0.55) 16%,
+      rgba(0, 0, 0, 0.8) 26%,
+      black 38%,
       black 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.25) 4%,
+      black 14%,
+      black 86%,
+      rgba(0, 0, 0, 0.25) 96%,
+      transparent 100%
     ) !important;
+  mask-composite: intersect !important;
 }
 
 /* Cards — tighter radial fade since they're smaller containers */
@@ -4982,4 +5127,15 @@ body {
     top: 70px !important;
     font-size: 18px !important;
   }
+}
+
+/* =========================================================
+   SEAMLESS SECTION FLOW — remove hard borders between sections
+   Rose patterns fade at edges, no lines breaking the flow
+   ========================================================= */
+.cta-section {
+  border-top: none !important;
+}
+.footer.jbc-editorial-footer {
+  border-top: none !important;
 }
