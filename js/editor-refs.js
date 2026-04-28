@@ -3686,3 +3686,177 @@
     attributeFilter: ['class', 'style', 'contenteditable']
   });
 })();
+/* =========================================================
+   JBC EMERGENCY EDITOR PATCH
+   Remove big yellow hero title container boxes.
+   Keep only Just / Broken / Cookies selectable.
+   Paste at the VERY END of js/editor-refs.js
+   ========================================================= */
+
+(function jbcKillHeroTitleWrapperBoxes() {
+  if (window.__jbcHeroWrapperPatchApplied) return;
+  window.__jbcHeroWrapperPatchApplied = true;
+
+  const blocked = [
+    '.hero-content',
+    '.hero-mega',
+    '.hero-oil-wrap'
+  ];
+
+  const words = '.hero-mega .l1, .hero-mega .l2, .hero-mega .l3';
+
+  function isBlocked(el) {
+    return el && blocked.some(function(sel) {
+      return el.matches && el.matches(sel);
+    });
+  }
+
+  function getBlocked(el) {
+    return el && el.closest ? el.closest(blocked.join(',')) : null;
+  }
+
+  function cleanOne(el) {
+    if (!el) return;
+
+    el.classList.remove(
+      'jbc-editable',
+      'jbc-selected',
+      'jbc-grabbed',
+      'jbc-move-active',
+      'jbc-moved',
+      'jbc-text-changed'
+    );
+
+    el.removeAttribute('contenteditable');
+    el.removeAttribute('data-orig-z');
+
+    el.style.outline = 'none';
+    el.style.boxShadow = 'none';
+    el.style.cursor = 'default';
+    el.style.pointerEvents = 'none';
+  }
+
+  function restoreWords() {
+    document.querySelectorAll(words).forEach(function(word) {
+      word.classList.add('jbc-editable');
+      word.setAttribute('contenteditable', 'true');
+      word.style.pointerEvents = 'auto';
+      word.style.cursor = document.body.classList.contains('jbc-move-mode') ? 'move' : 'text';
+    });
+  }
+
+  function cleanAll() {
+    document.querySelectorAll(blocked.join(',')).forEach(cleanOne);
+    restoreWords();
+  }
+
+  /* Add CSS shield */
+  const style = document.createElement('style');
+  style.id = 'jbc-hero-title-wrapper-killer';
+  style.textContent = `
+    /* Kill editor boxes on hero title parent wrappers */
+    .hero-content,
+    .hero-mega,
+    .hero-oil-wrap,
+    .hero-content:hover,
+    .hero-mega:hover,
+    .hero-oil-wrap:hover,
+    .hero-content.jbc-selected,
+    .hero-mega.jbc-selected,
+    .hero-oil-wrap.jbc-selected,
+    .hero-content.jbc-grabbed,
+    .hero-mega.jbc-grabbed,
+    .hero-oil-wrap.jbc-grabbed,
+    .hero-content.jbc-move-active,
+    .hero-mega.jbc-move-active,
+    .hero-oil-wrap.jbc-move-active,
+    body.jbc-move-mode .hero-content,
+    body.jbc-move-mode .hero-mega,
+    body.jbc-move-mode .hero-oil-wrap,
+    body.jbc-move-mode .hero-content:hover,
+    body.jbc-move-mode .hero-mega:hover,
+    body.jbc-move-mode .hero-oil-wrap:hover {
+      outline: none !important;
+      box-shadow: none !important;
+      cursor: default !important;
+    }
+
+    body.jbc-move-mode .hero-content,
+    body.jbc-move-mode .hero-mega,
+    body.jbc-move-mode .hero-oil-wrap {
+      pointer-events: none !important;
+    }
+
+    body.jbc-move-mode .hero-mega .l1,
+    body.jbc-move-mode .hero-mega .l2,
+    body.jbc-move-mode .hero-mega .l3 {
+      pointer-events: auto !important;
+      cursor: move !important;
+    }
+
+    .hero-mega .l1:hover,
+    .hero-mega .l2:hover,
+    .hero-mega .l3:hover {
+      outline: 2px dashed rgba(232, 137, 29, 0.75) !important;
+      outline-offset: 3px !important;
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* Stop editor events from grabbing the wrappers */
+  document.addEventListener('mousedown', function(e) {
+    const word = e.target.closest(words);
+    if (word) {
+      restoreWords();
+      return;
+    }
+
+    const badBox = getBlocked(e.target);
+
+    if (badBox || isBlocked(e.target)) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      cleanAll();
+      return false;
+    }
+  }, true);
+
+  document.addEventListener('mouseover', function(e) {
+    const badBox = getBlocked(e.target);
+
+    if (badBox) {
+      cleanAll();
+    }
+  }, true);
+
+  document.addEventListener('contextmenu', function(e) {
+    const word = e.target.closest(words);
+    if (word) return;
+
+    const badBox = getBlocked(e.target);
+
+    if (badBox || isBlocked(e.target)) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      cleanAll();
+      return false;
+    }
+  }, true);
+
+  /* Keep cleaning, because the editor keeps re-adding classes */
+  const observer = new MutationObserver(cleanAll);
+
+  observer.observe(document.documentElement, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class', 'style', 'contenteditable']
+  });
+
+  setInterval(cleanAll, 400);
+
+  cleanAll();
+})();
