@@ -5473,3 +5473,224 @@ body {
     letter-spacing: 4px !important;
   }
 }
+/* =========================================================
+   JBC FINAL MOBILE HERO/NAV CLEAN FIX
+   Keeps static rose hero background.
+   Removes video-era ghost cover and mobile nav weirdness.
+   Paste at very bottom of style.css.
+   ========================================================= */
+
+/* Kill the video layer completely if any old HTML remains */
+.hero-rose-video {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Stop old jbc-floral-hero/video experiments from affecting layout */
+.hero,
+.hero.jbc-floral-hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.18) 0%,
+      rgba(42, 34, 30, 0.04) 45%,
+      rgba(42, 34, 30, 0.12) 100%
+    ),
+    url("../images/hero%20back%20image.png") !important;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* Remove old pseudo rose/video layers */
+.hero::before,
+.hero::after,
+.hero.jbc-floral-hero::before,
+.hero.jbc-floral-hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Real nav bar, fixed and not huge */
+.nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 72px !important;
+  z-index: 10000 !important;
+  transform: none !important;
+  background: rgba(42, 34, 30, 0.86) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.nav .container {
+  width: 88% !important;
+  max-width: var(--container) !important;
+  margin: 0 auto !important;
+  padding: 18px 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* Hamburger sits inside nav line, not floating down the page */
+.hamburger {
+  display: none;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  margin-left: auto !important;
+  z-index: 10001 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Reset hero content from bad inline dimensions */
+.hero-content {
+  position: relative !important;
+  z-index: 6 !important;
+  width: auto !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding-bottom: 20px !important;
+}
+
+.hero-mega,
+.hero-oil-wrap {
+  position: relative !important;
+  z-index: 7 !important;
+  width: auto !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+.hero-mega,
+.hero-mega .l1,
+.hero-mega .l2,
+.hero-mega .l3 {
+  transform: none !important;
+}
+
+/* Keep portrait behind title */
+.hero .hero-photo-layer {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+/* Keep empty editor block from blocking menu/touch */
+.hero .jbc-custom:not(.hero-photo-layer) {
+  pointer-events: none !important;
+}
+
+/* Keep StorytellinG visible */
+.hero .tag {
+  position: absolute !important;
+  z-index: 8 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 968px) {
+  .hamburger {
+    display: flex !important;
+  }
+
+  .nav-links {
+    position: fixed !important;
+    top: 0 !important;
+    right: -100% !important;
+    width: 75% !important;
+    height: 100svh !important;
+    background: rgba(42, 34, 30, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 35px !important;
+    z-index: 9999 !important;
+  }
+
+  .nav-links.open {
+    right: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
+
+  .hero,
+  .hero.jbc-floral-hero {
+    min-height: 100svh !important;
+    padding: 92px 20px 24px !important;
+    overflow: hidden !important;
+    background-position: center top !important;
+  }
+
+  .hero-content {
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+    transform: none !important;
+    padding-bottom: 10vh !important;
+  }
+
+  .hero-mega,
+  .hero-oil-wrap {
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+    left: auto !important;
+  }
+
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(4rem, 21vw, 7rem) !important;
+    transform: none !important;
+  }
+
+  .hero-mega .l2 {
+    margin-left: 15px !important;
+  }
+
+  .hero .tag {
+    right: 12px !important;
+    top: 92px !important;
+    font-size: 24px !important;
+    letter-spacing: 4px !important;
+  }
+}
