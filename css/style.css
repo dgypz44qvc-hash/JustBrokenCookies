@@ -1070,9 +1070,13 @@ section { padding:var(--section-pad) 0; position:relative; }
   .hero .jbc-custom img { max-height:45vh; object-fit:cover; border-radius:0; }
   .hero .jbc-custom[style*="position:absolute"],
   .hero .jbc-custom[style*="position: absolute"] {
-    width:90% !important;
-    left:5% !important;
-    top:8% !important;
+    width:80% !important;
+    left:10% !important;
+    top:12% !important;
+  }
+  /* Photo layer behind titles on mobile — slightly faded so titles pop */
+  .hero .hero-photo-layer {
+    opacity: 0.7 !important;
   }
   /* Scale added text down on mobile */
   .hero .jbc-custom p {
@@ -1178,9 +1182,10 @@ section { padding:var(--section-pad) 0; position:relative; }
   }
 }
 
-/* ---- Hero secret words, safe version ---- */
-/* Hide the old patterned underlay only, without killing the main hero animation */
-.hero .hero-underlay,
+/* ---- Hero secret words ---- */
+/* hero-underlay starts hidden via inline <style> (opacity:0, visibility:hidden)
+   and is revealed on hover / scroll by JS toggling .oil-hover / .oil-scroll.
+   Do NOT use display:none here — it kills the reveal effect. */
 .hero .hero-secret-words {
   display: none !important;
 }
