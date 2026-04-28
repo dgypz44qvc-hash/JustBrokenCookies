@@ -5361,3 +5361,115 @@ body {
     font-size: clamp(4rem, 21vw, 7rem) !important;
   }
 }
+/* =========================================================
+   JBC HERO STATIC ROSE BACKGROUND KEEP
+   Keeps the current static rose background image
+   Removes video-era mobile/top cover issues
+   ========================================================= */
+
+/* Kill old video if any remains */
+.hero-rose-video {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hero as normal section */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.16) 0%,
+      rgba(42, 34, 30, 0.04) 45%,
+      rgba(42, 34, 30, 0.12) 100%
+    ),
+    url("../images/hero%20back%20image.png") !important;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* If your file is JPG instead, use this line above:
+   url("../images/hero%20back%20image.jpg")
+*/
+
+/* Remove old pseudo background layers that may cover mobile */
+.hero::before,
+.hero::after,
+.hero.jbc-floral-hero::before,
+.hero.jbc-floral-hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Keep hero content above the static rose background */
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero-bottom {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+/* Keep the portrait layer */
+.hero .hero-photo-layer {
+  position: absolute !important;
+  z-index: 2 !important;
+}
+
+/* Keep the empty custom block from interfering */
+.hero .jbc-custom:not(.hero-photo-layer) {
+  pointer-events: none !important;
+}
+
+/* Keep StorytellinG visible */
+.hero .tag {
+  position: absolute !important;
+  z-index: 8 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Mobile fix, keep rose background but stop giant cover */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh !important;
+    padding: 92px 20px 24px !important;
+    background-size: cover !important;
+    background-position: center top !important;
+  }
+
+  .hero-content {
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    padding-bottom: 10vh !important;
+  }
+
+  .hero-mega,
+  .hero-oil-wrap {
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+    left: auto !important;
+  }
+
+  .hero .tag {
+    right: 12px !important;
+    top: 92px !important;
+    font-size: 24px !important;
+    letter-spacing: 4px !important;
+  }
+}
