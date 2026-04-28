@@ -4170,9 +4170,8 @@ body {
   z-index: 7 !important;
 }
 
-/* Hero bottom text, if used, stays above video */
+/* Hero bottom text stays above video — absolute positioned via end-of-file override */
 .hero-bottom {
-  position: relative !important;
   z-index: 6 !important;
 }
 
@@ -4254,8 +4253,7 @@ body {
 
 .hero-content,
 .hero-oil-wrap,
-.hero-mega,
-.hero-bottom {
+.hero-mega {
   position: relative !important;
   z-index: 6 !important;
 }
@@ -4781,9 +4779,7 @@ body {
 /* Keep main title and StorytellinG above portrait */
 .hero-content,
 .hero-oil-wrap,
-.hero-mega,
-.hero-bottom,
-.hero .tag {
+.hero-mega {
   position: relative !important;
   z-index: 8 !important;
 }
@@ -4908,9 +4904,7 @@ body {
 /* Keep title and StorytellinG above the portrait */
 .hero-content,
 .hero-oil-wrap,
-.hero-mega,
-.hero-bottom,
-.hero .tag {
+.hero-mega {
   position: relative !important;
   z-index: 8 !important;
 }
@@ -4922,16 +4916,20 @@ body {
 /* Titles centered in hero — simple flexbox, no transforms */
 .hero {
   justify-content: center !important;
+  align-items: stretch !important;
 }
 .hero-content {
   flex: none !important;
   transform: none !important;
+  justify-content: center !important;
+  padding-bottom: 0 !important;
 }
 .hero-bottom {
   position: absolute !important;
   bottom: 60px !important;
   left: 60px !important;
   right: 60px !important;
+  z-index: 8 !important;
 }
 .hero-oil-wrap,
 .hero-mega {

@@ -125,6 +125,31 @@
     .jbc-move-mode .jbc-img-wrap{cursor:move!important;}
     .jbc-move-mode .jbc-img-wrap:hover{outline:2px dashed #E8891D;outline-offset:3px;}
     .jbc-move-mode .jbc-img-overlay{display:none!important;}
+    /* In move mode, bring custom elements (images, added items) to front so they can be grabbed */
+    .jbc-move-mode .jbc-custom{z-index:9990!important;cursor:move!important;pointer-events:all!important;}
+    .jbc-move-mode .jbc-custom:hover{outline:2px dashed #E8891D;outline-offset:3px;}
+    .jbc-move-mode .jbc-custom img{pointer-events:none!important;}
+    /* Universal drag — all visible elements draggable in move mode */
+    .jbc-move-mode h1,.jbc-move-mode h2,.jbc-move-mode h3,.jbc-move-mode h4,.jbc-move-mode h5,.jbc-move-mode h6,
+    .jbc-move-mode p,.jbc-move-mode span,.jbc-move-mode a,.jbc-move-mode button,.jbc-move-mode img,
+    .jbc-move-mode figure,.jbc-move-mode blockquote,.jbc-move-mode li,
+    .jbc-move-mode .hero-mega,.jbc-move-mode .hero-content,.jbc-move-mode .hero-bottom,
+    .jbc-move-mode .tag,.jbc-move-mode .manifesto-text,.jbc-move-mode .cta-box,
+    .jbc-move-mode .service-card,.jbc-move-mode .portfolio-item,.jbc-move-mode .value-card,
+    .jbc-move-mode .process-card,.jbc-move-mode .blog-card,.jbc-move-mode .testimonial-card,
+    .jbc-move-mode .team-card,.jbc-move-mode .pricing-card{
+      cursor:move!important;pointer-events:all!important;
+    }
+    .jbc-move-mode h1:hover,.jbc-move-mode h2:hover,.jbc-move-mode h3:hover,.jbc-move-mode h4:hover,
+    .jbc-move-mode p:hover,.jbc-move-mode span:hover,.jbc-move-mode a:hover,.jbc-move-mode button:hover,
+    .jbc-move-mode img:hover,.jbc-move-mode figure:hover,.jbc-move-mode blockquote:hover,
+    .jbc-move-mode .hero-mega:hover,.jbc-move-mode .hero-content:hover,.jbc-move-mode .hero-bottom:hover,
+    .jbc-move-mode .tag:hover,.jbc-move-mode .manifesto-text:hover,.jbc-move-mode .cta-box:hover,
+    .jbc-move-mode .service-card:hover,.jbc-move-mode .portfolio-item:hover,.jbc-move-mode .value-card:hover,
+    .jbc-move-mode .process-card:hover,.jbc-move-mode .blog-card:hover{
+      outline:2px dashed #E8891D!important;outline-offset:3px!important;
+    }
+    .jbc-move-active{outline:2px solid #2ecc40!important;outline-offset:2px!important;opacity:0.9;}
     .jbc-move-active{opacity:0.7!important;outline:2px solid #E8891D!important;outline-offset:4px!important;}
     .jbc-moved{outline:2px dashed rgba(232,137,29,0.5)!important;outline-offset:3px;}
     #jbc-toolbar .jbc-move-btn{background:#E8891D;border-color:#E8891D;color:#000;}
@@ -1781,12 +1806,18 @@
 
     document.addEventListener('mousedown', function(e){
       if(!moveMode) return;
-      /* Find the element to drag — works on any editable, image, or container */
+      /* Find the element to drag — works on ANY visible element */
+      if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-panel,#jbc-panel-toggle,.jbc-arr-btn,.jbc-resize-handle')) return;
       var target = e.target.closest('.jbc-editable') || e.target.closest('.jbc-img-wrap') ||
                    e.target.closest('.jbc-added') || e.target.closest('.jbc-custom') ||
-                   e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card');
+                   e.target.closest('.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.testimonial-card,.team-card,.pricing-card') ||
+                   e.target.closest('h1,h2,h3,h4,h5,h6,p,span,a,button,img,figure,blockquote,ul,ol,li') ||
+                   e.target.closest('.hero-mega,.hero-content,.hero-bottom,.tag,.manifesto-text,.marquee,.cta-box') ||
+                   e.target.closest('div[class]:not(section):not(.hero):not(body):not(html):not(nav):not(footer):not(.preloader)');
       if(!target) return;
-      if(e.target.closest('#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-panel,#jbc-panel-toggle')) return;
+      /* Don't drag the body, html, main wrappers, or sections themselves */
+      if(target.tagName==='BODY'||target.tagName==='HTML'||target.tagName==='MAIN') return;
+      if(target.tagName==='SECTION'||target.tagName==='NAV'||target.tagName==='FOOTER') return;
       if(e.button !== 0) return;
       e.preventDefault();
 
@@ -2455,6 +2486,14 @@
       font-family:monospace;font-size:12px;border-radius:3px;width:100%;box-sizing:border-box;}
     .jbc-prop-field input:focus,.jbc-prop-field select:focus{border-color:#2ecc40;outline:none;}
     .jbc-prop-field input[type="color"]{height:30px;padding:2px;cursor:pointer;}
+    .jbc-arrow-input{display:flex;align-items:center;gap:0;}
+    .jbc-arrow-input input{flex:1;min-width:0;border-radius:0;text-align:center;font-size:11px;}
+    .jbc-arr-btn{background:#333;color:#aaa;border:1px solid #444;width:22px;height:28px;cursor:pointer;
+      font-size:10px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;user-select:none;}
+    .jbc-arr-btn:first-child{border-radius:4px 0 0 4px;border-right:none;}
+    .jbc-arr-btn:last-child{border-radius:0 4px 4px 0;border-left:none;}
+    .jbc-arr-btn:hover{background:#555;color:#fff;}
+    .jbc-arr-btn:active{background:#2ecc40;color:#000;}
     .jbc-prop-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
     .jbc-prop-actions button{flex:1;min-width:70px;padding:6px 8px;background:#222;color:#fff;border:1px solid #444;
       font-family:monospace;font-size:10px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;border-radius:3px;transition:all 0.15s;}
@@ -2774,21 +2813,32 @@
     var curBg = el.style.backgroundColor || cs.backgroundColor;
     var curColor = el.style.color || cs.color;
 
+    /* Helper: build an input with arrow buttons */
+    function arrowField(id, labelText, value, step, unit){
+      step = step || 1; unit = unit || '';
+      return '<div class="jbc-prop-field"><label>'+labelText+'</label>' +
+        '<div class="jbc-arrow-input">' +
+        '<button class="jbc-arr-btn" data-dir="-1" data-for="'+id+'" data-step="'+step+'" data-unit="'+unit+'">&#9660;</button>' +
+        '<input type="text" id="'+id+'" value="'+value+'">' +
+        '<button class="jbc-arr-btn" data-dir="1" data-for="'+id+'" data-step="'+step+'" data-unit="'+unit+'">&#9650;</button>' +
+        '</div></div>';
+    }
+
     container.innerHTML = [
       '<div style="font-size:12px;font-weight:bold;color:#2ecc40;margin-bottom:10px;">'+label+'</div>',
       '<h4>Position & Size</h4>',
       '<div class="jbc-prop-group">',
-      '  <div class="jbc-prop-field"><label>X (left)</label><input type="text" id="jbc-p-x" value="'+(el.style.left||Math.round(rect.left)+'px')+'"></div>',
-      '  <div class="jbc-prop-field"><label>Y (top)</label><input type="text" id="jbc-p-y" value="'+(el.style.top||Math.round(rect.top+window.scrollY)+'px')+'"></div>',
+      arrowField('jbc-p-x','X (left)', el.style.left||Math.round(rect.left)+'px', 1, 'px'),
+      arrowField('jbc-p-y','Y (top)', el.style.top||Math.round(rect.top+window.scrollY)+'px', 1, 'px'),
       '</div>',
       '<div class="jbc-prop-group">',
-      '  <div class="jbc-prop-field"><label>Width</label><input type="text" id="jbc-p-w" value="'+(el.style.width||Math.round(rect.width)+'px')+'"></div>',
-      '  <div class="jbc-prop-field"><label>Height</label><input type="text" id="jbc-p-h" value="'+(el.style.height||'auto')+'"></div>',
+      arrowField('jbc-p-w','Width', el.style.width||Math.round(rect.width)+'px', 1, 'px'),
+      arrowField('jbc-p-h','Height', el.style.height||'auto', 1, 'px'),
       '</div>',
       '<h4>Stacking & Visibility</h4>',
       '<div class="jbc-prop-group">',
-      '  <div class="jbc-prop-field"><label>Z-Index</label><input type="number" id="jbc-p-z" value="'+curZ+'"></div>',
-      '  <div class="jbc-prop-field"><label>Opacity</label><input type="number" id="jbc-p-o" value="'+curOpacity.toFixed(2)+'" min="0" max="1" step="0.05"></div>',
+      arrowField('jbc-p-z','Z-Index', curZ, 1, ''),
+      arrowField('jbc-p-o','Opacity', curOpacity.toFixed(2), 0.05, ''),
       '</div>',
       '<h4>Colors</h4>',
       '<div class="jbc-prop-group">',
@@ -2829,6 +2879,39 @@
     if(pColor) pColor.addEventListener('input', function(){ applyProp('color', pColor.value); });
     if(pBg) pBg.addEventListener('input', function(){ applyProp('backgroundColor', pBg.value); });
     if(pBgNone) pBgNone.addEventListener('click', function(){ applyProp('backgroundColor', 'transparent'); });
+
+    /* Arrow increment / decrement buttons */
+    var propMap = {'jbc-p-x':'left','jbc-p-y':'top','jbc-p-w':'width','jbc-p-h':'height','jbc-p-z':'zIndex','jbc-p-o':'opacity'};
+    container.querySelectorAll('.jbc-arr-btn').forEach(function(btn){
+      /* Repeating on hold */
+      var holdTimer = null, holdInterval = null;
+      function doStep(){
+        var inp = container.querySelector('#'+btn.getAttribute('data-for'));
+        if(!inp) return;
+        var dir = parseInt(btn.getAttribute('data-dir'));
+        var step = parseFloat(btn.getAttribute('data-step'));
+        var unit = btn.getAttribute('data-unit') || '';
+        var cur = parseFloat(inp.value) || 0;
+        var next = Math.round((cur + dir * step) * 100) / 100;
+        inp.value = unit ? next + unit : next;
+        var cssProp = propMap[inp.id];
+        if(cssProp){
+          applyProp(cssProp, inp.value);
+          if(cssProp === 'zIndex') refreshLayersPanel();
+        }
+        /* Also update universal handles position */
+        if(selectedElement) showUniversalHandles(selectedElement);
+      }
+      btn.addEventListener('mousedown', function(e){
+        e.preventDefault();
+        doStep();
+        holdTimer = setTimeout(function(){
+          holdInterval = setInterval(doStep, 60);
+        }, 400);
+      });
+      btn.addEventListener('mouseup', function(){ clearTimeout(holdTimer); clearInterval(holdInterval); });
+      btn.addEventListener('mouseleave', function(){ clearTimeout(holdTimer); clearInterval(holdInterval); });
+    });
 
     /* Action buttons */
     container.querySelectorAll('[data-pa]').forEach(function(btn){
