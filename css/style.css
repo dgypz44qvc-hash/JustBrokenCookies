@@ -7827,3 +7827,304 @@ top: auto !important;
 .hero .tag::after {
   top: 105% !important;
 }
+/* =========================================================
+   JBC HERO STABLE FINAL LOOK
+   Restores rose overlay, fixes title position,
+   keeps portrait large/right and StorytellinG visible.
+   Paste at VERY BOTTOM of css/style.css
+   ========================================================= */
+
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 100vh !important;
+  padding: 96px 60px 60px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2A221E 0%,
+      #2A221E 50%,
+      #2D231F 76%,
+      #241C19 100%
+    ) !important;
+}
+
+/* Kill old pseudo/video layers only */
+.hero::before,
+.hero::after,
+.hero-rose-video {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Portrait, large/right */
+.hero .jbc-custom.hero-photo-layer {
+  position: absolute !important;
+  left: 38% !important;
+  top: 5% !important;
+  width: 64% !important;
+  z-index: 2 !important;
+  opacity: 0.82 !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
+.hero .jbc-custom.hero-photo-layer picture,
+.hero .jbc-custom.hero-photo-layer img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  filter: grayscale(100%) contrast(1.08) brightness(0.92) !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 52% 42%,
+      #000 0%,
+      #000 46%,
+      rgba(0, 0, 0, 0.72) 62%,
+      rgba(0, 0, 0, 0.28) 78%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 52% 42%,
+      #000 0%,
+      #000 46%,
+      rgba(0, 0, 0, 0.72) 62%,
+      rgba(0, 0, 0, 0.28) 78%,
+      transparent 100%
+    ) !important;
+}
+
+/* Rose pattern overlay, visible again */
+.hero-corner-rose {
+  display: block !important;
+  visibility: visible !important;
+  position: absolute !important;
+  pointer-events: none !important;
+
+  z-index: 4 !important;
+
+  left: 13% !important;
+  top: 4% !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  width: 74% !important;
+  height: 86% !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 760px 760px !important;
+  background-position: center center !important;
+
+  opacity: 0.82 !important;
+  mix-blend-mode: screen !important;
+  filter: saturate(1.25) contrast(1.12) brightness(0.98) !important;
+
+  transform: none !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 48% 50%,
+      #000 0%,
+      #000 48%,
+      rgba(0, 0, 0, 0.70) 62%,
+      rgba(0, 0, 0, 0.26) 80%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 48% 50%,
+      #000 0%,
+      #000 48%,
+      rgba(0, 0, 0, 0.70) 62%,
+      rgba(0, 0, 0, 0.26) 80%,
+      transparent 100%
+    ) !important;
+}
+
+/* Big title, brought down so it is not cut by nav */
+.hero-content {
+  position: absolute !important;
+  z-index: 10 !important;
+
+  left: 44px !important;
+  top: 150px !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+
+  display: block !important;
+  pointer-events: none !important;
+}
+
+.hero-oil-wrap,
+.hero-mega {
+  position: relative !important;
+  z-index: 10 !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+.hero-mega .l1,
+.hero-mega .l2,
+.hero-mega .l3 {
+  display: block !important;
+  position: relative !important;
+  transform: none !important;
+  line-height: 0.76 !important;
+}
+
+.hero-mega .l1 {
+  margin-left: 0 !important;
+}
+
+.hero-mega .l2 {
+  margin-left: 110px !important;
+}
+
+.hero-mega .l3 {
+  margin-left: 0 !important;
+}
+
+/* StorytellinG, moved up but not cropped */
+.hero .tag {
+  position: absolute !important;
+  z-index: 12 !important;
+
+  top: 82px !important;
+  right: 92px !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  writing-mode: vertical-rl !important;
+  text-orientation: mixed !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 88px !important;
+  font-weight: 700 !important;
+  line-height: 0.9 !important;
+  letter-spacing: 0 !important;
+  color: var(--dusty-rose) !important;
+
+  pointer-events: none !important;
+}
+
+.hero .tag::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 105% !important;
+  width: 1px !important;
+  height: 230px !important;
+  transform: translateX(-50%) !important;
+
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(201, 58, 110, 0.55) 0 3px,
+      transparent 3px 10px
+    ) !important;
+  background-size: 1px 10px !important;
+  background-repeat: repeat-y !important;
+}
+
+/* Bottom line */
+.hero-bottom {
+  position: absolute !important;
+  z-index: 10 !important;
+
+  left: 60px !important;
+  right: 60px !important;
+  bottom: 54px !important;
+
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+
+  padding-top: 28px !important;
+  border-top: var(--border) !important;
+}
+
+.hero .jbc-custom:not(.hero-photo-layer) {
+  pointer-events: none !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh !important;
+    padding: 92px 20px 24px !important;
+  }
+
+  .hero .jbc-custom.hero-photo-layer {
+    left: 18% !important;
+    top: 13% !important;
+    width: 92% !important;
+    opacity: 0.70 !important;
+    z-index: 2 !important;
+  }
+
+  .hero-corner-rose {
+    left: 0% !important;
+    top: 8% !important;
+    width: 100% !important;
+    height: 70% !important;
+    background-size: 520px 520px !important;
+    background-position: center top !important;
+    opacity: 0.72 !important;
+    z-index: 4 !important;
+  }
+
+  .hero-content {
+    left: 20px !important;
+    top: 250px !important;
+    right: 20px !important;
+  }
+
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(4.4rem, 22vw, 8rem) !important;
+    line-height: 0.78 !important;
+  }
+
+  .hero-mega .l2 {
+    margin-left: 42px !important;
+  }
+
+  .hero .tag {
+    top: 95px !important;
+    right: 16px !important;
+    font-size: 24px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .hero .tag::after {
+    height: 150px !important;
+  }
+
+  .hero-bottom {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 24px !important;
+  }
+}
