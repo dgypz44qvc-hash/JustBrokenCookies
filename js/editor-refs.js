@@ -235,6 +235,20 @@
     var html = '';
     var layers = getSectionElements(section);
 
+    /* ---- SECTION DESIGN (always shown at top) ---- */
+    var secTag = section.tagName.toLowerCase();
+    var secLabel = section.classList.contains('hero') ? 'Hero' : (section.className.split(/\s+/)[0] || secTag);
+    var secBg = section.style.backgroundColor || getComputedStyle(section).backgroundColor;
+    html += '<div class="jbc-menu-header" style="color:#0af;">\u25a0 Section: '+secLabel+'</div>';
+    html += '<button data-action="sec-bg-pick" style="display:flex;align-items:center;gap:8px;"><i class="fas fa-fill-drip"></i> Background Color <input type="color" id="jbc-ctx-secbg" value="'+rgbToHex(secBg)+'" style="width:24px;height:20px;padding:0;border:1px solid #666;cursor:pointer;margin-left:auto;" onclick="event.stopPropagation()"></button>';
+    html += '<button data-action="sec-bg-clear"><i class="fas fa-eraser"></i> Clear Background</button>';
+    html += '<button data-action="sec-bg-img"><i class="fas fa-image"></i> Background Image...</button>';
+    html += '<button data-action="sec-pad-more"><i class="fas fa-expand"></i> More Padding (+20px)</button>';
+    html += '<button data-action="sec-pad-less"><i class="fas fa-compress"></i> Less Padding (-20px)</button>';
+    html += '<button data-action="sec-move-up"><i class="fas fa-arrow-up"></i> Move Section Up</button>';
+    html += '<button data-action="sec-move-down"><i class="fas fa-arrow-down"></i> Move Section Down</button>';
+    html += '<button data-action="sec-hide" style="color:#E84848;"><i class="fas fa-eye-slash"></i> Hide Section</button>';
+
     /* Sort layers by z-index (highest first) for a clear stacking view */
     var sortedLayers = layers.slice().sort(function(a,b){
       var zA = parseInt(a.style.zIndex) || parseInt(getComputedStyle(a).zIndex) || 0;
@@ -353,11 +367,101 @@
     }
   });
 
+  /* Live section background color from the inline color picker */
+  ctxMenu.addEventListener('input', function(e){
+    if(e.target.id === 'jbc-ctx-secbg'){
+      var sec = ctxMenu._pasteSection;
+      if(sec){
+        sec.style.backgroundColor = e.target.value;
+        markChanged(sec);
+      }
+    }
+  });
+
   /* Handle context menu actions */
   ctxMenu.addEventListener('click', function(e){
     var btn = e.target.closest('button');
     if(!btn) return;
     var action = btn.getAttribute('data-action');
+
+    /* ---- SECTION DESIGN ACTIONS ---- */
+    var _sec = ctxMenu._pasteSection;
+    if(action === 'sec-bg-pick'){
+      /* Handled by the color input's own change event below */
+      return;
+    }
+    if(action === 'sec-bg-clear' && _sec){
+      _sec.style.backgroundColor = '';
+      _sec.style.background = '';
+      markChanged(_sec);
+      showToast('Background cleared');
+      ctxMenu.style.display = 'none';
+      return;
+    }
+    if(action === 'sec-bg-img' && _sec){
+      var fi = document.createElement('input');
+      fi.type = 'file'; fi.accept = 'image/*';
+      fi.addEventListener('change', function(){
+        var file = fi.files[0]; if(!file) return;
+        var reader = new FileReader();
+        reader.onload = function(ev){
+          _sec.style.backgroundImage = 'url('+ev.target.result+')';
+          _sec.style.backgroundSize = 'cover';
+          _sec.style.backgroundPosition = 'center';
+          markChanged(_sec);
+          showToast('Background image set');
+        };
+        reader.readAsDataURL(file);
+      });
+      fi.click();
+      ctxMenu.style.display = 'none';
+      return;
+    }
+    if(action === 'sec-pad-more' && _sec){
+      var curPad = parseInt(getComputedStyle(_sec).paddingTop) || 0;
+      _sec.style.paddingTop = (curPad + 20) + 'px';
+      _sec.style.paddingBottom = (parseInt(getComputedStyle(_sec).paddingBottom) + 20) + 'px';
+      markChanged(_sec);
+      showToast('Padding increased');
+      ctxMenu.style.display = 'none';
+      return;
+    }
+    if(action === 'sec-pad-less' && _sec){
+      var curPad2 = parseInt(getComputedStyle(_sec).paddingTop) || 0;
+      _sec.style.paddingTop = Math.max(0, curPad2 - 20) + 'px';
+      _sec.style.paddingBottom = Math.max(0, parseInt(getComputedStyle(_sec).paddingBottom) - 20) + 'px';
+      markChanged(_sec);
+      showToast('Padding decreased');
+      ctxMenu.style.display = 'none';
+      return;
+    }
+    if(action === 'sec-move-up' && _sec){
+      var prev = _sec.previousElementSibling;
+      if(prev && prev.tagName !== 'NAV' && !prev.classList.contains('preloader') && !prev.classList.contains('page-transition')){
+        _sec.parentNode.insertBefore(_sec, prev);
+        markChanged(_sec);
+        showToast('Section moved up');
+      }
+      ctxMenu.style.display = 'none';
+      return;
+    }
+    if(action === 'sec-move-down' && _sec){
+      var next = _sec.nextElementSibling;
+      if(next){
+        _sec.parentNode.insertBefore(next, _sec);
+        markChanged(_sec);
+        showToast('Section moved down');
+      }
+      ctxMenu.style.display = 'none';
+      return;
+    }
+    if(action === 'sec-hide' && _sec){
+      _sec.style.display = 'none';
+      markChanged(_sec);
+      showToast('Section hidden');
+      ctxMenu.style.display = 'none';
+      return;
+    }
 
     /* Layer selection — always brings element to front temporarily so it's reachable */
     if(action === 'select-layer'){
