@@ -10,31 +10,31 @@ section.hero > div.tag {
   font-size: 88px;
   font-weight: 700;
   z-index: 5;
-  opacity: 0.834282;
+  opacity: 0.958873;
   filter: blur(0px);
   transition-behavior: normal;
   transition-duration: 1.5s;
   transition-timing-function: ease-out;
   transition-delay: 0s;
   transition-property: opacity;
-  transform: translate(43px, -63px) !important;
+  transform: translate(-1px, 105px) !important;
   position: absolute;
 }
 
 section.hero > div.hero-content {
-  transform: translate(-12px, -36px) !important;
+  transform: translate(-93px, -360px) !important;
 }
 
 section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega {
-  --mx: -299.5095736113826px;
-  --my: -299.99077567921097px;
+  --mx: -299.5267202694341px;
+  --my: -299.37672915157566px;
+  transform: translate(15px, 25px) !important;
   position: relative;
-  transform: translate(-43px, -465px) !important;
 }
 
 div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1 {
   opacity: 1;
-  transform: translate(107px, -250px) !important;
+  transform: translate(-1px, 11px) !important;
   filter: blur(0px);
   transition-behavior: normal, normal, normal;
   transition-duration: 1s, 1s, 1s;
@@ -42,12 +42,12 @@ div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1 {
   transition-delay: 940ms, 940ms, 940ms;
   transition-property: opacity, transform, filter;
   position: relative;
-  font-size: 158px;
+  font-size: 132px;
 }
 
 div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2 {
   opacity: 1;
-  transform: translate(-125px, -218px) !important;
+  transform: translateY(0px);
   filter: blur(0px);
   transition-behavior: normal, normal, normal;
   transition-duration: 1s, 1s, 1s;
@@ -55,12 +55,12 @@ div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2 {
   transition-delay: 1120ms, 1120ms, 1120ms;
   transition-property: opacity, transform, filter;
   position: relative;
-  font-size: 170px;
+  font-size: 130px;
 }
 
 div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3 {
   opacity: 1;
-  transform: translate(56px, -172px) !important;
+  transform: translateY(0px);
   filter: blur(0px);
   transition-behavior: normal, normal, normal;
   transition-duration: 1s, 1s, 1s;
@@ -68,16 +68,7 @@ div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3 {
   transition-delay: 1300ms, 1300ms, 1300ms;
   transition-property: opacity, transform, filter;
   position: relative;
-  font-size: 180px;
-}
-
-[data-jbc-id="jbc-el-2"] {
-  left: 27.05%;
-  top: 10.62%;
-  width: 63.13%;
-  position: absolute;
-  z-index: 1;
-  transform: translate(0px, -72px) !important;
+  font-size: 154px;
 }
 
 section.hero > div.hero-photo-layer > picture > div {
@@ -85,7 +76,7 @@ section.hero > div.hero-photo-layer > picture > div {
   display: block;
   width: 100%;
   height: 100%;
-  transform: translate(163px, -23px) !important;
+  transform: translate(17px, 23px) !important;
 }
 
 .hero {
