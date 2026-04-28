@@ -1805,8 +1805,8 @@
     if(p.indexOf('about')!==-1) filename='about.html';
     else if(p.indexOf('services')!==-1) filename='services.html';
     else if(p.indexOf('portfolio')!==-1) filename='portfolio.html';
-    else if(p.indexOf('post-')!==-1){ filename='post-01.html'; subdir='blog'; }
-    else if(p.indexOf('blog')!==-1) filename='blog.html';
+    else if(p.indexOf('post-')!==-1){ filename=p.split('/').pop()||'post-01.html'; subdir='magazine'; }
+    else if(p.indexOf('magazine')!==-1) filename='magazine.html';
     else if(p.indexOf('contact')!==-1) filename='contact.html';
     return {filename:filename,subdir:subdir};
   }
@@ -1930,7 +1930,59 @@
     var clone = document.documentElement.cloneNode(true);
 
     /* Remove all editor UI elements */
-    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar,#jbc-guides,#jbc-snap-line').forEach(function(el){ el.remove(); });
+    clone.querySelectorAll('#jbc-editor-banner,#jbc-toolbar,#jbc-toast,#jbc-add-btn,#jbc-add-menu,#jbc-placement-hint,#jbc-context-menu,#jbc-format-bar,#jbc-guides,#jbc-snap-line,#jbc-panel,#jbc-panel-toggle').forEach(function(el){ el.remove(); });
+
+    /* ================================================================
+       STEP 0A — Unwrap oil-on-water runtime DOM.
+       main.js wraps .hero-mega inside .hero-oil-wrap and creates a
+       .hero-underlay clone. These must NOT be saved into the HTML.
+       ================================================================ */
+    clone.querySelectorAll('.hero-oil-wrap').forEach(function(wrap){
+      /* Find the REAL hero-mega (not the underlay copy) */
+      var realMega = wrap.querySelector('.hero-mega:not(.hero-underlay)');
+      if(realMega){
+        /* Strip inline CSS vars from oil hover (--mx, --my) */
+        realMega.style.removeProperty('--mx');
+        realMega.style.removeProperty('--my');
+        realMega.removeAttribute('style');
+        /* Move it out of the oil-wrap, back to its original parent */
+        wrap.parentNode.insertBefore(realMega, wrap);
+      }
+      /* Remove the oil-wrap (and its underlay copy) entirely */
+      wrap.remove();
+    });
+    /* Remove any stray hero-underlay elements */
+    clone.querySelectorAll('.hero-underlay').forEach(function(el){ el.remove(); });
+
+    /* ================================================================
+       STEP 0B — Clean runtime classes and baked states.
+       ================================================================ */
+    var cloneBody = clone.querySelector('body');
+    if(cloneBody && cloneBody.getAttribute('class') === '') cloneBody.removeAttribute('class');
+    /* Preloader should not have "loaded" class baked in */
+    var preloader = clone.querySelector('.preloader');
+    if(preloader) preloader.classList.remove('loaded');
+    /* Nav should not have "scrolled" class baked in */
+    var nav2 = clone.querySelector('.nav');
+    if(nav2) nav2.classList.remove('scrolled');
+    /* Cursor dots should not have baked positions */
+    clone.querySelectorAll('.cursor-dot,.cursor-ring').forEach(function(el){ el.removeAttribute('style'); });
+    /* Hero mega lines — strip runtime inline styles (font-size overrides, etc) */
+    clone.querySelectorAll('.hero-mega .l1,.hero-mega .l2,.hero-mega .l3').forEach(function(el){
+      el.removeAttribute('style');
+    });
+    /* Tag — strip runtime z-index (CSS handles it), trailing nbsp */
+    var tagEl = clone.querySelector('.hero .tag');
+    if(tagEl){
+      tagEl.textContent = tagEl.textContent.replace(/\s+$/,'');
+      tagEl.setAttribute('style','font-size: 48px;');
+    }
+    /* Section selection outlines */
+    clone.querySelectorAll('.jbc-section-selected,.jbc-section-hover').forEach(function(el){
+      el.classList.remove('jbc-section-selected','jbc-section-hover');
+    });
+    /* Universal resize handles */
+    clone.querySelectorAll('.jbc-universal-handles').forEach(function(el){ el.remove(); });
 
     /* ================================================================
        STEP 1 — Strip animation/parallax inline styles from ALL elements.
@@ -2224,7 +2276,759 @@
     showToast('Downloaded '+pageInfo.filename);
   }
 
+  /* ========================================================================
+     EDITOR V2 EXTENSIONS — Undo/Redo, Side Panel, Properties, Section Edit
+     ======================================================================== */
+
+  /* ---- V2 STYLES ---- */
+  var css2 = document.createElement('style');
+  css2.textContent = `
+    /* LEFT SIDEBAR PANEL */
+    #jbc-panel{position:fixed;left:0;top:40px;bottom:0;width:280px;z-index:1000001;
+      background:#111;border-right:2px solid #333;display:flex;flex-direction:column;
+      font-family:monospace;color:#ccc;overflow:hidden;transition:transform 0.25s;transform:translateX(-100%);}
+    #jbc-panel.open{transform:translateX(0);}
+    #jbc-panel-tabs{display:flex;border-bottom:2px solid #333;flex-shrink:0;}
+    #jbc-panel-tabs button{flex:1;padding:10px 6px;background:none;border:none;border-bottom:2px solid transparent;
+      color:#888;font-family:monospace;font-size:11px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.15s;}
+    #jbc-panel-tabs button:hover{color:#fff;}
+    #jbc-panel-tabs button.active{color:#2ecc40;border-bottom-color:#2ecc40;}
+    .jbc-tab-content{display:none;flex:1;overflow-y:auto;padding:12px;}
+    .jbc-tab-content.active{display:block;}
+    .jbc-tab-content h4{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid #333;}
+    .jbc-tab-content h4:first-child{margin-top:4px;}
+
+    /* Layer items */
+    .jbc-layer-row{display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid transparent;border-radius:4px;cursor:pointer;font-size:11px;transition:all 0.1s;margin-bottom:2px;}
+    .jbc-layer-row:hover{background:#222;border-color:#444;}
+    .jbc-layer-row.selected{background:#1a3a1a;border-color:#2ecc40;}
+    .jbc-layer-row i{width:16px;text-align:center;color:#888;font-size:12px;flex-shrink:0;}
+    .jbc-layer-row .lbl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .jbc-layer-row .z-badge{font-size:9px;color:#666;flex-shrink:0;}
+    .jbc-layer-row .vis-btn{background:none;border:none;color:#888;cursor:pointer;padding:2px;font-size:11px;flex-shrink:0;}
+    .jbc-layer-row .vis-btn:hover{color:#2ecc40;}
+    .jbc-layer-row .vis-btn.hidden{color:#E84848;}
+
+    /* Properties panel */
+    .jbc-prop-group{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+    .jbc-prop-group.full{grid-template-columns:1fr;}
+    .jbc-prop-field{display:flex;flex-direction:column;gap:2px;}
+    .jbc-prop-field label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#666;}
+    .jbc-prop-field input,.jbc-prop-field select{background:#222;color:#fff;border:1px solid #444;padding:5px 6px;
+      font-family:monospace;font-size:12px;border-radius:3px;width:100%;box-sizing:border-box;}
+    .jbc-prop-field input:focus,.jbc-prop-field select:focus{border-color:#2ecc40;outline:none;}
+    .jbc-prop-field input[type="color"]{height:30px;padding:2px;cursor:pointer;}
+    .jbc-prop-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+    .jbc-prop-actions button{flex:1;min-width:70px;padding:6px 8px;background:#222;color:#fff;border:1px solid #444;
+      font-family:monospace;font-size:10px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;border-radius:3px;transition:all 0.15s;}
+    .jbc-prop-actions button:hover{background:#2ecc40;border-color:#2ecc40;color:#000;}
+    .jbc-prop-actions button.danger:hover{background:#E84848;border-color:#E84848;color:#fff;}
+
+    /* Section selection */
+    .jbc-section-selected{outline:2px dashed #0af!important;outline-offset:-2px!important;}
+    .jbc-section-hover{outline:1px dashed rgba(0,180,255,0.3)!important;outline-offset:-1px!important;}
+
+    /* Panel toggle button */
+    #jbc-panel-toggle{position:fixed;top:44px;left:4px;z-index:1000002;width:36px;height:36px;
+      background:#111;border:2px solid #333;color:#fff;font-size:16px;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;transition:all 0.2s;border-radius:3px;}
+    #jbc-panel-toggle:hover{background:#2ecc40;border-color:#2ecc40;color:#000;}
+    #jbc-panel-toggle.open{left:284px;}
+
+    /* Undo/redo buttons */
+    #jbc-toolbar .jbc-undo-btn,#jbc-toolbar .jbc-redo-btn{padding:8px 14px;font-size:11px;}
+    #jbc-toolbar .jbc-undo-btn:disabled,#jbc-toolbar .jbc-redo-btn:disabled{opacity:0.3;}
+
+    /* Universal resize handles on selected element */
+    .jbc-universal-handles{position:absolute;inset:-4px;z-index:999997;pointer-events:none;border:1px dashed #2ecc40;}
+    .jbc-uhandle{position:absolute;width:10px;height:10px;background:#2ecc40;border:1px solid #fff;pointer-events:all;cursor:nwse-resize;z-index:999998;}
+    .jbc-uhandle.tl{top:-5px;left:-5px;cursor:nw-resize;}
+    .jbc-uhandle.tr{top:-5px;right:-5px;cursor:ne-resize;}
+    .jbc-uhandle.bl{bottom:-5px;left:-5px;cursor:sw-resize;}
+    .jbc-uhandle.br{bottom:-5px;right:-5px;cursor:se-resize;}
+    .jbc-uhandle.tm{top:-5px;left:50%;margin-left:-5px;cursor:n-resize;}
+    .jbc-uhandle.bm{bottom:-5px;left:50%;margin-left:-5px;cursor:s-resize;}
+    .jbc-uhandle.ml{top:50%;left:-5px;margin-top:-5px;cursor:w-resize;}
+    .jbc-uhandle.mr{top:50%;right:-5px;margin-top:-5px;cursor:e-resize;}
+
+    /* Responsive preview */
+    #jbc-preview-frame{display:none;position:fixed;top:40px;left:0;right:0;bottom:0;z-index:999990;
+      background:rgba(0,0,0,0.8);align-items:flex-start;justify-content:center;padding-top:20px;}
+    #jbc-preview-frame.visible{display:flex;}
+    #jbc-preview-frame iframe{border:2px solid #333;background:#fff;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+
+    /* Section edit bar */
+    .jbc-section-bar{position:absolute;top:-36px;left:50%;transform:translateX(-50%);z-index:999996;
+      display:flex;gap:4px;background:#111;border:1px solid #333;padding:4px 8px;border-radius:4px;white-space:nowrap;}
+    .jbc-section-bar button{background:#222;color:#fff;border:1px solid #444;padding:4px 8px;
+      font-family:monospace;font-size:10px;font-weight:bold;cursor:pointer;border-radius:3px;transition:all 0.1s;}
+    .jbc-section-bar button:hover{background:#0af;border-color:#0af;color:#000;}
+  `;
+  document.head.appendChild(css2);
+
+  /* ---- UNDO / REDO SYSTEM ---- */
+  var undoStack = [], redoStack = [], maxUndo = 50;
+  function captureState(label){
+    undoStack.push({label:label, html:document.body.innerHTML, scroll:window.scrollY});
+    if(undoStack.length > maxUndo) undoStack.shift();
+    redoStack = [];
+    updateUndoRedoBtns();
+  }
+  /* Capture initial state */
+  setTimeout(function(){ captureState('initial'); }, 500);
+
+  function undo(){
+    if(undoStack.length < 2) return;
+    var current = undoStack.pop();
+    redoStack.push(current);
+    var prev = undoStack[undoStack.length - 1];
+    restoreState(prev);
+    showToast('Undo: ' + (prev.label || ''));
+  }
+  function redo(){
+    if(redoStack.length === 0) return;
+    var next = redoStack.pop();
+    undoStack.push(next);
+    restoreState(next);
+    showToast('Redo: ' + (next.label || ''));
+  }
+  function restoreState(state){
+    /* Save scroll, restore HTML, re-scroll */
+    document.body.innerHTML = state.html;
+    window.scrollTo(0, state.scroll);
+    updateUndoRedoBtns();
+    /* Re-init editor UI references (they were destroyed) */
+    reinitEditorUI();
+  }
+  function reinitEditorUI(){
+    /* After innerHTML restore, we need to re-find / recreate editor elements.
+       Simplest approach: reload the page with ?edit to get a fresh editor init. */
+    location.reload();
+  }
+  function updateUndoRedoBtns(){
+    var ub = document.querySelector('.jbc-undo-btn');
+    var rb = document.querySelector('.jbc-redo-btn');
+    if(ub) ub.disabled = undoStack.length < 2;
+    if(rb) rb.disabled = redoStack.length === 0;
+  }
+
+  /* Add undo/redo to keyboard shortcuts */
+  document.addEventListener('keydown', function(e){
+    if((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey){
+      var isTyping = document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true';
+      if(!isTyping){
+        e.preventDefault();
+        undo();
+      }
+    }
+    if((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))){
+      var isTyping2 = document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true';
+      if(!isTyping2){
+        e.preventDefault();
+        redo();
+      }
+    }
+  });
+
+  /* Add undo/redo buttons to toolbar */
+  var undoBtn = document.createElement('button');
+  undoBtn.className = 'jbc-undo-btn';
+  undoBtn.innerHTML = '<i class="fas fa-undo"></i> UNDO';
+  undoBtn.disabled = true;
+  undoBtn.addEventListener('click', undo);
+  toolbar.insertBefore(undoBtn, saveBtn);
+
+  var redoBtn = document.createElement('button');
+  redoBtn.className = 'jbc-redo-btn';
+  redoBtn.innerHTML = '<i class="fas fa-redo"></i> REDO';
+  redoBtn.disabled = true;
+  redoBtn.addEventListener('click', redo);
+  toolbar.insertBefore(redoBtn, saveBtn);
+
+  /* Capture state after significant actions */
+  var captureTimeout = null;
+  function debouncedCapture(label){
+    clearTimeout(captureTimeout);
+    captureTimeout = setTimeout(function(){ captureState(label); }, 600);
+  }
+  /* Hook into existing change tracking */
+  var origUpdateCounter = updateCounter;
+  updateCounter = function(){
+    origUpdateCounter();
+    debouncedCapture('edit');
+  };
+
+  /* ---- PANEL TOGGLE BUTTON ---- */
+  var panelToggle = document.createElement('button');
+  panelToggle.id = 'jbc-panel-toggle';
+  panelToggle.innerHTML = '<i class="fas fa-columns"></i>';
+  panelToggle.title = 'Toggle Side Panel';
+  document.body.appendChild(panelToggle);
+
+  /* ---- LEFT SIDE PANEL ---- */
+  var panel = document.createElement('div');
+  panel.id = 'jbc-panel';
+  panel.innerHTML = [
+    '<div id="jbc-panel-tabs">',
+    '  <button class="active" data-tab="layers">Layers</button>',
+    '  <button data-tab="props">Properties</button>',
+    '  <button data-tab="section">Section</button>',
+    '  <button data-tab="page">Page</button>',
+    '</div>',
+    '<div class="jbc-tab-content active" id="jbc-tab-layers">',
+    '  <h4>Current Section Layers</h4>',
+    '  <div id="jbc-layers-list"></div>',
+    '</div>',
+    '<div class="jbc-tab-content" id="jbc-tab-props">',
+    '  <h4>Element Properties</h4>',
+    '  <div id="jbc-props-content"><p style="color:#666;font-size:11px;">Click any element to see its properties</p></div>',
+    '</div>',
+    '<div class="jbc-tab-content" id="jbc-tab-section">',
+    '  <h4>Section Design</h4>',
+    '  <div id="jbc-section-content"><p style="color:#666;font-size:11px;">Click on a section background to select it</p></div>',
+    '</div>',
+    '<div class="jbc-tab-content" id="jbc-tab-page">',
+    '  <h4>Page Settings</h4>',
+    '  <div id="jbc-page-content"></div>',
+    '</div>'
+  ].join('\n');
+  document.body.appendChild(panel);
+
+  var panelOpen = false;
+  panelToggle.addEventListener('click', function(){
+    panelOpen = !panelOpen;
+    panel.classList.toggle('open', panelOpen);
+    panelToggle.classList.toggle('open', panelOpen);
+    panelToggle.innerHTML = panelOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-columns"></i>';
+    if(panelOpen) refreshLayersPanel();
+  });
+
+  /* Tab switching */
+  panel.querySelector('#jbc-panel-tabs').addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    panel.querySelectorAll('#jbc-panel-tabs button').forEach(function(b){ b.classList.remove('active'); });
+    panel.querySelectorAll('.jbc-tab-content').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    var tabId = 'jbc-tab-' + btn.getAttribute('data-tab');
+    var tab = document.getElementById(tabId);
+    if(tab) tab.classList.add('active');
+    if(btn.getAttribute('data-tab') === 'layers') refreshLayersPanel();
+    if(btn.getAttribute('data-tab') === 'page') refreshPageSettings();
+  });
+
+  /* ---- LAYERS PANEL ---- */
+  var selectedElement = null;
+  var selectedSection = null;
+
+  function refreshLayersPanel(){
+    var list = document.getElementById('jbc-layers-list');
+    if(!list) return;
+    /* Find section in viewport center */
+    var centerEl = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+    var section = centerEl ? (centerEl.closest('section') || centerEl.closest('.hero') || centerEl.closest('.manifesto') || centerEl.closest('footer')) : null;
+    if(!section) section = document.querySelector('.hero');
+    if(!section){ list.innerHTML = '<p style="color:#666;font-size:11px;">No section found</p>'; return; }
+
+    var elems = getSectionElements(section);
+    elems.sort(function(a,b){
+      var zA = parseInt(a.style.zIndex) || parseInt(getComputedStyle(a).zIndex) || 0;
+      var zB = parseInt(b.style.zIndex) || parseInt(getComputedStyle(b).zIndex) || 0;
+      return zB - zA;
+    });
+
+    var html = '<div style="font-size:9px;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">' +
+      (section.classList.contains('hero') ? 'Hero' : section.tagName.toLowerCase()) + ' — ' + elems.length + ' elements</div>';
+
+    elems.forEach(function(el, idx){
+      var label = getLayerLabel(el);
+      var icon = getLayerIcon(el);
+      var z = parseInt(el.style.zIndex) || parseInt(getComputedStyle(el).zIndex) || 'auto';
+      var isSel = (el === selectedElement) ? ' selected' : '';
+      html += '<div class="jbc-layer-row'+isSel+'" data-layer-v2="'+idx+'">';
+      html += '<i class="fas '+icon+'"></i>';
+      html += '<span class="lbl">'+label+'</span>';
+      html += '<span class="z-badge">z:'+z+'</span>';
+      html += '<button class="vis-btn" data-vis-idx="'+idx+'" title="Toggle visibility"><i class="fas fa-eye"></i></button>';
+      html += '</div>';
+    });
+    list.innerHTML = html;
+    list._elements = elems;
+
+    /* Click handlers */
+    list.querySelectorAll('.jbc-layer-row').forEach(function(row){
+      row.addEventListener('click', function(e){
+        if(e.target.closest('.vis-btn')) return;
+        var i = parseInt(row.getAttribute('data-layer-v2'));
+        var els = list._elements;
+        if(els && els[i]){
+          selectElement(els[i]);
+          els[i].scrollIntoView({behavior:'smooth', block:'center'});
+        }
+      });
+    });
+    list.querySelectorAll('.vis-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var i = parseInt(btn.getAttribute('data-vis-idx'));
+        var els = list._elements;
+        if(els && els[i]){
+          var el = els[i];
+          if(el.style.display === 'none'){
+            el.style.display = '';
+            btn.classList.remove('hidden');
+            btn.innerHTML = '<i class="fas fa-eye"></i>';
+          } else {
+            el.style.display = 'none';
+            btn.classList.add('hidden');
+            btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+          }
+          markChanged(el);
+        }
+      });
+    });
+  }
+
+  /* Refresh layers on scroll */
+  var layerRefreshRAF = null;
+  window.addEventListener('scroll', function(){
+    if(!panelOpen) return;
+    if(layerRefreshRAF) return;
+    layerRefreshRAF = requestAnimationFrame(function(){
+      refreshLayersPanel();
+      layerRefreshRAF = null;
+    });
+  }, {passive:true});
+
+  /* ---- ELEMENT SELECTION & PROPERTIES ---- */
+  var universalHandlesEl = null;
+
+  function selectElement(el){
+    /* Deselect previous */
+    if(selectedElement){
+      selectedElement.classList.remove('jbc-selected');
+      removeUniversalHandles();
+    }
+    selectedElement = el;
+    ctxTarget = el; /* sync with existing context menu system */
+    el.classList.add('jbc-selected');
+
+    /* Show properties */
+    showProperties(el);
+    /* Show universal resize handles */
+    showUniversalHandles(el);
+    /* Update layers */
+    if(panelOpen) refreshLayersPanel();
+    /* Switch to properties tab */
+    panel.querySelectorAll('#jbc-panel-tabs button').forEach(function(b){ b.classList.remove('active'); });
+    panel.querySelectorAll('.jbc-tab-content').forEach(function(t){ t.classList.remove('active'); });
+    panel.querySelector('[data-tab="props"]').classList.add('active');
+    document.getElementById('jbc-tab-props').classList.add('active');
+  }
+
+  function showProperties(el){
+    var container = document.getElementById('jbc-props-content');
+    if(!container) return;
+    var cs = getComputedStyle(el);
+    var rect = el.getBoundingClientRect();
+    var label = getLayerLabel(el);
+
+    var curZ = parseInt(el.style.zIndex) || parseInt(cs.zIndex) || 0;
+    var curOpacity = el.style.opacity !== '' ? parseFloat(el.style.opacity) : parseFloat(cs.opacity);
+    var curBg = el.style.backgroundColor || cs.backgroundColor;
+    var curColor = el.style.color || cs.color;
+
+    container.innerHTML = [
+      '<div style="font-size:12px;font-weight:bold;color:#2ecc40;margin-bottom:10px;">'+label+'</div>',
+      '<h4>Position & Size</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>X (left)</label><input type="text" id="jbc-p-x" value="'+(el.style.left||Math.round(rect.left)+'px')+'"></div>',
+      '  <div class="jbc-prop-field"><label>Y (top)</label><input type="text" id="jbc-p-y" value="'+(el.style.top||Math.round(rect.top+window.scrollY)+'px')+'"></div>',
+      '</div>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Width</label><input type="text" id="jbc-p-w" value="'+(el.style.width||Math.round(rect.width)+'px')+'"></div>',
+      '  <div class="jbc-prop-field"><label>Height</label><input type="text" id="jbc-p-h" value="'+(el.style.height||'auto')+'"></div>',
+      '</div>',
+      '<h4>Stacking & Visibility</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Z-Index</label><input type="number" id="jbc-p-z" value="'+curZ+'"></div>',
+      '  <div class="jbc-prop-field"><label>Opacity</label><input type="number" id="jbc-p-o" value="'+curOpacity.toFixed(2)+'" min="0" max="1" step="0.05"></div>',
+      '</div>',
+      '<h4>Colors</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Text Color</label><input type="color" id="jbc-p-color" value="'+rgbToHex(curColor)+'"></div>',
+      '  <div class="jbc-prop-field"><label>Background</label><input type="color" id="jbc-p-bg" value="'+rgbToHex(curBg)+'"></div>',
+      '</div>',
+      '<div class="jbc-prop-group full">',
+      '  <div class="jbc-prop-field"><label>BG Transparent</label><button id="jbc-p-bg-none" style="background:#222;color:#fff;border:1px solid #444;padding:4px 8px;font-family:monospace;font-size:10px;cursor:pointer;border-radius:3px;">Remove Background</button></div>',
+      '</div>',
+      '<h4>Actions</h4>',
+      '<div class="jbc-prop-actions">',
+      '  <button data-pa="front"><i class="fas fa-arrow-up"></i> Front</button>',
+      '  <button data-pa="back"><i class="fas fa-arrow-down"></i> Back</button>',
+      '  <button data-pa="duplicate"><i class="fas fa-clone"></i> Copy</button>',
+      '  <button data-pa="delete" class="danger"><i class="fas fa-trash"></i> Delete</button>',
+      '</div>'
+    ].join('\n');
+
+    /* Wire up live property inputs */
+    var pX = container.querySelector('#jbc-p-x');
+    var pY = container.querySelector('#jbc-p-y');
+    var pW = container.querySelector('#jbc-p-w');
+    var pH = container.querySelector('#jbc-p-h');
+    var pZ = container.querySelector('#jbc-p-z');
+    var pO = container.querySelector('#jbc-p-o');
+    var pColor = container.querySelector('#jbc-p-color');
+    var pBg = container.querySelector('#jbc-p-bg');
+    var pBgNone = container.querySelector('#jbc-p-bg-none');
+
+    function applyProp(prop, val){ el.style[prop] = val; markChanged(el); }
+
+    if(pX) pX.addEventListener('change', function(){ applyProp('left', pX.value); });
+    if(pY) pY.addEventListener('change', function(){ applyProp('top', pY.value); });
+    if(pW) pW.addEventListener('change', function(){ applyProp('width', pW.value); });
+    if(pH) pH.addEventListener('change', function(){ applyProp('height', pH.value); });
+    if(pZ) pZ.addEventListener('input', function(){ applyProp('zIndex', pZ.value); refreshLayersPanel(); });
+    if(pO) pO.addEventListener('input', function(){ applyProp('opacity', pO.value); });
+    if(pColor) pColor.addEventListener('input', function(){ applyProp('color', pColor.value); });
+    if(pBg) pBg.addEventListener('input', function(){ applyProp('backgroundColor', pBg.value); });
+    if(pBgNone) pBgNone.addEventListener('click', function(){ applyProp('backgroundColor', 'transparent'); });
+
+    /* Action buttons */
+    container.querySelectorAll('[data-pa]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var a = btn.getAttribute('data-pa');
+        if(a === 'front'){ el.style.zIndex = '50'; markChanged(el); refreshLayersPanel(); showToast('Brought to front'); }
+        if(a === 'back'){ el.style.zIndex = '1'; markChanged(el); refreshLayersPanel(); showToast('Sent to back'); }
+        if(a === 'duplicate'){
+          clipboard = { html:el.outerHTML, tag:el.tagName, isAdded:el.classList.contains('jbc-added'), isImgWrap:el.classList.contains('jbc-img-wrap'), isText:el.classList.contains('jbc-editable'), computedStyle:null, _sourceEl:el };
+          var r = el.getBoundingClientRect();
+          var sec = el.closest('section') || el.closest('.hero') || el.closest('footer') || document.body;
+          pasteElement(r.left + window.scrollX + 30, r.top + window.scrollY + 30, sec);
+          showToast('Duplicated');
+        }
+        if(a === 'delete'){
+          if(confirm('Delete this element?')){
+            el.remove();
+            selectedElement = null;
+            removeUniversalHandles();
+            container.innerHTML = '<p style="color:#666;font-size:11px;">Element deleted</p>';
+            changes.text++;
+            updateCounter();
+            refreshLayersPanel();
+          }
+        }
+      });
+    });
+  }
+
+  /* ---- UNIVERSAL RESIZE HANDLES ---- */
+  function showUniversalHandles(el){
+    removeUniversalHandles();
+    /* Show resize handles on ANY element — make it relative if static so handles work */
+    var pos = getComputedStyle(el).position;
+
+    var box = document.createElement('div');
+    box.className = 'jbc-universal-handles';
+    ['tl','tm','tr','ml','mr','bl','bm','br'].forEach(function(corner){
+      var h = document.createElement('div');
+      h.className = 'jbc-uhandle ' + corner;
+      h.setAttribute('data-corner', corner);
+      box.appendChild(h);
+    });
+    el.style.position = el.style.position || pos;
+    if(pos === 'static'){
+      el.style.position = 'relative';
+    }
+    el.appendChild(box);
+    universalHandlesEl = box;
+
+    /* Wire resize for each handle */
+    box.querySelectorAll('.jbc-uhandle').forEach(function(handle){
+      var corner = handle.getAttribute('data-corner');
+      var resizing = false, sX, sY, sW, sH, sL, sT;
+      handle.addEventListener('mousedown', function(e){
+        e.stopPropagation(); e.preventDefault();
+        resizing = true;
+        sX = e.clientX; sY = e.clientY;
+        sW = el.offsetWidth; sH = el.offsetHeight;
+        sL = parseFloat(el.style.left) || 0;
+        sT = parseFloat(el.style.top) || 0;
+        function onMove(e2){
+          if(!resizing) return;
+          var dx = e2.clientX - sX, dy = e2.clientY - sY;
+          if(corner.indexOf('r') !== -1) el.style.width = Math.max(30, sW + dx) + 'px';
+          if(corner.indexOf('b') !== -1) el.style.height = Math.max(20, sH + dy) + 'px';
+          if(corner === 'tl' || corner === 'ml' || corner === 'bl'){
+            el.style.width = Math.max(30, sW - dx) + 'px';
+            el.style.left = (sL + dx) + (String(el.style.left).indexOf('%') !== -1 ? '%' : 'px');
+          }
+          if(corner === 'tl' || corner === 'tm' || corner === 'tr'){
+            el.style.height = Math.max(20, sH - dy) + 'px';
+            el.style.top = (sT + dy) + (String(el.style.top).indexOf('%') !== -1 ? '%' : 'px');
+          }
+        }
+        function onUp(){
+          resizing = false;
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          markChanged(el);
+          showProperties(el);
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+    });
+  }
+
+  function removeUniversalHandles(){
+    if(universalHandlesEl){
+      universalHandlesEl.remove();
+      universalHandlesEl = null;
+    }
+    document.querySelectorAll('.jbc-universal-handles').forEach(function(h){ h.remove(); });
+  }
+
+  /* ---- CLICK TO SELECT ANY ELEMENT ---- */
+  document.addEventListener('click', function(e){
+    /* Ignore clicks on editor UI */
+    if(e.target.closest('#jbc-panel,#jbc-panel-toggle,#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-toast')) return;
+    /* Ignore clicks on universal handles */
+    if(e.target.closest('.jbc-universal-handles')) return;
+
+    /* Find the nearest meaningful element — works on ALL elements */
+    var target = e.target.closest('.jbc-added') || e.target.closest('.jbc-custom') || e.target.closest('.jbc-img-wrap');
+    if(!target) target = e.target.closest('.jbc-editable');
+    if(!target){
+      /* In move mode or with panel open, allow selecting any visible element */
+      if(moveMode || panelOpen){
+        target = e.target.closest('h1,h2,h3,h4,h5,h6,p,img,blockquote,figure,video,.service-card,.portfolio-item,.value-card,.process-card,.blog-card,.team-member,.testi-brutal,.tag');
+      }
+    }
+    if(target){
+      selectElement(target);
+    }
+  });
+
+  /* Deselect on click in empty area */
+  document.addEventListener('mousedown', function(e){
+    if(e.target.closest('#jbc-panel,#jbc-panel-toggle,#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar,#jbc-toast,.jbc-universal-handles,.jbc-added,.jbc-custom,.jbc-img-wrap,.jbc-editable')) return;
+    if(selectedElement && !moveMode){
+      selectedElement.classList.remove('jbc-selected');
+      removeUniversalHandles();
+      selectedElement = null;
+      var pc = document.getElementById('jbc-props-content');
+      if(pc) pc.innerHTML = '<p style="color:#666;font-size:11px;">Click any element to see its properties</p>';
+    }
+  });
+
+  /* ---- SECTION EDITING ---- */
+  /* Click on section background to select and edit it */
+  document.addEventListener('dblclick', function(e){
+    if(e.target.closest('#jbc-panel,#jbc-panel-toggle,#jbc-editor-banner,#jbc-toolbar,#jbc-add-btn,#jbc-add-menu,#jbc-context-menu,#jbc-format-bar')) return;
+    var section = e.target.closest('section') || e.target.closest('.hero') || e.target.closest('.manifesto') || e.target.closest('footer');
+    if(!section) return;
+    /* Only trigger if clicking directly on the section, not on a child element with content */
+    if(e.target !== section && !e.target.classList.contains('container') && e.target.closest('.jbc-added,.jbc-editable,.jbc-img-wrap,.jbc-custom')) return;
+
+    selectSection(section);
+  });
+
+  function selectSection(section){
+    /* Deselect previous */
+    document.querySelectorAll('.jbc-section-selected').forEach(function(s){ s.classList.remove('jbc-section-selected'); });
+    selectedSection = section;
+    section.classList.add('jbc-section-selected');
+
+    /* Switch to section tab */
+    panel.querySelectorAll('#jbc-panel-tabs button').forEach(function(b){ b.classList.remove('active'); });
+    panel.querySelectorAll('.jbc-tab-content').forEach(function(t){ t.classList.remove('active'); });
+    panel.querySelector('[data-tab="section"]').classList.add('active');
+    document.getElementById('jbc-tab-section').classList.add('active');
+    if(!panelOpen){ panelOpen = true; panel.classList.add('open'); panelToggle.classList.add('open'); panelToggle.innerHTML = '<i class="fas fa-times"></i>'; }
+
+    showSectionProperties(section);
+  }
+
+  function showSectionProperties(section){
+    var container = document.getElementById('jbc-section-content');
+    if(!container) return;
+    var cs = getComputedStyle(section);
+    var tag = section.tagName.toLowerCase();
+    var cls = section.className.replace(/jbc-section-selected|jbc-section-hover/g,'').trim();
+    var label = cls ? cls.split(/\s+/)[0] : tag;
+
+    container.innerHTML = [
+      '<div style="font-size:12px;font-weight:bold;color:#0af;margin-bottom:10px;">&lt;'+tag+'&gt; '+label+'</div>',
+      '<h4>Background</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Color</label><input type="color" id="jbc-s-bg" value="'+rgbToHex(cs.backgroundColor)+'"></div>',
+      '  <div class="jbc-prop-field"><label>Transparent</label><button id="jbc-s-bg-none" style="background:#222;color:#fff;border:1px solid #444;padding:4px 8px;font-family:monospace;font-size:10px;cursor:pointer;border-radius:3px;width:100%;">Clear BG</button></div>',
+      '</div>',
+      '<div class="jbc-prop-group full">',
+      '  <div class="jbc-prop-field"><label>Background Image URL</label><input type="text" id="jbc-s-bgimg" value="'+(section.style.backgroundImage||'').replace(/url\(['"]?|['"]?\)/g,'')+'" placeholder="images/..."></div>',
+      '</div>',
+      '<h4>Spacing</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Padding Top</label><input type="text" id="jbc-s-pt" value="'+cs.paddingTop+'"></div>',
+      '  <div class="jbc-prop-field"><label>Padding Bottom</label><input type="text" id="jbc-s-pb" value="'+cs.paddingBottom+'"></div>',
+      '</div>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Padding Left</label><input type="text" id="jbc-s-pl" value="'+cs.paddingLeft+'"></div>',
+      '  <div class="jbc-prop-field"><label>Padding Right</label><input type="text" id="jbc-s-pr" value="'+cs.paddingRight+'"></div>',
+      '</div>',
+      '<h4>Border</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Border Top</label><input type="text" id="jbc-s-bt" value="'+(section.style.borderTop||'none')+'" placeholder="2px solid #fff"></div>',
+      '  <div class="jbc-prop-field"><label>Border Bottom</label><input type="text" id="jbc-s-bb" value="'+(section.style.borderBottom||'none')+'" placeholder="2px solid #fff"></div>',
+      '</div>',
+      '<h4>Visibility</h4>',
+      '<div class="jbc-prop-group">',
+      '  <div class="jbc-prop-field"><label>Min Height</label><input type="text" id="jbc-s-mh" value="'+(section.style.minHeight||cs.minHeight)+'"></div>',
+      '  <div class="jbc-prop-field"><label>Overflow</label><select id="jbc-s-overflow"><option value="">auto</option><option value="hidden">hidden</option><option value="visible">visible</option></select></div>',
+      '</div>',
+      '<h4>Section Order</h4>',
+      '<div class="jbc-prop-actions">',
+      '  <button data-sa="move-up"><i class="fas fa-arrow-up"></i> Move Up</button>',
+      '  <button data-sa="move-down"><i class="fas fa-arrow-down"></i> Move Down</button>',
+      '  <button data-sa="hide" class="danger"><i class="fas fa-eye-slash"></i> Hide</button>',
+      '</div>'
+    ].join('\n');
+
+    /* Wire up section property inputs */
+    function secProp(id, prop, transform){
+      var input = container.querySelector(id);
+      if(!input) return;
+      input.addEventListener('change', function(){
+        section.style[prop] = transform ? transform(input.value) : input.value;
+        markChanged(section);
+      });
+      if(input.type === 'color') input.addEventListener('input', function(){
+        section.style[prop] = input.value;
+        markChanged(section);
+      });
+    }
+    secProp('#jbc-s-bg','backgroundColor');
+    secProp('#jbc-s-bgimg','backgroundImage', function(v){ return v ? 'url('+v+')' : 'none'; });
+    secProp('#jbc-s-pt','paddingTop');
+    secProp('#jbc-s-pb','paddingBottom');
+    secProp('#jbc-s-pl','paddingLeft');
+    secProp('#jbc-s-pr','paddingRight');
+    secProp('#jbc-s-bt','borderTop');
+    secProp('#jbc-s-bb','borderBottom');
+    secProp('#jbc-s-mh','minHeight');
+    secProp('#jbc-s-overflow','overflow');
+
+    var bgNone = container.querySelector('#jbc-s-bg-none');
+    if(bgNone) bgNone.addEventListener('click', function(){ section.style.backgroundColor = 'transparent'; markChanged(section); });
+
+    /* Section order actions */
+    container.querySelectorAll('[data-sa]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var a = btn.getAttribute('data-sa');
+        if(a === 'move-up'){
+          var prev = section.previousElementSibling;
+          if(prev && prev.tagName !== 'NAV'){
+            section.parentNode.insertBefore(section, prev);
+            markChanged(section);
+            showToast('Section moved up');
+          }
+        }
+        if(a === 'move-down'){
+          var next = section.nextElementSibling;
+          if(next){
+            section.parentNode.insertBefore(next, section);
+            markChanged(section);
+            showToast('Section moved down');
+          }
+        }
+        if(a === 'hide'){
+          section.style.display = section.style.display === 'none' ? '' : 'none';
+          markChanged(section);
+          showToast(section.style.display === 'none' ? 'Section hidden' : 'Section visible');
+        }
+      });
+    });
+  }
+
+  /* Section hover highlight */
+  document.addEventListener('mouseover', function(e){
+    var section = e.target.closest('section') || e.target.closest('.hero') || e.target.closest('footer');
+    if(section && section !== selectedSection){
+      section.classList.add('jbc-section-hover');
+    }
+  });
+  document.addEventListener('mouseout', function(e){
+    var section = e.target.closest('section') || e.target.closest('.hero') || e.target.closest('footer');
+    if(section) section.classList.remove('jbc-section-hover');
+  });
+
+  /* ---- PAGE SETTINGS ---- */
+  function refreshPageSettings(){
+    var container = document.getElementById('jbc-page-content');
+    if(!container) return;
+    var title = document.title || '';
+    var metaDesc = '';
+    var metaTag = document.querySelector('meta[name="description"]');
+    if(metaTag) metaDesc = metaTag.getAttribute('content') || '';
+
+    container.innerHTML = [
+      '<h4>SEO & Meta</h4>',
+      '<div class="jbc-prop-group full">',
+      '  <div class="jbc-prop-field"><label>Page Title</label><input type="text" id="jbc-pg-title" value="'+title.replace(/"/g,'&quot;')+'"></div>',
+      '</div>',
+      '<div class="jbc-prop-group full">',
+      '  <div class="jbc-prop-field"><label>Meta Description</label><textarea id="jbc-pg-desc" style="background:#222;color:#fff;border:1px solid #444;padding:6px;font-family:monospace;font-size:11px;width:100%;box-sizing:border-box;min-height:60px;border-radius:3px;resize:vertical;">'+metaDesc+'</textarea></div>',
+      '</div>',
+      '<h4>Quick Links</h4>',
+      '<div class="jbc-prop-group full">',
+      '  <div class="jbc-prop-field"><label>All page links</label><div id="jbc-pg-links" style="font-size:11px;color:#888;"></div></div>',
+      '</div>'
+    ].join('\n');
+
+    var pgTitle = container.querySelector('#jbc-pg-title');
+    var pgDesc = container.querySelector('#jbc-pg-desc');
+    if(pgTitle) pgTitle.addEventListener('change', function(){
+      document.title = pgTitle.value;
+      var titleTag = document.querySelector('title');
+      if(titleTag) titleTag.textContent = pgTitle.value;
+      changes.text++;
+      updateCounter();
+      showToast('Title updated');
+    });
+    if(pgDesc) pgDesc.addEventListener('change', function(){
+      var mt = document.querySelector('meta[name="description"]');
+      if(mt) mt.setAttribute('content', pgDesc.value);
+      else {
+        mt = document.createElement('meta');
+        mt.setAttribute('name','description');
+        mt.setAttribute('content', pgDesc.value);
+        document.head.appendChild(mt);
+      }
+      changes.text++;
+      updateCounter();
+      showToast('Meta description updated');
+    });
+
+    /* List all links on page */
+    var linksDiv = container.querySelector('#jbc-pg-links');
+    if(linksDiv){
+      var links = document.querySelectorAll('a[href]');
+      var linkList = [];
+      links.forEach(function(a){
+        if(a.closest('#jbc-panel,#jbc-toolbar,#jbc-add-menu,#jbc-context-menu')) return;
+        var href = a.getAttribute('href');
+        if(href && href !== '#' && !href.startsWith('javascript')){
+          linkList.push('<div style="margin-bottom:4px;"><a href="'+href+'" target="_blank" style="color:#0af;text-decoration:none;">'+href+'</a></div>');
+        }
+      });
+      linksDiv.innerHTML = linkList.length ? linkList.slice(0,20).join('') : '<span>No links found</span>';
+    }
+  }
+
+  /* ---- BANNER UPDATE ---- */
+  banner.innerHTML = '<span>EDITOR MODE — <strong>Click</strong> text to edit · <strong>Right-click</strong> for layers · <strong>Double-click</strong> section to design · <strong>Panel</strong> ◀ for tools</span>';
+
   /* ========== LOG ========== */
-  console.log('JBC Editor loaded — EDITOR MODE active');
+  console.log('JBC Editor V2 loaded — EDITOR MODE active with side panel, undo/redo, section editing');
 
 })();
