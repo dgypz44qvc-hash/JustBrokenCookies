@@ -6668,3 +6668,267 @@ body {
     background-size: 330px 330px !important;
   }
 }
+/* =========================================================
+   JBC FINAL HERO RESET, REAL ROSE LAYER
+   HTML is already clean.
+   This fixes old CSS conflicts from video / ::after experiments.
+   Paste at VERY BOTTOM of css/style.css.
+   ========================================================= */
+
+/* 1. Hero base, stable stage */
+.hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+
+  padding: 100px 60px 60px !important;
+  background: var(--charcoal) !important;
+}
+
+/* 2. Kill old hero pseudo backgrounds completely */
+.hero::before,
+.hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* 3. Kill old hero video completely */
+.hero-rose-video {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 4. Real rose layer, independent from ::before/::after */
+.hero-corner-rose {
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+
+  /* move these if needed */
+  right: -40px !important;
+  bottom: -55px !important;
+  left: auto !important;
+  top: auto !important;
+
+  width: 820px !important;
+  height: 700px !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 620px 620px !important;
+  background-position: right bottom !important;
+
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+  filter: saturate(1.2) contrast(1.12) brightness(0.95) !important;
+
+  transform: none !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 80% 82%,
+      #000 0%,
+      #000 60%,
+      rgba(0, 0, 0, 0.78) 72%,
+      rgba(0, 0, 0, 0.34) 86%,
+      transparent 100%
+    ) !important;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 80% 82%,
+      #000 0%,
+      #000 60%,
+      rgba(0, 0, 0, 0.78) 72%,
+      rgba(0, 0, 0, 0.34) 86%,
+      transparent 100%
+    ) !important;
+}
+
+/* 5. Portrait above roses, below title */
+.hero .jbc-custom.hero-photo-layer {
+  position: absolute !important;
+  left: 27.05% !important;
+  top: 10.62% !important;
+  width: 63.13% !important;
+  z-index: 3 !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.hero .jbc-custom.hero-photo-layer picture,
+.hero .jbc-custom.hero-photo-layer img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* 6. Empty editor block must not block anything */
+.hero .jbc-custom:not(.hero-photo-layer) {
+  position: absolute !important;
+  z-index: 4 !important;
+  pointer-events: none !important;
+}
+
+/* 7. Restore hero title to normal position */
+.hero-content {
+  position: relative !important;
+  z-index: 10 !important;
+
+  width: auto !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
+  margin: 0 !important;
+
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding-bottom: 20px !important;
+}
+
+.hero-oil-wrap,
+.hero-mega {
+  position: relative !important;
+  z-index: 10 !important;
+
+  width: auto !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+
+  transform: none !important;
+  margin: 0 !important;
+}
+
+.hero-mega .l1,
+.hero-mega .l2,
+.hero-mega .l3 {
+  transform: none !important;
+}
+
+/* 8. Restore StorytellinG */
+.hero .tag {
+  position: absolute !important;
+  top: 110px !important;
+  right: 190px !important;
+  z-index: 12 !important;
+
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  writing-mode: vertical-rl !important;
+  text-orientation: mixed !important;
+
+  font-family: var(--font-body) !important;
+  font-size: 88px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  line-height: 0.9 !important;
+  color: var(--dusty-rose) !important;
+}
+
+/* 9. Recreate dotted line separately, not with old broken pseudo */
+.hero .tag::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 105% !important;
+  width: 1px !important;
+  height: 230px !important;
+  transform: translateX(-50%) !important;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(201, 58, 110, 0.55) 0 3px,
+    transparent 3px 10px
+  ) !important;
+  background-size: 1px 10px !important;
+  background-repeat: repeat-y !important;
+}
+
+/* 10. Restore bottom border */
+.hero-bottom {
+  position: relative !important;
+  z-index: 10 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+  padding-top: 28px !important;
+  border-top: var(--border) !important;
+}
+
+/* 11. Mobile */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh !important;
+    padding: 92px 20px 24px !important;
+  }
+
+  .hero-corner-rose {
+    right: -85px !important;
+    bottom: -85px !important;
+    width: 430px !important;
+    height: 430px !important;
+    background-size: 390px 390px !important;
+    opacity: 1 !important;
+  }
+
+  .hero .jbc-custom.hero-photo-layer {
+    left: 10% !important;
+    top: 12% !important;
+    width: 80% !important;
+    z-index: 3 !important;
+    opacity: 0.72 !important;
+  }
+
+  .hero-content {
+    z-index: 10 !important;
+    padding-bottom: 10vh !important;
+    transform: none !important;
+  }
+
+  .hero-mega,
+  .hero-oil-wrap {
+    transform: none !important;
+  }
+
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(4rem, 21vw, 7rem) !important;
+    transform: none !important;
+  }
+
+  .hero-mega .l2 {
+    margin-left: 15px !important;
+  }
+
+  .hero .tag {
+    top: 95px !important;
+    right: 16px !important;
+    font-size: 24px !important;
+    letter-spacing: 4px !important;
+    z-index: 12 !important;
+  }
+
+  .hero .tag::after {
+    height: 150px !important;
+  }
+}
