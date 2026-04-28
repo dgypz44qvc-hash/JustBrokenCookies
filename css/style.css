@@ -5141,3 +5141,223 @@ body {
 .footer.jbc-editorial-footer {
   border-top: none !important;
 }
+/* =========================================================
+   JBC MOBILE TOP COVER / HERO RESET FIX
+   Fixes the false "loader" cover on mobile.
+   The issue is old hero video/nav override code, not preloader.
+   Paste at VERY BOTTOM of css/style.css
+   ========================================================= */
+
+/* 1. Make absolutely sure real loader and page transition never cover mobile */
+.preloader,
+.preloader.loaded {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+.page-transition:not(.active) {
+  transform: translateY(100%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 2. Reset hero stage, kill old overflow-visible video/nav experiment */
+.hero,
+.hero.jbc-floral-hero {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  min-height: 100svh !important;
+}
+
+/* 3. If video is still in HTML, stop it causing top-cover chaos */
+.hero-rose-video {
+  display: none !important;
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 4. Static hero background image, if you are using hero back image */
+.hero,
+.hero.jbc-floral-hero {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(42, 34, 30, 0.20) 0%,
+      rgba(42, 34, 30, 0.05) 45%,
+      rgba(42, 34, 30, 0.14) 100%
+    ),
+    url("../images/hero%20back%20image.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* If your file is jpg, replace the url above with:
+   url("../images/hero%20back%20image.jpg")
+*/
+
+/* 5. Remove old pseudo floral/video backgrounds */
+.hero::before,
+.hero::after,
+.hero.jbc-floral-hero::before,
+.hero.jbc-floral-hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+/* 6. Restore nav top position and stop mobile weirdness */
+.nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  width: 100% !important;
+  z-index: 10000 !important;
+  background: rgba(42, 34, 30, 0.78) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  transform: none !important;
+}
+
+.nav .container {
+  width: 88% !important;
+  max-width: var(--container) !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+/* 7. Put hamburger back inside the nav line */
+.hamburger {
+  position: relative !important;
+  right: auto !important;
+  top: auto !important;
+  z-index: 10001 !important;
+  flex-shrink: 0 !important;
+}
+
+/* 8. Keep nav logo on the same line */
+.nav-logo {
+  position: relative !important;
+  z-index: 10001 !important;
+  white-space: nowrap !important;
+}
+
+/* 9. Restore hero content to sane layout, overriding bad inline editor styles */
+.hero-content {
+  position: relative !important;
+  z-index: 6 !important;
+  width: auto !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  padding-bottom: 20px !important;
+}
+
+.hero-mega,
+.hero-oil-wrap {
+  position: relative !important;
+  z-index: 7 !important;
+  width: auto !important;
+  height: auto !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+/* 10. Keep portrait/custom elements from becoming the top blanket */
+.hero .jbc-custom {
+  position: absolute !important;
+}
+
+.hero .hero-photo-layer {
+  z-index: 2 !important;
+}
+
+/* 11. Keep StorytellinG visible */
+.hero .tag {
+  position: absolute !important;
+  z-index: 8 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* 12. Mobile-specific fix */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden !important;
+  }
+
+  .nav {
+    height: auto !important;
+    min-height: 72px !important;
+    padding: 0 !important;
+  }
+
+  .nav .container {
+    padding: 18px 0 !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+    margin-left: auto !important;
+  }
+
+  .nav-links {
+    z-index: 9999 !important;
+  }
+
+  .hero,
+  .hero.jbc-floral-hero {
+    min-height: 100svh !important;
+    padding-top: 92px !important;
+    overflow: hidden !important;
+    background-position: center top !important;
+  }
+
+  .hero-content {
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+    padding-bottom: 12vh !important;
+  }
+
+  .hero-mega,
+  .hero-oil-wrap {
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    top: auto !important;
+  }
+
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(4rem, 21vw, 7rem) !important;
+  }
+}
