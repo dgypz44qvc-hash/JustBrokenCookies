@@ -1,0 +1,15 @@
+{
+  "name": "jbc-local-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local visual editor for JustBrokenCookies website",
+  "scripts": {
+    "editor": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "express": "^4.18.3",
+    "multer": "^1.4.5-lts.1"
+  }
+}

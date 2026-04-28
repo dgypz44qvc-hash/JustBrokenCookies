@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JBC Local Editor</title>
+  <link rel="stylesheet" href="/css/local-editor.css">
+</head>
+<body>
+  <div id="editor-shell">
+    <header id="topbar">
+      <div class="brand">JBC Local Editor</div>
+      <button id="btn-edit" class="active">Edit Mode</button>
+      <button id="btn-preview">Preview</button>
+      <button id="btn-undo">Undo</button>
+      <button id="btn-redo">Redo</button>
+      <button id="btn-add-decoration">Add Decoration</button>
+      <button id="btn-replace-image">Replace Image</button>
+      <button id="btn-reset-selected">Reset Selected</button>
+      <button id="btn-save" class="save">Save</button>
+      <span id="status">Loading…</span>
+    </header>
+    <aside id="left-panel">
+      <h3>Layers</h3>
+      <div id="layers"></div>
+      <h3>Images</h3>
+      <div class="mini-row"><button id="btn-refresh-images">Refresh</button></div>
+      <div id="image-list"></div>
+    </aside>
+    <main id="canvas-wrap">
+      <iframe id="site-frame" title="Website canvas"></iframe>
+    </main>
+    <aside id="right-panel">
+      <h3>Selected</h3>
+      <div id="selected-label">Nothing selected</div>
+      <div class="group">
+        <label>Text</label>
+        <textarea id="prop-text" rows="4"></textarea>
+      </div>
+      <div class="group image-tools">
+        <label>Image src</label>
+        <input id="prop-src" type="text">
+        <input id="upload-image" type="file" accept="image/*">
+        <button id="btn-apply-src">Apply src</button>
+        <button id="btn-hero-mobile">Replace hero mobile source</button>
+      </div>
+      <div class="grid2">
+        <label>Left <input id="prop-left" type="text"></label>
+        <label>Top <input id="prop-top" type="text"></label>
+        <label>Width <input id="prop-width" type="text"></label>
+        <label>Height <input id="prop-height" type="text"></label>
+        <label>Opacity <input id="prop-opacity" type="number" step="0.05" min="0" max="1"></label>
+        <label>Z-index <input id="prop-z" type="number" step="1"></label>
+        <label>Rotate <input id="prop-rotate" type="text"></label>
+        <label>Radius <input id="prop-radius" type="text"></label>
+      </div>
+      <div class="grid2">
+        <label>Colour <input id="prop-color" type="color"></label>
+        <label>Background <input id="prop-bg" type="color"></label>
+      </div>
+      <div class="grid2">
+        <label>Font size <input id="prop-font-size" type="text"></label>
+        <label>Font family <input id="prop-font-family" type="text"></label>
+        <label>Letter spacing <input id="prop-letter" type="text"></label>
+        <label>Blend mode <select id="prop-blend"><option value="">default</option><option>normal</option><option>screen</option><option>multiply</option><option>overlay</option><option>soft-light</option><option>hard-light</option></select></label>
+      </div>
+      <div class="grid2">
+        <label>Padding <input id="prop-padding" type="text"></label>
+        <label>Margin <input id="prop-margin" type="text"></label>
+      </div>
+      <div class="buttons">
+        <button id="btn-hide">Hide/Show</button>
+        <button id="btn-duplicate">Duplicate</button>
+        <button id="btn-delete" class="danger">Delete</button>
+      </div>
+      <p class="hint">Drag selected elements on the canvas. Use corner handles to resize decorative/absolute elements.</p>
+    </aside>
+  </div>
+  <script src="/js/local-editor.js"></script>
+</body>
+</html>
