@@ -6,9 +6,9 @@
   top: -979px !important;
   width: 420px !important;
   height: 420px !important;
-  opacity: 0.38 !important;
+  opacity: 0.85 !important;
   z-index: 4 !important;
-  mix-blend-mode: normal !important;
+  mix-blend-mode: screen !important;
 }
 
 [data-editor-id="hero-section"] {
@@ -24,9 +24,9 @@
   top: -352px !important;
   width: 420px !important;
   height: 420px !important;
-  opacity: 0.38 !important;
+  opacity: 0.85 !important;
   z-index: 4 !important;
-  mix-blend-mode: normal !important;
+  mix-blend-mode: screen !important;
 }
 
 [data-editor-id="rose-1777417460898-jbc36"] {
@@ -35,9 +35,9 @@
   top: -185px !important;
   width: 420px !important;
   height: 420px !important;
-  opacity: 0.38 !important;
+  opacity: 0.85 !important;
   z-index: 4 !important;
-  mix-blend-mode: normal !important;
+  mix-blend-mode: screen !important;
 }
 
 [data-editor-id="rose-1777417462368-smmlm"] {
@@ -46,9 +46,9 @@
   top: 143px !important;
   width: 420px !important;
   height: 420px !important;
-  opacity: 0.38 !important;
+  opacity: 0.85 !important;
   z-index: 4 !important;
-  mix-blend-mode: normal !important;
+  mix-blend-mode: screen !important;
 }
 
 [data-editor-id="hero-title-line-1"] {

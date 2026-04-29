@@ -13,18 +13,27 @@
       <nav class="tool-group" aria-label="Panels">
         <button id="btn-layers" type="button" class="icon-btn" title="Layers" aria-label="Layers">Layers</button>
         <button id="btn-properties" type="button" class="icon-btn" title="Properties" aria-label="Properties">Properties</button>
+        <button id="btn-clean-canvas" type="button" class="icon-btn" title="Clean Canvas" aria-label="Clean Canvas">Clean</button>
       </nav>
       <nav class="tool-group" aria-label="Editing">
         <button id="btn-preview" type="button" class="icon-btn" title="Preview" aria-label="Preview">Preview</button>
         <button id="btn-undo" type="button" class="icon-btn" title="Undo" aria-label="Undo">Undo</button>
         <button id="btn-redo" type="button" class="icon-btn" title="Redo" aria-label="Redo">Redo</button>
       </nav>
-      <nav class="tool-group primary-tools" aria-label="Create and media">
-        <button id="btn-add-image" type="button" title="Add Image">Add Image</button>
-        <button id="btn-add-decoration" type="button" title="Add Decoration">Add Decoration</button>
-        <button id="btn-add-rose-top" type="button" title="Add Rose Pattern">Add Rose</button>
-        <button id="btn-add-vector" type="button" title="Add SVG or Vector">Add SVG</button>
-        <button id="btn-replace-image" type="button" title="Replace Image">Replace Image</button>
+      <nav class="tool-group text-format-tools" aria-label="Text formatting">
+        <select id="top-font-family" title="Font family" aria-label="Font family">
+          <option value="">Font</option>
+          <option value="Inter, system-ui, sans-serif">Inter</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Playfair Display', Georgia, serif">Playfair</option>
+          <option value="'Cormorant Garamond', Georgia, serif">Cormorant</option>
+          <option value="'DM Sans', Inter, sans-serif">DM Sans</option>
+          <option value="'Space Grotesk', Inter, sans-serif">Space Grotesk</option>
+          <option value="Montserrat, Inter, sans-serif">Montserrat</option>
+        </select>
+        <input id="top-font-size" type="text" title="Font size" aria-label="Font size" placeholder="Size">
+        <input id="top-text-color" type="color" title="Text color" aria-label="Text color">
+        <button id="btn-text-edit" type="button" title="Edit selected text">Text Edit</button>
       </nav>
       <span id="status">Loading...</span>
       <button id="btn-save" type="button" class="save" title="Save">Save</button>
@@ -44,9 +53,17 @@
       <div id="image-list" class="image-list"></div>
     </aside>
 
+    <div id="left-gutter" class="panel-gutter panel-gutter-left" aria-label="Resize layers panel">
+      <button id="btn-collapse-left" type="button" title="Collapse layers" aria-label="Collapse layers">‹</button>
+    </div>
+
     <main id="canvas-wrap">
       <iframe id="site-frame" title="Website canvas"></iframe>
     </main>
+
+    <div id="right-gutter" class="panel-gutter panel-gutter-right" aria-label="Resize properties panel">
+      <button id="btn-collapse-right" type="button" title="Collapse properties" aria-label="Collapse properties">›</button>
+    </div>
 
     <aside id="right-panel" class="panel panel-right" aria-label="Properties">
       <div class="panel-head">
@@ -80,6 +97,12 @@
             <option value="click">Click to place</option>
           </select>
         </label>
+        <div class="inline-actions">
+          <button id="btn-add-text-panel" type="button">Text</button>
+          <button id="btn-add-box-panel" type="button">Box</button>
+          <button id="btn-add-block-panel" type="button">Block</button>
+          <button id="btn-add-section-panel" type="button">Section</button>
+        </div>
         <div class="inline-actions">
           <button id="btn-add-image-panel" type="button">Add Image</button>
           <button id="btn-add-decoration-panel" type="button">Add Decoration</button>
@@ -124,7 +147,18 @@
           <label>Font size <input id="prop-font-size" type="text"></label>
           <label>Spacing <input id="prop-letter" type="text"></label>
         </div>
-        <label>Font family <input id="prop-font-family" type="text"></label>
+        <label>Font family <input id="prop-font-family" type="text" list="font-library"></label>
+        <datalist id="font-library">
+          <option value="Inter, system-ui, sans-serif"></option>
+          <option value="Georgia, serif"></option>
+          <option value="'Playfair Display', Georgia, serif"></option>
+          <option value="'Cormorant Garamond', Georgia, serif"></option>
+          <option value="'DM Sans', Inter, sans-serif"></option>
+          <option value="'Space Grotesk', Inter, sans-serif"></option>
+          <option value="Montserrat, Inter, sans-serif"></option>
+          <option value="'Libre Baskerville', Georgia, serif"></option>
+          <option value="'Courier New', monospace"></option>
+        </datalist>
         <label>Blend mode
           <select id="prop-blend">
             <option value="">Default</option>
@@ -161,12 +195,16 @@
     <div id="floating-toolbar" aria-label="Selection tools">
       <span id="float-label"></span>
       <button id="float-replace" type="button">Replace</button>
+      <button id="float-edit-text" type="button">Edit Text</button>
       <button id="float-duplicate" type="button">Duplicate</button>
       <button id="float-hide" type="button">Hide</button>
       <button id="float-forward" type="button">Forward</button>
       <button id="float-backward" type="button">Backward</button>
       <button id="float-delete" type="button">Delete</button>
     </div>
+
+    <div id="context-menu" aria-label="Editor context menu"></div>
+    <div id="add-library" aria-label="Add library"></div>
   </div>
 
   <script src="/js/local-editor.js"></script>

@@ -7297,7 +7297,7 @@ top: auto !important;
   width: 64% !important;
 
   z-index: 2 !important;
-  opacity: 0.82 !important;
+  opacity: 0.72 !important;
   transform: none !important;
   pointer-events: none !important;
 }
@@ -7308,7 +7308,7 @@ top: auto !important;
   width: 100% !important;
   height: auto !important;
 
-  filter: grayscale(100%) contrast(1.08) brightness(0.92) !important;
+  filter: grayscale(100%) saturate(0) contrast(1.02) brightness(0.86) !important;
 
   /* soft fade into background, no visible rectangle */
   -webkit-mask-image:
@@ -7364,9 +7364,9 @@ top: auto !important;
   background-size: 760px 760px !important;
   background-position: center center !important;
 
-  opacity: 0.82 !important;
-  mix-blend-mode: screen !important;
-  filter: saturate(1.25) contrast(1.12) brightness(0.98) !important;
+  opacity: 0.42 !important;
+  mix-blend-mode: normal !important;
+  filter: grayscale(100%) saturate(0) contrast(0.95) brightness(0.82) !important;
 
   transform: none !important;
 
@@ -7841,14 +7841,7 @@ top: auto !important;
   min-height: 100vh !important;
   padding: 96px 60px 60px !important;
 
-  background:
-    linear-gradient(
-      90deg,
-      #2A221E 0%,
-      #2A221E 50%,
-      #2D231F 76%,
-      #241C19 100%
-    ) !important;
+  background: #2A221E !important;
 }
 
 /* Kill old pseudo/video layers only */

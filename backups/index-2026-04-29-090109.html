@@ -260,56 +260,6 @@
             rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
             rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
         }
-      </style>
-<style>
-        .hero-oil-wrap { position:relative; display:block; width:100%; }
-        .hero { overflow:hidden !important; }
-        .hero-underlay {
-          position:absolute; top:0; left:0; width:100%; height:100%;
-          pointer-events:none; z-index:1; user-select:none;
-          opacity:0; visibility:hidden; transition:opacity 0.7s ease, visibility 0.7s;
-        }
-        .hero-underlay .l1 {
-          color:transparent !important;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cdefs%3E%3Cstyle%3E*%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='55' cy='55' r='50' stroke-width='0.6' opacity='0.5'/%3E%3Ccircle cx='55' cy='55' r='42' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='34' stroke-width='0.7' opacity='0.55'/%3E%3Ccircle cx='55' cy='55' r='25' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='17' stroke-width='0.8' opacity='0.6'/%3E%3Ccircle cx='55' cy='55' r='9' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='55' cy='55' r='3' stroke-width='0.6' opacity='0.5'/%3E%3Cline x1='55' y1='2' x2='55' y2='10' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='55' y1='100' x2='55' y2='108' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='2' y1='55' x2='10' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='100' y1='55' x2='108' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='16' y1='16' x2='22' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='16' x2='88' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='16' y1='94' x2='22' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='94' x2='88' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M55 5 L58 15 L55 12 L52 15Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M105 55 L95 58 L98 55 L95 52Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M30 12 Q55 32 80 12' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M98 30 Q78 55 98 80' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M80 98 Q55 78 30 98' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M12 80 Q32 55 12 30' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M36 22 Q44 34 55 30 Q66 26 72 18' stroke-width='0.35' opacity='0.28'/%3E%3Cpath d='M88 36 Q76 44 80 55 Q84 66 92 72' stroke-width='0.35' opacity='0.28'/%3E%3C/svg%3E") 0 0/110px 110px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
-          -webkit-background-clip:text !important; background-clip:text !important;
-          -webkit-text-fill-color:transparent !important;
-        }
-        .hero-underlay .l2 {
-          color:transparent !important;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130'%3E%3Cdefs%3E%3Cstyle%3Eline,path%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='28' cy='22' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='28' cy='22' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='85' cy='16' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='85' cy='16' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='65' cy='52' r='4' fill='none' stroke='%23111' stroke-width='0.8' opacity='0.65'/%3E%3Ccircle cx='65' cy='52' r='1.5' fill='%23111' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='22' cy='75' r='0.8' fill='%23111' opacity='0.45'/%3E%3Ccircle cx='105' cy='62' r='3' fill='none' stroke='%23111' stroke-width='0.7' opacity='0.6'/%3E%3Ccircle cx='105' cy='62' r='1' fill='%23111' opacity='0.5'/%3E%3Ccircle cx='48' cy='105' r='2.5' fill='none' stroke='%23111' stroke-width='0.6' opacity='0.55'/%3E%3Ccircle cx='48' cy='105' r='0.8' fill='%23111' opacity='0.45'/%3E%3Cline x1='28' y1='22' x2='65' y2='52' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='85' y2='16' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='65' y1='52' x2='105' y2='62' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='65' y1='52' x2='22' y2='75' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='22' y1='75' x2='48' y2='105' stroke-width='0.5' opacity='0.4'/%3E%3Cline x1='105' y1='62' x2='110' y2='110' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M65 46 L71 52 L65 58 L59 52Z' stroke-width='0.5' opacity='0.45'/%3E%3Cpath d='M28 22 Q12 48 22 75' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3Cpath d='M85 16 Q110 38 105 62' stroke-width='0.3' stroke-dasharray='2 3' opacity='0.25'/%3E%3C/svg%3E") 0 0/130px 130px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
-          -webkit-background-clip:text !important; background-clip:text !important;
-          -webkit-text-fill-color:transparent !important;
-        }
-        .hero-underlay .l3 {
-          color:transparent !important;
-          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='130' viewBox='0 0 150 130'%3E%3Cdefs%3E%3Cstyle%3Epath,line%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Cpath d='M20 42 L28 18 L24 8' stroke-width='1' opacity='0.6'/%3E%3Cpath d='M28 18 Q36 28 30 42' stroke-width='0.7' opacity='0.5'/%3E%3Cpath d='M22 44 L24 42 L20 42 L22 44Z' fill='%23111' opacity='0.5'/%3E%3Cline x1='18' y1='46' x2='6' y2='60' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='19' y1='49' x2='8' y2='64' stroke-width='0.35' opacity='0.3'/%3E%3Cline x1='20' y1='52' x2='10' y2='68' stroke-width='0.35' opacity='0.28'/%3E%3Cline x1='21' y1='55' x2='12' y2='72' stroke-width='0.3' opacity='0.25'/%3E%3Ccircle cx='30' cy='42' r='1.5' fill='%23111' opacity='0.45'/%3E%3Cpath d='M10 65 Q35 22 62 48 Q78 62 98 32 Q115 8 142 50' stroke-width='0.6' opacity='0.4'/%3E%3Cpath d='M5 92 Q32 68 58 82 Q80 95 108 62 Q128 38 145 72' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M15 112 Q45 98 65 106 Q88 116 108 96 Q128 78 142 100' stroke-width='0.35' opacity='0.25'/%3E%3Cpath d='M112 10 Q124 4 128 16 Q134 30 124 36 Q112 42 108 30 Q104 18 112 10' stroke-width='0.5' opacity='0.4'/%3E%3Ccircle cx='95' cy='30' r='0.8' fill='%23111' opacity='0.35'/%3E%3Ccircle cx='58' cy='50' r='0.6' fill='%23111' opacity='0.3'/%3E%3Ccircle cx='128' cy='65' r='0.8' fill='%23111' opacity='0.3'/%3E%3Cpath d='M72 112 Q80 100 88 112' stroke-width='0.5' opacity='0.35'/%3E%3Cpath d='M64 116 Q80 96 96 116' stroke-width='0.4' opacity='0.3'/%3E%3Cline x1='80' y1='96' x2='80' y2='120' stroke-width='0.3' opacity='0.25'/%3E%3C/svg%3E") 0 0/150px 130px repeat, linear-gradient(135deg, #fff 0%, #f5f0ea 40%, #fff 60%, #ede5da 100%);
-          -webkit-background-clip:text !important; background-clip:text !important;
-          -webkit-text-fill-color:transparent !important;
-        }
-        .hero-oil-wrap .hero-mega:not(.hero-underlay) {
-          position:relative; z-index:2; --mx:-300px; --my:-300px;
-        }
-        /* DESKTOP hover reveal */
-        .hero-oil-wrap.oil-hover .hero-underlay { opacity:1; visibility:visible; }
-        .hero-oil-wrap.oil-hover .hero-mega:not(.hero-underlay) {
-          -webkit-mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
-            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
-          mask-image: radial-gradient(ellipse 200px 220px at var(--mx) var(--my),
-            transparent 0%, transparent 30%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,1) 75%);
-        }
-        /* MOBILE scroll wipe */
-        .hero-oil-wrap.oil-scroll .hero-underlay { opacity:1; visibility:visible; }
-        .hero-oil-wrap.oil-scroll .hero-mega:not(.hero-underlay) {
-          -webkit-mask-image: linear-gradient(to bottom,
-            transparent 0%, transparent var(--scroll-reveal,0%),
-            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
-            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
-          mask-image: linear-gradient(to bottom,
-            transparent 0%, transparent var(--scroll-reveal,0%),
-            rgba(0,0,0,0.3) calc(var(--scroll-reveal,0%) + 5%),
-            rgba(0,0,0,1) calc(var(--scroll-reveal,0%) + 15%));
-        }
       </style></head>
 <body class="">
 
@@ -329,7 +279,7 @@
   <div class="cursor-ring"></div>
 
   <!-- ========== NAVIGATION ========== -->
-  <nav class="nav scrolled" id="navbar" style="transform: translateY(0px);">
+  <nav class="nav" id="navbar" style="transform: translateY(0px);">
     <div class="container">
       <a href="index.html" class="nav-logo" data-editor-id="jbc-1777417664795-8bts">
         <span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span>
@@ -355,27 +305,23 @@
     <div class="tag" data-jbc-id="section.hero > div.tag" data-editor-id="hero-storytelling-tag" style="filter: blur(0px); transition: opacity 1.5s ease-out;">StorytellinG</div>
 
     <div class="hero-content" data-jbc-id="section.hero > div.hero-content" data-editor-id="hero-content">
-      <div class="hero-oil-wrap" style="transition: opacity 1.5s ease-out; opacity: 0.88921;"><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-underlay-1">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-underlay-1-l1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms;" data-editor-id="hero-underlay-1-l2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms;" data-editor-id="hero-underlay-1-l3">Cookies</span>
-      </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-underlay-2">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-underlay-2-l1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms;" data-editor-id="hero-underlay-2-l2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms;" data-editor-id="hero-underlay-2-l3">Cookies</span>
-      </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-underlay-3">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-underlay-3-l1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms;" data-editor-id="hero-underlay-3-l2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms;" data-editor-id="hero-underlay-3-l3">Cookies</span>
-      </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-underlay-4">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-underlay-4-l1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms;" data-editor-id="hero-underlay-4-l2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms;" data-editor-id="hero-underlay-4-l3">Cookies</span>
-      </div><div class="hero-mega" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group" style="--mx: -299.5163117459273px; --my: -300.55917913110255px;">
-        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2560ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2560ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2560ms;">Just</span>
-        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2740ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2740ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2740ms;" data-editor-id="hero-title-line-2">Broken</span>
-        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2920ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2920ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2920ms;" data-editor-id="hero-title-line-3">Cookies</span>
-      </div></div></div></div></div>
+      <div class="hero-oil-wrap" style="transition: opacity 1.5s ease-out; opacity: 1;"><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 400ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 580ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 760ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 940ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1120ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1300ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      </div><div class="hero-oil-wrap" style=""><div class="hero-mega hero-underlay" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group">
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1480ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1660ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 1840ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      </div><div class="hero-mega" data-jbc-id="section.hero > div.hero-content > div.hero-oil-wrap > div.hero-mega" data-editor-id="hero-title-group" style="--mx: -299.5208116153982px; --my: -301.2239097254797px;">
+        <span class="l1" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l1" data-editor-id="hero-title-line-1" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2020ms;">Just</span>
+        <span class="l2" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l2" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2200ms;" data-editor-id="hero-title-line-2">Broken</span>
+        <span class="l3" data-jbc-id="div.hero-content > div.hero-oil-wrap > div.hero-mega > span.l3" style="filter: blur(0px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms, filter 1s cubic-bezier(0.16, 1, 0.3, 1) 2380ms;" data-editor-id="hero-title-line-3">Cookies</span>
+      </div></div></div></div>
     </div>
 
     
@@ -434,13 +380,13 @@
   <!-- ========== SERVICES ========== -->
   <section id="services-overview" class="jbc-editorial-section jbc-floral-process" style="border-top:2px solid #fff;" data-editor-id="process-section">
     <div class="container">
-      <div class="sec-header" style="opacity: 0; transform: translateY(30px); filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+      <div class="sec-header" style="">
         <h2 data-editor-id="process-heading" class="">How We Build Stories</h2>
         <span>The 3D Process</span>
       </div>
 
       <div class="services-grid">
-        <div class="service-card jbc-editorial-card jbc-editorial-card-1" data-expandable="" data-card="1" data-editor-id="process-card-1" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="service-card jbc-editorial-card jbc-editorial-card-1" data-expandable="" data-card="1" data-editor-id="process-card-1">
           <div class="service-num">NO. 01</div>
           <h3>Define</h3>
           <span class="service-sub">understand</span>
@@ -458,7 +404,7 @@
           </div>
         </div>
 
-        <div class="service-card jbc-editorial-card jbc-editorial-card-2" data-expandable="" data-card="2" data-editor-id="process-card-2" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="service-card jbc-editorial-card jbc-editorial-card-2" data-expandable="" data-card="2" data-editor-id="process-card-2">
           <div class="service-num">NO. 02</div>
           <h3>Design</h3>
           <span class="service-sub">craft</span>
@@ -471,7 +417,7 @@
           </div>
         </div>
 
-        <div class="service-card jbc-editorial-card jbc-editorial-card-3" data-expandable="" data-card="3" data-editor-id="process-card-3" style="filter: blur(4px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div class="service-card jbc-editorial-card jbc-editorial-card-3" data-expandable="" data-card="3" data-editor-id="process-card-3">
           <div class="service-num">NO. 03</div>
           <h3>Describe</h3>
           <span class="service-sub">deliver</span>
