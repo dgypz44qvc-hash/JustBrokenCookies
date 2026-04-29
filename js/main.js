@@ -207,37 +207,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- OIL-ON-WATER HERO TEXT REVEAL ----
     if (heroMega) {
       const isTouch = !window.matchMedia('(hover:hover)').matches;
-      const existingWrap = heroMega.closest('.hero-oil-wrap');
-      if (existingWrap) {
-        existingWrap.querySelectorAll(':scope > .hero-underlay').forEach((el, index) => {
-          if (index > 0) el.remove();
-        });
-      }
 
       // 1. Wrap heroMega — preserve exact layout to prevent any bounce
-      const wrapper = existingWrap || document.createElement('div');
-      if (!existingWrap) {
-        wrapper.classList.add('hero-oil-wrap');
-        const rect = heroMega.getBoundingClientRect();
-        wrapper.style.width = rect.width + 'px';
-        wrapper.style.height = rect.height + 'px';
-        heroMega.parentElement.insertBefore(wrapper, heroMega);
-        wrapper.appendChild(heroMega);
-        // Release fixed size after a frame so it flows normally
-        requestAnimationFrame(() => {
-          wrapper.style.width = '';
-          wrapper.style.height = '';
-        });
-      }
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('hero-oil-wrap');
+      const rect = heroMega.getBoundingClientRect();
+      wrapper.style.width = rect.width + 'px';
+      wrapper.style.height = rect.height + 'px';
+      heroMega.parentElement.insertBefore(wrapper, heroMega);
+      wrapper.appendChild(heroMega);
+      // Release fixed size after a frame so it flows normally
+      requestAnimationFrame(() => {
+        wrapper.style.width = '';
+        wrapper.style.height = '';
+      });
 
       // 2. Clone underlay
-      let underlay = wrapper.querySelector(':scope > .hero-underlay');
-      if (!underlay) {
-        underlay = heroMega.cloneNode(true);
-        underlay.classList.add('hero-underlay');
-        underlay.removeAttribute('style');
-        wrapper.insertBefore(underlay, heroMega);
-      }
+      const underlay = heroMega.cloneNode(true);
+      underlay.classList.add('hero-underlay');
+      underlay.removeAttribute('style');
+      wrapper.insertBefore(underlay, heroMega);
 
       // 3. SVG patterns — tattoo ink (black #111 on white), fine-line art
       const lensSVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110' viewBox='0 0 110 110'%3E%3Cdefs%3E%3Cstyle%3E*%7Bfill:none;stroke:%23111;stroke-linecap:round%7D%3C/style%3E%3C/defs%3E%3Ccircle cx='55' cy='55' r='50' stroke-width='0.6' opacity='0.5'/%3E%3Ccircle cx='55' cy='55' r='42' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='34' stroke-width='0.7' opacity='0.55'/%3E%3Ccircle cx='55' cy='55' r='25' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='55' cy='55' r='17' stroke-width='0.8' opacity='0.6'/%3E%3Ccircle cx='55' cy='55' r='9' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='55' cy='55' r='3' stroke-width='0.6' opacity='0.5'/%3E%3Cline x1='55' y1='2' x2='55' y2='10' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='55' y1='100' x2='55' y2='108' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='2' y1='55' x2='10' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='100' y1='55' x2='108' y2='55' stroke-width='0.5' opacity='0.5'/%3E%3Cline x1='16' y1='16' x2='22' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='16' x2='88' y2='22' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='16' y1='94' x2='22' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cline x1='94' y1='94' x2='88' y2='88' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M55 5 L58 15 L55 12 L52 15Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M105 55 L95 58 L98 55 L95 52Z' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M30 12 Q55 32 80 12' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M98 30 Q78 55 98 80' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M80 98 Q55 78 30 98' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M12 80 Q32 55 12 30' stroke-width='0.4' opacity='0.3'/%3E%3Cpath d='M36 22 Q44 34 55 30 Q66 26 72 18' stroke-width='0.35' opacity='0.28'/%3E%3Cpath d='M88 36 Q76 44 80 55 Q84 66 92 72' stroke-width='0.35' opacity='0.28'/%3E%3C/svg%3E";
