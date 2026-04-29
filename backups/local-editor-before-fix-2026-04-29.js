@@ -46,15 +46,12 @@
   let copiedStyle = null;
   let panelResize = null;
   let suppressNextClick = false;
-  let deviceMode = 'desktop';
-  let zoom = 1;
 
   const managedStyles = [
     'position', 'left', 'top', 'right', 'bottom', 'width', 'height', 'opacity',
     'z-index', 'color', 'background-color', 'font-size', 'font-family',
     'letter-spacing', 'padding', 'margin', 'border-radius', 'mix-blend-mode',
-    'transform', 'display', 'background-image', 'background-size',
-    'background-position', 'background-repeat'
+    'transform', 'display'
   ];
 
   const layerGroups = [
@@ -211,7 +208,6 @@
     doc.body.classList.remove('jbc-editor-preview', 'jbc-is-dragging', 'jbc-text-edit-mode');
     wireCanvas();
     buildLayers();
-    markEditableItems();
     loadImages();
     pushHistory();
     setStatus('Ready');
@@ -222,8 +218,6 @@
       '<style id="jbc-editor-runtime-css">',
       '[data-jbc-selected="true"]{outline:2px solid rgba(232,137,29,.95)!important;outline-offset:3px!important;}',
       '.jbc-editor-hover{outline:1px solid rgba(232,137,29,.5)!important;outline-offset:3px!important;}',
-      '[data-jbc-editable="true"]{outline:1px dashed rgba(232,137,29,.24);outline-offset:4px;}',
-      '[data-jbc-editable="true"]:hover{outline-color:rgba(232,137,29,.72)!important;}',
       '.jbc-editor-box{position:absolute;z-index:2147483646;pointer-events:none;border:1px solid rgba(232,137,29,.65);box-shadow:0 0 0 1px rgba(20,16,14,.45);}',
       '.jbc-editor-handle{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#e8891d;border:2px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.28);pointer-events:auto;touch-action:none;}',
       '.jbc-editor-handle.nw{left:0;top:0;cursor:nwse-resize}.jbc-editor-handle.n{left:50%;top:0;cursor:ns-resize}.jbc-editor-handle.ne{left:100%;top:0;cursor:nesw-resize}.jbc-editor-handle.e{left:100%;top:50%;cursor:ew-resize}.jbc-editor-handle.se{left:100%;top:100%;cursor:nwse-resize}.jbc-editor-handle.s{left:50%;top:100%;cursor:ns-resize}.jbc-editor-handle.sw{left:0;top:100%;cursor:nesw-resize}.jbc-editor-handle.w{left:0;top:50%;cursor:ew-resize}',
@@ -231,7 +225,6 @@
       '.jbc-editor-handle.rotate:after{content:"";position:absolute;left:50%;top:16px;width:1px;height:18px;background:rgba(255,255,255,.85);}',
       'body.jbc-is-dragging,body.jbc-is-dragging *{user-select:none!important;cursor:grabbing!important;}',
       'body.jbc-editor-preview [data-jbc-selected="true"],body.jbc-editor-preview .jbc-editor-hover{outline:none!important;}',
-      'body.jbc-editor-preview [data-jbc-editable="true"]{outline:none!important;}',
       'body.jbc-editor-preview .jbc-editor-box{display:none!important;}',
       'body:not(.jbc-editor-preview) .hero .tag,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l1,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l2,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l3,body:not(.jbc-editor-preview) .hero .jbc-custom,body:not(.jbc-editor-preview) .hero .jbc-custom img,body:not(.jbc-editor-preview) .hero-corner-rose{pointer-events:auto!important;}',
       '[contenteditable="true"].jbc-text-editing{outline:2px solid #2ecc40!important;outline-offset:4px!important;cursor:text!important;user-select:text!important;-webkit-user-select:text!important;}',
@@ -246,39 +239,14 @@
 
   function serializeHtml() {
     const clone = doc.documentElement.cloneNode(true);
-    cleanupRuntimeDom(clone);
     clone.querySelector('#jbc-editor-runtime-css')?.remove();
     clone.querySelector('#jbc-editor-overrides-live')?.remove();
     clone.querySelectorAll('.jbc-editor-box').forEach(el => el.remove());
     clone.querySelectorAll('[data-jbc-selected], .jbc-editor-hover').forEach(el => { el.removeAttribute('data-jbc-selected'); el.classList.remove('jbc-editor-hover'); });
-    clone.querySelectorAll('[data-jbc-editable]').forEach(el => el.removeAttribute('data-jbc-editable'));
     clone.querySelector('body')?.classList.remove('jbc-editor-preview', 'jbc-is-dragging', 'jbc-text-edit-mode');
     clone.querySelectorAll('[data-editor-bound], [contenteditable]').forEach(el => { el.removeAttribute('data-editor-bound'); if (el.getAttribute('contenteditable') === 'true') el.removeAttribute('contenteditable'); });
     clone.querySelectorAll('[data-editor-id]').forEach(el => stripManagedInlineStyles(el));
     return '<!DOCTYPE html>\n' + clone.outerHTML;
-  }
-
-  function cleanupRuntimeDom(root) {
-    root.querySelectorAll('style').forEach(style => {
-      const css = style.textContent || '';
-      if (css.includes('.hero-oil-wrap') && css.includes('.hero-underlay')) style.remove();
-    });
-    root.querySelectorAll('.hero-oil-wrap').forEach(wrap => {
-      const title = wrap.querySelector(':scope > .hero-mega:not(.hero-underlay)');
-      if (!title) return;
-      wrap.querySelectorAll(':scope > .hero-underlay').forEach(el => el.remove());
-      title.removeAttribute('style');
-      title.querySelectorAll('.l1, .l2, .l3').forEach(line => {
-        line.style.removeProperty('--mx');
-        line.style.removeProperty('--my');
-        line.style.removeProperty('opacity');
-        line.style.removeProperty('transform');
-        line.style.removeProperty('filter');
-        line.style.removeProperty('transition');
-        if (!line.getAttribute('style')?.trim()) line.removeAttribute('style');
-      });
-      wrap.replaceWith(title);
-    });
   }
 
   function stripManagedInlineStyles(el) {
@@ -311,15 +279,16 @@
     on('btn-undo', 'click', undo);
     on('btn-redo', 'click', redo);
     on('btn-save', 'click', saveAll);
-    on('btn-publish', 'click', saveAll);
-    on('btn-desktop-view', 'click', () => setDeviceMode('desktop'));
-    on('btn-mobile-view', 'click', () => setDeviceMode('mobile'));
-    on('btn-zoom-out', 'click', () => setZoom(zoom - 0.1));
-    on('btn-zoom-in', 'click', () => setZoom(zoom + 0.1));
-    on('btn-add-text-panel', 'click', addTextBlock);
-    on('btn-add-box-panel', 'click', addBoxBlock);
-    on('btn-add-block-panel', 'click', addContentBlock);
-    on('btn-add-section-panel', 'click', addBlankSection);
+    on('btn-add-image', 'click', () => beginAssetAdd('image'));
+    on('btn-add-image-panel', 'click', () => beginAssetAdd('image'));
+    on('btn-add-decoration', 'click', () => beginAssetAdd('decoration'));
+    on('btn-add-decoration-panel', 'click', () => beginAssetAdd('decoration'));
+    on('btn-add-rose', 'click', () => beginAssetAdd('rose'));
+    on('btn-add-rose-top', 'click', () => beginAssetAdd('rose'));
+    on('btn-add-vector', 'click', () => beginAssetAdd('vector'));
+    on('btn-add-vector-panel', 'click', () => beginAssetAdd('vector'));
+    on('btn-add-image-decoration', 'click', () => beginAssetAdd('decoration'));
+    on('btn-add-selected-as-decoration', 'click', () => beginAssetAdd('decoration'));
     on('btn-upload-asset', 'click', () => prop('upload-image')?.click());
     on('btn-replace-image', 'click', () => prop('upload-image')?.click());
     on('btn-refresh-images', 'click', loadImages);
@@ -332,11 +301,6 @@
     on('btn-duplicate', 'click', duplicateSelected);
     on('btn-duplicate-top', 'click', duplicateSelected);
     on('btn-reset-selected', 'click', resetSelected);
-    on('btn-select-parent', 'click', selectParent);
-    on('btn-move-layer-up', 'click', moveLayerUp);
-    on('btn-move-layer-down', 'click', moveLayerDown);
-    on('btn-apply-background', 'click', applyBackground);
-    on('btn-clear-background', 'click', clearBackground);
     on('btn-bring-forward', 'click', bringForward);
     on('btn-forward-top', 'click', bringForward);
     on('btn-send-backward', 'click', sendBackward);
@@ -354,11 +318,8 @@
     window.addEventListener('keydown', onKeyDown, true);
     window.addEventListener('pointermove', onPanelResizeMove);
     window.addEventListener('pointerup', endPanelResize);
-    window.addEventListener('resize', () => { fitZoomForDevice(false); updateSelectionUI(); });
+    window.addEventListener('resize', updateSelectionUI);
     window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
-    const canvasWrap = prop('canvas-wrap');
-    canvasWrap?.addEventListener('dragover', onFileDragOver);
-    canvasWrap?.addEventListener('drop', onShellFileDrop);
     ['prop-left','prop-top','prop-width','prop-height','prop-opacity','prop-z','prop-rotate','prop-radius','prop-color','prop-bg','prop-font-size','prop-font-family','prop-letter','prop-blend','prop-text'].forEach(id => on(id, 'change', applyPanel));
   }
 
@@ -391,77 +352,6 @@
     doc.addEventListener('keydown', onKeyDown, true);
     doc.addEventListener('wheel', onWheel, { capture: true, passive: false });
     doc.addEventListener('scroll', updateSelectionUI, true);
-    doc.addEventListener('dragover', onFileDragOver, true);
-    doc.addEventListener('drop', onCanvasFileDrop, true);
-  }
-
-  function onFileDragOver(e) {
-    if (!editMode) return;
-    if (Array.from(e.dataTransfer?.types || []).includes('Files')) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'copy';
-      setStatus('Drop to upload');
-    }
-  }
-
-  async function onShellFileDrop(e) {
-    if (!editMode) return;
-    const file = e.dataTransfer?.files?.[0];
-    if (!file) return;
-    e.preventDefault();
-    const frameRect = frame.getBoundingClientRect();
-    const point = {
-      x: Math.max(0, e.clientX - frameRect.left),
-      y: Math.max(0, e.clientY - frameRect.top)
-    };
-    await uploadDroppedFile(file, point);
-  }
-
-  async function onCanvasFileDrop(e) {
-    if (!editMode) return;
-    const file = e.dataTransfer?.files?.[0];
-    if (!file) return;
-    e.preventDefault();
-    e.stopPropagation();
-    await uploadDroppedFile(file, { x: e.clientX, y: e.clientY });
-  }
-
-  async function uploadDroppedFile(file, point) {
-    try {
-      const src = await uploadImage(file, 'images/editor-assets');
-      applyUploadedAsset(src, point);
-    } catch (err) {
-      setStatus(err.message);
-    }
-  }
-
-  function setDeviceMode(mode) {
-    deviceMode = mode === 'mobile' ? 'mobile' : 'desktop';
-    document.body.classList.toggle('device-mobile', deviceMode === 'mobile');
-    toggleClass('btn-desktop-view', 'active', deviceMode === 'desktop');
-    toggleClass('btn-mobile-view', 'active', deviceMode === 'mobile');
-    fitZoomForDevice(true);
-    setStatus(deviceMode === 'mobile' ? 'Mobile view' : 'Desktop view');
-    updateSelectionUI();
-  }
-
-  function setZoom(value) {
-    zoom = Math.max(0.35, Math.min(1.5, Math.round(value * 10) / 10));
-    document.documentElement.style.setProperty('--canvas-scale', String(zoom));
-    setText('zoom-label', Math.round(zoom * 100) + '%');
-    updateSelectionUI();
-  }
-
-  function fitZoomForDevice(preferFit) {
-    if (deviceMode !== 'mobile') {
-      if (preferFit) setZoom(1);
-      return;
-    }
-    const wrap = prop('canvas-wrap');
-    if (!wrap) return;
-    const available = Math.max(320, wrap.clientWidth - 40);
-    const fit = Math.min(1, Math.max(0.45, available / 390));
-    if (preferFit || zoom > fit) setZoom(fit);
   }
 
   function selectElement(el) {
@@ -503,23 +393,7 @@
     setValue('prop-font-family', selected ? selected.style.fontFamily || '' : '');
     setValue('prop-letter', selected ? selected.style.letterSpacing || cs.letterSpacing || '' : '');
     setValue('prop-blend', selected ? selected.style.mixBlendMode || '' : '');
-    hydrateBackgroundPanel();
     updateFloatingToolbar();
-  }
-
-  function hydrateBackgroundPanel() {
-    const section = selected?.closest?.('section, footer') || (selected?.matches?.('section, footer') ? selected : null);
-    const sectionCss = section ? frame.contentWindow.getComputedStyle(section) : null;
-    const pageCss = doc?.body ? frame.contentWindow.getComputedStyle(doc.body) : null;
-    setValue('prop-section-bg', sectionCss ? rgbToHex(sectionCss.backgroundColor) : '#000000');
-    setValue('prop-section-bg-image', section ? cssUrlToPath(section.style.backgroundImage || sectionCss.backgroundImage) : '');
-    setValue('prop-page-bg', pageCss ? rgbToHex(pageCss.backgroundColor) : '#000000');
-    setValue('prop-page-bg-image', doc?.body ? cssUrlToPath(doc.body.style.backgroundImage || pageCss.backgroundImage) : '');
-  }
-
-  function cssUrlToPath(value) {
-    const m = String(value || '').match(/url\(["']?([^"')]+)["']?\)/);
-    return m ? m[1] : '';
   }
 
   function rgbToHex(value) {
@@ -734,36 +608,6 @@
       layersEl.appendChild(otherWrap);
     }
     window.__jbcLayerAudit = audit;
-    markEditableItems();
-  }
-
-  function markEditableItems() {
-    if (!doc) return;
-    doc.querySelectorAll('[data-jbc-editable]').forEach(el => el.removeAttribute('data-jbc-editable'));
-    collectEditableItems().forEach(el => {
-      selectorFor(el);
-      el.setAttribute('data-jbc-editable', 'true');
-    });
-  }
-
-  function collectEditableItems() {
-    if (!doc) return [];
-    const set = new Set();
-    layerGroups.forEach(group => group.items.forEach(([, sel]) => {
-      const el = normalizeAuditElement(doc.querySelector(sel));
-      if (isVisibleEditable(el)) set.add(el);
-    }));
-    auditSelectors.forEach(([, selector]) => {
-      doc.querySelectorAll(selector).forEach(item => {
-        const el = normalizeAuditElement(item);
-        if (isVisibleEditable(el) && !isHugeHeroTitleParent(el)) set.add(el);
-      });
-    });
-    doc.querySelectorAll('footer.footer h4, footer.footer a, footer.footer .footer-bottom span, .editor-decoration').forEach(item => {
-      const el = normalizeAuditElement(item);
-      if (isVisibleEditable(el)) set.add(el);
-    });
-    return Array.from(set).filter(Boolean);
   }
 
   function appendFooterTextLayers(included) {
@@ -885,26 +729,10 @@
       e.target.value = '';
       if (!file) return;
       const src = await uploadImage(file, 'images/editor-assets');
-      applyUploadedAsset(src);
+      const kind = assetMode?.kind || (src.toLowerCase().endsWith('.svg') ? 'vector' : 'decoration');
+      if (selectedImage(selected) && !assetMode) replaceSelectedImage(src);
+      else beginAssetAdd(kind, src);
     } catch (err) { setStatus(err.message); }
-  }
-
-  function applyUploadedAsset(src, point) {
-    const target = getValue('upload-target') || 'screen';
-    if (target === 'section-bg') {
-      setValue('prop-section-bg-image', src);
-      applyBackground(point ? pickAssetParentAtPoint(point.x, point.y) : null);
-      return;
-    }
-    if (target === 'page-bg') {
-      setValue('prop-page-bg-image', src);
-      applyBackground();
-      return;
-    }
-    const kindValue = getValue('upload-kind') || 'auto';
-    const kind = kindValue === 'auto' ? (src.toLowerCase().endsWith('.svg') ? 'vector' : 'image') : kindValue;
-    const parent = point ? pickAssetParentAtPoint(point.x, point.y) : resolvePlacementParent('selected');
-    insertAsset(assetConfig(kind, src), parent, point || null);
   }
 
   function applyImageSource() { const src = getValue('prop-src').trim(); if (src) replaceSelectedImage(src); }
@@ -968,104 +796,6 @@
     insertAsset(assetMode.config, targetParent, { x: e.clientX, y: e.clientY });
     assetMode = null;
     document.body.classList.remove('asset-place-mode');
-  }
-
-  function createInsertedElement(tag, className, html, defaults = {}) {
-    if (!doc) return null;
-    pushHistory();
-    const parent = resolvePlacementParent(getValue('asset-placement') || 'selected');
-    ensurePositionedParent(parent);
-    const el = doc.createElement(tag);
-    el.className = className;
-    el.dataset.editorId = nextAssetId(defaults.prefix || 'block');
-    el.innerHTML = html;
-    el.style.position = 'absolute';
-    el.style.left = defaults.left || '48px';
-    el.style.top = defaults.top || '48px';
-    if (defaults.width) el.style.width = defaults.width;
-    if (defaults.height) el.style.height = defaults.height;
-    if (defaults.padding) el.style.padding = defaults.padding;
-    if (defaults.background) el.style.backgroundColor = defaults.background;
-    if (defaults.color) el.style.color = defaults.color;
-    el.style.zIndex = String(nextZIndexIn(parent));
-    parent.insertBefore(el, parent.firstChild);
-    selectElement(el);
-    saveStyleFor(el, true);
-    markDirty('Element added');
-    return el;
-  }
-
-  function addTextBlock() {
-    const el = createInsertedElement('div', 'editor-decoration editor-text-block', 'New text', {
-      prefix: 'text',
-      width: '260px',
-      padding: '12px',
-      color: '#f7eee8'
-    });
-    if (el) beginTextEdit(el);
-    return el;
-  }
-
-  function applyLocalPoint(el, target, frameX, frameY) {
-    const parent = target.closest?.('section, footer') || backgroundTargetSection() || doc.body;
-    const point = localPointFor(target, frameX, frameY);
-    if (el.parentElement !== parent) parent.insertBefore(el, parent.firstChild);
-    el.style.left = Math.max(0, Math.round(point.x)) + 'px';
-    el.style.top = Math.max(0, Math.round(point.y)) + 'px';
-    saveStyleFor(el, true);
-  }
-
-  function addTextBlockAt(target, frameX, frameY) {
-    const el = addTextBlock();
-    if (el) applyLocalPoint(el, target, frameX, frameY);
-  }
-
-  function addBoxBlock() {
-    return createInsertedElement('div', 'editor-decoration editor-box-block', '', {
-      prefix: 'box',
-      width: '260px',
-      height: '160px',
-      background: '#e8891d'
-    });
-  }
-
-  function addBoxBlockAt(target, frameX, frameY) {
-    const el = addBoxBlock();
-    if (el) applyLocalPoint(el, target, frameX, frameY);
-  }
-
-  function addContentBlock() {
-    return createInsertedElement('div', 'editor-decoration editor-content-block', '<strong>Heading</strong><br>Short supporting text', {
-      prefix: 'block',
-      width: '320px',
-      padding: '20px',
-      background: '#211916',
-      color: '#f7eee8'
-    });
-  }
-
-  function addContentBlockAt(target, frameX, frameY) {
-    const el = addContentBlock();
-    if (el) applyLocalPoint(el, target, frameX, frameY);
-  }
-
-  function addBlankSection() {
-    if (!doc) return;
-    pushHistory();
-    const section = doc.createElement('section');
-    section.className = 'editor-added-section';
-    section.dataset.editorId = nextAssetId('section');
-    section.style.minHeight = '420px';
-    section.style.padding = '80px 24px';
-    section.style.backgroundColor = '#14100e';
-    section.style.color = '#f7eee8';
-    section.innerHTML = '<h2>New section</h2><p>Add your story here.</p>';
-    const anchor = selected?.closest?.('section, footer') || doc.querySelector('section.hero');
-    if (anchor?.nextSibling) anchor.parentNode.insertBefore(section, anchor.nextSibling);
-    else doc.body.appendChild(section);
-    selectElement(section);
-    saveStyleFor(section, true);
-    markDirty('Section added');
   }
 
   function pickAssetParentAtPoint(x, y) {
@@ -1157,78 +887,6 @@
 
   function resetSelected() { if (!selected) return; pushHistory(); managedStyles.forEach(name => selected.style.removeProperty(name)); saveStyleFor(selected, true); hydratePanel(); updateSelectionUI(); markDirty('Reset selected'); }
 
-  function selectParent() {
-    const parent = selected?.parentElement?.closest?.('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content');
-    if (parent) selectElement(parent);
-  }
-
-  function moveLayerUp() {
-    if (!selected || !selected.parentElement || !selected.nextElementSibling) return;
-    pushHistory();
-    selected.parentElement.insertBefore(selected.nextElementSibling, selected);
-    buildLayers();
-    updateSelectionUI();
-    markDirty('Layer moved up');
-  }
-
-  function moveLayerDown() {
-    if (!selected || !selected.parentElement || !selected.previousElementSibling) return;
-    pushHistory();
-    selected.parentElement.insertBefore(selected, selected.previousElementSibling);
-    buildLayers();
-    updateSelectionUI();
-    markDirty('Layer moved down');
-  }
-
-  function backgroundTargetSection(fallback) {
-    return fallback?.closest?.('section, footer') || selected?.closest?.('section, footer') || (selected?.matches?.('section, footer') ? selected : null) || doc.querySelector('section.hero');
-  }
-
-  function setBackgroundImage(el, value) {
-    if (!el) return;
-    const src = String(value || '').trim();
-    el.style.backgroundImage = src ? 'url("' + src.replace(/"/g, '\\"') + '")' : '';
-    if (src) {
-      el.style.backgroundSize = 'cover';
-      el.style.backgroundPosition = 'center';
-      el.style.backgroundRepeat = 'no-repeat';
-    }
-  }
-
-  function applyBackground(sectionOverride) {
-    if (!doc) return;
-    pushHistory();
-    const section = backgroundTargetSection(sectionOverride);
-    if (section) {
-      section.style.backgroundColor = getValue('prop-section-bg') || '';
-      setBackgroundImage(section, getValue('prop-section-bg-image'));
-      saveStyleFor(section, true);
-    }
-    if (doc.body) {
-      doc.body.style.backgroundColor = getValue('prop-page-bg') || '';
-      setBackgroundImage(doc.body, getValue('prop-page-bg-image'));
-      saveStyleFor(doc.body, false);
-    }
-    hydratePanel();
-    markDirty('Background updated');
-  }
-
-  function clearBackground() {
-    if (!doc) return;
-    pushHistory();
-    const section = backgroundTargetSection();
-    [section, doc.body].filter(Boolean).forEach(el => {
-      el.style.removeProperty('background-color');
-      el.style.removeProperty('background-image');
-      el.style.removeProperty('background-size');
-      el.style.removeProperty('background-position');
-      el.style.removeProperty('background-repeat');
-      saveStyleFor(el, true);
-    });
-    hydratePanel();
-    markDirty('Background cleared');
-  }
-
   function bringForward() {
     if (!selected) return;
     pushHistory();
@@ -1297,15 +955,9 @@
     addItem('Send Backward', sendBackward);
     addItem('Reset Style', resetSelected);
     separator();
-    addItem('Add Text Here', () => addTextBlockAt(target, frameX, frameY));
-    addItem('Add Box Here', () => addBoxBlockAt(target, frameX, frameY));
-    addItem('Add Block Here', () => addContentBlockAt(target, frameX, frameY));
+    addItem('Add Decoration Here', () => insertAsset(assetConfig('decoration'), target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
     addItem('Add Rose Here', () => insertAsset(assetConfig('rose'), target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
-    addItem('Upload Here', () => { setValue('upload-target', 'screen'); prop('upload-image')?.click(); });
-    addItem('Use Upload as Section Background', () => { setValue('upload-target', 'section-bg'); prop('upload-image')?.click(); });
-    addItem('Use Upload as Page Background', () => { setValue('upload-target', 'page-bg'); prop('upload-image')?.click(); });
     addItem('Copy Style', () => { copiedStyle = selected ? selected.getAttribute('style') || '' : ''; });
-    addItem('Paste Style', () => { if (copiedStyle && selected) { pushHistory(); selected.setAttribute('style', copiedStyle); saveStyleFor(selected, true); hydratePanel(); markDirty('Style pasted'); } }, !!copiedStyle);
     addItem('Select Parent', () => { const parent = target.parentElement?.closest('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content'); if (parent) selectElement(parent); }, !!target.parentElement);
     const maxX = window.innerWidth - 210;
     const maxY = window.innerHeight - 330;
@@ -1375,22 +1027,10 @@
 
   function onKeyDown(e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); return; }
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveAll(); return; }
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'p') { e.preventDefault(); togglePreview(); return; }
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'j') { e.preventDefault(); setDeviceMode(deviceMode === 'mobile' ? 'desktop' : 'mobile'); return; }
-    const target = e.target;
-    const inField = target?.matches?.('input, textarea, select') || target?.isContentEditable;
-    if (inField) return;
     if (textEditingEl) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); textEditingEl.blur(); }
       return;
     }
-    if (e.key === 'Escape') { hideContextMenu(); if (selected) { selected.removeAttribute('data-jbc-selected'); selected = null; document.body.classList.remove('has-selection', 'has-image', 'has-text', 'selected-decoration'); if (handlesBox) handlesBox.style.display = 'none'; hydratePanel(); buildLayers(); } return; }
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'd') { e.preventDefault(); duplicateSelected(); return; }
-    if ((e.key === 'Delete' || e.key === 'Backspace') && selected) { e.preventDefault(); deleteSelected(); return; }
-    if (e.shiftKey && e.key.toLowerCase() === 't') { e.preventDefault(); toggleCleanCanvas(); return; }
-    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); setLeftCollapsed(false); return; }
     if (!selected || selected.isContentEditable || !['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
     e.preventDefault();
     pushHistory();

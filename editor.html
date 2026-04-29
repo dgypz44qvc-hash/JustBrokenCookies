@@ -10,30 +10,27 @@
   <div id="editor-shell">
     <header id="topbar" aria-label="Editor toolbar">
       <div class="brand" aria-label="JBC Local Editor">JBC</div>
+      <nav class="tool-group page-tools" aria-label="Page">
+        <select id="page-select" title="Page" aria-label="Page">
+          <option value="index.html">Home</option>
+        </select>
+      </nav>
       <nav class="tool-group" aria-label="Panels">
         <button id="btn-layers" type="button" class="icon-btn" title="Layers" aria-label="Layers">Layers</button>
         <button id="btn-properties" type="button" class="icon-btn" title="Properties" aria-label="Properties">Properties</button>
         <button id="btn-clean-canvas" type="button" class="icon-btn" title="Clean Canvas" aria-label="Clean Canvas">Clean</button>
       </nav>
+      <nav class="tool-group view-tools" aria-label="View">
+        <button id="btn-desktop-view" type="button" class="icon-btn active" title="Desktop view" aria-label="Desktop view">Desktop</button>
+        <button id="btn-mobile-view" type="button" class="icon-btn" title="Mobile view" aria-label="Mobile view">Mobile</button>
+        <button id="btn-zoom-out" type="button" class="icon-btn" title="Zoom out" aria-label="Zoom out">-</button>
+        <span id="zoom-label" aria-live="polite">100%</span>
+        <button id="btn-zoom-in" type="button" class="icon-btn" title="Zoom in" aria-label="Zoom in">+</button>
+      </nav>
       <nav class="tool-group" aria-label="Editing">
         <button id="btn-preview" type="button" class="icon-btn" title="Preview" aria-label="Preview">Preview</button>
         <button id="btn-undo" type="button" class="icon-btn" title="Undo" aria-label="Undo">Undo</button>
         <button id="btn-redo" type="button" class="icon-btn" title="Redo" aria-label="Redo">Redo</button>
-      </nav>
-      <nav class="tool-group text-format-tools" aria-label="Text formatting">
-        <select id="top-font-family" title="Font family" aria-label="Font family">
-          <option value="">Font</option>
-          <option value="Inter, system-ui, sans-serif">Inter</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="'Playfair Display', Georgia, serif">Playfair</option>
-          <option value="'Cormorant Garamond', Georgia, serif">Cormorant</option>
-          <option value="'DM Sans', Inter, sans-serif">DM Sans</option>
-          <option value="'Space Grotesk', Inter, sans-serif">Space Grotesk</option>
-          <option value="Montserrat, Inter, sans-serif">Montserrat</option>
-        </select>
-        <input id="top-font-size" type="text" title="Font size" aria-label="Font size" placeholder="Size">
-        <input id="top-text-color" type="color" title="Text color" aria-label="Text color">
-        <button id="btn-text-edit" type="button" title="Edit selected text">Text Edit</button>
       </nav>
       <span id="status">Loading...</span>
       <button id="btn-save" type="button" class="save" title="Save">Save</button>
@@ -83,35 +80,25 @@
       </section>
 
       <section class="property-section asset-tools">
-        <h3>Add Assets</h3>
-        <label>Place in
-          <select id="asset-placement">
-            <option value="selected">Selected section</option>
-            <option value="hero">Hero</option>
-            <option value="manifesto">Manifesto</option>
-            <option value="process">Process</option>
-            <option value="work">Selected Work</option>
-            <option value="testimonial">Testimonial</option>
-            <option value="cta">CTA</option>
-            <option value="footer">Footer</option>
-            <option value="click">Click to place</option>
+        <h3>Upload</h3>
+        <label>File type
+          <select id="upload-kind">
+            <option value="auto">Auto detect</option>
+            <option value="image">Image</option>
+            <option value="vector">SVG / Vector</option>
+            <option value="decoration">Decoration</option>
+          </select>
+        </label>
+        <label>Upload as
+          <select id="upload-target">
+            <option value="screen">Add to screen top layer</option>
+            <option value="section-bg">Add as section background</option>
+            <option value="page-bg">Add as page background</option>
           </select>
         </label>
         <div class="inline-actions">
-          <button id="btn-add-text-panel" type="button">Text</button>
-          <button id="btn-add-box-panel" type="button">Box</button>
-          <button id="btn-add-block-panel" type="button">Block</button>
-          <button id="btn-add-section-panel" type="button">Section</button>
-        </div>
-        <div class="inline-actions">
-          <button id="btn-add-image-panel" type="button">Add Image</button>
-          <button id="btn-add-decoration-panel" type="button">Add Decoration</button>
-          <button id="btn-add-rose" type="button">Rose Pattern</button>
-          <button id="btn-add-vector-panel" type="button">SVG / Vector</button>
-        </div>
-        <div class="inline-actions">
-          <button id="btn-upload-asset" type="button">Upload Asset</button>
-          <button id="btn-add-selected-as-decoration" type="button">Use Picked Image</button>
+          <button id="btn-upload-asset" type="button">Choose File</button>
+          <button id="btn-add-section-panel" type="button">New Section</button>
         </div>
       </section>
 
@@ -119,10 +106,7 @@
         <h3>Image</h3>
         <label>Source <input id="prop-src" type="text"></label>
         <input id="upload-image" type="file" accept=".png,.jpg,.jpeg,.webp,.gif,.svg,image/png,image/jpeg,image/webp,image/gif,image/svg+xml">
-        <div class="inline-actions">
-          <button id="btn-apply-src" type="button">Apply Source</button>
-          <button id="btn-hero-mobile" type="button">Hero Mobile</button>
-        </div>
+        <button id="btn-apply-src" type="button">Apply Source</button>
       </section>
 
       <section class="property-section">
@@ -175,9 +159,20 @@
       <section class="property-section decoration-tools">
         <h3>Selected Asset</h3>
         <div class="inline-actions">
-          <button id="btn-add-image-decoration" type="button">Use Image</button>
           <button id="btn-bring-forward" type="button">Forward</button>
           <button id="btn-send-backward" type="button">Backward</button>
+        </div>
+      </section>
+
+      <section class="property-section">
+        <h3>Background</h3>
+        <label>Section fill <input id="prop-section-bg" type="color"></label>
+        <label>Section image <input id="prop-section-bg-image" type="text" placeholder="images/example.jpg"></label>
+        <label>Page fill <input id="prop-page-bg" type="color"></label>
+        <label>Page image <input id="prop-page-bg-image" type="text" placeholder="images/example.jpg"></label>
+        <div class="inline-actions">
+          <button id="btn-apply-background" type="button">Apply</button>
+          <button id="btn-clear-background" type="button">Clear</button>
         </div>
       </section>
 
@@ -187,6 +182,9 @@
           <button id="btn-hide" type="button">Hide</button>
           <button id="btn-duplicate" type="button">Duplicate</button>
           <button id="btn-reset-selected" type="button">Reset</button>
+          <button id="btn-select-parent" type="button">Parent</button>
+          <button id="btn-move-layer-up" type="button">Layer Up</button>
+          <button id="btn-move-layer-down" type="button">Layer Down</button>
           <button id="btn-delete" type="button" class="danger">Delete</button>
         </div>
       </section>

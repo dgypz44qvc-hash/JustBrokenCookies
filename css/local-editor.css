@@ -11,8 +11,11 @@
   --green: #2ecc40;
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
   --left-panel-width: 196px;
-  --right-panel-width: 256px;
+  --right-panel-width: 300px;
   --gutter-width: 8px;
+  --canvas-scale: 1;
+  --canvas-width: 100%;
+  --canvas-height: 100%;
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +44,7 @@ button:disabled { opacity: 0.42; cursor: default; }
   height: 100vh;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 42px minmax(0, 1fr);
+  grid-template-rows: 44px minmax(0, 1fr);
   overflow: hidden;
 }
 body.left-collapsed { --left-panel-width: 0px; }
@@ -53,26 +56,42 @@ body.clean-canvas:not(.has-selection) { --right-panel-width: 0px; }
   grid-column: 1 / 6;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   padding: 4px 8px;
   background: rgba(33, 25, 22, 0.98);
   border-bottom: 1px solid var(--line);
   z-index: 10;
 }
 .brand {
-  width: 38px;
+  width: 36px;
   font-size: 13px;
   font-weight: 850;
   letter-spacing: 0.12em;
   color: var(--gold);
 }
-.tool-group { display: flex; gap: 6px; align-items: center; padding-right: 8px; border-right: 1px solid var(--line); }
+.tool-group { display: flex; gap: 5px; align-items: center; padding-right: 7px; border-right: 1px solid var(--line); }
 .tool-group:last-of-type { border-right: 0; }
 .icon-btn { min-width: 34px; }
 .primary-tools button, .selected-tools button { min-width: 68px; }
-.text-format-tools {
+.text-format-tools, .primary-tools { display: none; }
+.text-format-tools,
+.page-tools,
+.view-tools {
   flex: 0 1 auto;
   min-width: 0;
+}
+.page-tools select {
+  width: 104px;
+  min-height: 30px;
+  margin-top: 0;
+  padding: 0 8px;
+}
+.view-tools { gap: 4px; }
+#zoom-label {
+  min-width: 44px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
 }
 .text-format-tools select,
 .text-format-tools input {
@@ -95,9 +114,16 @@ body.clean-canvas:not(.has-selection) { --right-panel-width: 0px; }
   font-weight: 800;
   min-width: 70px;
 }
+.publish {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #160f0b;
+  font-weight: 800;
+  min-width: 74px;
+}
 #status {
   margin-left: auto;
-  max-width: 290px;
+  max-width: 240px;
   color: var(--muted);
   font-size: 12px;
   white-space: nowrap;
@@ -107,7 +133,7 @@ body.clean-canvas:not(.has-selection) { --right-panel-width: 0px; }
 
 .panel {
   position: fixed;
-  top: 42px;
+  top: 44px;
   bottom: 0;
   z-index: 18;
   width: var(--right-panel-width);
@@ -138,12 +164,51 @@ h2 { font-size: 12px; color: var(--text); }
 h3 { font-size: 10px; color: var(--gold); margin-bottom: 9px; }
 .ghost-btn { min-height: 26px; padding: 0 8px; font-size: 11px; color: var(--muted); }
 
-#canvas-wrap { grid-column: 1; grid-row: 2; position: relative; min-width: 0; background: #080605; overflow: hidden; }
-#site-frame { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+#canvas-wrap {
+  grid-column: 1;
+  grid-row: 2;
+  position: relative;
+  min-width: 0;
+  background: #080605;
+  overflow: auto;
+  display: grid;
+  place-items: start center;
+  padding: 16px calc(var(--right-panel-width) + 16px) 40px calc(var(--left-panel-width) + 16px);
+}
+#site-frame {
+  width: var(--canvas-width);
+  height: var(--canvas-height);
+  min-height: 100%;
+  border: 0;
+  display: block;
+  background: #fff;
+  transform: scale(var(--canvas-scale));
+  transform-origin: top center;
+  transition: width 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+body.left-collapsed #canvas-wrap { padding-left: 16px; }
+body.right-collapsed #canvas-wrap,
+body.clean-canvas:not(.has-selection) #canvas-wrap { padding-right: 16px; }
+body.clean-canvas #canvas-wrap { padding-left: 16px; }
+body.device-mobile #canvas-wrap {
+  padding-top: 18px;
+  padding-bottom: 48px;
+}
+body.device-mobile #site-frame {
+  --canvas-width: 390px;
+  --canvas-height: 844px;
+  min-height: 844px;
+  border-radius: 22px;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.48);
+}
+body.device-mobile #right-panel,
+body.device-mobile #left-panel {
+  box-shadow: none;
+}
 
 .panel-gutter {
   position: fixed;
-  top: 42px;
+  top: 44px;
   bottom: 0;
   width: var(--gutter-width);
   z-index: 19;
