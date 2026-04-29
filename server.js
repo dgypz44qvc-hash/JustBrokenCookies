@@ -8,7 +8,6 @@ const cheerio = require('cheerio');
 const app = express();
 const ROOT = process.cwd();
 const PORT = process.env.PORT || 3000;
-const EDITOR_PASSWORD = process.env.EDITOR_PASSWORD || '';
 
 const allowedWritableFiles = new Set(['index.html', 'css/editor-overrides.css']);
 
@@ -82,18 +81,10 @@ function ensureEditorIds(html) {
   assign('section.hero', 'hero-section');
   assign('.hero .tag', 'hero-storytelling-tag');
   assign('.hero-content', 'hero-content');
-  assign('.hero-mega:not(.hero-underlay)', 'hero-title-group');
-  assign('.hero-mega:not(.hero-underlay) .l1', 'hero-title-line-1');
-  assign('.hero-mega:not(.hero-underlay) .l2', 'hero-title-line-2');
-  assign('.hero-mega:not(.hero-underlay) .l3', 'hero-title-line-3');
-  $('.hero-mega.hero-underlay').each((i, el) => {
-    const groupId = `hero-underlay-${i+1}`;
-    $(el).attr('data-editor-id', groupId);
-    ['l1', 'l2', 'l3'].forEach(cls => {
-      const child = $(el).find(`.${cls}`).first();
-      if (child.length) child.attr('data-editor-id', `${groupId}-${cls}`);
-    });
-  });
+  assign('.hero-mega', 'hero-title-group');
+  assign('.hero-mega .l1', 'hero-title-line-1');
+  assign('.hero-mega .l2', 'hero-title-line-2');
+  assign('.hero-mega .l3', 'hero-title-line-3');
   assign('.hero .jbc-custom img', 'hero-image-desktop');
   assign('.hero .jbc-custom.hero-photo-layer', 'hero-image-wrap');
   assign('.hero-bottom', 'hero-bottom');
@@ -152,32 +143,9 @@ const upload = multer({
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
-function editorAuth(req, res, next) {
-  if (!EDITOR_PASSWORD) return next();
-  const auth = req.get('authorization') || '';
-  const [scheme, encoded] = auth.split(' ');
-  if (scheme === 'Basic' && encoded) {
-    const [, password = ''] = Buffer.from(encoded, 'base64').toString('utf8').split(':');
-    if (password === EDITOR_PASSWORD) return next();
-  }
-  res.set('WWW-Authenticate', 'Basic realm="JBC Online Editor"');
-  res.status(401).send('Authentication required');
-}
-
-app.get('/editor', editorAuth, async (req, res) => {
+app.get('/editor', async (req, res) => {
   res.sendFile(path.join(__dirname, 'editor.html'));
 });
-
-app.get('/online-editor', editorAuth, async (req, res) => {
-  try {
-    const html = await fs.readFile(path.join(__dirname, 'editor.html'), 'utf8');
-    res.type('html').send(html
-      .replace('<title>JBC Local Editor</title>', '<title>JBC Online Editor</title>')
-      .replace('aria-label="JBC Local Editor">JBC</div>', 'aria-label="JBC Online Editor">JBC</div>'));
-  } catch (e) { res.status(500).send(e.message); }
-});
-
-app.use('/api', editorAuth);
 
 app.get('/api/site-html', async (req, res) => {
   try {

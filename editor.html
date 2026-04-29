@@ -13,7 +13,6 @@
       <nav class="tool-group" aria-label="Panels">
         <button id="btn-layers" type="button" class="icon-btn" title="Layers" aria-label="Layers">Layers</button>
         <button id="btn-properties" type="button" class="icon-btn" title="Properties" aria-label="Properties">Properties</button>
-        <button id="btn-clean-canvas" type="button" class="icon-btn" title="Clean Canvas" aria-label="Clean Canvas">Clean</button>
       </nav>
       <nav class="tool-group" aria-label="Editing">
         <button id="btn-preview" type="button" class="icon-btn" title="Preview" aria-label="Preview">Preview</button>
@@ -21,21 +20,11 @@
         <button id="btn-redo" type="button" class="icon-btn" title="Redo" aria-label="Redo">Redo</button>
       </nav>
       <nav class="tool-group primary-tools" aria-label="Create and media">
-        <button id="btn-add-menu" type="button" title="Open Add Library">+ Add</button>
         <button id="btn-add-image" type="button" title="Add Image">Add Image</button>
-        <button id="btn-add-text" type="button" title="Add Text">Add Text</button>
         <button id="btn-add-decoration" type="button" title="Add Decoration">Add Decoration</button>
         <button id="btn-add-rose-top" type="button" title="Add Rose Pattern">Add Rose</button>
         <button id="btn-add-vector" type="button" title="Add SVG or Vector">Add SVG</button>
         <button id="btn-replace-image" type="button" title="Replace Image">Replace Image</button>
-      </nav>
-      <nav class="tool-group selected-tools" aria-label="Selected element actions">
-        <button id="btn-text-edit" type="button" title="Edit Text">Text Edit</button>
-        <button id="btn-duplicate-top" type="button" title="Duplicate">Duplicate</button>
-        <button id="btn-hide-top" type="button" title="Hide or Show">Hide</button>
-        <button id="btn-forward-top" type="button" title="Bring Forward">Forward</button>
-        <button id="btn-backward-top" type="button" title="Send Backward">Backward</button>
-        <button id="btn-delete-top" type="button" title="Delete">Delete</button>
       </nav>
       <span id="status">Loading...</span>
       <button id="btn-save" type="button" class="save" title="Save">Save</button>
@@ -55,17 +44,9 @@
       <div id="image-list" class="image-list"></div>
     </aside>
 
-    <div id="left-gutter" class="panel-gutter panel-gutter-left" aria-hidden="true">
-      <button id="btn-collapse-left" type="button" title="Collapse layers">‹</button>
-    </div>
-
     <main id="canvas-wrap">
       <iframe id="site-frame" title="Website canvas"></iframe>
     </main>
-
-    <div id="right-gutter" class="panel-gutter panel-gutter-right" aria-hidden="true">
-      <button id="btn-collapse-right" type="button" title="Collapse properties">›</button>
-    </div>
 
     <aside id="right-panel" class="panel panel-right" aria-label="Properties">
       <div class="panel-head">
@@ -100,16 +81,10 @@
           </select>
         </label>
         <div class="inline-actions">
-          <button id="btn-add-text-panel" type="button">Text</button>
-          <button id="btn-add-box-panel" type="button">Box</button>
           <button id="btn-add-image-panel" type="button">Add Image</button>
           <button id="btn-add-decoration-panel" type="button">Add Decoration</button>
           <button id="btn-add-rose" type="button">Rose Pattern</button>
           <button id="btn-add-vector-panel" type="button">SVG / Vector</button>
-        </div>
-        <div class="inline-actions">
-          <button id="btn-add-block-panel" type="button">Content Block</button>
-          <button id="btn-add-section-panel" type="button">Section</button>
         </div>
         <div class="inline-actions">
           <button id="btn-upload-asset" type="button">Upload Asset</button>
@@ -149,18 +124,7 @@
           <label>Font size <input id="prop-font-size" type="text"></label>
           <label>Spacing <input id="prop-letter" type="text"></label>
         </div>
-        <label>Font family <input id="prop-font-family" type="text" list="font-library"></label>
-        <datalist id="font-library">
-          <option value="Inter, Arial, sans-serif"></option>
-          <option value="Georgia, serif"></option>
-          <option value="'Playfair Display', Georgia, serif"></option>
-          <option value="'Cormorant Garamond', Georgia, serif"></option>
-          <option value="'DM Sans', Inter, Arial, sans-serif"></option>
-          <option value="'Space Grotesk', Inter, Arial, sans-serif"></option>
-          <option value="'Montserrat', Inter, Arial, sans-serif"></option>
-          <option value="'Libre Baskerville', Georgia, serif"></option>
-          <option value="'Courier New', monospace"></option>
-        </datalist>
+        <label>Font family <input id="prop-font-family" type="text"></label>
         <label>Blend mode
           <select id="prop-blend">
             <option value="">Default</option>
@@ -197,16 +161,12 @@
     <div id="floating-toolbar" aria-label="Selection tools">
       <span id="float-label"></span>
       <button id="float-replace" type="button">Replace</button>
-      <button id="float-edit-text" type="button">Edit Text</button>
       <button id="float-duplicate" type="button">Duplicate</button>
       <button id="float-hide" type="button">Hide</button>
       <button id="float-forward" type="button">Forward</button>
       <button id="float-backward" type="button">Backward</button>
       <button id="float-delete" type="button">Delete</button>
     </div>
-
-    <div id="context-menu" aria-label="Editor context menu"></div>
-    <div id="add-library" aria-label="Add library"></div>
   </div>
 
   <script src="/js/local-editor.js"></script>

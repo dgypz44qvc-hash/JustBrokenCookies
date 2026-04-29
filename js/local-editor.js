@@ -6,7 +6,6 @@
   const floatingToolbar = document.getElementById('floating-toolbar');
   const floatLabel = document.getElementById('float-label');
   const contextMenu = document.getElementById('context-menu');
-  const addLibrary = document.getElementById('add-library');
   const prop = id => document.getElementById(id);
   function on(id, event, handler) {
     const el = prop(id);
@@ -57,7 +56,9 @@
 
   const layerGroups = [
     { title: 'Hero', items: [
+      ['Hero', '[data-editor-id="hero-section"], section.hero'],
       ['Storytelling Tag', '[data-editor-id="hero-storytelling-tag"], .hero .tag'],
+      ['Hero Content', '[data-editor-id="hero-content"], .hero-content'],
       ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega:not(.hero-underlay) .l1'],
       ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega:not(.hero-underlay) .l2'],
       ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega:not(.hero-underlay) .l3'],
@@ -137,47 +138,6 @@
 
   const allowedAssetExt = /\.(png|jpe?g|webp|gif|svg)$/i;
 
-  const fontLibrary = [
-    ['Clean Sans', 'Inter, Arial, sans-serif'],
-    ['Editorial Serif', 'Georgia, serif'],
-    ['Luxury Display', "'Playfair Display', Georgia, serif"],
-    ['Soft Serif', "'Cormorant Garamond', Georgia, serif"],
-    ['Modern Sans', "'DM Sans', Inter, Arial, sans-serif"],
-    ['Geometric', "'Space Grotesk', Inter, Arial, sans-serif"],
-    ['Bold Brand', "'Montserrat', Inter, Arial, sans-serif"],
-    ['Bookish', "'Libre Baskerville', Georgia, serif"],
-    ['Mono Label', "'Courier New', monospace"]
-  ];
-
-  const fontImports = {
-    "'Playfair Display', Georgia, serif": 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap',
-    "'Cormorant Garamond', Georgia, serif": 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap',
-    "'DM Sans', Inter, Arial, sans-serif": 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap',
-    "'Space Grotesk', Inter, Arial, sans-serif": 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap',
-    "'Montserrat', Inter, Arial, sans-serif": 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap',
-    "'Libre Baskerville', Georgia, serif": 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap'
-  };
-
-  const addLibraryGroups = [
-    { title: 'Text', items: [
-      ['Headline', () => insertTextBox('A bold new headline', { fontSize: '54px', fontFamily: "'Playfair Display', Georgia, serif", width: '520px' })],
-      ['Paragraph', () => insertTextBox('Write your new copy here.', { fontSize: '18px', width: '420px' })],
-      ['Button', () => insertTextBox('New Button', { tag: 'a', className: 'btn editor-added-button', fontSize: '15px', padding: '14px 20px', backgroundColor: '#e8891d', color: '#140f0d', borderRadius: '999px', width: '180px' })]
-    ]},
-    { title: 'Objects', items: [
-      ['Image', () => beginAssetAdd('image')],
-      ['Decoration', () => beginAssetAdd('decoration')],
-      ['Rose Pattern', () => beginAssetAdd('rose')],
-      ['SVG / Vector', () => beginAssetAdd('vector')]
-    ]},
-    { title: 'Layout', items: [
-      ['Box', () => insertBox()],
-      ['Content Block', () => insertBlock()],
-      ['Section Band', () => insertSection()]
-    ]},
-    { title: 'Fonts', items: fontLibrary.map(([name, family]) => [name, () => applyFontFamily(family)]) }
-  ];
-
   function setStatus(msg) { if (status) status.textContent = msg; }
   function uid(prefix) { return (prefix || 'el') + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6); }
   function cssEscape(value) { return window.CSS && CSS.escape ? CSS.escape(value) : String(value).replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
@@ -219,9 +179,9 @@
       const found = target.closest(sel);
       if (found) return found;
     }
-    const fallback = target.closest('[data-editor-id], .footer-grid, .footer-brand, .footer-col, .footer-bottom, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer');
+    const fallback = target.closest('[data-editor-id], .footer-grid, .footer-brand, .footer-col, .footer-bottom, section.hero, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer');
     if (!fallback) return null;
-    if (fallback.matches('.hero-content, .hero-mega')) return target.closest('.hero-mega:not(.hero-underlay) .l1, .hero-mega:not(.hero-underlay) .l2, .hero-mega:not(.hero-underlay) .l3, .hero .tag, .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img, .hero-corner-rose') || null;
+    if (fallback.matches('section.hero, .hero-content, .hero-mega')) return target.closest('.hero-mega:not(.hero-underlay) .l1, .hero-mega:not(.hero-underlay) .l2, .hero-mega:not(.hero-underlay) .l3, .hero .tag, .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img, .hero-corner-rose') || fallback;
     return fallback;
   }
 
@@ -246,7 +206,6 @@
   function onFrameLoad() {
     doc = frame.contentDocument;
     doc.body.classList.remove('jbc-editor-preview', 'jbc-is-dragging', 'jbc-text-edit-mode');
-    normalizeEditorIds();
     wireCanvas();
     buildLayers();
     loadImages();
@@ -258,7 +217,7 @@
     const runtimeCss = [
       '<style id="jbc-editor-runtime-css">',
       '[data-jbc-selected="true"]{outline:2px solid rgba(232,137,29,.95)!important;outline-offset:3px!important;}',
-      '.jbc-editor-hover{outline:1px dashed rgba(232,137,29,.72)!important;outline-offset:3px!important;}',
+      '.jbc-editor-hover{outline:1px solid rgba(232,137,29,.5)!important;outline-offset:3px!important;}',
       '.jbc-editor-box{position:absolute;z-index:2147483646;pointer-events:none;border:1px solid rgba(232,137,29,.65);box-shadow:0 0 0 1px rgba(20,16,14,.45);}',
       '.jbc-editor-handle{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#e8891d;border:2px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.28);pointer-events:auto;touch-action:none;}',
       '.jbc-editor-handle.nw{left:0;top:0;cursor:nwse-resize}.jbc-editor-handle.n{left:50%;top:0;cursor:ns-resize}.jbc-editor-handle.ne{left:100%;top:0;cursor:nesw-resize}.jbc-editor-handle.e{left:100%;top:50%;cursor:ew-resize}.jbc-editor-handle.se{left:100%;top:100%;cursor:nwse-resize}.jbc-editor-handle.s{left:50%;top:100%;cursor:ns-resize}.jbc-editor-handle.sw{left:0;top:100%;cursor:nesw-resize}.jbc-editor-handle.w{left:0;top:50%;cursor:ew-resize}',
@@ -279,7 +238,6 @@
   }
 
   function serializeHtml() {
-    normalizeEditorIds();
     const clone = doc.documentElement.cloneNode(true);
     clone.querySelector('#jbc-editor-runtime-css')?.remove();
     clone.querySelector('#jbc-editor-overrides-live')?.remove();
@@ -306,31 +264,6 @@
 
   function markDirty(msg) { dirty = true; setStatus(msg || 'Unsaved changes'); updateFloatingToolbar(); }
 
-  function normalizeEditorIds() {
-    if (!doc) return;
-    const visibleHero = doc.querySelector('.hero-mega:not(.hero-underlay)');
-    if (visibleHero) {
-      assignUniqueEditorId(visibleHero, 'hero-title-group');
-      assignUniqueEditorId(visibleHero.querySelector('.l1'), 'hero-title-line-1');
-      assignUniqueEditorId(visibleHero.querySelector('.l2'), 'hero-title-line-2');
-      assignUniqueEditorId(visibleHero.querySelector('.l3'), 'hero-title-line-3');
-    }
-    doc.querySelectorAll('.hero-mega.hero-underlay').forEach((group, groupIndex) => {
-      assignUniqueEditorId(group, 'hero-underlay-' + (groupIndex + 1));
-      ['l1', 'l2', 'l3'].forEach(cls => {
-        const el = group.querySelector('.' + cls);
-        if (el) assignUniqueEditorId(el, 'hero-underlay-' + (groupIndex + 1) + '-' + cls);
-      });
-    });
-  }
-
-  function assignUniqueEditorId(el, id) {
-    if (!el) return;
-    const existing = doc.querySelector('[data-editor-id="' + cssEscape(id) + '"]');
-    if (existing && existing !== el) existing.dataset.editorId = uid('legacy');
-    el.dataset.editorId = id;
-  }
-
   function wireShell() {
     applyPanelLayout();
     on('btn-layers', 'click', () => setLeftCollapsed(!document.body.classList.contains('left-collapsed')));
@@ -346,14 +279,8 @@
     on('btn-undo', 'click', undo);
     on('btn-redo', 'click', redo);
     on('btn-save', 'click', saveAll);
-    on('btn-add-menu', 'click', e => toggleAddLibrary(e.currentTarget));
     on('btn-add-image', 'click', () => beginAssetAdd('image'));
     on('btn-add-image-panel', 'click', () => beginAssetAdd('image'));
-    on('btn-add-text', 'click', () => insertTextBox());
-    on('btn-add-text-panel', 'click', () => insertTextBox());
-    on('btn-add-box-panel', 'click', insertBox);
-    on('btn-add-block-panel', 'click', insertBlock);
-    on('btn-add-section-panel', 'click', insertSection);
     on('btn-add-decoration', 'click', () => beginAssetAdd('decoration'));
     on('btn-add-decoration-panel', 'click', () => beginAssetAdd('decoration'));
     on('btn-add-rose', 'click', () => beginAssetAdd('rose'));
@@ -387,11 +314,7 @@
     on('float-backward', 'click', sendBackward);
     on('float-delete', 'click', deleteSelected);
     on('upload-image', 'change', uploadReplacement);
-    document.addEventListener('pointerdown', e => {
-      if (!contextMenu?.contains(e.target)) hideContextMenu();
-      if (!addLibrary?.contains(e.target) && e.target.id !== 'btn-add-menu') hideAddLibrary();
-    });
-    window.addEventListener('keydown', onKeyDown, true);
+    document.addEventListener('pointerdown', e => { if (!contextMenu?.contains(e.target)) hideContextMenu(); });
     window.addEventListener('pointermove', onPanelResizeMove);
     window.addEventListener('pointerup', endPanelResize);
     window.addEventListener('resize', updateSelectionUI);
@@ -481,15 +404,7 @@
   function getRotate(el) { const m = String(el?.style.transform || '').match(/rotate\(([^)]+)\)/); return m ? m[1] : ''; }
 
   function ensureEditablePosition(el) {
-    if (shouldFloatFreeInHero(el)) {
-      floatFreeInHero(el);
-      return;
-    }
     const cs = frame.contentWindow.getComputedStyle(el);
-    if (cs.position === 'absolute' || cs.position === 'fixed') {
-      ensureLeftTopPosition(el, cs);
-      return;
-    }
     if (el.classList.contains('editor-decoration')) {
       ensurePositionedParent(el.parentElement);
       if (cs.position === 'static') el.style.position = 'absolute';
@@ -497,53 +412,6 @@
     }
     if (cs.position === 'static') el.style.position = 'relative';
     if (isTextElement(el) && cs.display === 'inline') el.style.display = 'inline-block';
-  }
-
-  function ensureLeftTopPosition(el, cs = frame.contentWindow.getComputedStyle(el)) {
-    const parent = el.offsetParent || el.parentElement;
-    if (parent && parent !== doc.body) ensurePositionedParent(parent);
-    const rect = el.getBoundingClientRect();
-    const parentRect = parent && parent !== doc.body ? parent.getBoundingClientRect() : { left: 0, top: 0 };
-    if (!el.style.left || cs.right !== 'auto') setStyleValue(el, 'left', Math.round(rect.left - parentRect.left + (parent?.scrollLeft || 0)) + 'px');
-    if (!el.style.top || cs.bottom !== 'auto') setStyleValue(el, 'top', Math.round(rect.top - parentRect.top + (parent?.scrollTop || 0)) + 'px');
-    if (cs.right !== 'auto') setStyleValue(el, 'right', 'auto');
-    if (cs.bottom !== 'auto') setStyleValue(el, 'bottom', 'auto');
-  }
-
-  function shouldFloatFreeInHero(el) {
-    if (!el?.closest?.('section.hero')) return false;
-    if (el.matches('section.hero, .hero-content, .hero-mega, .hero-oil-wrap')) return false;
-    return el.matches('.hero .tag, .hero-mega:not(.hero-underlay) .l1, .hero-mega:not(.hero-underlay) .l2, .hero-mega:not(.hero-underlay) .l3, .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img, .hero-corner-rose, .editor-decoration');
-  }
-
-  function floatFreeInHero(el) {
-    const hero = el.closest('section.hero');
-    if (!hero) return;
-    ensurePositionedParent(hero);
-    const cs = frame.contentWindow.getComputedStyle(el);
-    const rect = el.getBoundingClientRect();
-    const heroRect = hero.getBoundingClientRect();
-    const left = Math.round(rect.left - heroRect.left + hero.scrollLeft);
-    const top = Math.round(rect.top - heroRect.top + hero.scrollTop);
-    if (el.parentElement !== hero) hero.appendChild(el);
-    setStyleValue(el, 'position', 'absolute');
-    setStyleValue(el, 'left', left + 'px');
-    setStyleValue(el, 'top', top + 'px');
-    setStyleValue(el, 'right', 'auto');
-    setStyleValue(el, 'bottom', 'auto');
-    el.style.display = el.tagName === 'IMG' ? 'block' : 'inline-block';
-    el.style.width = Math.max(1, Math.round(rect.width)) + 'px';
-    el.style.height = Math.max(1, Math.round(rect.height)) + 'px';
-    if (isTextElement(el)) {
-      el.style.color = cs.color;
-      el.style.fontSize = cs.fontSize;
-      el.style.fontFamily = cs.fontFamily;
-      el.style.fontWeight = cs.fontWeight;
-      el.style.lineHeight = cs.lineHeight;
-      el.style.letterSpacing = cs.letterSpacing;
-      el.style.textTransform = cs.textTransform;
-      el.style.whiteSpace = 'nowrap';
-    }
   }
 
   function ensurePositionedParent(parent) {
@@ -595,8 +463,8 @@
     const dy = dragState.next.y - dragState.startY;
     if (Math.abs(dx) > 2 || Math.abs(dy) > 2) dragState.didMove = true;
     if (dragState.mode === 'move') {
-      setStyleValue(selected, 'left', Math.round(dragState.left + dx) + 'px');
-      setStyleValue(selected, 'top', Math.round(dragState.top + dy) + 'px');
+      selected.style.left = Math.round(dragState.left + dx) + 'px';
+      selected.style.top = Math.round(dragState.top + dy) + 'px';
     } else if (dragState.mode === 'rotate') {
       const a0 = Math.atan2(dragState.startY - dragState.centerY, dragState.startX - dragState.centerX);
       const a1 = Math.atan2(dragState.next.y - dragState.centerY, dragState.next.x - dragState.centerX);
@@ -615,41 +483,10 @@
     if (mode.includes('s')) height += dy;
     if (mode.includes('w')) { width -= dx; left += dx; }
     if (mode.includes('n')) { height -= dy; top += dy; }
-    if (shouldScaleProportionally(selected)) {
-      const ratio = dragState.width / Math.max(1, dragState.height);
-      const anchorX = mode.includes('w') ? dragState.left + dragState.width : dragState.left;
-      const anchorY = mode.includes('n') ? dragState.top + dragState.height : dragState.top;
-      const drivenByWidth = Math.abs(width - dragState.width) >= Math.abs(height - dragState.height);
-      if (drivenByWidth) height = width / ratio;
-      else width = height * ratio;
-      width = Math.max(24, width);
-      height = Math.max(24, height);
-      if (mode.includes('w')) left = anchorX - width;
-      if (mode.includes('n')) top = anchorY - height;
-      syncScaledMedia(selected);
-    }
-    setStyleValue(selected, 'width', Math.max(24, Math.round(width)) + 'px');
-    setStyleValue(selected, 'height', Math.max(24, Math.round(height)) + 'px');
-    setStyleValue(selected, 'left', Math.round(left) + 'px');
-    setStyleValue(selected, 'top', Math.round(top) + 'px');
-  }
-
-  function shouldScaleProportionally(el) {
-    if (!el || isResizableContainer(el)) return false;
-    return el.classList.contains('editor-decoration') || el.classList.contains('hero-corner-rose') || el.matches('img, picture') || !!selectedImage(el);
-  }
-
-  function isResizableContainer(el) {
-    return !!el?.matches?.('section, footer, .hero-content, .hero-mega, .hero-oil-wrap, .manifesto-inner, .portfolio-grid, .footer-grid, .footer-col, .service-card, .portfolio-item, .testi-brutal, .cta-section');
-  }
-
-  function syncScaledMedia(el) {
-    const img = selectedImage(el);
-    if (!img) return;
-    img.style.setProperty('display', 'block', 'important');
-    img.style.setProperty('width', '100%', 'important');
-    img.style.setProperty('height', '100%', 'important');
-    img.style.setProperty('object-fit', 'contain', 'important');
+    selected.style.width = Math.max(24, Math.round(width)) + 'px';
+    selected.style.height = Math.max(24, Math.round(height)) + 'px';
+    selected.style.left = Math.round(left) + 'px';
+    selected.style.top = Math.round(top) + 'px';
   }
 
   function endPointerGesture(e) {
@@ -721,11 +558,6 @@
     const live = doc.getElementById('jbc-editor-overrides-live');
     if (live) live.textContent = editorCss;
     if (rebuildLayers) buildLayers();
-  }
-
-  function setStyleValue(el, name, value) {
-    if (!el) return;
-    el.style.setProperty(name, value, 'important');
   }
 
   function buildLayers() {
@@ -984,7 +816,6 @@
     div.dataset.assetParent = sectionLabel(parent);
     div.dataset.editorId = nextAssetId(config.prefix);
     div.innerHTML = '<img src="' + config.src + '" alt="">';
-    syncScaledMedia(div);
     const parentRect = parent.getBoundingClientRect();
     const left = point ? point.x - parentRect.left + parent.scrollLeft : 48;
     const top = point ? point.y - parentRect.top + parent.scrollTop : 48;
@@ -994,7 +825,7 @@
     div.style.width = config.width + 'px';
     div.style.height = config.height + 'px';
     div.style.opacity = '0.9';
-    div.style.zIndex = String(nextZIndexIn(parent));
+    div.style.zIndex = '5';
     div.style.mixBlendMode = config.blend;
     parent.insertBefore(div, parent.firstChild);
     selectElement(div);
@@ -1058,51 +889,21 @@
   function bringForward() {
     if (!selected) return;
     pushHistory();
-    ensureEditablePosition(selected);
-    selected.style.zIndex = String(nextZIndexIn(layerScopeFor(selected), selected));
-    selected.parentElement?.appendChild(selected);
+    const z = parseInt(selected.style.zIndex || frame.contentWindow.getComputedStyle(selected).zIndex || '0', 10) || 0;
+    selected.style.zIndex = String(z + 1);
     saveStyleFor(selected, true);
     hydratePanel();
-    updateSelectionUI();
     markDirty('Brought forward');
   }
 
   function sendBackward() {
     if (!selected) return;
     pushHistory();
-    ensureEditablePosition(selected);
-    selected.style.zIndex = String(previousZIndexIn(layerScopeFor(selected), selected));
-    if (selected.parentElement?.firstElementChild !== selected) selected.parentElement?.insertBefore(selected, selected.parentElement.firstElementChild);
+    const z = parseInt(selected.style.zIndex || frame.contentWindow.getComputedStyle(selected).zIndex || '0', 10) || 0;
+    selected.style.zIndex = String(Math.max(0, z - 1));
     saveStyleFor(selected, true);
     hydratePanel();
-    updateSelectionUI();
     markDirty('Sent backward');
-  }
-
-  function layerScopeFor(el) {
-    return el?.closest?.('section, footer') || el?.parentElement || doc.body;
-  }
-
-  function zIndexOf(el) {
-    const z = frame.contentWindow.getComputedStyle(el).zIndex;
-    return z === 'auto' ? 0 : parseInt(z, 10) || 0;
-  }
-
-  function layerZValues(scope, exclude) {
-    const root = scope || doc.body;
-    return Array.from(root.querySelectorAll('*'))
-      .filter(el => el !== exclude && !el.matches('.jbc-editor-box, .jbc-editor-handle'))
-      .map(zIndexOf);
-  }
-
-  function nextZIndexIn(scope, exclude) {
-    const values = layerZValues(scope, exclude);
-    return Math.max(5, ...values) + 1;
-  }
-
-  function previousZIndexIn(scope, exclude) {
-    const values = layerZValues(scope, exclude).filter(z => z >= 0);
-    return values.length ? Math.max(0, Math.min(...values) - 1) : 0;
   }
 
   function onCanvasContextMenu(e) {
@@ -1144,14 +945,9 @@
     addItem('Send Backward', sendBackward);
     addItem('Reset Style', resetSelected);
     separator();
-    addItem('Add Text Here', () => insertTextBox(undefined, {}, target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
-    addItem('Add Box Here', () => insertBox(target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
-    addItem('Add Block Here', () => insertBlock(target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
-    addItem('Add Section After', () => insertSection(target.closest('section, footer') || doc.body));
     addItem('Add Decoration Here', () => insertAsset(assetConfig('decoration'), target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
     addItem('Add Rose Here', () => insertAsset(assetConfig('rose'), target.closest('section, footer') || doc.body, localPointFor(target, frameX, frameY)));
     addItem('Copy Style', () => { copiedStyle = selected ? selected.getAttribute('style') || '' : ''; });
-    addItem('Paste Style', () => { if (copiedStyle && selected) { pushHistory(); selected.setAttribute('style', copiedStyle); saveStyleFor(selected, true); hydratePanel(); markDirty('Style pasted'); } }, !!copiedStyle);
     addItem('Select Parent', () => { const parent = target.parentElement?.closest('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content'); if (parent) selectElement(parent); }, !!target.parentElement);
     const maxX = window.innerWidth - 210;
     const maxY = window.innerHeight - 330;
@@ -1160,207 +956,11 @@
   }
 
   function hideContextMenu() { contextMenu?.classList.remove('visible'); }
-  function hideAddLibrary() { addLibrary?.classList.remove('visible'); }
-
-  function toggleAddLibrary(anchor) {
-    if (!addLibrary) return;
-    if (addLibrary.classList.contains('visible')) { hideAddLibrary(); return; }
-    renderAddLibrary();
-    const rect = anchor?.getBoundingClientRect?.() || { left: 8, bottom: 42 };
-    addLibrary.style.transform = 'translate(' + Math.round(Math.max(8, rect.left)) + 'px,' + Math.round(rect.bottom + 6) + 'px)';
-    addLibrary.classList.add('visible');
-  }
-
-  function renderAddLibrary() {
-    if (!addLibrary) return;
-    addLibrary.innerHTML = '';
-    const head = document.createElement('div');
-    head.className = 'library-head';
-    const title = document.createElement('strong');
-    title.textContent = 'Add Library';
-    const close = document.createElement('button');
-    close.type = 'button';
-    close.textContent = 'Close';
-    close.onclick = hideAddLibrary;
-    head.append(title, close);
-    addLibrary.appendChild(head);
-    const note = document.createElement('div');
-    note.className = 'library-note';
-    note.textContent = 'Pick something, then drag it into place. Right-click the canvas for add-here options.';
-    addLibrary.appendChild(note);
-    addLibraryGroups.forEach(group => {
-      const section = document.createElement('section');
-      section.className = 'library-section';
-      const heading = document.createElement('h3');
-      heading.textContent = group.title;
-      const grid = document.createElement('div');
-      grid.className = 'library-grid';
-      group.items.forEach(([label, action]) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = label;
-        button.onclick = () => { hideAddLibrary(); action(); };
-        grid.appendChild(button);
-      });
-      section.append(heading, grid);
-      addLibrary.appendChild(section);
-    });
-  }
 
   function localPointFor(target, frameX, frameY) {
     const parent = target.closest('section, footer') || doc.body;
     const rect = parent.getBoundingClientRect();
     return { x: frameX - rect.left + parent.scrollLeft, y: frameY - rect.top + parent.scrollTop };
-  }
-
-  function defaultInsertionParent(parent) {
-    return parent || selected?.closest?.('section, footer') || doc.querySelector('section.hero') || doc.body;
-  }
-
-  function defaultInsertionPoint(parent, point) {
-    if (point) return point;
-    return { x: 64, y: 64 };
-  }
-
-  function insertTextBox(text = 'New text', options = {}, parent, point) {
-    if (!doc) return;
-    pushHistory();
-    parent = defaultInsertionParent(parent);
-    ensurePositionedParent(parent);
-    const el = doc.createElement(options.tag || 'div');
-    el.className = options.className || 'editor-added-text';
-    el.dataset.assetType = 'text';
-    el.dataset.editorId = nextAssetId('text');
-    if (el.tagName === 'A') el.setAttribute('href', '#');
-    el.textContent = text;
-    const p = defaultInsertionPoint(parent, point);
-    Object.assign(el.style, {
-      position: 'absolute',
-      left: Math.max(0, Math.round(p.x)) + 'px',
-      top: Math.max(0, Math.round(p.y)) + 'px',
-      width: options.width || '320px',
-      minHeight: options.minHeight || '',
-      color: options.color || '#fff7ef',
-      backgroundColor: options.backgroundColor || '',
-      fontSize: options.fontSize || '22px',
-      fontFamily: options.fontFamily || 'Inter, Arial, sans-serif',
-      lineHeight: options.lineHeight || '1.1',
-      padding: options.padding || '0',
-      borderRadius: options.borderRadius || '0',
-      zIndex: String(nextZIndexIn(parent))
-    });
-    ensureFontImport(el.style.fontFamily);
-    parent.appendChild(el);
-    selectElement(el);
-    saveStyleFor(el, true);
-    markDirty('Text added');
-  }
-
-  function insertBox(parent, point) {
-    if (!doc) return;
-    pushHistory();
-    parent = defaultInsertionParent(parent);
-    ensurePositionedParent(parent);
-    const box = doc.createElement('div');
-    box.className = 'editor-decoration editor-box';
-    box.dataset.assetType = 'box';
-    box.dataset.editorId = nextAssetId('box');
-    const p = defaultInsertionPoint(parent, point);
-    Object.assign(box.style, {
-      position: 'absolute',
-      left: Math.max(0, Math.round(p.x)) + 'px',
-      top: Math.max(0, Math.round(p.y)) + 'px',
-      width: '280px',
-      height: '170px',
-      backgroundColor: 'rgba(232, 137, 29, 0.16)',
-      borderRadius: '18px',
-      zIndex: String(nextZIndexIn(parent))
-    });
-    parent.appendChild(box);
-    selectElement(box);
-    saveStyleFor(box, true);
-    markDirty('Box added');
-  }
-
-  function insertBlock(parent, point) {
-    if (!doc) return;
-    pushHistory();
-    parent = defaultInsertionParent(parent);
-    ensurePositionedParent(parent);
-    const block = doc.createElement('div');
-    block.className = 'editor-decoration editor-block';
-    block.dataset.assetType = 'block';
-    block.dataset.editorId = nextAssetId('block');
-    const heading = doc.createElement('h3');
-    heading.textContent = 'New block';
-    const copy = doc.createElement('p');
-    copy.textContent = 'Add a short description here.';
-    block.append(heading, copy);
-    const p = defaultInsertionPoint(parent, point);
-    Object.assign(block.style, {
-      position: 'absolute',
-      left: Math.max(0, Math.round(p.x)) + 'px',
-      top: Math.max(0, Math.round(p.y)) + 'px',
-      width: '340px',
-      height: '190px',
-      color: '#fff7ef',
-      backgroundColor: 'rgba(20, 16, 14, 0.82)',
-      padding: '24px',
-      borderRadius: '16px',
-      zIndex: String(nextZIndexIn(parent))
-    });
-    parent.appendChild(block);
-    selectorFor(heading);
-    selectorFor(copy);
-    selectElement(block);
-    saveStyleFor(block, true);
-    markDirty('Block added');
-  }
-
-  function insertSection(afterEl) {
-    if (!doc) return;
-    pushHistory();
-    const section = doc.createElement('section');
-    section.className = 'editor-added-section';
-    section.dataset.editorId = nextAssetId('section');
-    const heading = doc.createElement('h2');
-    heading.textContent = 'New section';
-    const copy = doc.createElement('p');
-    copy.textContent = 'Start writing this part of the page.';
-    section.append(heading, copy);
-    Object.assign(section.style, {
-      position: 'relative',
-      minHeight: '360px',
-      padding: '90px 8vw',
-      color: '#fff7ef',
-      backgroundColor: '#211916'
-    });
-    const target = afterEl?.matches?.('section, footer') ? afterEl : selected?.closest?.('section, footer');
-    if (target?.parentElement) target.parentElement.insertBefore(section, target.nextSibling);
-    else doc.body.appendChild(section);
-    selectorFor(heading);
-    selectorFor(copy);
-    selectElement(section);
-    saveStyleFor(section, true);
-    markDirty('Section added');
-  }
-
-  function applyFontFamily(family) {
-    if (!selected) { setValue('prop-font-family', family); return; }
-    pushHistory();
-    ensureFontImport(family);
-    selected.style.fontFamily = family;
-    saveStyleFor(selected, true);
-    hydratePanel();
-    markDirty('Font changed');
-  }
-
-  function ensureFontImport(family) {
-    const url = fontImports[family];
-    if (!url || editorCss.includes(url)) return;
-    editorCss = '@import url("' + url + '");\n' + editorCss.trim() + '\n';
-    const live = doc?.getElementById('jbc-editor-overrides-live');
-    if (live) live.textContent = editorCss;
   }
 
   function beginTextEdit(el, sourceEvent) {
@@ -1416,11 +1016,11 @@
   }
 
   function onKeyDown(e) {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
     if (textEditingEl) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); textEditingEl.blur(); }
       return;
     }
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
     if (!selected || selected.isContentEditable || !['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
     e.preventDefault();
     pushHistory();
@@ -1547,10 +1147,7 @@
 
   async function saveAll() {
     try {
-      const activeEditable = doc?.activeElement?.isContentEditable ? doc.activeElement : null;
-      if (activeEditable && activeEditable !== textEditingEl) textEditingEl = activeEditable;
       if (textEditingEl) finishTextEdit();
-      normalizeEditorIds();
       const html = serializeHtml();
       await api('/api/save-all', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ html, css: editorCss }) });
       dirty = false;
