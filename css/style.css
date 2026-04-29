@@ -7214,6 +7214,166 @@ top: auto !important;
     bottom: 24px !important;
   }
 }
+
+/* =========================================================
+   JBC HERO CLEAN REBUILD BASE - FINAL OVERRIDE
+   Plain taupe stage. Keep only title reveal + StorytellinG.
+   Existing saved portrait/rose/background objects are hidden;
+   future editor-added objects use new IDs and remain available.
+   ========================================================= */
+.hero,
+.hero.jbc-floral-hero {
+  background: #2A221E !important;
+  background-image: none !important;
+}
+
+.hero::before,
+.hero::after,
+.hero-rose-video,
+.hero-corner-rose,
+.hero [data-editor-id="hero-image-wrap"],
+.hero [data-editor-id="rose-1777417437621-oy3d2"],
+.hero [data-editor-id="rose-1777417457688-b9dcu"],
+.hero [data-editor-id="rose-1777417460898-jbc36"],
+.hero [data-editor-id="rose-1777417462368-smmlm"],
+.hero .jbc-custom:not(.hero-photo-layer) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.hero .tag {
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   JBC HERO CLEAN REBUILD BASE - FINAL OVERRIDE
+   Plain taupe stage. Keep only title reveal + StorytellinG.
+   Existing saved portrait/rose/background objects are hidden;
+   future editor-added objects use new IDs and remain available.
+   ========================================================= */
+.hero,
+.hero.jbc-floral-hero {
+  background: #2A221E !important;
+  background-image: none !important;
+}
+
+.hero::before,
+.hero::after,
+.hero-rose-video,
+.hero-corner-rose,
+.hero [data-editor-id="hero-image-wrap"],
+.hero [data-editor-id="rose-1777417437621-oy3d2"],
+.hero [data-editor-id="rose-1777417457688-b9dcu"],
+.hero [data-editor-id="rose-1777417460898-jbc36"],
+.hero [data-editor-id="rose-1777417462368-smmlm"],
+.hero .jbc-custom:not(.hero-photo-layer) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.hero .tag {
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   JBC HERO CLEAN REBUILD BASE - FINAL OVERRIDE
+   Plain taupe stage. Keep only title reveal + StorytellinG.
+   Existing saved portrait/rose/background objects are hidden;
+   future editor-added objects use new IDs and remain available.
+   ========================================================= */
+.hero,
+.hero.jbc-floral-hero {
+  background: #2A221E !important;
+  background-image: none !important;
+}
+
+.hero::before,
+.hero::after,
+.hero-rose-video,
+.hero-corner-rose,
+.hero [data-editor-id="hero-image-wrap"],
+.hero [data-editor-id="rose-1777417437621-oy3d2"],
+.hero [data-editor-id="rose-1777417457688-b9dcu"],
+.hero [data-editor-id="rose-1777417460898-jbc36"],
+.hero [data-editor-id="rose-1777417462368-smmlm"],
+.hero .jbc-custom:not(.hero-photo-layer) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.hero .tag {
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   JBC HERO CLEAN REBUILD BASE
+   Keep only the title reveal and StorytellinG on plain taupe.
+   Existing portrait/rose background pieces are hidden so new
+   editor-added items can be rebuilt manually from a clean stage.
+   ========================================================= */
+.hero,
+.hero.jbc-floral-hero {
+  background: #2A221E !important;
+  background-image: none !important;
+}
+
+.hero::before,
+.hero::after,
+.hero-rose-video,
+.hero-corner-rose,
+.hero [data-editor-id="hero-image-wrap"],
+.hero [data-editor-id="rose-1777417437621-oy3d2"],
+.hero [data-editor-id="rose-1777417457688-b9dcu"],
+.hero [data-editor-id="rose-1777417460898-jbc36"],
+.hero [data-editor-id="rose-1777417462368-smmlm"],
+.hero .jbc-custom:not(.hero-photo-layer) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.hero .tag {
+  opacity: 1 !important;
+}
 /* =========================================================
    JBC PUSH UP JUST / BROKEN / COOKIES TITLE ONLY
    Does not move StorytellinG
@@ -8120,4 +8280,44 @@ top: auto !important;
     right: 20px !important;
     bottom: 24px !important;
   }
+}
+
+/* =========================================================
+   JBC HERO CLEAN REBUILD BASE - FINAL OVERRIDE
+   Plain taupe stage. Keep only title reveal + StorytellinG.
+   Existing saved portrait/rose/background objects are hidden;
+   future editor-added objects use new IDs and remain available.
+   ========================================================= */
+.hero,
+.hero.jbc-floral-hero {
+  background: #2A221E !important;
+  background-image: none !important;
+}
+
+.hero::before,
+.hero::after,
+.hero-rose-video,
+.hero-corner-rose,
+.hero [data-editor-id="hero-image-wrap"],
+.hero [data-editor-id="rose-1777417437621-oy3d2"],
+.hero [data-editor-id="rose-1777417457688-b9dcu"],
+.hero [data-editor-id="rose-1777417460898-jbc36"],
+.hero [data-editor-id="rose-1777417462368-smmlm"],
+.hero .jbc-custom:not(.hero-photo-layer) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.hero-content,
+.hero-oil-wrap,
+.hero-mega,
+.hero .tag {
+  display: block !important;
+  visibility: visible !important;
+}
+
+.hero .tag {
+  opacity: 1 !important;
 }

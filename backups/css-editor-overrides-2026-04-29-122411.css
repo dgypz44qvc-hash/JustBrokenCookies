@@ -1,0 +1,94 @@
+/* JBC local editor overrides */
+
+[data-editor-id="hero-title-line-1"] {
+  left: 113px !important;
+  top: -2793px !important;
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+[data-editor-id="hero-title-line-2"] {
+  left: -189px !important;
+  top: -2029px !important;
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+[data-editor-id="hero-title-line-3"] {
+  left: 6px !important;
+  top: -1660px !important;
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+[data-editor-id="decor-001"] {
+  left: -76px !important;
+  top: -1304px !important;
+  width: 1595px !important;
+  height: 1830px !important;
+  z-index: 2 !important;
+}
+
+[data-editor-id="hero-section"] {
+  left: 7px !important;
+  top: 39px !important;
+  width: 1497px !important;
+  height: 979px !important;
+}
+
+[data-editor-id="rose-1777461276486-tgxu"] {
+  left: 144px !important;
+  top: -475px !important;
+}
+
+[data-editor-id="rose-1777461279793-jpyp"] {
+  left: 182px !important;
+  top: -423px !important;
+}
+
+[data-editor-id="image-003"] {
+  position: absolute !important;
+  left: 48px !important;
+  top: 48px !important;
+  width: 320px !important;
+  height: 220px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="decor-004"] {
+  position: absolute !important;
+  left: 484px !important;
+  top: -86px !important;
+  width: 729px !important;
+  height: 1095px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="hero-storytelling-tag"] {
+  left: 1330px !important;
+  top: 431px !important;
+  opacity: 1 !important;
+}
+
+[data-editor-id="manifesto-inner"] {
+  position: relative !important;
+  left: 198px !important;
+  top: 31px !important;
+}
+
+[data-editor-id="manifesto-section"] {
+  position: relative !important;
+  left: -103px !important;
+  top: 181px !important;
+  width: 1497px !important;
+  height: 154px !important;
+}
+
+[data-editor-id="process-section"] {
+  left: -72px !important;
+  top: 171px !important;
+}
