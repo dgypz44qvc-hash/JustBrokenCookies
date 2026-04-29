@@ -12,7 +12,7 @@
 }
 
 [data-editor-id="hero-section"] {
-  left: 16px !important;
+  left: 1px !important;
   top: -36px !important;
   width: 1225px !important;
   height: 1038px !important;
@@ -31,8 +31,8 @@
 
 [data-editor-id="rose-1777417460898-jbc36"] {
   position: absolute !important;
-  left: 747px !important;
-  top: -75px !important;
+  left: 797px !important;
+  top: -185px !important;
   width: 420px !important;
   height: 420px !important;
   opacity: 0.85 !important;
@@ -93,9 +93,9 @@
 }
 
 [data-editor-id="hero-storytelling-tag"] {
-  left: 1124px !important;
-  top: 1039px !important;
+  left: 1155px !important;
+  top: 939px !important;
   width: 79px !important;
-  height: 676px !important;
+  height: 24px !important;
   opacity: 1 !important;
 }
