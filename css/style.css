@@ -4208,7 +4208,7 @@ body {
 /* video hidden, no override needed */
 /* =========================================================
    JBC HERO STATIC BACKGROUND IMAGE
-   File: images/fullhero-hq.png
+   File: images/herobandw.png
    ========================================================= */
 
 .hero {
@@ -4216,7 +4216,7 @@ body {
   overflow: hidden !important;
 
   background-image:
-    url("../images/fullhero-hq.png") !important;
+    url("../images/herobandw.png") !important;
 
   background-repeat: no-repeat !important;
   background-size: cover !important;
