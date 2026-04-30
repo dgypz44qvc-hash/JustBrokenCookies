@@ -4683,3 +4683,110 @@ body {
   margin-top: 0 !important;
   padding-top: clamp(54px, 6vw, 88px) !important;
 }
+
+/* =========================================================
+   CURRENT MOBILE REPAIR
+   Keeps the live mobile page visible and tunes the new image hero
+   ========================================================= */
+
+@media (max-width: 968px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .preloader.loaded,
+  .page-transition:not(.active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .nav {
+    z-index: 1000 !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+    position: relative !important;
+    z-index: 1003 !important;
+  }
+
+  .nav-links {
+    position: fixed !important;
+    inset: 0 0 0 auto !important;
+    width: min(82vw, 360px) !important;
+    height: 100vh !important;
+    height: 100svh !important;
+    right: auto !important;
+    left: 100% !important;
+    display: flex !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateX(0) !important;
+    transition: left 0.45s var(--ease-out-expo), opacity 0.3s ease, visibility 0.3s ease !important;
+  }
+
+  .nav-links.open {
+    left: calc(100% - min(82vw, 360px)) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero.jbc-floral-hero {
+    min-height: clamp(520px, 72svh, 680px) !important;
+    height: clamp(520px, 72svh, 680px) !important;
+    padding: 72px 0 0 !important;
+    justify-content: flex-start !important;
+    overflow: hidden !important;
+    background-color: #050505 !important;
+    background-size: cover !important;
+    background-position: 26% center !important;
+  }
+
+  .hero .hero-full-bg {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: 26% center !important;
+    transform: scale(1.02) !important;
+  }
+
+  .hero .jbc-custom,
+  .hero .hero-photo-layer,
+  .hero-content,
+  .hero-oil-wrap,
+  .hero-mega,
+  .hero .tag,
+  .hero-bottom,
+  .hero-content::after,
+  .hero::before,
+  .hero::after {
+    display: none !important;
+  }
+
+  .manifesto {
+    position: relative !important;
+    z-index: 5 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero.jbc-floral-hero {
+    min-height: clamp(470px, 68svh, 610px) !important;
+    height: clamp(470px, 68svh, 610px) !important;
+    background-position: 23% center !important;
+  }
+
+  .hero .hero-full-bg {
+    object-position: 23% center !important;
+    transform: scale(1.025) !important;
+  }
+}
