@@ -4237,9 +4237,18 @@ body {
 }
 
 /* Keep hero content above background */
-.hero > *:not(.hero-full-bg) {
+.hero > *:not(picture) {
   position: relative;
   z-index: 3;
+}
+
+.hero > picture {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
 }
 
 .hero .hero-full-bg {
@@ -4754,8 +4763,8 @@ body {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    object-position: 26% center !important;
-    transform: scale(1.02) !important;
+    object-position: center center !important;
+    transform: scale(1.01) !important;
   }
 
   .hero .jbc-custom,
@@ -4785,7 +4794,7 @@ body {
   }
 
   .hero .hero-full-bg {
-    object-position: 23% center !important;
-    transform: scale(1.025) !important;
+    object-position: center center !important;
+    transform: scale(1.01) !important;
   }
 }
