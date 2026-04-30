@@ -4208,15 +4208,14 @@ body {
 /* video hidden, no override needed */
 /* =========================================================
    JBC HERO STATIC BACKGROUND IMAGE
-   File: images/herobandw.png
+   File: images/herobandw responsive JPEG variants
    ========================================================= */
 
 .hero {
   position: relative !important;
   overflow: hidden !important;
 
-  background-image:
-    url("../images/herobandw.png") !important;
+  background-image: none !important;
 
   background-repeat: no-repeat !important;
   background-size: cover !important;
