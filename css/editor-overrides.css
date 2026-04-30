@@ -1,39 +1,11 @@
 /* JBC local editor overrides */
 
-[data-editor-id="hero-title-line-1"] {
-  left: 113px !important;
-  top: -2793px !important;
-  opacity: 1 !important;
-  transform: translateY(0px) !important;
-}
-
-[data-editor-id="hero-title-line-2"] {
-  left: -189px !important;
-  top: -2029px !important;
-  opacity: 1 !important;
-  transform: translateY(0px) !important;
-}
-
-[data-editor-id="hero-title-line-3"] {
-  left: 6px !important;
-  top: -1660px !important;
-  opacity: 1 !important;
-  transform: translateY(0px) !important;
-}
-
 [data-editor-id="decor-001"] {
   left: -76px !important;
   top: -1304px !important;
   width: 1595px !important;
   height: 1830px !important;
   z-index: 2 !important;
-}
-
-[data-editor-id="hero-section"] {
-  left: 7px !important;
-  top: 39px !important;
-  width: 1497px !important;
-  height: 979px !important;
 }
 
 [data-editor-id="rose-1777461276486-tgxu"] {
@@ -69,26 +41,41 @@
 }
 
 [data-editor-id="hero-storytelling-tag"] {
-  left: 1330px !important;
-  top: 431px !important;
   opacity: 1 !important;
+}
+
+
+
+[data-editor-id="jbc-1777551171911-djsv"] {
+  left: 0px !important;
+  top: 0px !important;
+  right: auto !important;
+  bottom: auto !important;
 }
 
 [data-editor-id="manifesto-inner"] {
   position: relative !important;
-  left: 198px !important;
-  top: 31px !important;
+  left: -300px !important;
+  top: -18px !important;
+  right: auto !important;
+  bottom: auto !important;
 }
 
-[data-editor-id="manifesto-section"] {
-  position: relative !important;
-  left: -103px !important;
-  top: 181px !important;
-  width: 1497px !important;
-  height: 154px !important;
+[data-editor-id="hero-title-line-1"] {
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
 }
 
-[data-editor-id="process-section"] {
-  left: -72px !important;
-  top: 171px !important;
+[data-editor-id="hero-section"] {
+  left: -4px !important;
+  top: 63px !important;
+  background-color: rgb(0, 0, 0) !important;
+  background-image: url("images/fullhero-1777582870295.png") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+[data-editor-id="jbc-1777582870310-2u4w"] {
+  background-color: rgb(33, 31, 29) !important;
 }

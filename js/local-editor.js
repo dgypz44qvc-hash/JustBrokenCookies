@@ -60,11 +60,7 @@
   const layerGroups = [
     { title: 'Hero', items: [
       ['Hero', '[data-editor-id="hero-section"], section.hero'],
-      ['Storytelling Tag', '[data-editor-id="hero-storytelling-tag"], .hero .tag'],
       ['Hero Content', '[data-editor-id="hero-content"], .hero-content'],
-      ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega:not(.hero-underlay) .l1'],
-      ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega:not(.hero-underlay) .l2'],
-      ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega:not(.hero-underlay) .l3'],
       ['Hero Image', '[data-editor-id="hero-image-wrap"], .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img'],
       ['Corner Rose', '[data-editor-id="hero-corner-rose"], .hero-corner-rose']
     ]},
@@ -98,7 +94,6 @@
   ];
 
   const editableTextSelector = [
-    '.hero .tag', '.hero-mega .l1', '.hero-mega .l2', '.hero-mega .l3',
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'cite',
     'a[href]', 'button', '.btn', '.section-title', '.footer-brand', '.footer-col h4',
     '.footer-col a', '.footer-bottom span'
@@ -106,7 +101,7 @@
 
   const auditSelectors = [
     ['Sections', 'section'],
-    ['Hero Elements', '.hero, .hero .tag, .hero-content, .hero-mega, .hero-mega .l1, .hero-mega .l2, .hero-mega .l3, .hero .jbc-custom, .hero .jbc-custom img, .hero-corner-rose'],
+    ['Hero Elements', '.hero, .hero-content, .hero .jbc-custom, .hero .jbc-custom img, .hero-corner-rose'],
     ['Images', 'img, picture'],
     ['Buttons and Links', 'a[href], button'],
     ['Headings', 'h1, h2, h3, h4, h5, h6'],
@@ -176,15 +171,15 @@
     if (!target || target.nodeType !== 1) return null;
     if (target.closest('.jbc-editor-handle')) return null;
     const exactText = target.closest(editableTextSelector);
-    if (exactText && !exactText.matches('footer.footer, section.hero, .hero-content, .hero-mega')) return exactText;
-    const priority = ['.editor-decoration', '.hero-mega:not(.hero-underlay) .l1', '.hero-mega:not(.hero-underlay) .l2', '.hero-mega:not(.hero-underlay) .l3', '.hero .tag', '.hero .jbc-custom.hero-photo-layer', '.hero .jbc-custom img', '.hero-corner-rose', '.service-card h3', '.service-card p', '.service-card', '.portfolio-item h3', '.portfolio-item p', '.portfolio-item', '.testi-brutal', '.cta-section .btn', '.cta-section .section-title', '.manifesto-inner h2', '.manifesto-inner p', '.manifesto-inner'];
+    if (exactText && !exactText.matches('footer.footer, section.hero, .hero-content')) return exactText;
+    const priority = ['.editor-decoration', '.hero .jbc-custom.hero-photo-layer', '.hero .jbc-custom img', '.hero-corner-rose', '.service-card h3', '.service-card p', '.service-card', '.portfolio-item h3', '.portfolio-item p', '.portfolio-item', '.testi-brutal', '.cta-section .btn', '.cta-section .section-title', '.manifesto-inner h2', '.manifesto-inner p', '.manifesto-inner'];
     for (const sel of priority) {
       const found = target.closest(sel);
       if (found) return found;
     }
     const fallback = target.closest('[data-editor-id], .footer-grid, .footer-brand, .footer-col, .footer-bottom, section.hero, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer');
     if (!fallback) return null;
-    if (fallback.matches('section.hero, .hero-content, .hero-mega')) return target.closest('.hero-mega:not(.hero-underlay) .l1, .hero-mega:not(.hero-underlay) .l2, .hero-mega:not(.hero-underlay) .l3, .hero .tag, .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img, .hero-corner-rose') || fallback;
+    if (fallback.matches('section.hero, .hero-content')) return target.closest('.hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img, .hero-corner-rose') || fallback;
     return fallback;
   }
 
@@ -233,7 +228,7 @@
       'body.jbc-editor-preview [data-jbc-selected="true"],body.jbc-editor-preview .jbc-editor-hover{outline:none!important;}',
       'body.jbc-editor-preview [data-jbc-editable="true"]{outline:none!important;}',
       'body.jbc-editor-preview .jbc-editor-box{display:none!important;}',
-      'body:not(.jbc-editor-preview) .hero .tag,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l1,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l2,body:not(.jbc-editor-preview) .hero-mega:not(.hero-underlay) .l3,body:not(.jbc-editor-preview) .hero .jbc-custom,body:not(.jbc-editor-preview) .hero .jbc-custom img,body:not(.jbc-editor-preview) .hero-corner-rose{pointer-events:auto!important;}',
+      'body:not(.jbc-editor-preview) .hero .jbc-custom,body:not(.jbc-editor-preview) .hero .jbc-custom img,body:not(.jbc-editor-preview) .hero-corner-rose{pointer-events:auto!important;}',
       '[contenteditable="true"].jbc-text-editing{outline:2px solid #2ecc40!important;outline-offset:4px!important;cursor:text!important;user-select:text!important;-webkit-user-select:text!important;}',
       'body.jbc-text-edit-mode .jbc-editor-box{display:none!important;}',
       '.editor-decoration{position:absolute;display:block;pointer-events:auto;z-index:4;touch-action:none;}',

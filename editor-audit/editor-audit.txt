@@ -1,0 +1,583 @@
+=== FILES ===
+total 9344
+drwxr-xr-x@  41 vale  staff     1312 Apr 30 13:58 .
+drwxr-xr-x@   4 vale  staff      128 Apr 28 13:18 ..
+-rw-r--r--@   1 vale  staff    18436 Apr 29 14:05 .DS_Store
+drwxr-xr-x   17 vale  staff      544 Apr 30 13:53 .git
+-rw-------@   1 vale  staff      104 Apr 23 11:01 .gitignore
+-rw-r--r--@   1 vale  staff     5189 Apr 22 19:44 DEPLOYMENT-GUIDE.md
+drwxr-xr-x@   5 vale  staff      160 Apr 28 11:51 JBC
+-rw-r--r--    1 vale  staff    25476 Apr 23 00:46 JBC-Site-v2.zip
+-rw-r--r--    1 vale  staff    25481 Apr 23 00:52 JBC-Site-v3.zip
+-rw-r--r--    1 vale  staff    25599 Apr 23 08:45 JBC-Site-v4.zip
+-rw-r--r--    1 vale  staff    25584 Apr 23 09:04 JBC-Site-v5.zip
+-rw-r--r--    1 vale  staff  2137853 Apr 23 09:13 JBC-Site-v6.zip
+-rw-r--r--    1 vale  staff  2137856 Apr 23 09:23 JBC-Site-v7.zip
+-rw-------    1 vale  staff    24563 Apr 23 00:19 JustBrokenCookies-Website.zip
+-rw-r--r--@   1 vale  staff      470 Apr 29 17:40 ONLINE-EDITOR.md
+-rw-r--r--@   1 vale  staff    32788 Apr 23 10:00 SITE-MAP-REFERENCE.html
+-rw-r--r--@   1 vale  staff     8633 Apr 29 17:40 about.html
+drwxr-xr-x@  33 vale  staff     1056 Apr 30 13:26 backups
+-rw-r--r--@   1 vale  staff     7319 Apr 29 17:40 contact.html
+drwxr-xr-x   11 vale  staff      352 Apr 30 13:52 css
+drwxr-xr-x@   3 vale  staff       96 Apr 30 13:58 editor-audit
+-rw-r--r--@   1 vale  staff    10084 Apr 30 12:26 editor.html
+drwxr-xr-x@   3 vale  staff       96 Apr 29 22:33 emergency-backups
+drwxr-xr-x   42 vale  staff     1344 Apr 29 21:53 images
+-rw-r--r--@   1 vale  staff    25129 Apr 30 13:32 index.html
+drwxr-xr-x    5 vale  staff      160 Apr 29 21:53 js
+drwxr-xr-x@   3 vale  staff       96 Apr 29 17:40 magazine
+-rw-r--r--@   1 vale  staff    17062 Apr 29 17:40 magazine.html
+-rw-r--r--@   1 vale  staff    12596 Apr 23 10:18 mockup-1-cinematic.html
+-rw-r--r--@   1 vale  staff    11365 Apr 23 10:20 mockup-2-editorial.html
+-rw-r--r--@   1 vale  staff    11847 Apr 23 10:21 mockup-3-splitscreen.html
+-rw-r--r--@   1 vale  staff    11574 Apr 23 10:23 mockup-4-brutalist.html
+-rw-r--r--@   1 vale  staff    12535 Apr 23 10:24 mockup-5-flowing.html
+-rw-r--r--@   1 vale  staff    13186 Apr 23 10:26 mockup-6-bento.html
+drwxr-xr-x@ 107 vale  staff     3424 Apr 29 17:40 node_modules
+-rw-r--r--@   1 vale  staff    48122 Apr 29 17:40 package-lock.json
+-rw-r--r--@   1 vale  staff      331 Apr 29 17:40 package.json
+-rw-r--r--@   1 vale  staff     7498 Apr 29 17:40 portfolio.html
+-rw-r--r--@   1 vale  staff    38797 Apr 22 19:51 preview-mockup.html
+-rw-r--r--@   1 vale  staff    11967 Apr 29 17:40 server.js
+-rw-r--r--@   1 vale  staff     9128 Apr 29 17:40 services.html
+
+=== GIT STATUS ===
+ M css/editor-overrides.css
+ M css/local-editor.css
+ M css/style.css
+ M editor.html
+ M index.html
+ M js/local-editor.js
+?? JBC/
+?? backups/css-editor-overrides-2026-04-30-131456.css
+?? backups/css-editor-overrides-2026-04-30-132230.css
+?? backups/css-editor-overrides-2026-04-30-132305.css
+?? backups/css-editor-overrides-2026-04-30-132624.css
+?? backups/index-2026-04-30-131456.html
+?? backups/index-2026-04-30-132230.html
+?? backups/index-2026-04-30-132305.html
+?? backups/index-2026-04-30-132624.html
+?? css/style-before-clean-marquee-repair.css
+?? css/style-before-hero-title-rose-fix.css
+?? css/style-before-marquee-animation-fix.css
+?? css/style-before-marquee-transform-fix.css
+?? css/style-before-professional-hero-marquee-spacing.css
+?? editor-audit/
+?? emergency-backups/
+
+=== EDITOR HTML IDS ===
+id="add-library"
+id="btn-add-section-panel"
+id="btn-apply-background"
+id="btn-apply-src"
+id="btn-bring-forward"
+id="btn-clean-canvas"
+id="btn-clear-background"
+id="btn-close-layers"
+id="btn-close-properties"
+id="btn-collapse-left"
+id="btn-collapse-right"
+id="btn-delete"
+id="btn-desktop-view"
+id="btn-duplicate"
+id="btn-hide"
+id="btn-layers"
+id="btn-mobile-view"
+id="btn-move-layer-down"
+id="btn-move-layer-up"
+id="btn-preview"
+id="btn-properties"
+id="btn-redo"
+id="btn-refresh-images"
+id="btn-reset-selected"
+id="btn-save"
+id="btn-select-parent"
+id="btn-send-backward"
+id="btn-undo"
+id="btn-upload-asset"
+id="btn-zoom-in"
+id="btn-zoom-out"
+id="canvas-stage"
+id="canvas-wrap"
+id="context-menu"
+id="editor-shell"
+id="float-backward"
+id="float-delete"
+id="float-duplicate"
+id="float-edit-text"
+id="float-forward"
+id="float-hide"
+id="float-label"
+id="float-replace"
+id="floating-toolbar"
+id="font-library"
+id="image-list"
+id="layers"
+id="left-gutter"
+id="left-panel"
+id="page-select"
+id="prop-bg"
+id="prop-blend"
+id="prop-color"
+id="prop-font-family"
+id="prop-font-size"
+id="prop-height"
+id="prop-left"
+id="prop-letter"
+id="prop-opacity"
+id="prop-page-bg"
+id="prop-page-bg-image"
+id="prop-radius"
+id="prop-rotate"
+id="prop-section-bg"
+id="prop-section-bg-image"
+id="prop-src"
+id="prop-text"
+id="prop-top"
+id="prop-width"
+id="prop-z"
+id="right-gutter"
+id="right-panel"
+id="selected-meta"
+id="selected-name"
+id="site-frame"
+id="status"
+id="topbar"
+id="upload-image"
+id="upload-kind"
+id="upload-target"
+id="zoom-label"
+
+=== LOCAL EDITOR FUNCTIONS ===
+209:  function pickEditable(target) {
+370:  function serializeHtml() {
+648:  function selectElement(el) {
+715:  function ensureEditablePosition(el) {
+745:  function ensurePositionedParent(parent) {
+754:  function onPointerDown(e) {
+766:  function startTransform(e, mode) {
+782:  function onPointerMove(e) {
+789:  function applyPointerFrame() {
+822:  function endPointerGesture(e) {
+930:  function saveStyleFor(el, rebuildLayers = false) {
+946:  function buildLayers() {
+1336:  function insertAsset(config, parent, point) {
+1493:  function bringForward() {
+1503:  function sendBackward() {
+1585:  function beginTextEdit(el, sourceEvent) {
+
+=== POINTER / DRAG / SCROLL LINES ===
+46:    const rect = el.getBoundingClientRect();
+50:    const parentRect = parent === doc.body ? { left: 0, top: 0 } : parent.getBoundingClientRect();
+51:    if (propName === 'left') return numericValue(rect.left - parentRect.left + (parent.scrollLeft || 0));
+52:    if (propName === 'top') return numericValue(rect.top - parentRect.top + (parent.scrollTop || 0));
+69:  let dragState = null;
+230:    const rect = tag.getBoundingClientRect();
+233:    const inside = e.clientX >= rect.left - padX && e.clientX <= rect.right + padX && e.clientY >= rect.top - padY && e.clientY <= rect.bottom + padY;
+241:    const rect = line.getBoundingClientRect();
+243:    const inside = e.clientX >= rect.left - pad && e.clientX <= rect.right + pad && e.clientY >= rect.top - pad && e.clientY <= rect.bottom + pad;
+249:    const rect = el.getBoundingClientRect();
+250:    return e.clientX >= rect.left - pad && e.clientX <= rect.right + pad && e.clientY >= rect.top - pad && e.clientY <= rect.bottom + pad;
+436:    on('left-gutter', 'pointerdown', e => startPanelResize(e, 'left'));
+437:    on('right-gutter', 'pointerdown', e => startPanelResize(e, 'right'));
+487:    document.addEventListener('pointerdown', e => { if (!contextMenu?.contains(e.target)) hideContextMenu(); });
+492:    window.addEventListener('pointermove', onPanelResizeMove);
+493:    window.addEventListener('pointerup', endPanelResize);
+507:      on(id, 'pointerup', e => applyPanel(e, false));
+508:      on(id, 'wheel', e => requestAnimationFrame(() => applyPanel(e, false)));
+516:      if (!editMode || dragState) return;
+534:    doc.addEventListener('pointerdown', onPointerDown, true);
+535:    doc.addEventListener('pointermove', onPointerMove, true);
+536:    doc.addEventListener('pointerup', endPointerGesture, true);
+537:    doc.addEventListener('pointercancel', endPointerGesture, true);
+545:    doc.addEventListener('scroll', updateSelectionUI, true);
+564:    const frameRect = frame.getBoundingClientRect();
+566:      x: Math.max(0, e.clientX - frameRect.left),
+567:      y: Math.max(0, e.clientY - frameRect.top)
+578:    await uploadDroppedFile(file, { x: e.clientX, y: e.clientY });
+641:    fitRaf = requestAnimationFrame(() => {
+730:    const rect = el.getBoundingClientRect();
+732:    const parentRect = parent === doc.body ? { left: 0, top: 0 } : parent.getBoundingClientRect();
+733:    const left = Math.round(rect.left - parentRect.left + (parent.scrollLeft || 0));
+734:    const top = Math.round(rect.top - parentRect.top + (parent.scrollTop || 0));
+771:    const rect = selected.getBoundingClientRect();
+773:    dragState = { mode, pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, left: parseFloat(selected.style.left || (cs.left !== 'auto' ? cs.left : '0')) || 0, top: parseFloat(selected.style.top || (cs.top !== 'auto' ? cs.top : '0')) || 0, width: rect.width, height: rect.height, centerX: rect.left + rect.width / 2, centerY: rect.top + rect.height / 2, startRotate: parseFloat(getRotate(selected)) || 0, next: null };
+775:    dragState.didMove = false;
+779:    e.target.setPointerCapture?.(e.pointerId);
+783:    if (!dragState || e.pointerId !== dragState.pointerId) return;
+784:    dragState.next = { x: e.clientX, y: e.clientY };
+786:    if (!rafPending) { rafPending = true; frame.contentWindow.requestAnimationFrame(applyPointerFrame); }
+791:    if (!dragState || !dragState.next || !selected) return;
+792:    const dx = dragState.next.x - dragState.startX;
+793:    const dy = dragState.next.y - dragState.startY;
+794:    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) dragState.didMove = true;
+795:    if (dragState.mode === 'move') {
+796:      selected.style.left = Math.round(dragState.left + dx) + 'px';
+797:      selected.style.top = Math.round(dragState.top + dy) + 'px';
+798:    } else if (dragState.mode === 'rotate') {
+799:      const a0 = Math.atan2(dragState.startY - dragState.centerY, dragState.startX - dragState.centerX);
+800:      const a1 = Math.atan2(dragState.next.y - dragState.centerY, dragState.next.x - dragState.centerX);
+801:      selected.style.transform = 'rotate(' + Math.round(dragState.startRotate + (a1 - a0) * 180 / Math.PI) + 'deg)';
+803:      resizeSelected(dragState.mode, dx, dy);
+811:    let width = dragState.width, height = dragState.height, left = dragState.left, top = dragState.top;
+823:    if (!dragState || e.pointerId !== dragState.pointerId) return;
+826:    markDirty(dragState.mode === 'move' ? 'Moved' : dragState.mode === 'rotate' ? 'Rotated' : 'Resized');
+827:    suppressNextClick = !!dragState.didMove;
+828:    dragState = null;
+843:    const rect = selected.getBoundingClientRect();
+844:    handlesBox.style.left = rect.left + doc.defaultView.scrollX + 'px';
+845:    handlesBox.style.top = rect.top + doc.defaultView.scrollY + 'px';
+877:      panelWatch.raf = requestAnimationFrame(tick);
+879:    panelWatch.raf = requestAnimationFrame(tick);
+1052:    button.onclick = () => { selectElement(el); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
+1082:    const rect = el.getBoundingClientRect();
+1227:    const targetParent = pickAssetParentAtPoint(e.clientX, e.clientY);
+1228:    insertAsset(assetMode.config, targetParent, { x: e.clientX, y: e.clientY });
+1350:    const parentRect = parent.getBoundingClientRect();
+1351:    const left = point ? point.x - parentRect.left + parent.scrollLeft : 48;
+1352:    const top = point ? point.y - parentRect.top + parent.scrollTop : 48;
+1411:    copy.style.left = (selected.offsetLeft + 28) + 'px';
+1412:    copy.style.top = (selected.offsetTop + 28) + 'px';
+1528:    showContextMenu(e.clientX, e.clientY, el || selected);
+1533:    const frameRect = frame.getBoundingClientRect();
+1581:    const rect = parent.getBoundingClientRect();
+1582:    return { x: frameX - rect.left + parent.scrollLeft, y: frameY - rect.top + parent.scrollTop };
+1607:    if (sourceEvent && doc.caretRangeFromPoint) range = doc.caretRangeFromPoint(sourceEvent.clientX, sourceEvent.clientY);
+1609:      const pos = doc.caretPositionFromPoint(sourceEvent.clientX, sourceEvent.clientY);
+1681:    const width = parseFloat(selected.style.width || selected.getBoundingClientRect().width) || 0;
+1682:    const height = parseFloat(selected.style.height || selected.getBoundingClientRect().height) || 0;
+1753:    panelResize = { side, startX: e.clientX, startLeft: panelWidth('left'), startRight: panelWidth('right') };
+1765:    const dx = e.clientX - panelResize.startX;
+
+=== POSITIONING / ABSOLUTE CONVERSION LINES ===
+49:    const parent = el.offsetParent || el.parentElement || doc.body;
+87:    'z-index', 'color', 'background-color', 'font-size', 'font-family',
+89:    'transform', 'display', 'background-image', 'background-size',
+287:      '[data-jbc-selected="true"]{outline:2px solid rgba(232,137,29,.95)!important;outline-offset:3px!important;z-index:2147483001!important;}',
+292:      '.jbc-editor-box{position:absolute;z-index:2147483646;pointer-events:none;border:1px solid rgba(232,137,29,.65);box-shadow:0 0 0 1px rgba(20,16,14,.45);}',
+293:      '.jbc-editor-handle{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#e8891d;border:2px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,.28);pointer-events:auto;touch-action:none;}',
+296:      '.jbc-editor-handle.rotate:after{content:"";position:absolute;left:50%;top:16px;width:1px;height:18px;background:rgba(255,255,255,.85);}',
+306:      'body:not(.jbc-editor-preview) .hero .tag,body:not(.jbc-editor-preview) [data-editor-id="hero-storytelling-tag"]{pointer-events:auto!important;z-index:2147483000!important;}',
+310:      '.editor-decoration{position:absolute;display:block;pointer-events:auto;z-index:4;touch-action:none;}',
+354:      position: 'absolute',
+364:      zIndex: '7',
+400:        line.style.removeProperty('transform');
+674:    setValue('prop-left', selected ? numericValue(selected.style.left || (cs.left !== 'auto' ? cs.left : '')) || rectValue(selected, 'left') : '');
+675:    setValue('prop-top', selected ? numericValue(selected.style.top || (cs.top !== 'auto' ? cs.top : '')) || rectValue(selected, 'top') : '');
+676:    setValue('prop-width', selected ? numericValue(selected.style.width || (cs.width !== 'auto' ? cs.width : '')) || rectValue(selected, 'width') : '');
+677:    setValue('prop-height', selected ? numericValue(selected.style.height || (cs.height !== 'auto' ? cs.height : '')) || rectValue(selected, 'height') : '');
+679:    setValue('prop-z', selected ? selected.style.zIndex || (cs.zIndex === 'auto' ? '' : cs.zIndex) : '');
+713:  function getRotate(el) { const m = String(el?.style.transform || '').match(/rotate\(([^)]+)\)/); return m ? m[1] : ''; }
+718:      ensurePositionedParent(el.parentElement);
+719:      if (cs.position === 'static') el.style.position = 'absolute';
+722:    if (cs.position === 'static') el.style.position = 'relative';
+731:    const parent = el.offsetParent || el.parentElement || doc.body;
+740:    if (isTextElement(el) && !el.style.width) {
+749:      parent.style.position = 'relative';
+773:    dragState = { mode, pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, left: parseFloat(selected.style.left || (cs.left !== 'auto' ? cs.left : '0')) || 0, top: parseFloat(selected.style.top || (cs.top !== 'auto' ? cs.top : '0')) || 0, width: rect.width, height: rect.height, centerX: rect.left + rect.width / 2, centerY: rect.top + rect.height / 2, startRotate: parseFloat(getRotate(selected)) || 0, next: null };
+796:      selected.style.left = Math.round(dragState.left + dx) + 'px';
+797:      selected.style.top = Math.round(dragState.top + dy) + 'px';
+801:      selected.style.transform = 'rotate(' + Math.round(dragState.startRotate + (a1 - a0) * 180 / Math.PI) + 'deg)';
+816:    selected.style.width = Math.max(24, Math.round(width)) + 'px';
+817:    selected.style.height = Math.max(24, Math.round(height)) + 'px';
+818:    selected.style.left = Math.round(left) + 'px';
+819:    selected.style.top = Math.round(top) + 'px';
+844:    handlesBox.style.left = rect.left + doc.defaultView.scrollX + 'px';
+845:    handlesBox.style.top = rect.top + doc.defaultView.scrollY + 'px';
+846:    handlesBox.style.width = rect.width + 'px';
+847:    handlesBox.style.height = rect.height + 'px';
+910:    applyIf('prop-z', 'zIndex', getValue('prop-z'));
+918:    if ((applyAll || id === 'prop-rotate') && getValue('prop-rotate') !== '') selected.style.setProperty('transform', 'rotate(' + numericValue(getValue('prop-rotate')) + 'deg)', 'important');
+1087:    let parent = el.parentElement;
+1090:      parent = parent.parentElement;
+1242:    el.style.position = 'absolute';
+1243:    el.style.left = defaults.left || '48px';
+1244:    el.style.top = defaults.top || '48px';
+1245:    if (defaults.width) el.style.width = defaults.width;
+1246:    if (defaults.height) el.style.height = defaults.height;
+1250:    el.style.zIndex = String(nextZIndexIn(parent));
+1272:    if (el.parentElement !== parent) parent.insertBefore(el, parent.firstChild);
+1273:    el.style.left = Math.max(0, Math.round(point.x)) + 'px';
+1274:    el.style.top = Math.max(0, Math.round(point.y)) + 'px';
+1353:    div.style.position = 'absolute';
+1354:    div.style.left = Math.max(0, Math.round(left)) + 'px';
+1355:    div.style.top = Math.max(0, Math.round(top)) + 'px';
+1356:    div.style.width = config.width + 'px';
+1357:    div.style.height = config.height + 'px';
+1359:    div.style.zIndex = String(nextZIndexIn(parent));
+1411:    copy.style.left = (selected.offsetLeft + 28) + 'px';
+1412:    copy.style.top = (selected.offsetTop + 28) + 'px';
+1413:    selected.parentElement.appendChild(copy);
+1422:    const parent = selected?.parentElement?.closest?.('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content');
+1427:    if (!selected || !selected.parentElement || !selected.nextElementSibling) return;
+1429:    selected.parentElement.insertBefore(selected.nextElementSibling, selected);
+1436:    if (!selected || !selected.parentElement || !selected.previousElementSibling) return;
+1438:    selected.parentElement.insertBefore(selected, selected.previousElementSibling);
+1497:    selected.style.zIndex = String(nextZIndexIn(selected.closest('section, footer') || selected.parentElement || doc.body));
+1506:    const z = parseInt(selected.style.zIndex || frame.contentWindow.getComputedStyle(selected).zIndex || '0', 10) || 0;
+1507:    selected.style.zIndex = String(Math.max(0, z - 1));
+1516:      const z = frame.contentWindow.getComputedStyle(el).zIndex;
+1570:    addItem('Select Parent', () => { const parent = target.parentElement?.closest('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content'); if (parent) selectElement(parent); }, !!target.parentElement);
+1573:    contextMenu.style.transform = 'translate(' + Math.max(8, Math.min(maxX, Math.round(pageX))) + 'px,' + Math.max(8, Math.min(maxY, Math.round(pageY))) + 'px)';
+1662:    const left = parseFloat(selected.style.left || '0') || 0;
+1663:    const top = parseFloat(selected.style.top || '0') || 0;
+1664:    if (e.key === 'ArrowLeft') selected.style.left = left - step + 'px';
+1665:    if (e.key === 'ArrowRight') selected.style.left = left + step + 'px';
+1666:    if (e.key === 'ArrowUp') selected.style.top = top - step + 'px';
+1667:    if (e.key === 'ArrowDown') selected.style.top = top + step + 'px';
+1679:    const left = parseFloat(selected.style.left || '0') || 0;
+1680:    const top = parseFloat(selected.style.top || '0') || 0;
+1681:    const width = parseFloat(selected.style.width || selected.getBoundingClientRect().width) || 0;
+1682:    const height = parseFloat(selected.style.height || selected.getBoundingClientRect().height) || 0;
+1683:    if (e.metaKey) { selected.style.width = Math.max(24, width + amount) + 'px'; selected.style.height = Math.max(24, height + amount) + 'px'; }
+1684:    else if (e.shiftKey) selected.style.left = left + amount + 'px';
+1685:    else selected.style.top = top + amount + 'px';
+
+=== SAVE / SERIALIZE LINES ===
+64:  let editorCss = '';
+95:      ['Hero', '[data-editor-id="hero-section"], section.hero'],
+96:      ['Storytelling Tag', '[data-editor-id="hero-storytelling-tag"], .hero .tag'],
+97:      ['Dotted Accent Line', '[data-editor-id="hero-dotted-accent"]'],
+98:      ['Hero Content', '[data-editor-id="hero-content"], .hero-content'],
+99:      ['Just', '[data-editor-id="hero-title-line-1"], .hero-mega:not(.hero-underlay) .l1'],
+100:      ['Broken', '[data-editor-id="hero-title-line-2"], .hero-mega:not(.hero-underlay) .l2'],
+101:      ['Cookies', '[data-editor-id="hero-title-line-3"], .hero-mega:not(.hero-underlay) .l3'],
+102:      ['Hero Image', '[data-editor-id="hero-image-wrap"], .hero .jbc-custom.hero-photo-layer, .hero .jbc-custom img'],
+103:      ['Corner Rose', '[data-editor-id="hero-corner-rose"], .hero-corner-rose']
+105:    { title: 'Manifesto', items: [['Manifesto', '[data-editor-id="manifesto-section"], .manifesto']] },
+107:      ['Process Section', '[data-editor-id="process-section"], #services-overview'],
+108:      ['Process Heading', '[data-editor-id="process-heading"], #services-overview .sec-header h2'],
+109:      ['Card 1', '[data-editor-id="process-card-1"], #services-overview .service-card:nth-of-type(1)'],
+110:      ['Card 2', '[data-editor-id="process-card-2"], #services-overview .service-card:nth-of-type(2)'],
+111:      ['Card 3', '[data-editor-id="process-card-3"], #services-overview .service-card:nth-of-type(3)']
+114:      ['Work Section', '[data-editor-id="featured-work-section"], #featured-work'],
+115:      ['Portfolio Grid', '[data-editor-id="portfolio-grid"], #featured-work .portfolio-grid'],
+116:      ['Work Item 1', '[data-editor-id="portfolio-item-1"], #featured-work .portfolio-item:nth-of-type(1)'],
+117:      ['Work Item 2', '[data-editor-id="portfolio-item-2"], #featured-work .portfolio-item:nth-of-type(2)'],
+118:      ['Work Item 3', '[data-editor-id="portfolio-item-3"], #featured-work .portfolio-item:nth-of-type(3)'],
+119:      ['Work Item 4', '[data-editor-id="portfolio-item-4"], #featured-work .portfolio-item:nth-of-type(4)']
+121:    { title: 'Testimonial', items: [['Testimonial', '[data-editor-id="testimonial-section"], .testimonial-section']] },
+122:    { title: 'CTA', items: [['CTA', '[data-editor-id="cta-section"], .cta-section']] },
+124:      ['Footer', '[data-editor-id="footer-section"], footer.footer'],
+150:    ['Data Editor IDs', '[data-editor-id]']
+155:    '#jbc-editor-runtime-css', '#jbc-editor-overrides-live', '.jbc-editor-box',
+185:    return '[data-editor-id="' + cssEscape(el.dataset.editorId) + '"]';
+219:    const fallback = target.closest('[data-editor-id], .footer-grid, .footer-brand, .footer-col, .footer-bottom, section.hero, .manifesto, #services-overview, #featured-work, .testimonial-section, .cta-section, footer.footer');
+228:    const tag = doc.querySelector('[data-editor-id="hero-storytelling-tag"], .hero .tag');
+239:    const line = doc.querySelector('[data-editor-id="hero-dotted-accent"]');
+265:      editorCss = cssRes.css || '';
+267:      frame.srcdoc = injectEditorRuntime(htmlSource, editorCss);
+305:      'body.jbc-editor-preview [data-editor-runtime-proxy="true"]{display:none!important;}',
+306:      'body:not(.jbc-editor-preview) .hero .tag,body:not(.jbc-editor-preview) [data-editor-id="hero-storytelling-tag"]{pointer-events:auto!important;z-index:2147483000!important;}',
+308:      '[contenteditable="true"].jbc-text-editing{outline:2px solid #2ecc40!important;outline-offset:4px!important;cursor:text!important;user-select:text!important;-webkit-user-select:text!important;}',
+313:      '<style id="jbc-editor-overrides-live">' + String(overrides).replace(/<\/style/gi, '<\\/style') + '</style>',
+347:    if (!heroContent || doc.querySelector('[data-editor-id="hero-dotted-accent"]')) return;
+370:  function serializeHtml() {
+375:    clone.querySelector('#jbc-editor-overrides-live')?.remove();
+380:    clone.querySelectorAll('[data-editor-bound], [contenteditable]').forEach(el => { el.removeAttribute('data-editor-bound'); if (el.getAttribute('contenteditable') === 'true') el.removeAttribute('contenteditable'); });
+381:    clone.querySelectorAll('[data-editor-id]').forEach(el => stripManagedInlineStyles(el));
+390:    root.querySelectorAll('[data-editor-runtime-proxy="true"]').forEach(el => el.remove());
+395:      title.removeAttribute('style');
+403:        if (!line.getAttribute('style')?.trim()) line.removeAttribute('style');
+409:  function stripManagedInlineStyles(el) {
+412:    if (!el.getAttribute('style').trim()) el.removeAttribute('style');
+417:    const snapshot = { html: serializeHtml(), css: editorCss };
+440:        frame.srcdoc = injectEditorRuntime(htmlSource, editorCss);
+750:      saveStyleFor(parent, false);
+805:    saveStyleFor(selected, false);
+825:    saveStyleFor(selected, true);
+921:      saveStyleFor(selected, true);
+930:  function saveStyleFor(el, rebuildLayers = false) {
+936:    if (!decl) editorCss = editorCss.replace(re, '').trim() + '\n';
+939:      editorCss = re.test(editorCss) ? editorCss.replace(re, block) : (editorCss.trim() + '\n\n' + block + '\n').trim() + '\n';
+941:    const live = doc.getElementById('jbc-editor-overrides-live');
+942:    if (live) live.textContent = editorCss;
+1101:    return type + ' / ' + sectionLabel(el.closest('section, footer')) + ' / ' + selectorFor(el).replace('[data-editor-id="', '').replace('"]', '');
+1253:    saveStyleFor(el, true);
+1275:    saveStyleFor(el, true);
+1327:    saveStyleFor(section, true);
+1363:    saveStyleFor(div, true);
+1371:    } while (doc.querySelector('[data-editor-id="' + id + '"]'));
+1387:  function hideSelected() { if (!selected) return; pushHistory(); selected.style.display = frame.contentWindow.getComputedStyle(selected).display === 'none' ? '' : 'none'; saveStyleFor(selected, true); markDirty('Visibility changed'); }
+1415:    saveStyleFor(copy, true);
+1419:  function resetSelected() { if (!selected) return; pushHistory(); managedStyles.forEach(name => selected.style.removeProperty(name)); saveStyleFor(selected, true); hydratePanel(); updateSelectionUI(); markDirty('Reset selected'); }
+1422:    const parent = selected?.parentElement?.closest?.('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content');
+1466:      saveStyleFor(section, true);
+1471:      saveStyleFor(doc.body, false);
+1487:      saveStyleFor(el, true);
+1498:    saveStyleFor(selected, true);
+1508:    saveStyleFor(selected, true);
+1569:    addItem('Paste Style', () => { if (copiedStyle && selected) { pushHistory(); selected.setAttribute('style', copiedStyle); saveStyleFor(selected, true); hydratePanel(); markDirty('Style pasted'); } }, !!copiedStyle);
+1570:    addItem('Select Parent', () => { const parent = target.parentElement?.closest('[data-editor-id], section, footer, .footer-grid, .footer-col, .hero-content'); if (parent) selectElement(parent); }, !!target.parentElement);
+1624:    el.removeAttribute('contenteditable');
+1668:    saveStyleFor(selected, false);
+1686:    saveStyleFor(selected, false);
+1813:    editorCss = snapshot.css;
+1822:      const html = serializeHtml();
+1823:      await api('/api/save-all', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ html, css: editorCss }) });
+
+=== EDITOR OVERRIDES FIRST 160 LINES ===
+/* JBC local editor overrides */
+
+[data-editor-id="decor-001"] {
+  left: -76px !important;
+  top: -1304px !important;
+  width: 1595px !important;
+  height: 1830px !important;
+  z-index: 2 !important;
+}
+
+[data-editor-id="rose-1777461276486-tgxu"] {
+  left: 144px !important;
+  top: -475px !important;
+}
+
+[data-editor-id="rose-1777461279793-jpyp"] {
+  left: 182px !important;
+  top: -423px !important;
+}
+
+[data-editor-id="image-003"] {
+  position: absolute !important;
+  left: 48px !important;
+  top: 48px !important;
+  width: 320px !important;
+  height: 220px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="decor-004"] {
+  position: absolute !important;
+  left: 484px !important;
+  top: -86px !important;
+  width: 729px !important;
+  height: 1095px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="manifesto-inner"] {
+  position: relative !important;
+  left: 198px !important;
+  top: 31px !important;
+}
+
+[data-editor-id="manifesto-section"] {
+  left: -32px !important;
+  top: 131px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+[data-editor-id="process-section"] {
+  left: -8px !important;
+  top: 120px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+[data-editor-id="hero-storytelling-tag"] {
+  left: 1295px !important;
+  top: 80px !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 123px !important;
+  height: 531px !important;
+  opacity: 1 !important;
+  font-size: 71px !important;
+}
+
+[data-editor-id="hero-image-wrap"] {
+  left: 280px !important;
+  top: 65px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+[data-editor-id="jbc-1777551171911-djsv"] {
+  left: 0px !important;
+  top: 0px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+=== LOCAL EDITOR CSS MOVEMENT/SELECTION RULES ===
+3:  --panel: #211916;
+4:  --panel-soft: #2a211d;
+13:  --left-panel-width: 196px;
+14:  --right-panel-width: 300px;
+16:  --canvas-scale: 1;
+17:  --canvas-width: 100vw;
+18:  --canvas-height: 100vh;
+19:  --scaled-canvas-width: 100vw;
+20:  --scaled-canvas-height: 100vh;
+40:  cursor: pointer;
+52:body.left-collapsed { --left-panel-width: 0px; }
+53:body.right-collapsed { --right-panel-width: 0px; }
+54:body.clean-canvas { --left-panel-width: 0px; }
+55:body.clean-canvas { --right-panel-width: 0px; }
+77:.primary-tools button, .selected-tools button { min-width: 68px; }
+136:.panel {
+141:  width: var(--right-panel-width);
+144:  background: var(--panel);
+149:.panel-left { left: 0; width: var(--left-panel-width); }
+150:.panel-right { right: 0; width: var(--right-panel-width); }
+151:.panel-left { border-right: 1px solid var(--line); }
+152:.panel-right { border-left: 1px solid var(--line); }
+153:body.left-collapsed #left-panel, body.right-collapsed #right-panel { display: none; }
+154:body.clean-canvas #left-panel { display: none; }
+155:body.clean-canvas #right-panel { display: none; }
+156:.panel-head {
+168:#canvas-wrap {
+177:  padding: 16px calc(var(--right-panel-width) + 16px) 40px calc(var(--left-panel-width) + 16px);
+179:#canvas-stage {
+180:  width: var(--scaled-canvas-width);
+181:  height: var(--scaled-canvas-height);
+187:  width: var(--canvas-width);
+188:  height: var(--canvas-height);
+189:  min-height: var(--canvas-height);
+193:  transform: scale(var(--canvas-scale));
+198:  min-width: var(--canvas-width);
+200:body.left-collapsed #canvas-wrap { padding-left: 16px; }
+201:body.right-collapsed #canvas-wrap,
+202:body.clean-canvas #canvas-wrap { padding-right: 16px; }
+203:body.clean-canvas #canvas-wrap { padding-left: 16px; }
+204:body.device-mobile #canvas-wrap {
+209:  --canvas-width: 390px;
+210:  --canvas-height: 844px;
+213:body.device-mobile #canvas-stage {
+217:body.device-mobile #right-panel,
+218:body.device-mobile #left-panel {
+222:.panel-gutter {
+230:  cursor: col-resize;
+232:.panel-gutter-left { left: var(--left-panel-width); border-right: 1px solid var(--line); }
+233:.panel-gutter-right { right: var(--right-panel-width); border-left: 1px solid var(--line); }
+234:body.left-collapsed #left-gutter, body.clean-canvas #left-gutter { left: 0; background: transparent; border-right-color: transparent; }
+235:body.right-collapsed #right-gutter, body.clean-canvas #right-gutter { right: 0; background: transparent; border-left-color: transparent; }
+236:.panel-gutter:hover, body.resizing-panels .panel-gutter { background: rgba(232, 137, 29, 0.18); }
+237:.panel-gutter button {
+264:  background: var(--panel-soft);
+279:  cursor: pointer;
+285:.selected-card, .property-section {
+293:#selected-name { font-size: 13px; font-weight: 800; overflow-wrap: anywhere; }
+294:#selected-meta { margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.45; overflow-wrap: anywhere; }
+304:  outline: none;
+307:textarea { resize: vertical; min-height: 78px; text-transform: none; letter-spacing: 0; }
+316:body.has-image .image-tools, body.has-text .text-tools, body.selected-decoration .decoration-tools { display: block; }
+317:body.asset-place-mode #canvas-wrap { cursor: crosshair; }
+320:#floating-toolbar {
+335:#floating-toolbar.visible { display: flex; }
+336:#floating-toolbar span { max-width: 130px; color: var(--text); font-size: 11px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+337:#floating-toolbar button { min-height: 26px; padding: 0 8px; font-size: 11px; }
+338:#floating-toolbar { max-width: min(680px, calc(100vw - 16px)); flex-wrap: wrap; }
+344:#context-menu, #add-library {
+360:#context-menu.visible, #add-library.visible { display: grid; gap: 3px; }
+361:#context-menu button, #add-library button {
+369:#context-menu button:hover, #add-library button:hover { border-color: rgba(232, 137, 29, 0.55); background: rgba(232, 137, 29, 0.14); }
+370:#context-menu .separator, #add-library .separator { height: 1px; margin: 4px 2px; background: var(--line); }
+374:  :root { --left-panel-width: 0px; --right-panel-width: 232px; }
+375:  #left-panel { display: none; }

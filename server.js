@@ -91,12 +91,7 @@ function ensureEditorIds(html) {
   const $ = cheerio.load(html, { decodeEntities: false });
   const assign = (selector, id) => { const el = $(selector).first(); if (el.length && !el.attr('data-editor-id')) el.attr('data-editor-id', id); };
   assign('section.hero', 'hero-section');
-  assign('.hero .tag', 'hero-storytelling-tag');
   assign('.hero-content', 'hero-content');
-  assign('.hero-mega:not(.hero-underlay)', 'hero-title-group');
-  assign('.hero-mega:not(.hero-underlay) .l1', 'hero-title-line-1');
-  assign('.hero-mega:not(.hero-underlay) .l2', 'hero-title-line-2');
-  assign('.hero-mega:not(.hero-underlay) .l3', 'hero-title-line-3');
   $('.hero-mega.hero-underlay').each((i, el) => {
     const groupId = `hero-underlay-${i+1}`;
     $(el).attr('data-editor-id', groupId);

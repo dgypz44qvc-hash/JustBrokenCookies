@@ -1,0 +1,85 @@
+/* JBC local editor overrides */
+
+[data-editor-id="decor-001"] {
+  left: -76px !important;
+  top: -1304px !important;
+  width: 1595px !important;
+  height: 1830px !important;
+  z-index: 2 !important;
+}
+
+[data-editor-id="rose-1777461276486-tgxu"] {
+  left: 144px !important;
+  top: -475px !important;
+}
+
+[data-editor-id="rose-1777461279793-jpyp"] {
+  left: 182px !important;
+  top: -423px !important;
+}
+
+[data-editor-id="image-003"] {
+  position: absolute !important;
+  left: 48px !important;
+  top: 48px !important;
+  width: 320px !important;
+  height: 220px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="decor-004"] {
+  position: absolute !important;
+  left: 484px !important;
+  top: -86px !important;
+  width: 729px !important;
+  height: 1095px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="manifesto-inner"] {
+  position: relative !important;
+  left: 198px !important;
+  top: 31px !important;
+}
+
+[data-editor-id="manifesto-section"] {
+  position: relative !important;
+  left: -103px !important;
+  top: 181px !important;
+  width: 1497px !important;
+  height: 154px !important;
+}
+
+[data-editor-id="process-section"] {
+  left: -72px !important;
+  top: 171px !important;
+}
+
+[data-editor-id="hero-storytelling-tag"] {
+  left: 1295px !important;
+  top: 80px !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 123px !important;
+  height: 531px !important;
+  opacity: 1 !important;
+  font-size: 71px !important;
+}
+
+[data-editor-id="hero-image-wrap"] {
+  left: 280px !important;
+  top: 65px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+[data-editor-id="jbc-1777551171911-djsv"] {
+  left: 0px !important;
+  top: 0px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
