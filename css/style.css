@@ -4,23 +4,23 @@
    ============================================ */
 
 :root {
-  /* ---- Dark brown + sunset fluo palette ---- */
+  /* ---- Black + sunset fluo palette ---- */
   --cream:      #F0E6DA;        /* warm light text    */
-  --charcoal:   #211F1D;        /* cold dark taupe    */
+  --charcoal:   #050505;        /* black stage        */
   --blush:      #E84848;        /* sunset coral-red   */
   --dusty-rose: #C93A6E;        /* hot magenta        */
   --sage:       #8A9B82;        /* earthy green hint  */
   --gold:       #E8891D;        /* sunset amber-orange*/
   --wine:       #8B3A8B;        /* rich purple        */
-  --taupe:      #56514C;        /* cooler deep taupe  */
-  --ivory:      #1D1A18;        /* darker taupe cards  */
-  --warm-gray:  #938C84;        /* muted body text    */
+  --taupe:      #1A1A1A;        /* deep neutral gray   */
+  --ivory:      #0B0B0B;        /* black cards         */
+  --warm-gray:  #A09A94;        /* muted body text     */
 
   --font-display: 'Playfair Display', Georgia, serif;
   --font-script:  'Dancing Script', cursive;
   --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
 
-  --border: 1px solid rgba(107,95,85,0.35);
+  --border: 1px solid rgba(255,255,255,0.13);
   --section-pad: clamp(80px, 12vw, 140px);
   --container: 1200px;
 
@@ -141,12 +141,12 @@ ul { list-style:none; }
 .nav {
   position:fixed; top:0; left:0; width:100%; z-index:1000;
   padding:0;
-  background:rgba(42,34,30,0.95);
+  background:rgba(5, 5, 5, 0.95);
   backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
   transition:all 0.5s var(--ease-out-expo);
 }
 .nav.scrolled {
-  background:rgba(42,34,30,0.98);
+  background:rgba(5, 5, 5, 0.98);
   box-shadow:0 1px 30px rgba(0,0,0,0.12);
 }
 .nav .container {
@@ -1036,7 +1036,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   .nav-links {
     position:fixed; top:0; right:-100%;
     width:75%; height:100vh;
-    background:rgba(42,34,30,0.98);
+    background:rgba(5, 5, 5, 0.98);
     backdrop-filter:blur(20px);
     flex-direction:column; justify-content:center;
     gap:35px; transition:right 0.5s var(--ease-out-expo);
@@ -1683,7 +1683,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   isolation: isolate;
   overflow: hidden;
   background:
-    linear-gradient(145deg, rgba(35, 29, 25, 0.96), rgba(42, 34, 30, 0.92)) !important;
+    linear-gradient(145deg, rgba(10, 10, 10, 0.96), rgba(5, 5, 5, 0.92)) !important;
   border: 1px solid rgba(240, 230, 218, 0.13) !important;
   border-radius: 18px !important;
   padding: clamp(34px, 4vw, 58px) clamp(26px, 3.4vw, 44px) !important;
@@ -1947,7 +1947,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   position: relative;
   isolation: isolate;
   background:
-    linear-gradient(180deg, rgba(35, 29, 25, 1), rgba(26, 21, 18, 1)) !important;
+    linear-gradient(180deg, rgba(5, 5, 5, 1), rgba(0, 0, 0, 1)) !important;
   border-top: 1px solid rgba(240, 230, 218, 0.14) !important;
 }
 
@@ -2004,7 +2004,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 
 .footer.jbc-editorial-footer .social-links a {
   border-color: rgba(240, 230, 218, 0.16) !important;
-  background: rgba(42, 34, 30, 0.34);
+  background: rgba(5, 5, 5, 0.34);
 }
 
 .footer.jbc-editorial-footer .footer-bottom {
@@ -2027,7 +2027,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 
 .btn-outline {
   border-color: rgba(240, 230, 218, 0.28) !important;
-  background: rgba(35, 29, 25, 0.20) !important;
+  background: rgba(10, 10, 10, 0.20) !important;
   backdrop-filter: blur(10px);
 }
 
@@ -2581,9 +2581,9 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-image:
     linear-gradient(
       90deg,
-      rgba(35, 29, 25, 0.58),
-      rgba(35, 29, 25, 0.32),
-      rgba(35, 29, 25, 0.68)
+      rgba(5, 5, 5, 0.58),
+      rgba(5, 5, 5, 0.32),
+      rgba(5, 5, 5, 0.68)
     ),
     var(--jbc-rose-pattern);
   background-repeat: no-repeat;
@@ -2945,9 +2945,9 @@ section { padding:var(--section-pad) 0; position:relative; }
   background-image:
     linear-gradient(
       90deg,
-      rgba(42, 34, 30, 0.92) 0%,
-      rgba(42, 34, 30, 0.42) 46%,
-      rgba(42, 34, 30, 0.12) 100%
+      rgba(5, 5, 5, 0.92) 0%,
+      rgba(5, 5, 5, 0.42) 46%,
+      rgba(5, 5, 5, 0.12) 100%
     ),
     var(--jbc-rose-pattern, url("../images/jbc-rose-pattern-bg.png"));
 
@@ -3919,7 +3919,7 @@ body {
 
 /* Keep the nav above the video, but let video be visible behind it */
 .nav {
-  background: rgba(42, 34, 30, 0.78) !important;
+  background: rgba(5, 5, 5, 0.78) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
   z-index: 1000 !important;
@@ -3936,7 +3936,7 @@ body {
 
 /* If the video feels too visible under the nav, darken nav slightly */
 .nav.scrolled {
-  background: rgba(42, 34, 30, 0.90) !important;
+  background: rgba(5, 5, 5, 0.90) !important;
 }
 
 /* Mobile, less intense behind nav */
@@ -3949,7 +3949,7 @@ body {
   }
 
   .nav {
-    background: rgba(42, 34, 30, 0.86) !important;
+    background: rgba(5, 5, 5, 0.86) !important;
   }
 }
 
@@ -4028,7 +4028,7 @@ body {
 
 /* NAV ONLY: make it transparent/glassy, do not move it */
 .nav {
-  background: rgba(42, 34, 30, 0.42) !important;
+  background: rgba(5, 5, 5, 0.42) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   border-bottom: 1px solid rgba(240, 230, 218, 0.08) !important;
@@ -4037,13 +4037,13 @@ body {
 
 /* On scroll, slightly darker for readability */
 .nav.scrolled {
-  background: rgba(42, 34, 30, 0.72) !important;
+  background: rgba(5, 5, 5, 0.72) !important;
 }
 
 /* Mobile nav a little more readable */
 @media (max-width: 768px) {
   .nav {
-    background: rgba(42, 34, 30, 0.58) !important;
+    background: rgba(5, 5, 5, 0.58) !important;
   }
 
   .hero-rose-video {
@@ -4163,7 +4163,7 @@ body {
 /* Nav stays above everything */
 .nav {
   z-index: 1000 !important;
-  background: rgba(42, 34, 30, 0.42) !important;
+  background: rgba(5, 5, 5, 0.42) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -4939,4 +4939,74 @@ body {
     width: min(82vw, 360px) !important;
     height: min(82vw, 360px) !important;
   }
+}
+
+/* =========================================================
+   SITE-WIDE BLACK THEME OVERRIDE
+   Keeps the hero artwork, removes brown/taupe page surfaces.
+   ========================================================= */
+
+html,
+body {
+  background: #050505 !important;
+  background-color: #050505 !important;
+}
+
+body[data-editor-id],
+.page-transition,
+.manifesto,
+.jbc-editorial-section,
+#services-overview,
+#featured-work,
+.testimonial-section,
+.cta-section,
+.footer,
+.footer.jbc-editorial-footer,
+.page-header,
+.service-detail,
+.portfolio-grid-section,
+.blog-grid-section,
+.contact-section {
+  background-color: #050505 !important;
+}
+
+.nav,
+.nav.scrolled {
+  background: rgba(5, 5, 5, 0.86) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.nav-links {
+  background-color: transparent !important;
+}
+
+@media (max-width: 968px) {
+  .nav-links,
+  .nav-links.open {
+    background: rgba(5, 5, 5, 0.98) !important;
+  }
+}
+
+.service-card,
+.service-card.jbc-editorial-card,
+.value-card,
+.process-card,
+.portfolio-item,
+.portfolio-item.jbc-editorial-work-item,
+.testi-brutal,
+.testi-content,
+.contact-form,
+.contact-info-wrap,
+.footer.jbc-editorial-footer .footer-grid,
+.service-cinema,
+.service-cinema-inner {
+  background: #0b0b0b !important;
+  background-color: #0b0b0b !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.hero,
+.hero.jbc-floral-hero {
+  background-color: #050505 !important;
 }
