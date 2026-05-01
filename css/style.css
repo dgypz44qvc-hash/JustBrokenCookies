@@ -1581,7 +1581,7 @@ section { padding:var(--section-pad) 0; position:relative; }
    Uses: images/jbc-rose-pattern-bg.png
    ========================================================= */
 :root {
-  --jbc-floral-pattern: url("../images/jbc-rose-pattern-bg.png");
+  --jbc-floral-pattern: url("../images/jbc-floral-accent-desktop.jpg");
   --jbc-deep: #2A221E;
   --jbc-card: #231D19;
   --jbc-gold: #E8891D;
@@ -2433,7 +2433,7 @@ section { padding:var(--section-pad) 0; position:relative; }
    ========================================================= */
 
 :root {
-  --jbc-rose-pattern: url("../images/jbc-rose-pattern-bg.png");
+  --jbc-rose-pattern: url("../images/jbc-floral-accent-desktop.jpg");
 }
 
 /* Keep every decorated section safe */
@@ -4879,13 +4879,13 @@ body {
     z-index: 0 !important;
     pointer-events: none !important;
     background-image:
-      linear-gradient(180deg, rgba(5, 5, 5, 0.6), rgba(5, 5, 5, 0.92)),
-      url("../images/mobile-floral-mobile.jpg") !important;
-    background-size: 140% auto !important;
+      linear-gradient(180deg, rgba(5, 5, 5, 0.64), rgba(5, 5, 5, 0.94)),
+      url("../images/jbc-floral-accent-mobile.jpg") !important;
+    background-size: 150% auto !important;
     background-repeat: repeat-y !important;
     background-position: center top !important;
-    opacity: 0.28 !important;
-    filter: saturate(0.82) contrast(1.08) brightness(0.62) !important;
+    opacity: 0.34 !important;
+    filter: saturate(0.92) contrast(1.08) brightness(0.68) !important;
   }
 
   #services-overview > *,
