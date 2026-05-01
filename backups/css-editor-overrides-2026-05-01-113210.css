@@ -1,6 +1,20 @@
 /* JBC local editor overrides */
 
-
+[data-editor-id="decor-001"] {
+  position: absolute !important;
+  left: 336px !important;
+  top: 21px !important;
+  width: 1592px !important;
+  height: 768px !important;
+  opacity: 0.35 !important;
+  z-index: 1 !important;
+  color: rgb(240, 230, 218) !important;
+  background-color: rgb(0, 0, 0) !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  border-radius: 0px !important;
+  mix-blend-mode: normal !important;
+}
 
 [data-editor-id="rose-1777461276486-tgxu"] {
   left: 144px !important;
@@ -71,95 +85,23 @@
 }
 
 [data-editor-id="jbc-1777582870310-2u4w"] {
-  left: 0px !important;
-  top: 0px !important;
+  background-color: rgb(5, 5, 5) !important;
 }
 
-
+[data-editor-id="process-section"] {
+  left: 3px !important;
+  top: -52px !important;
+  width: 1209px !important;
+  height: 878px !important;
+  opacity: 0.75 !important;
+  color: rgb(240, 230, 218) !important;
+  background-color: rgb(5, 5, 5) !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  border-radius: 0px !important;
+}
 
 [data-editor-id="jbc-1777551738761-b55o"] {
   left: -3px !important;
   top: -8px !important;
-}
-
-[data-editor-id="footer-bottom"] {
-  left: 1px !important;
-  top: -442px !important;
-  width: 1209px !important;
-  height: 511px !important;
-}
-
-[data-editor-id="jbc-1777551171910-ooc8"] {
-  left: 0px !important;
-  top: 0px !important;
-}
-
-
-
-
-
-[data-editor-id="cta-section"] {
-  left: 1px !important;
-  top: 1px !important;
-}
-
-[data-editor-id="jbc-1777551171912-lnsb"] {
-  position: relative !important;
-  left: 0px !important;
-  top: 0px !important;
-  width: 371px !important;
-  height: 175px !important;
-}
-
-
-
-[data-editor-id="footer-brand"] {
-  position: relative !important;
-}
-
-[data-editor-id="footer-grid"] {
-  left: 0px !important;
-  top: -16px !important;
-  width: 1209px !important;
-  height: 240px !important;
-}
-
-[data-editor-id="image-002"] {
-  position: absolute !important;
-  left: 385px !important;
-  top: -4px !important;
-  width: 1516px !important;
-  height: 335px !important;
-  opacity: 0.25 !important;
-  z-index: 1001 !important;
-  color: rgb(240, 230, 218) !important;
-  background-color: rgb(0, 0, 0) !important;
-  font-size: 16px !important;
-  letter-spacing: normal !important;
-  border-radius: 0px !important;
-  mix-blend-mode: normal !important;
-}
-
-[data-editor-id="jbc-1777551171910-f1lg"] {
-  position: relative !important;
-  display: none !important;
-}
-
-[data-editor-id="jbc-1777551171910-04hk"] {
-  position: relative !important;
-  display: none !important;
-}
-
-[data-editor-id="footer-section"] {
-  left: -6px !important;
-  top: -95px !important;
-  width: 1465px !important;
-  height: 230px !important;
-}
-
-[data-editor-id="process-section"] {
-  left: -18px !important;
-  top: -52px !important;
-  width: 1503px !important;
-  height: 878px !important;
 }

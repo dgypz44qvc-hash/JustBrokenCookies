@@ -1,0 +1,81 @@
+/* JBC local editor overrides */
+
+[data-editor-id="decor-001"] {
+  left: -76px !important;
+  top: -1304px !important;
+  width: 1595px !important;
+  height: 1830px !important;
+  z-index: 2 !important;
+}
+
+[data-editor-id="rose-1777461276486-tgxu"] {
+  left: 144px !important;
+  top: -475px !important;
+}
+
+[data-editor-id="rose-1777461279793-jpyp"] {
+  left: 182px !important;
+  top: -423px !important;
+}
+
+[data-editor-id="image-003"] {
+  position: absolute !important;
+  left: 48px !important;
+  top: 48px !important;
+  width: 320px !important;
+  height: 220px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="decor-004"] {
+  position: absolute !important;
+  left: 484px !important;
+  top: -86px !important;
+  width: 729px !important;
+  height: 1095px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="hero-storytelling-tag"] {
+  opacity: 1 !important;
+}
+
+
+
+[data-editor-id="jbc-1777551171911-djsv"] {
+  left: 0px !important;
+  top: 0px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+[data-editor-id="manifesto-inner"] {
+  position: relative !important;
+  left: -300px !important;
+  top: -18px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+[data-editor-id="hero-title-line-1"] {
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+[data-editor-id="hero-section"] {
+  left: -4px !important;
+  top: 63px !important;
+  background-color: rgb(0, 0, 0) !important;
+  background-image: url("images/heromultiroses-1920.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+[data-editor-id="jbc-1777582870310-2u4w"] {
+  background-color: rgb(5, 5, 5) !important;
+}

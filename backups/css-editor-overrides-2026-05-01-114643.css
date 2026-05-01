@@ -1,6 +1,11 @@
 /* JBC local editor overrides */
 
-
+[data-editor-id="decor-001"] {
+  left: 830px !important;
+  top: -8px !important;
+  width: 1266px !important;
+  height: 768px !important;
+}
 
 [data-editor-id="rose-1777461276486-tgxu"] {
   left: 144px !important;
