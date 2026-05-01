@@ -5233,3 +5233,2851 @@ body[data-editor-id],
     display: none !important;
   }
 }
+
+/* =========================================================
+   PROCESS SECTION ROSE PATTERN FIX
+   Fixes stretched rose wallpaper + softens card pattern borders
+   ========================================================= */
+
+/* Stop the main process rose background from stretching vertically */
+#services-overview.jbc-floral-process::before {
+  background-size: 620px auto !important;
+  background-repeat: repeat !important;
+  background-position: left top !important;
+  opacity: 0.42 !important;
+
+  /* Fade the big rose layer so it dissolves into the dark section */
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,1) 38%,
+      rgba(0,0,0,0.58) 58%,
+      rgba(0,0,0,0.18) 78%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,1) 38%,
+      rgba(0,0,0,0.58) 58%,
+      rgba(0,0,0,0.18) 78%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+}
+
+/* If any older process background layer is using cover/stretch, neutralise it */
+#services-overview.jbc-floral-process,
+#services-overview.jbc-floral-process .container {
+  background-size: auto !important;
+}
+
+/* Keep the real content above all decorative roses */
+#services-overview.jbc-floral-process > *,
+#services-overview.jbc-floral-process .container,
+#services-overview.jbc-floral-process .sec-header,
+#services-overview.jbc-floral-process .services-grid,
+#services-overview.jbc-floral-process .service-card {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Fade decorative patterns inside the Define / Design / Describe cards */
+#services-overview .service-card::before,
+#services-overview .jbc-editorial-card::before,
+#services-overview .jbc-editorial-card-1::before,
+#services-overview .jbc-editorial-card-2::before,
+#services-overview .jbc-editorial-card-3::before {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  opacity: 0.34 !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.92) 42%,
+      rgba(0,0,0,0.45) 72%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.92) 42%,
+      rgba(0,0,0,0.45) 72%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+}
+
+/* Extra soft dark veil so the card pattern does not fight the text */
+#services-overview .service-card {
+  overflow: hidden !important;
+  background-color: rgba(10, 8, 8, 0.78) !important;
+}
+
+#services-overview .service-card > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+
+/* =========================================================
+   SELECTED WORK ROSE PATTERN FIX
+   Fixes stretched rose wallpaper + softens portfolio/card pattern borders
+   ========================================================= */
+
+/* Stop the Selected Work rose background from stretching */
+#featured-work.jbc-floral-work::before {
+  background-size: 620px auto !important;
+  background-repeat: repeat !important;
+  background-position: left top !important;
+  opacity: 0.36 !important;
+
+  /* Fade the big rose layer into the dark section */
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.92) 34%,
+      rgba(0,0,0,0.52) 58%,
+      rgba(0,0,0,0.18) 78%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.92) 34%,
+      rgba(0,0,0,0.52) 58%,
+      rgba(0,0,0,0.18) 78%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+}
+
+/* Neutralise any old stretched background behaviour on the section/container */
+#featured-work.jbc-floral-work,
+#featured-work.jbc-floral-work .container,
+#featured-work.jbc-floral-work .portfolio-grid {
+  background-size: auto !important;
+}
+
+/* Keep real content safely above decorative layers */
+#featured-work.jbc-floral-work > *,
+#featured-work.jbc-floral-work .container,
+#featured-work.jbc-floral-work .sec-header,
+#featured-work.jbc-floral-work .portfolio-grid,
+#featured-work.jbc-floral-work .portfolio-item {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Fade any decorative pattern layers inside portfolio items/cards */
+#featured-work .portfolio-item::before,
+#featured-work .portfolio-item::after,
+#featured-work .jbc-editorial-work-item::before,
+#featured-work .jbc-editorial-work-item::after,
+#featured-work .jbc-editorial-work-item-1::before,
+#featured-work .jbc-editorial-work-item-2::before,
+#featured-work .jbc-editorial-work-item-3::before,
+#featured-work .jbc-editorial-work-item-4::before {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  opacity: 0.30 !important;
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.88) 42%,
+      rgba(0,0,0,0.42) 72%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.88) 42%,
+      rgba(0,0,0,0.42) 72%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+}
+
+/* Make portfolio cards feel integrated rather than pasted */
+#featured-work .portfolio-item {
+  overflow: hidden !important;
+  background-color: rgba(10, 8, 8, 0.76) !important;
+}
+
+/* Keep images/overlays/text above the softened pattern */
+#featured-work .portfolio-item > *,
+#featured-work .portfolio-item img,
+#featured-work .portfolio-item .overlay {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Give image edges a softer editorial blend inside each work card */
+#featured-work .portfolio-item img {
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,1) 62%,
+      rgba(0,0,0,0.58) 84%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,1) 62%,
+      rgba(0,0,0,0.58) 84%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+}
+
+/* =========================================================
+   SELECTED WORK, EDGE FADE ONLY
+   Keeps rose pattern visible, only softens harsh rectangular borders
+   ========================================================= */
+
+#featured-work.jbc-floral-work::before {
+  opacity: 0.36 !important;
+  background-size: 620px auto !important;
+  background-repeat: repeat !important;
+  background-position: left top !important;
+
+  /* Edge feather only, not centre fade */
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0.55) 4%,
+      rgba(0,0,0,1) 10%,
+      rgba(0,0,0,1) 86%,
+      rgba(0,0,0,0.55) 94%,
+      rgba(0,0,0,0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0.55) 5%,
+      rgba(0,0,0,1) 12%,
+      rgba(0,0,0,1) 88%,
+      rgba(0,0,0,0.55) 95%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+
+  -webkit-mask-composite: source-in !important;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0.55) 4%,
+      rgba(0,0,0,1) 10%,
+      rgba(0,0,0,1) 86%,
+      rgba(0,0,0,0.55) 94%,
+      rgba(0,0,0,0) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,0.55) 5%,
+      rgba(0,0,0,1) 12%,
+      rgba(0,0,0,1) 88%,
+      rgba(0,0,0,0.55) 95%,
+      rgba(0,0,0,0) 100%
+    ) !important;
+
+  mask-composite: intersect !important;
+}
+
+/* Remove any extra centre dark veil from the previous attempt */
+#featured-work.jbc-floral-work::after {
+  background: none !important;
+  opacity: 0 !important;
+}
+
+/* =========================================================
+   FOOTER CONTENT RESTORE, REMOVE FOOTER IMAGES ONLY
+   Brings footer text/links back, removes stuck decorative image layers
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background-color: #0b0909 !important;
+  background-image: none !important;
+  overflow: hidden !important;
+}
+
+/* Remove decorative footer background images only */
+footer.footer::before,
+footer.footer::after,
+.footer.jbc-editorial-footer::before,
+.footer.jbc-editorial-footer::after {
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Bring the real footer layout/content back */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Restore correct display types */
+footer.footer .footer-brand,
+footer.footer .footer-col,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col {
+  display: block !important;
+}
+
+footer.footer .footer-bottom,
+.footer.jbc-editorial-footer .footer-bottom {
+  display: flex !important;
+}
+
+footer.footer .social-links,
+.footer.jbc-editorial-footer .social-links {
+  display: flex !important;
+}
+
+/* Keep all footer text and links visible */
+footer.footer a,
+footer.footer p,
+footer.footer h4,
+footer.footer span,
+footer.footer i,
+.footer.jbc-editorial-footer a,
+.footer.jbc-editorial-footer p,
+.footer.jbc-editorial-footer h4,
+.footer.jbc-editorial-footer span,
+.footer.jbc-editorial-footer i {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Hide only loose/custom images inside footer, not text or links */
+footer.footer img,
+footer.footer picture,
+footer.footer .jbc-custom,
+.footer.jbc-editorial-footer img,
+.footer.jbc-editorial-footer picture,
+.footer.jbc-editorial-footer .jbc-custom {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+
+
+/* =========================================================
+   FOOTER PORTRAIT BACKGROUND, CLEAN REBUILD
+   Uses: images/footer-story-bg-desktop.jpg
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  overflow: hidden !important;
+  background-color: #090707 !important;
+  isolation: isolate !important;
+}
+
+/* Cinematic portrait layer under footer content */
+footer.footer::before,
+.footer.jbc-editorial-footer::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.46 !important;
+  position: absolute !important;
+  inset: 0 !important;
+  height: auto !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(9,7,7,0.94) 0%,
+      rgba(9,7,7,0.70) 24%,
+      rgba(9,7,7,0.34) 52%,
+      rgba(9,7,7,0.74) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(9,7,7,0.96) 0%,
+      rgba(9,7,7,0.28) 34%,
+      rgba(9,7,7,0.86) 100%
+    ),
+    url("../images/footer-story-bg-desktop.jpg") !important;
+
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.22) 0%,
+      rgba(0,0,0,0.92) 24%,
+      rgba(0,0,0,1) 54%,
+      rgba(0,0,0,1) 100%
+    ) !important;
+  mask-image:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.22) 0%,
+      rgba(0,0,0,0.92) 24%,
+      rgba(0,0,0,1) 54%,
+      rgba(0,0,0,1) 100%
+    ) !important;
+}
+
+/* Remove any old footer after-layer so only this clean strip remains */
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Keep footer text and links above the portrait strip */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Give the footer enough depth for the portrait artwork to breathe */
+footer.footer,
+.footer.jbc-editorial-footer {
+  padding-bottom: 72px !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer::before,
+  .footer.jbc-editorial-footer::before {
+    inset: 0 !important;
+    height: auto !important;
+    opacity: 0.38 !important;
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(9,7,7,0.96) 0%,
+        rgba(9,7,7,0.62) 48%,
+        rgba(9,7,7,0.88) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(9,7,7,0.98) 0%,
+        rgba(9,7,7,0.34) 38%,
+        rgba(9,7,7,0.90) 100%
+      ),
+      url("../images/footer-story-bg-mobile.jpg") !important;
+    background-position: center center !important;
+  }
+}
+
+.footer.jbc-editorial-footer .footer-grid::before,
+.footer.jbc-editorial-footer .footer-grid::after,
+footer.footer .footer-grid::before,
+footer.footer .footer-grid::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+
+/* =========================================================
+   FOOTER CINEMATIC PORTRAIT BACKGROUND
+   Footer image behind footer text
+   Uses: images/footer-story-bg-desktop.jpg
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background-color: #080606 !important;
+  background-image: none !important;
+}
+
+/* The image layer, under all footer text */
+footer.footer::before,
+.footer.jbc-editorial-footer::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  height: auto !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  opacity: 0.46 !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(8,6,6,0.96) 0%,
+      rgba(8,6,6,0.58) 18%,
+      rgba(8,6,6,0.20) 48%,
+      rgba(8,6,6,0.48) 78%,
+      rgba(8,6,6,0.80) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8,6,6,0.92) 0%,
+      rgba(8,6,6,0.18) 38%,
+      rgba(8,6,6,0.88) 100%
+    ),
+    url("../images/footer-story-bg-desktop.jpg") !important;
+
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  -webkit-mask-image:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.28) 0%,
+      rgba(0,0,0,0.92) 20%,
+      rgba(0,0,0,1) 48%,
+      rgba(0,0,0,1) 100%
+    ) !important;
+  mask-image:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.28) 0%,
+      rgba(0,0,0,0.92) 20%,
+      rgba(0,0,0,1) 48%,
+      rgba(0,0,0,1) 100%
+    ) !important;
+}
+
+/* Kill old second footer pseudo layer, avoids duplicate ghost images */
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Keep footer text/links above the image */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Extra breathing room so the portrait sits under the footer content elegantly */
+footer.footer,
+.footer.jbc-editorial-footer {
+  padding-bottom: 76px !important;
+}
+
+/* Mobile, use the optimized portrait background without the old strip */
+@media (max-width: 768px) {
+  footer.footer::before,
+  .footer.jbc-editorial-footer::before {
+    inset: 0 !important;
+    height: auto !important;
+    opacity: 0.38 !important;
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(8,6,6,0.96) 0%,
+        rgba(8,6,6,0.62) 48%,
+        rgba(8,6,6,0.88) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(8,6,6,0.98) 0%,
+        rgba(8,6,6,0.34) 38%,
+        rgba(8,6,6,0.90) 100%
+      ),
+      url("../images/footer-story-bg-mobile.jpg") !important;
+    background-position: center center !important;
+  }
+}
+
+
+/* =========================================================
+   FORCE FOOTER IMAGE STRIP VISIBLE
+   Final override, nothing should hide this layer
+   Uses: images/footer-story-bg-desktop.jpg
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 360px !important;
+  padding-top: 70px !important;
+  padding-bottom: 90px !important;
+  background: #080606 !important;
+}
+
+/* This is the visible image layer */
+footer.footer::before,
+.footer.jbc-editorial-footer::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.78 !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 360px !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(8,6,6,0.90) 0%,
+      rgba(8,6,6,0.52) 18%,
+      rgba(8,6,6,0.18) 48%,
+      rgba(8,6,6,0.44) 78%,
+      rgba(8,6,6,0.82) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8,6,6,0.70) 0%,
+      rgba(8,6,6,0.14) 40%,
+      rgba(8,6,6,0.88) 100%
+    ),
+    url("../images/footer-story-bg-desktop.jpg") !important;
+
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Disable only the second ghost layer */
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background-image: none !important;
+}
+
+/* Keep all footer content above the image */
+footer.footer > *,
+.footer.jbc-editorial-footer > *,
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 5 !important;
+  display: revert-layer;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  display: grid !important;
+}
+
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  display: flex !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer {
+    min-height: 420px !important;
+  }
+
+  footer.footer::before,
+  .footer.jbc-editorial-footer::before {
+    opacity: 0.58 !important;
+    background-position: center center !important;
+  }
+}
+
+/* =========================================================
+   FOOTER IMAGE STRIP, CORRECT IMAGE
+   Uses: images/Vale flower walk.jpeg
+   Keeps footer text above, removes previous wrong/hidden footer image behaviour
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 430px !important;
+  padding-top: 80px !important;
+  padding-bottom: 90px !important;
+  background: #070505 !important;
+}
+
+/* Correct visible footer background image */
+footer.footer::before,
+.footer.jbc-editorial-footer::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.62 !important;
+
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 430px !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.94) 0%,
+      rgba(7,5,5,0.56) 22%,
+      rgba(7,5,5,0.18) 50%,
+      rgba(7,5,5,0.46) 78%,
+      rgba(7,5,5,0.82) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.64) 0%,
+      rgba(7,5,5,0.12) 36%,
+      rgba(7,5,5,0.84) 100%
+    ),
+    url("../images/Vale%20flower%20walk.jpeg") !important;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Kill any second ghost/footer layer */
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background-image: none !important;
+}
+
+/* Keep footer text, links, logo and icons above the image */
+footer.footer > *,
+.footer.jbc-editorial-footer > *,
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  display: grid !important;
+}
+
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  display: flex !important;
+}
+
+/* Mobile version, slightly taller so the image does not get chopped */
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer {
+    min-height: 500px !important;
+  }
+
+  footer.footer::before,
+  .footer.jbc-editorial-footer::before {
+    min-height: 500px !important;
+    opacity: 0.48 !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}
+
+
+/* =========================================================
+   FOOTER FOREGROUND IMAGE LAYER RESTORE
+   Puts the footer lady image above any footer background,
+   but underneath the footer text and links.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: #070505 !important;
+}
+
+/* Keep any footer background/pseudo layers behind the inserted image */
+footer.footer::before,
+.footer.jbc-editorial-footer::before,
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  z-index: 0 !important;
+}
+
+/* Restore the actual inserted footer image layer */
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"],
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.62 !important;
+  position: absolute !important;
+  left: 25% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 75% !important;
+  height: 260px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Make the image fill the strip cleanly */
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img,
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  filter: brightness(0.72) contrast(1.05) saturate(0.9) !important;
+}
+
+/* Soft veil over the image so footer text remains readable */
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after,
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(7,5,5,0.68) 0%, rgba(7,5,5,0.18) 42%, rgba(7,5,5,0.68) 100%),
+    linear-gradient(180deg, rgba(7,5,5,0.52) 0%, rgba(7,5,5,0.14) 45%, rgba(7,5,5,0.78) 100%) !important;
+}
+
+/* Keep real footer text and links above the image */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Mobile, full width but softer */
+@media (max-width: 768px) {
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"],
+  footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
+  .footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
+    left: 0 !important;
+    width: 100% !important;
+    height: 230px !important;
+    opacity: 0.42 !important;
+  }
+}
+
+
+/* =========================================================
+   FOOTER FINAL IMAGE + TRANSPARENT TEXT AREAS
+   Correct image sits above background, below footer text.
+   Footer text boxes are transparent.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: #070505 !important;
+}
+
+/* Keep any footer pseudo/background layers underneath */
+footer.footer::before,
+.footer.jbc-editorial-footer::before,
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  z-index: 0 !important;
+}
+
+/* Correct inserted footer image layer */
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"],
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.66 !important;
+  position: absolute !important;
+  left: 24% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 76% !important;
+  height: 270px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  mix-blend-mode: normal !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Fill the strip cleanly */
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img,
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  filter: brightness(0.68) contrast(1.04) saturate(0.92) !important;
+}
+
+/* Soft veil on image only, text stays above */
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after,
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(7,5,5,0.66) 0%, rgba(7,5,5,0.14) 45%, rgba(7,5,5,0.62) 100%),
+    linear-gradient(180deg, rgba(7,5,5,0.38) 0%, rgba(7,5,5,0.08) 45%, rgba(7,5,5,0.74) 100%) !important;
+}
+
+/* Make footer text boxes transparent */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep only subtle lines, no dark panels */
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+footer.footer .footer-col,
+footer.footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-brand {
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Keep footer text readable above everything */
+footer.footer a,
+footer.footer p,
+footer.footer h4,
+footer.footer span,
+footer.footer i,
+.footer.jbc-editorial-footer a,
+.footer.jbc-editorial-footer p,
+.footer.jbc-editorial-footer h4,
+.footer.jbc-editorial-footer span,
+.footer.jbc-editorial-footer i {
+  position: relative !important;
+  z-index: 7 !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"],
+  footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
+  .footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
+    left: 0 !important;
+    width: 100% !important;
+    height: 240px !important;
+    opacity: 0.46 !important;
+  }
+}
+
+/* =========================================================
+   FINAL MOBILE HOMEPAGE REPAIR - LAST OVERRIDE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    background: #050505 !important;
+  }
+
+  .hero.jbc-floral-hero {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #050505 !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+  }
+
+  .hero.jbc-floral-hero > picture {
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1920 / 1073 !important;
+    transform: none !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background: #050505 !important;
+  }
+
+  .hero.jbc-floral-hero .hero-full-bg {
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    aspect-ratio: 1920 / 1073 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 1 !important;
+  }
+
+  .hero.jbc-floral-hero .hero-bottom,
+  .hero.jbc-floral-hero .jbc-custom,
+  .hero.jbc-floral-hero .hero-photo-layer,
+  .hero.jbc-floral-hero .hero-content,
+  .hero.jbc-floral-hero .hero-oil-wrap,
+  .hero.jbc-floral-hero .hero-mega,
+  .hero.jbc-floral-hero .tag,
+  .hero.jbc-floral-hero::before,
+  .hero.jbc-floral-hero::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .manifesto {
+    margin-top: 0 !important;
+    background: #050505 !important;
+  }
+
+  .manifesto-inner {
+    padding: 18px 0 !important;
+  }
+
+  .manifesto-inner span {
+    font-size: clamp(1.1rem, 6vw, 1.8rem) !important;
+  }
+
+  .jbc-editorial-section,
+  #services-overview,
+  #featured-work,
+  .testimonial-section,
+  .cta-section {
+    padding: 44px 0 !important;
+    background-color: #050505 !important;
+  }
+
+  .container {
+    width: min(90%, 420px) !important;
+  }
+
+  .sec-header {
+    margin-bottom: 26px !important;
+  }
+
+  .sec-header h2,
+  .section-title,
+  .cta-section h2 {
+    font-size: clamp(2rem, 10vw, 3.2rem) !important;
+    line-height: 0.96 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .services-grid,
+  .portfolio-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .service-card,
+  .service-card.jbc-editorial-card,
+  .portfolio-item,
+  .portfolio-item.jbc-editorial-work-item,
+  .testi-brutal,
+  .testi-content,
+  .cta-section .container,
+  .service-cinema,
+  .service-cinema-inner {
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 22px !important;
+    border-radius: 8px !important;
+    background-color: #090909 !important;
+    box-shadow: none !important;
+  }
+
+  .service-card h3 {
+    font-size: clamp(2rem, 11vw, 3.3rem) !important;
+    line-height: 0.92 !important;
+  }
+
+  .service-card p,
+  .service-card div,
+  .testi-content blockquote,
+  .cta-section p {
+    font-size: 0.88rem !important;
+    line-height: 1.62 !important;
+  }
+
+  .portfolio-item,
+  .portfolio-item.jbc-editorial-work-item {
+    aspect-ratio: 4 / 5 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .portfolio-item img,
+  .portfolio-item.jbc-editorial-work-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .portfolio-item .overlay {
+    padding: 20px !important;
+  }
+
+  .portfolio-item .overlay h3 {
+    font-size: clamp(1.65rem, 8vw, 2.5rem) !important;
+    line-height: 1 !important;
+  }
+
+  .testi-brutal {
+    width: min(90%, 420px) !important;
+    margin: 0 auto !important;
+  }
+
+  .footer.jbc-editorial-footer .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .nav .container {
+    padding: 12px 0 !important;
+  }
+
+  .nav-logo {
+    font-size: 0.56rem !important;
+    letter-spacing: 3.2px !important;
+  }
+
+  .hero.jbc-floral-hero > picture,
+  .hero.jbc-floral-hero .hero-full-bg {
+    aspect-ratio: 1920 / 1073 !important;
+  }
+
+  .jbc-editorial-section,
+  #services-overview,
+  #featured-work,
+  .testimonial-section,
+  .cta-section {
+    padding: 38px 0 !important;
+  }
+
+  .service-card,
+  .service-card.jbc-editorial-card,
+  .testi-brutal,
+  .testi-content,
+  .cta-section .container,
+  .service-cinema,
+  .service-cinema-inner {
+    padding: 18px !important;
+  }
+}
+
+/* =========================================================
+   FOOTER FINAL IMAGE + TRANSPARENT TEXT AREAS
+   Correct image sits above background, below footer text.
+   Footer text boxes are transparent.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: #070505 !important;
+}
+
+/* Keep any footer pseudo/background layers underneath */
+footer.footer::before,
+.footer.jbc-editorial-footer::before,
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  z-index: 0 !important;
+}
+
+/* Correct inserted footer image layer */
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"],
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.66 !important;
+  position: absolute !important;
+  left: 24% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 76% !important;
+  height: 270px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  mix-blend-mode: normal !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Fill the strip cleanly */
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img,
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  filter: brightness(0.68) contrast(1.04) saturate(0.92) !important;
+}
+
+/* Soft veil on image only, text stays above */
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after,
+footer.footer .editor-decoration.editor-image[data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(7,5,5,0.66) 0%, rgba(7,5,5,0.14) 45%, rgba(7,5,5,0.62) 100%),
+    linear-gradient(180deg, rgba(7,5,5,0.38) 0%, rgba(7,5,5,0.08) 45%, rgba(7,5,5,0.74) 100%) !important;
+}
+
+/* Make footer text boxes transparent */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep only subtle lines, no dark panels */
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+footer.footer .footer-col,
+footer.footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-brand {
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Keep footer text readable above everything */
+footer.footer a,
+footer.footer p,
+footer.footer h4,
+footer.footer span,
+footer.footer i,
+.footer.jbc-editorial-footer a,
+.footer.jbc-editorial-footer p,
+.footer.jbc-editorial-footer h4,
+.footer.jbc-editorial-footer span,
+.footer.jbc-editorial-footer i {
+  position: relative !important;
+  z-index: 7 !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"],
+  footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
+  .footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
+    left: 0 !important;
+    width: 100% !important;
+    height: 240px !important;
+    opacity: 0.46 !important;
+  }
+}
+
+
+/* FOOTER IMAGE DIRECT FIX */
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.72 !important;
+  position: absolute !important;
+  left: 22% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 78% !important;
+  height: 285px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+  background: transparent !important;
+}
+
+/* =========================================================
+   FOOTER PNG IMAGE FIX
+   Correct PNG image sits above footer background, below footer text
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 430px !important;
+  background: #070505 !important;
+}
+
+/* Keep old pseudo/background layers behind the real image */
+footer.footer::before,
+.footer.jbc-editorial-footer::before,
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  z-index: 0 !important;
+}
+
+/* The actual inserted footer image layer */
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.72 !important;
+
+  position: absolute !important;
+  left: 22% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+
+  width: 78% !important;
+  height: 285px !important;
+  z-index: 2 !important;
+
+  pointer-events: none !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Image fills the strip */
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+  object-position: center center !important;
+
+  filter: brightness(0.72) contrast(1.04) saturate(0.95) !important;
+}
+
+/* Keep footer text boxes transparent and above image */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Preserve layout */
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  display: grid !important;
+}
+
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  display: flex !important;
+}
+
+/* Text always above the image */
+footer.footer a,
+footer.footer p,
+footer.footer h4,
+footer.footer span,
+footer.footer i,
+.footer.jbc-editorial-footer a,
+.footer.jbc-editorial-footer p,
+.footer.jbc-editorial-footer h4,
+.footer.jbc-editorial-footer span,
+.footer.jbc-editorial-footer i {
+  position: relative !important;
+  z-index: 7 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer {
+    min-height: 500px !important;
+  }
+
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
+    left: 0 !important;
+    width: 100% !important;
+    height: 245px !important;
+    opacity: 0.48 !important;
+  }
+}
+
+
+/* =========================================================
+   FOOTER IMAGE FULL AREA FIX
+   Makes the footer image cover the entire footer block,
+   behind all footer text.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 430px !important;
+  background: #070505 !important;
+}
+
+/* Make the inserted image fill the whole footer area */
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.52 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 430px !important;
+
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Image fills the full footer cleanly */
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+  object-position: center center !important;
+
+  filter: brightness(0.62) contrast(1.04) saturate(0.9) !important;
+}
+
+/* Dark veil over the whole image so text remains readable */
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.86) 0%,
+      rgba(7,5,5,0.54) 26%,
+      rgba(7,5,5,0.34) 55%,
+      rgba(7,5,5,0.70) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.76) 0%,
+      rgba(7,5,5,0.20) 46%,
+      rgba(7,5,5,0.88) 100%
+    ) !important;
+}
+
+/* Footer text stays above the full image */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep text readable above image */
+footer.footer a,
+footer.footer p,
+footer.footer h4,
+footer.footer span,
+footer.footer i,
+.footer.jbc-editorial-footer a,
+.footer.jbc-editorial-footer p,
+.footer.jbc-editorial-footer h4,
+.footer.jbc-editorial-footer span,
+.footer.jbc-editorial-footer i {
+  position: relative !important;
+  z-index: 7 !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer {
+    min-height: 500px !important;
+  }
+
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
+    min-height: 500px !important;
+    opacity: 0.42 !important;
+  }
+
+  footer.footer [data-editor-id="image-002"] img,
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+    object-position: center center !important;
+  }
+}
+
+
+/* =========================================================
+   FOOTER IMAGE OPACITY BOOST
+   Increases footer image visibility by around 30%
+   ========================================================= */
+
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  opacity: 0.68 !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
+    opacity: 0.55 !important;
+  }
+}
+
+/* =========================================================
+   PROCESS CARDS, GENTLE FLORAL REPAIR
+   Keeps tiles visible, fixes floral placement, only softens hard edges lightly.
+   ========================================================= */
+
+/* Restore card visibility */
+#services-overview .service-card,
+#services-overview .jbc-editorial-card {
+  position: relative !important;
+  overflow: hidden !important;
+  background: rgba(8, 7, 7, 0.84) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.035),
+    0 18px 44px rgba(0,0,0,0.24) !important;
+}
+
+/* Main floral layer, visible but calmer */
+#services-overview .service-card::before,
+#services-overview .jbc-editorial-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-repeat: no-repeat !important;
+  background-size: 118% auto !important;
+  background-position: center 10% !important;
+
+  opacity: 0.34 !important;
+  filter: saturate(0.88) brightness(0.82) contrast(0.96) !important;
+
+  /* Very light edge fade only, not a centre fade */
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 8%,
+      rgba(0,0,0,1) 92%,
+      rgba(0,0,0,0.72) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 8%,
+      rgba(0,0,0,1) 92%,
+      rgba(0,0,0,0.72) 100%
+    ) !important;
+  -webkit-mask-composite: source-in !important;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 8%,
+      rgba(0,0,0,1) 92%,
+      rgba(0,0,0,0.72) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 8%,
+      rgba(0,0,0,1) 92%,
+      rgba(0,0,0,0.72) 100%
+    ) !important;
+  mask-composite: intersect !important;
+}
+
+/* Remove the blur veil completely, it was making the cards disappear */
+#services-overview .service-card::after,
+#services-overview .jbc-editorial-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,7,7,0.08) 0%,
+      rgba(8,7,7,0.18) 52%,
+      rgba(8,7,7,0.34) 100%
+    ) !important;
+
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Better individual floral placement */
+#services-overview .jbc-editorial-card-1::before {
+  background-position: 48% 4% !important;
+  background-size: 120% auto !important;
+  opacity: 0.36 !important;
+}
+
+#services-overview .jbc-editorial-card-2::before {
+  background-position: 50% 2% !important;
+  background-size: 116% auto !important;
+  opacity: 0.34 !important;
+}
+
+#services-overview .jbc-editorial-card-3::before {
+  background-position: 50% 6% !important;
+  background-size: 112% auto !important;
+  opacity: 0.12 !important;
+}
+
+/* Keep text above decoration */
+#services-overview .service-card > *,
+#services-overview .jbc-editorial-card > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+
+/* =========================================================
+   PROCESS CARDS, RESTORE FLORAL PATTERNS
+   Brings back the rose image inside Define / Design / Describe
+   without heavy blur or aggressive fading.
+   ========================================================= */
+
+#services-overview .service-card,
+#services-overview .jbc-editorial-card {
+  position: relative !important;
+  overflow: hidden !important;
+  background: rgba(8, 7, 7, 0.78) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+}
+
+/* Restore the actual floral image layer */
+#services-overview .service-card::before,
+#services-overview .jbc-editorial-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 122% auto !important;
+  background-position: center 8% !important;
+
+  opacity: 0.36 !important;
+  filter: saturate(0.9) brightness(0.86) contrast(0.98) !important;
+
+  /* Gentle edge feather only */
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 7%,
+      rgba(0,0,0,1) 93%,
+      rgba(0,0,0,0.72) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 7%,
+      rgba(0,0,0,1) 93%,
+      rgba(0,0,0,0.72) 100%
+    ) !important;
+  -webkit-mask-composite: source-in !important;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 7%,
+      rgba(0,0,0,1) 93%,
+      rgba(0,0,0,0.72) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,1) 7%,
+      rgba(0,0,0,1) 93%,
+      rgba(0,0,0,0.72) 100%
+    ) !important;
+  mask-composite: intersect !important;
+}
+
+/* Soft dark veil, keeps text readable but does not hide the roses */
+#services-overview .service-card::after,
+#services-overview .jbc-editorial-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,7,7,0.04) 0%,
+      rgba(8,7,7,0.18) 54%,
+      rgba(8,7,7,0.42) 100%
+    ) !important;
+
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Individual card placement, less copy-paste */
+#services-overview .jbc-editorial-card-1::before {
+  background-position: 48% 4% !important;
+  background-size: 124% auto !important;
+  opacity: 0.40 !important;
+}
+
+#services-overview .jbc-editorial-card-2::before {
+  background-position: 52% 2% !important;
+  background-size: 118% auto !important;
+  opacity: 0.38 !important;
+}
+
+#services-overview .jbc-editorial-card-3::before {
+  background-position: 50% 6% !important;
+  background-size: 112% auto !important;
+  opacity: 0.16 !important;
+}
+
+/* Keep all text/content above the floral layer */
+#services-overview .service-card > *,
+#services-overview .jbc-editorial-card > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+
+/* =========================================================
+   FINAL CTA EYESTORY BACKGROUND FORCE
+   Forces eyestory.png behind "Let's Break Some Cookies"
+   and above any old hidden/dark background layers.
+   ========================================================= */
+
+.cta-section,
+.cta-section.jbc-floral-cta {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background: #070505 !important;
+  background-image: none !important;
+  min-height: 560px !important;
+}
+
+/* Main visible image layer */
+.cta-section::before,
+.cta-section.jbc-floral-cta::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.72 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.72) 0%,
+      rgba(7,5,5,0.22) 36%,
+      rgba(7,5,5,0.18) 62%,
+      rgba(7,5,5,0.74) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.74) 0%,
+      rgba(7,5,5,0.16) 42%,
+      rgba(7,5,5,0.86) 100%
+    ),
+    url("../images/eyestory.png") !important;
+
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  filter: brightness(0.78) contrast(1.05) saturate(0.92) !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Keep a very light dark veil only, not enough to hide the image */
+.cta-section::after,
+.cta-section.jbc-floral-cta::after {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(7,5,5,0.00) 0%,
+      rgba(7,5,5,0.10) 48%,
+      rgba(7,5,5,0.46) 100%
+    ) !important;
+}
+
+/* Make sure the CTA content sits above the image and veil */
+.cta-section > *,
+.cta-section .container,
+.cta-section .section-title,
+.cta-section .section-subtitle,
+.cta-section .btn,
+.cta-section.jbc-floral-cta > *,
+.cta-section.jbc-floral-cta .container,
+.cta-section.jbc-floral-cta .section-title,
+.cta-section.jbc-floral-cta .section-subtitle,
+.cta-section.jbc-floral-cta .btn {
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Remove any accidental opaque box behind CTA content */
+.cta-section .container,
+.cta-section.jbc-floral-cta .container {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep the title readable */
+.cta-section .section-title,
+.cta-section h2 {
+  text-shadow: 0 18px 60px rgba(0,0,0,0.88) !important;
+}
+
+.cta-section .section-subtitle,
+.cta-section p {
+  text-shadow: 0 8px 30px rgba(0,0,0,0.88) !important;
+}
+
+@media (max-width: 768px) {
+  .cta-section,
+  .cta-section.jbc-floral-cta {
+    min-height: 500px !important;
+  }
+
+  .cta-section::before,
+  .cta-section.jbc-floral-cta::before {
+    opacity: 0.56 !important;
+    background-position: center center !important;
+  }
+}
+
+
+/* =========================================================
+   CTA EYESTORY, CORRECT ORIENTATION + 16:9 FIT + OPACITY BOOST
+   Keeps original image framing, flips it upright, makes it more visible.
+   ========================================================= */
+
+.cta-section,
+.cta-section.jbc-floral-cta {
+  min-height: 560px !important;
+  background: #070505 !important;
+}
+
+/* Correct image layer */
+.cta-section::before,
+.cta-section.jbc-floral-cta::before {
+  opacity: 1 !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.50) 0%,
+      rgba(7,5,5,0.10) 34%,
+      rgba(7,5,5,0.08) 62%,
+      rgba(7,5,5,0.50) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.46) 0%,
+      rgba(7,5,5,0.04) 42%,
+      rgba(7,5,5,0.58) 100%
+    ),
+    url("../images/eyestory.png") !important;
+
+  /* contain preserves the full original 16:9 image, no ugly zoom crop */
+  background-size: contain !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  /* If the image was upside down visually, this flips the layer back */
+  transform: rotate(180deg) !important;
+  transform-origin: center center !important;
+
+  filter: brightness(1.08) contrast(1.04) saturate(1.02) !important;
+}
+
+/* Reduce the dark veil so the boosted image can actually show */
+.cta-section::after,
+.cta-section.jbc-floral-cta::after {
+  opacity: 0.42 !important;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(7,5,5,0.00) 0%,
+      rgba(7,5,5,0.06) 50%,
+      rgba(7,5,5,0.34) 100%
+    ) !important;
+}
+
+/* Keep content above image */
+.cta-section > *,
+.cta-section .container,
+.cta-section .section-title,
+.cta-section .section-subtitle,
+.cta-section .btn,
+.cta-section.jbc-floral-cta > *,
+.cta-section.jbc-floral-cta .container,
+.cta-section.jbc-floral-cta .section-title,
+.cta-section.jbc-floral-cta .section-subtitle,
+.cta-section.jbc-floral-cta .btn {
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+@media (max-width: 768px) {
+  .cta-section::before,
+  .cta-section.jbc-floral-cta::before {
+    background-size: contain !important;
+    background-position: center center !important;
+    opacity: 0.82 !important;
+  }
+}
+
+
+/* =========================================================
+   CTA EYESTORY FINAL ORIENTATION + FULL COVER
+   Removes wrong rotation and makes image cover the whole CTA area.
+   ========================================================= */
+
+.cta-section,
+.cta-section.jbc-floral-cta {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 560px !important;
+  background: #070505 !important;
+  background-image: none !important;
+}
+
+/* Full background image, upright, covering whole CTA */
+.cta-section::before,
+.cta-section.jbc-floral-cta::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.42) 0%,
+      rgba(7,5,5,0.10) 32%,
+      rgba(7,5,5,0.08) 62%,
+      rgba(7,5,5,0.46) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.44) 0%,
+      rgba(7,5,5,0.04) 42%,
+      rgba(7,5,5,0.58) 100%
+    ),
+    url("../images/eyestory.png") !important;
+
+  /* COVER fills the whole section, no boxed image */
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  /* Remove the wrong upside-down rotation */
+  transform: none !important;
+  rotate: 0deg !important;
+  scale: 1 !important;
+  transform-origin: center center !important;
+
+  filter: brightness(1.04) contrast(1.04) saturate(1.02) !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Very light veil only, so the image remains visible */
+.cta-section::after,
+.cta-section.jbc-floral-cta::after {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.28 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(7,5,5,0.00) 0%,
+      rgba(7,5,5,0.04) 48%,
+      rgba(7,5,5,0.28) 100%
+    ) !important;
+}
+
+/* CTA content always above the image */
+.cta-section > *,
+.cta-section .container,
+.cta-section .section-title,
+.cta-section .section-subtitle,
+.cta-section .btn,
+.cta-section.jbc-floral-cta > *,
+.cta-section.jbc-floral-cta .container,
+.cta-section.jbc-floral-cta .section-title,
+.cta-section.jbc-floral-cta .section-subtitle,
+.cta-section.jbc-floral-cta .btn {
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cta-section .container,
+.cta-section.jbc-floral-cta .container {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 768px) {
+  .cta-section,
+  .cta-section.jbc-floral-cta {
+    min-height: 500px !important;
+  }
+
+  .cta-section::before,
+  .cta-section.jbc-floral-cta::before {
+    background-size: cover !important;
+    background-position: center center !important;
+    transform: none !important;
+    opacity: 0.82 !important;
+  }
+}
+
+
+/* =========================================================
+   CTA EYESTORY FINAL ORIENTATION + FULL COVER
+   Removes wrong rotation and makes image cover the whole CTA area.
+   ========================================================= */
+
+.cta-section,
+.cta-section.jbc-floral-cta {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 560px !important;
+  background: #070505 !important;
+  background-image: none !important;
+}
+
+/* Full background image, upright, covering whole CTA */
+.cta-section::before,
+.cta-section.jbc-floral-cta::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.42) 0%,
+      rgba(7,5,5,0.10) 32%,
+      rgba(7,5,5,0.08) 62%,
+      rgba(7,5,5,0.46) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.44) 0%,
+      rgba(7,5,5,0.04) 42%,
+      rgba(7,5,5,0.58) 100%
+    ),
+    url("../images/eyestory.png") !important;
+
+  /* COVER fills the whole section, no boxed image */
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  /* Remove the wrong upside-down rotation */
+  transform: none !important;
+  rotate: 0deg !important;
+  scale: 1 !important;
+  transform-origin: center center !important;
+
+  filter: brightness(1.04) contrast(1.04) saturate(1.02) !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Very light veil only, so the image remains visible */
+.cta-section::after,
+.cta-section.jbc-floral-cta::after {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.28 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(7,5,5,0.00) 0%,
+      rgba(7,5,5,0.04) 48%,
+      rgba(7,5,5,0.28) 100%
+    ) !important;
+}
+
+/* CTA content always above the image */
+.cta-section > *,
+.cta-section .container,
+.cta-section .section-title,
+.cta-section .section-subtitle,
+.cta-section .btn,
+.cta-section.jbc-floral-cta > *,
+.cta-section.jbc-floral-cta .container,
+.cta-section.jbc-floral-cta .section-title,
+.cta-section.jbc-floral-cta .section-subtitle,
+.cta-section.jbc-floral-cta .btn {
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.cta-section .container,
+.cta-section.jbc-floral-cta .container {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 768px) {
+  .cta-section,
+  .cta-section.jbc-floral-cta {
+    min-height: 500px !important;
+  }
+
+  .cta-section::before,
+  .cta-section.jbc-floral-cta::before {
+    background-size: cover !important;
+    background-position: center center !important;
+    transform: none !important;
+    opacity: 0.82 !important;
+  }
+}
+
+
+/* =========================================================
+   FOOTER IMAGE CLEAN CROP FIX
+   Keeps the footer image inside the footer, crops ugly side bleed,
+   and prevents the baked-in right edge from showing badly.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 360px !important;
+  padding-top: 72px !important;
+  padding-bottom: 78px !important;
+  background: #070505 !important;
+}
+
+/* Hard crop boundary for the actual footer image layer */
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.58 !important;
+
+  position: absolute !important;
+  left: 23% !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+
+  width: 77% !important;
+  height: 260px !important;
+  min-height: 0 !important;
+  max-height: 260px !important;
+
+  z-index: 2 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  clip-path: inset(0 0 0 0) !important;
+}
+
+/* Crop the image itself so the ugly right-side baked text/edge disappears */
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: 112% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+  object-position: 44% center !important;
+
+  transform: translateX(-4%) !important;
+  transform-origin: center center !important;
+
+  filter: brightness(0.62) contrast(1.04) saturate(0.9) !important;
+}
+
+/* Darken the right edge so no baked-in side detail shouts */
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.72) 0%,
+      rgba(7,5,5,0.16) 34%,
+      rgba(7,5,5,0.28) 62%,
+      rgba(7,5,5,0.92) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.46) 0%,
+      rgba(7,5,5,0.10) 42%,
+      rgba(7,5,5,0.84) 100%
+    ) !important;
+}
+
+/* Footer text remains above */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 6 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Prevent any section below/above from showing footer image overflow */
+.cta-section + footer.footer,
+.cta-section + .footer.jbc-editorial-footer {
+  margin-top: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Mobile containment */
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer {
+    min-height: 460px !important;
+  }
+
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
+    left: 0 !important;
+    width: 100% !important;
+    height: 230px !important;
+    max-height: 230px !important;
+    opacity: 0.44 !important;
+  }
+
+  footer.footer [data-editor-id="image-002"] img,
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+    width: 116% !important;
+    object-position: 42% center !important;
+    transform: translateX(-5%) !important;
+  }
+}
+
+
+/* =========================================================
+   REMOVE FOOTER INSERTED IMAGE
+   Hides/removes the footer experimental image layer.
+   ========================================================= */
+
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Keep footer text/content visible and clean */
+footer.footer .footer-grid,
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-grid,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+
+/* =========================================================
+   REMOVE EYESTORY CTA BACKGROUND
+   Removes the big eye/story image from the "Let's Break Some Cookies" section only.
+   Keeps CTA title, subtitle and button.
+   ========================================================= */
+
+.cta-section,
+.cta-section.jbc-floral-cta {
+  position: relative !important;
+  background: #070505 !important;
+  background-image: none !important;
+  overflow: hidden !important;
+}
+
+/* Remove the eyestory background layer */
+.cta-section::before,
+.cta-section.jbc-floral-cta::before {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background-image: none !important;
+}
+
+/* Remove the dark overlay that was added for that image */
+.cta-section::after,
+.cta-section.jbc-floral-cta::after {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background-image: none !important;
+}
+
+/* Keep CTA content visible */
+.cta-section > *,
+.cta-section .container,
+.cta-section .section-title,
+.cta-section .section-subtitle,
+.cta-section .btn,
+.cta-section.jbc-floral-cta > *,
+.cta-section.jbc-floral-cta .container,
+.cta-section.jbc-floral-cta .section-title,
+.cta-section.jbc-floral-cta .section-subtitle,
+.cta-section.jbc-floral-cta .btn {
+  position: relative !important;
+  z-index: 3 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+
+/* =========================================================
+   TESTIMONIAL EYESTORY BACKGROUND
+   Adds eyestory.png behind the testimonial section only.
+   ========================================================= */
+
+.testimonial-section,
+.testimonial-section.jbc-floral-testimonial {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background: #070505 !important;
+  background-image: none !important;
+}
+
+/* Eyestory image layer */
+.testimonial-section::before,
+.testimonial-section.jbc-floral-testimonial::before {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.58 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7,5,5,0.78) 0%,
+      rgba(7,5,5,0.24) 35%,
+      rgba(7,5,5,0.20) 62%,
+      rgba(7,5,5,0.78) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7,5,5,0.78) 0%,
+      rgba(7,5,5,0.10) 45%,
+      rgba(7,5,5,0.82) 100%
+    ),
+    url("../images/eyestory.png") !important;
+
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+
+  transform: none !important;
+  filter: brightness(0.88) contrast(1.04) saturate(0.92) !important;
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* Soft readability veil */
+.testimonial-section::after,
+.testimonial-section.jbc-floral-testimonial::after {
+  content: "" !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.42 !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(7,5,5,0.00) 0%,
+      rgba(7,5,5,0.12) 48%,
+      rgba(7,5,5,0.54) 100%
+    ) !important;
+}
+
+/* Keep testimonial content above the artwork */
+.testimonial-section > *,
+.testimonial-section .container,
+.testimonial-section .testi-brutal,
+.testimonial-section .testi-content,
+.testimonial-section .testi-mark,
+.testimonial-section.jbc-floral-testimonial > *,
+.testimonial-section.jbc-floral-testimonial .container,
+.testimonial-section.jbc-floral-testimonial .testi-brutal,
+.testimonial-section.jbc-floral-testimonial .testi-content,
+.testimonial-section.jbc-floral-testimonial .testi-mark {
+  position: relative !important;
+  z-index: 3 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Remove any boxy panel behind the quote, keep it transparent */
+.testimonial-section .testi-brutal,
+.testimonial-section .testi-content,
+.testimonial-section.jbc-floral-testimonial .testi-brutal,
+.testimonial-section.jbc-floral-testimonial .testi-content {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 768px) {
+  .testimonial-section::before,
+  .testimonial-section.jbc-floral-testimonial::before {
+    opacity: 0.42 !important;
+    background-position: center center !important;
+  }
+}
+
+
+/* =========================================================
+   TESTIMONIAL EYESTORY, OPACITY BOOST + NO FILTER
+   Makes eyestory image stronger and removes all image filters.
+   ========================================================= */
+
+.testimonial-section::before,
+.testimonial-section.jbc-floral-testimonial::before {
+  opacity: 0.82 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Reduce the veil so the image is not muted */
+.testimonial-section::after,
+.testimonial-section.jbc-floral-testimonial::after {
+  opacity: 0.22 !important;
+}
+
+@media (max-width: 768px) {
+  .testimonial-section::before,
+  .testimonial-section.jbc-floral-testimonial::before {
+    opacity: 0.62 !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+}
+
