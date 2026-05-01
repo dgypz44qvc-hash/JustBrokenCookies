@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JustBrokenCookies — Mobile Landing</title>
+  <meta name="description" content="JustBrokenCookies mobile landing page.">
+  <link rel="preload" as="image" href="images/mobilelanding-768.jpg" fetchpriority="high">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: #050505;
+    }
+
+    body {
+      font-family: Georgia, serif;
+      overflow: hidden;
+    }
+
+    .mobile-landing {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      width: 100%;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    .mobile-landing img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    .service-link {
+      position: absolute;
+      right: 5.5vw;
+      bottom: max(7svh, 42px);
+      width: min(36vw, 190px);
+      height: 58px;
+      z-index: 2;
+      display: block;
+      text-decoration: none;
+      background: transparent;
+    }
+
+    @media (min-width: 769px) {
+      .mobile-landing {
+        max-width: 768px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="mobile-landing" aria-label="JustBrokenCookies mobile landing page">
+    <img src="images/mobilelanding-768.jpg" width="768" height="1376" alt="Just Broken Cookies storytelling cover" fetchpriority="high" decoding="async">
+    <a class="service-link" href="index.html#services-overview" aria-label="Explore Our Services"></a>
+  </main>
+</body>
+</html>

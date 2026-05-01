@@ -4991,66 +4991,6 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  .hero.jbc-floral-hero {
-    min-height: 100svh !important;
-    height: 100svh !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    background: #050505 !important;
-  }
-
-  .hero.jbc-floral-hero > picture {
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    aspect-ratio: auto !important;
-    transform: none !important;
-    overflow: hidden !important;
-    z-index: 20 !important;
-  }
-
-  .hero.jbc-floral-hero .hero-full-bg {
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    transform: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: 21 !important;
-  }
-
-  .mobile-hero-service-link {
-    display: block !important;
-    position: absolute !important;
-    right: 6vw !important;
-    bottom: max(7svh, 44px) !important;
-    width: min(36vw, 190px) !important;
-    height: 56px !important;
-    z-index: 40 !important;
-    text-decoration: none !important;
-    background: transparent !important;
-    border: 0 !important;
-    cursor: pointer !important;
-  }
-
-  .home-page .nav {
-    display: none !important;
-  }
-}
-
-@media (min-width: 769px) {
-  .mobile-hero-service-link {
-    display: none !important;
-  }
-}
-
 /* =========================================================
    SITE-WIDE BLACK THEME OVERRIDE
    Keeps the hero artwork, removes brown/taupe page surfaces.
