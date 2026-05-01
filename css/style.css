@@ -8169,7 +8169,7 @@ footer.footer .social-links,
 
 #services-overview .service-card.jbc-editorial-card {
   background:
-    linear-gradient(180deg, rgba(7,6,6,0.76) 0%, rgba(7,6,6,0.92) 100%) !important;
+    linear-gradient(180deg, rgba(7,6,6,0.5) 0%, rgba(7,6,6,0.82) 100%) !important;
   border-color: rgba(255,255,255,0.2) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.04),
@@ -8183,11 +8183,11 @@ footer.footer .social-links,
   z-index: 0 !important;
   pointer-events: none !important;
 
-  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-image: url("../images/jbc-floral-wide-desktop.jpg") !important;
   background-repeat: no-repeat !important;
-  background-size: auto 118% !important;
-  opacity: 0.36 !important;
-  filter: saturate(1.02) brightness(0.9) contrast(1.04) !important;
+  background-size: 148% auto !important;
+  opacity: 0.78 !important;
+  filter: saturate(1.18) brightness(1.04) contrast(1.08) !important;
 
   -webkit-mask-image:
     radial-gradient(ellipse at center, #000 0%, #000 34%, rgba(0,0,0,0.62) 58%, rgba(0,0,0,0.18) 78%, transparent 100%) !important;
@@ -8202,26 +8202,26 @@ footer.footer .social-links,
   z-index: 1 !important;
   pointer-events: none !important;
   background:
-    radial-gradient(ellipse at 28% 18%, rgba(255,118,64,0.08) 0%, transparent 36%),
-    linear-gradient(180deg, rgba(5,5,5,0.1) 0%, rgba(5,5,5,0.42) 68%, rgba(5,5,5,0.62) 100%) !important;
+    radial-gradient(ellipse at 28% 18%, rgba(255,118,64,0.05) 0%, transparent 36%),
+    linear-gradient(180deg, rgba(5,5,5,0.2) 0%, rgba(5,5,5,0.48) 68%, rgba(5,5,5,0.72) 100%) !important;
   opacity: 1 !important;
 }
 
 #services-overview .jbc-editorial-card-1::before {
-  background-position: left 4% top 4% !important;
+  background-position: left 2% top 2% !important;
   transform: rotate(-3deg) !important;
 }
 
 #services-overview .jbc-editorial-card-2::before {
-  background-position: right 8% top 8% !important;
+  background-position: right 5% top 0% !important;
   transform: rotate(2deg) scaleX(-1) !important;
-  opacity: 0.32 !important;
+  opacity: 0.74 !important;
 }
 
 #services-overview .jbc-editorial-card-3::before {
-  background-position: right 0% bottom 8% !important;
+  background-position: right -8% bottom 0% !important;
   transform: rotate(4deg) !important;
-  opacity: 0.34 !important;
+  opacity: 0.76 !important;
 }
 
 #services-overview .service-card.jbc-editorial-card > * {
@@ -8232,8 +8232,8 @@ footer.footer .social-links,
 @media (max-width: 768px) {
   #services-overview .service-card.jbc-editorial-card::before {
     inset: -14% !important;
-    background-size: auto 106% !important;
-    opacity: 0.3 !important;
+    background-size: 165% auto !important;
+    opacity: 0.58 !important;
   }
 
   #services-overview .jbc-editorial-card-1::before,
