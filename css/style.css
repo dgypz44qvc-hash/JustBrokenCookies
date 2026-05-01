@@ -8081,3 +8081,83 @@ footer.footer .social-links,
   }
 }
 
+/* =========================================================
+   PROCESS ROSES, NATURAL RATIO + FEATHERED EDGES
+   Keeps "How We Build Stories" roses from stretching.
+   ========================================================= */
+
+#services-overview.jbc-floral-process {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+
+#services-overview.jbc-floral-process::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -8% -4% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image: url("../images/jbc-floral-wide-desktop.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: min(1180px, 88vw) auto !important;
+  background-position: left 45% top 48% !important;
+
+  opacity: 0.58 !important;
+  filter: saturate(1.04) contrast(1.02) brightness(0.9) !important;
+
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 9%, #000 58%, rgba(0,0,0,0.54) 76%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 12%, #000 82%, transparent 100%) !important;
+  -webkit-mask-composite: source-in !important;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 9%, #000 58%, rgba(0,0,0,0.54) 76%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 12%, #000 82%, transparent 100%) !important;
+  mask-composite: intersect !important;
+}
+
+#services-overview .service-card::before,
+#services-overview .jbc-editorial-card::before,
+#services-overview .jbc-editorial-card-1::before,
+#services-overview .jbc-editorial-card-2::before,
+#services-overview .jbc-editorial-card-3::before {
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 112% !important;
+  background-position: center center !important;
+  opacity: 0.28 !important;
+  filter: saturate(0.94) brightness(0.88) contrast(1) !important;
+
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%) !important;
+  -webkit-mask-composite: source-in !important;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%) !important;
+  mask-composite: intersect !important;
+}
+
+@media (max-width: 768px) {
+  #services-overview.jbc-floral-process::before {
+    inset: -5% -10% !important;
+    background-image: url("../images/jbc-floral-wide-mobile.jpg") !important;
+    background-size: min(760px, 145vw) auto !important;
+    background-position: center top 10% !important;
+    opacity: 0.42 !important;
+
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 9%, #000 74%, transparent 100%) !important;
+    mask-image:
+      linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%),
+      linear-gradient(180deg, transparent 0%, #000 9%, #000 74%, transparent 100%) !important;
+  }
+
+  #services-overview .service-card::before,
+  #services-overview .jbc-editorial-card::before {
+    background-size: 118% auto !important;
+    opacity: 0.22 !important;
+  }
+}
