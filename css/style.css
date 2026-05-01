@@ -8161,3 +8161,85 @@ footer.footer .social-links,
     opacity: 0.22 !important;
   }
 }
+
+/* =========================================================
+   PROCESS CARDS, EDITORIAL FLORAL PLACEMENT
+   Adds composed rose details inside each card with softened edges.
+   ========================================================= */
+
+#services-overview .service-card.jbc-editorial-card {
+  background:
+    linear-gradient(180deg, rgba(7,6,6,0.76) 0%, rgba(7,6,6,0.92) 100%) !important;
+  border-color: rgba(255,255,255,0.2) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 24px 80px rgba(0,0,0,0.34) !important;
+}
+
+#services-overview .service-card.jbc-editorial-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -18% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  background-image: url("../images/jbc-rose-pattern-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 118% !important;
+  opacity: 0.36 !important;
+  filter: saturate(1.02) brightness(0.9) contrast(1.04) !important;
+
+  -webkit-mask-image:
+    radial-gradient(ellipse at center, #000 0%, #000 34%, rgba(0,0,0,0.62) 58%, rgba(0,0,0,0.18) 78%, transparent 100%) !important;
+  mask-image:
+    radial-gradient(ellipse at center, #000 0%, #000 34%, rgba(0,0,0,0.62) 58%, rgba(0,0,0,0.18) 78%, transparent 100%) !important;
+}
+
+#services-overview .service-card.jbc-editorial-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(ellipse at 28% 18%, rgba(255,118,64,0.08) 0%, transparent 36%),
+    linear-gradient(180deg, rgba(5,5,5,0.1) 0%, rgba(5,5,5,0.42) 68%, rgba(5,5,5,0.62) 100%) !important;
+  opacity: 1 !important;
+}
+
+#services-overview .jbc-editorial-card-1::before {
+  background-position: left 4% top 4% !important;
+  transform: rotate(-3deg) !important;
+}
+
+#services-overview .jbc-editorial-card-2::before {
+  background-position: right 8% top 8% !important;
+  transform: rotate(2deg) scaleX(-1) !important;
+  opacity: 0.32 !important;
+}
+
+#services-overview .jbc-editorial-card-3::before {
+  background-position: right 0% bottom 8% !important;
+  transform: rotate(4deg) !important;
+  opacity: 0.34 !important;
+}
+
+#services-overview .service-card.jbc-editorial-card > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+@media (max-width: 768px) {
+  #services-overview .service-card.jbc-editorial-card::before {
+    inset: -14% !important;
+    background-size: auto 106% !important;
+    opacity: 0.3 !important;
+  }
+
+  #services-overview .jbc-editorial-card-1::before,
+  #services-overview .jbc-editorial-card-2::before,
+  #services-overview .jbc-editorial-card-3::before {
+    background-position: center top !important;
+    transform: none !important;
+  }
+}
