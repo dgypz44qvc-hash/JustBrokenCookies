@@ -86,6 +86,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // ---- CINEMATIC BW COVER IMAGES ----
+  // A real duplicate cover sits above the clean image, then fades on hover/reveal.
+  const cinematicCoverImages = document.querySelectorAll(
+    '.portfolio-item > img, .blog-card-image > img, .team-card > img, ' +
+    '.about-image > img, .service-detail-image > img, ' +
+    '.mag-featured-image > img, .mag-article-image > img'
+  );
+
+  cinematicCoverImages.forEach(img => {
+    if (img.classList.contains('jbc-cinematic-cover') || img.closest('.hero')) return;
+    const box = img.parentElement;
+    if (!box) return;
+
+    const existingCover = Array.from(box.children).find(child => child.classList.contains('jbc-cinematic-cover'));
+    if (existingCover) {
+      img.classList.add('jbc-cinematic-base');
+      box.classList.add('jbc-cinematic-image-box');
+      return;
+    }
+
+    const cover = img.cloneNode(true);
+    cover.removeAttribute('id');
+    cover.removeAttribute('data-editor-id');
+    cover.classList.add('jbc-cinematic-cover');
+    cover.setAttribute('aria-hidden', 'true');
+    cover.setAttribute('decoding', 'async');
+    cover.setAttribute('loading', 'lazy');
+    cover.alt = '';
+
+    img.classList.add('jbc-cinematic-base');
+    box.classList.add('jbc-cinematic-image-box');
+    if (img.nextSibling) {
+      box.insertBefore(cover, img.nextSibling);
+    } else {
+      box.appendChild(cover);
+    }
+  });
+
   // ---- BLUR-TO-SHARP SCROLL REVEAL ----
   const revealElements = document.querySelectorAll(
     '.fade-up, .reveal, .service-card, .value-card, .process-card, .blog-card, ' +
@@ -333,7 +371,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- PARALLAX ON IMAGES ----
-  document.querySelectorAll('.portfolio-item img, .about-image img, .service-detail-image img').forEach(img => {
+  // Note: images inside #featured-work .jbc-gallery-track are skipped here —
+  // they receive horizontal parallax from initHorizontalGallery() instead.
+  document.querySelectorAll(
+    '.portfolio-item img:not(.jbc-cinematic-cover), ' +
+    '.about-image img:not(.jbc-cinematic-cover), ' +
+    '.service-detail-image img:not(.jbc-cinematic-cover)'
+  ).forEach(img => {
+    if (img.closest('#featured-work .jbc-gallery-track')) return;
     img.style.transition = 'transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease';
 
     const imgParallax = new IntersectionObserver((entries) => {
@@ -601,14 +646,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- MOBILE: REVEAL COLOR ON SCROLL ----
   if (!window.matchMedia('(hover:hover)').matches) {
     const allImages = document.querySelectorAll(
-      '.portfolio-item img, .blog-card-image img, .team-card img, ' +
-      '.about-image img, .service-detail-image img'
+      '.portfolio-item img:not(.jbc-cinematic-cover), ' +
+      '.blog-card-image img:not(.jbc-cinematic-cover), ' +
+      '.team-card img:not(.jbc-cinematic-cover), ' +
+      '.about-image img:not(.jbc-cinematic-cover), ' +
+      '.service-detail-image img:not(.jbc-cinematic-cover), ' +
+      '.mag-featured-image img:not(.jbc-cinematic-cover), ' +
+      '.mag-article-image img:not(.jbc-cinematic-cover)'
     );
     const colorObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('color-revealed');
+            if (entry.target.parentElement) {
+              entry.target.parentElement.classList.add('jbc-image-revealed');
+            }
           }, 300);
           colorObserver.unobserve(entry.target);
         }
@@ -683,3 +736,164 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
 });
+
+/* ============================================
+   CODROPS HORIZONTAL PARALLAX GALLERY
+   #featured-work — Adapted for JustBrokenCookies
+   Vanilla JS — no dependencies
+   JS-driven pin (avoids CSS sticky/overflow conflicts)
+   ============================================ */
+
+(function initHorizontalGallery() {
+
+  /* Skip on mobile or reduced-motion */
+  if (window.matchMedia('(max-width: 768px)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var section       = document.getElementById('featured-work');
+  var pin           = section && section.querySelector('.jbc-gallery-pin');
+  var track         = section && section.querySelector('.jbc-gallery-track');
+  var progress      = section && section.querySelector('.jbc-gallery-progress-inner');
+  var galleryHeader = section && section.querySelector('.jbc-gallery-header');
+  var galleryFooter = section && section.querySelector('.jbc-gallery-footer');
+
+  if (!section || !pin || !track) return;
+
+  /* ---- Math helpers ---- */
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(min, max, v) { return Math.max(min, Math.min(max, v)); }
+
+  /* ---- State ---- */
+  var scroll       = { current: 0, target: 0, ease: 0.07 };
+  var travel       = 0;
+  var headerH      = 0;
+  var footerH      = 0;
+  var sectionAbsTop = 0; /* cached absolute Y of section top (px from document top) */
+  var isSetUp      = false;
+
+  /* ---- Setup ---- */
+  function setup() {
+    headerH = galleryHeader ? galleryHeader.offsetHeight : 0;
+    footerH = galleryFooter ? galleryFooter.offsetHeight : 0;
+
+    /* Reset pin to measure track naturally */
+    pin.style.position = '';
+    pin.style.top      = '';
+    pin.style.left     = '';
+    pin.style.width    = '';
+    track.style.transform = '';
+
+    travel = track.scrollWidth - window.innerWidth;
+
+    if (travel <= 0) {
+      section.style.minHeight = '';
+      isSetUp = false;
+      return;
+    }
+
+    /* Cache section's absolute document-space top position.
+       Must be measured BEFORE setting minHeight so layout is stable. */
+    sectionAbsTop = section.getBoundingClientRect().top + window.scrollY;
+
+    /* Section height = header + 100vh (pin zone) + travel + footer */
+    section.style.minHeight = (headerH + window.innerHeight + travel + footerH) + 'px';
+    isSetUp = true;
+  }
+
+  /* ---- JS-driven pin: uses position:absolute updated every frame.
+     Avoids position:fixed which misbehaves when ancestor stacking contexts
+     (isolation, overflow, will-change) shift the fixed-position anchor.  ---- */
+  function updatePin() {
+    var scrollY      = window.scrollY;
+    var pinZoneStart = sectionAbsTop + headerH;
+    var pinZoneEnd   = sectionAbsTop + headerH + travel;
+
+    if (scrollY >= pinZoneStart && scrollY <= pinZoneEnd) {
+      /* Inside pin zone: mimic fixed by tracking scroll offset each frame */
+      pin.style.position = 'absolute';
+      pin.style.top      = (scrollY - sectionAbsTop) + 'px';
+      pin.style.left     = '0';
+      pin.style.width    = '100%';
+    } else if (scrollY < pinZoneStart) {
+      /* Before pin zone: sit at top of its reserved space */
+      pin.style.position = 'absolute';
+      pin.style.top      = headerH + 'px';
+      pin.style.left     = '';
+      pin.style.width    = '';
+    } else {
+      /* After pin zone: sit at end of travel */
+      pin.style.position = 'absolute';
+      pin.style.top      = (headerH + travel) + 'px';
+      pin.style.left     = '';
+      pin.style.width    = '';
+    }
+  }
+
+  /* ---- Horizontal scroll target from page scroll ---- */
+  function computeTarget() {
+    return clamp(0, travel, window.scrollY - (sectionAbsTop + headerH));
+  }
+
+  /* ---- Per-image horizontal parallax (Codrops technique) ---- */
+  function applyParallax() {
+    var center = window.innerWidth * 0.5;
+    track.querySelectorAll('.portfolio-item').forEach(function(item) {
+      var rect       = item.getBoundingClientRect();
+      var itemCenter = rect.left + rect.width * 0.5;
+      var t          = clamp(-1, 1, (itemCenter - center) / center);
+      var shift      = -t * 10;  /* ±10% — within 12.5% overflow room */
+      item.querySelectorAll('img').forEach(function(img) {
+        img.style.transform = 'translate3d(' + shift + '%, 0, 0)';
+      });
+    });
+  }
+
+  /* ---- Render loop ---- */
+  function render() {
+    if (isSetUp) {
+      scroll.target  = computeTarget();
+      scroll.current = lerp(scroll.current, scroll.target, scroll.ease);
+
+      /* Snap to ends cleanly */
+      if (scroll.current < 0.5)          scroll.current = 0;
+      if (scroll.current > travel - 0.5) scroll.current = travel;
+
+      updatePin();
+      track.style.transform = 'translateX(' + (-scroll.current) + 'px)';
+
+      if (progress) {
+        progress.style.width = (scroll.current / travel * 100) + '%';
+      }
+
+      applyParallax();
+    }
+    requestAnimationFrame(render);
+  }
+
+  /* ---- Resize ---- */
+  function onResize() {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      /* Restore normal layout on mobile */
+      section.style.minHeight = '';
+      pin.style.position = '';
+      pin.style.top      = '';
+      pin.style.left     = '';
+      pin.style.width    = '';
+      track.style.transform = '';
+      isSetUp = false;
+      return;
+    }
+    setup();
+    scroll.current = clamp(0, travel, scroll.current);
+    scroll.target  = scroll.current;
+  }
+
+  /* ---- Ensure section is a positioning context for absolute children ---- */
+  section.style.position = 'relative';
+
+  /* ---- Boot ---- */
+  setup();
+  render();
+  window.addEventListener('resize', onResize, { passive: true });
+
+})();
