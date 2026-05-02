@@ -47,7 +47,13 @@
   bottom: auto !important;
 }
 
-
+[data-editor-id="manifesto-inner"] {
+  position: relative !important;
+  left: -300px !important;
+  top: -18px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
 
 [data-editor-id="hero-title-line-1"] {
   opacity: 1 !important;
@@ -182,21 +188,4 @@
   top: 608px !important;
   width: 51px !important;
   height: 145px !important;
-}
-
-[data-editor-id="jbc-1777751808357-5qkf"] {
-  left: 978px !important;
-  top: 514px !important;
-  width: 150px !important;
-  height: 237px !important;
-}
-
-[data-editor-id="jbc-1777551738761-3mns"] {
-  left: -3px !important;
-  top: 1px !important;
-}
-
-[data-editor-id="jbc-1777551171912-y3ue"] {
-  left: -27px !important;
-  top: -30px !important;
 }
