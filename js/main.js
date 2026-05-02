@@ -86,6 +86,99 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // ---- SELECTED WORK: CODROPS-INSPIRED CINEMATIC CYLINDER ----
+  (function initSelectedWorkCinema() {
+    const root = document.querySelector('[data-jbc-codrops-cinema]');
+    if (!root) return;
+
+    const ring = root.querySelector('.jbc-cinema-ring');
+    const stage = root.querySelector('.jbc-cinema-stage');
+    const panels = Array.from(root.querySelectorAll('.jbc-cinema-panel'));
+    const title = root.querySelector('.jbc-cinema-copy h3');
+    const kicker = root.querySelector('.jbc-cinema-kicker');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!ring || !stage || panels.length === 0 || reducedMotion) return;
+
+    let activeIndex = -1;
+    let pointerX = 0;
+    let pointerY = 0;
+    let ticking = false;
+
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+    const circularDifference = (angle) => {
+      const wrapped = ((angle + 180) % 360 + 360) % 360 - 180;
+      return Math.abs(wrapped);
+    };
+
+    const setActiveCopy = (index) => {
+      if (index === activeIndex) return;
+      activeIndex = index;
+      panels.forEach((panel, panelIndex) => {
+        panel.classList.toggle('is-active', panelIndex === index);
+      });
+      if (title) title.textContent = panels[index].dataset.title || '';
+      if (kicker) kicker.textContent = panels[index].dataset.kicker || '';
+    };
+
+    const updateCinema = () => {
+      ticking = false;
+
+      const mobile = window.innerWidth <= 768;
+      if (mobile) {
+        ring.style.transform = '';
+        panels.forEach((panel) => panel.style.setProperty('--focus', '1'));
+        root.style.setProperty('--jbc-cinema-progress', '0');
+        setActiveCopy(0);
+        return;
+      }
+
+      const rect = root.getBoundingClientRect();
+      const travel = Math.max(1, rect.height - window.innerHeight);
+      const progress = clamp(-rect.top / travel, 0, 1);
+      const maxRotation = (panels.length - 1) * 92;
+      const rotation = -(progress * maxRotation);
+      const driftX = pointerX * 8;
+      const driftY = pointerY * -4;
+
+      root.style.setProperty('--jbc-cinema-progress', progress.toFixed(4));
+      ring.style.transform = `rotateX(${driftY.toFixed(2)}deg) rotateY(${(rotation + driftX).toFixed(2)}deg)`;
+
+      panels.forEach((panel, index) => {
+        const angle = index * 92 + rotation;
+        const focus = clamp(1 - circularDifference(angle) / 118, 0, 1);
+        panel.style.setProperty('--focus', focus.toFixed(3));
+      });
+
+      const nextIndex = clamp(Math.round(progress * (panels.length - 1)), 0, panels.length - 1);
+      setActiveCopy(nextIndex);
+    };
+
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateCinema);
+    };
+
+    stage.addEventListener('pointermove', (event) => {
+      if (!window.matchMedia('(hover: hover)').matches) return;
+      const rect = stage.getBoundingClientRect();
+      pointerX = clamp((event.clientX - rect.left) / rect.width - 0.5, -0.5, 0.5);
+      pointerY = clamp((event.clientY - rect.top) / rect.height - 0.5, -0.5, 0.5);
+      requestUpdate();
+    }, { passive: true });
+
+    stage.addEventListener('pointerleave', () => {
+      pointerX = 0;
+      pointerY = 0;
+      requestUpdate();
+    }, { passive: true });
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+    requestUpdate();
+  })();
+
   // ---- BLUR-TO-SHARP SCROLL REVEAL ----
   const revealElements = document.querySelectorAll(
     '.fade-up, .reveal, .service-card, .value-card, .process-card, .blog-card, ' +
