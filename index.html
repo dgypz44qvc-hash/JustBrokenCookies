@@ -12,23 +12,6 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/editor-overrides.css">
 
-cd /Users/vale/Claude/Projects/website
-
-git status
-
-git add . \
-  ':!node_modules' \
-  ':!backups' \
-  ':!emergency-backups' \
-  ':!editor-audit' \
-  ':!JBC' \
-  ':!*.zip' \
-  ':!*.DS_Store'
-
-git commit -m "Update live site to match local version"
-
-git push origin master
-
 
 
 
@@ -76,7 +59,7 @@ git push origin master
         <a href="about.html" data-editor-id="jbc-1777551171911-kd2o">About</a>
         <a href="services.html" data-editor-id="jbc-1777551171911-kf6s" class="">Services</a>
         <a href="portfolio.html" data-editor-id="jbc-1777551171911-zf30" class="">Work</a>
-        <a href="blog.html" data-editor-id="jbc-1777551171911-5hn2">Blog</a>
+        <a href="magazine.html" data-editor-id="jbc-1777551171911-5hn2">Magazine</a>
         <a href="contact.html" data-editor-id="jbc-1777551171911-8ngy" class="">Contact</a>
       </div>
       <div class="hamburger" id="hamburger">
@@ -199,45 +182,62 @@ git push origin master
 
   <!-- ========== WORK ========== -->
   <section id="featured-work" style="border-top: 2px solid rgb(255, 255, 255);" class="jbc-editorial-section jbc-floral-work" data-editor-id="featured-work-section">
-    <div class="container" data-editor-id="jbc-1777551171912-30nb">
+
+    <!-- Section heading — scrolls normally above the pin zone -->
+    <div class="container jbc-gallery-header" data-editor-id="jbc-1777551171912-30nb">
       <div class="sec-header" data-editor-id="jbc-1777551738761-b55o">
         <h2 data-editor-id="jbc-1777551171912-b55d" class="">Selected Work</h2>
         <span></span>
       </div>
-      <div class="portfolio-grid" data-editor-id="portfolio-grid">
+    </div>
+
+    <!-- Sticky pin zone — gallery scrolls horizontally inside here -->
+    <div class="jbc-gallery-pin">
+      <div class="portfolio-grid jbc-gallery-track" data-editor-id="portfolio-grid">
         <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-1" data-editor-id="portfolio-item-1">
-          <img src="images/portfolio/the-way-home.jpg" alt="The Unfinished Room" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-q4yv">
+          <img decoding="async" loading="lazy" src="images/portfolio/the-way-home.jpg" alt="The Unfinished Room" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-q4yv">
+          <img class="jbc-cinematic-cover" decoding="async" loading="lazy" src="images/portfolio/the-way-home.jpg" alt="" aria-hidden="true">
           <div class="overlay">
             <span data-editor-id="jbc-1777551171912-4866">Campaign</span>
             <h3 data-editor-id="jbc-1777551171912-uint">The Unfinished Room</h3>
           </div>
         </div>
         <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-2" data-editor-id="portfolio-item-2">
-          <img src="images/portfolio/sunset-silk.jpg" alt="Sunset and Silk" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-71nj">
+          <img decoding="async" loading="lazy" src="images/portfolio/sunset-silk.jpg" alt="Sunset and Silk" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-71nj">
+          <img class="jbc-cinematic-cover" decoding="async" loading="lazy" src="images/portfolio/sunset-silk.jpg" alt="" aria-hidden="true">
           <div class="overlay">
             <span data-editor-id="jbc-1777551171912-u0nh">Visual</span>
             <h3 data-editor-id="jbc-1777551171912-9d4j" class="">Sunset &amp; Silk</h3>
           </div>
         </div>
         <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-3" data-editor-id="portfolio-item-3">
-          <img src="images/portfolio/voices-unheard.jpg" alt="Voices Unheard" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-car5">
+          <img decoding="async" loading="lazy" src="images/portfolio/voices-unheard.jpg" alt="Voices Unheard" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-car5">
+          <img class="jbc-cinematic-cover" decoding="async" loading="lazy" src="images/portfolio/voices-unheard.jpg" alt="" aria-hidden="true">
           <div class="overlay">
             <span data-editor-id="jbc-1777551171912-e4d0">Editorial</span>
             <h3 data-editor-id="jbc-1777551171912-821h" class="">Voices Unheard</h3>
           </div>
         </div>
         <div class="portfolio-item jbc-editorial-work-item jbc-editorial-work-item-4" data-editor-id="portfolio-item-4">
-          <img src="images/portfolio/dust-to-gold.jpg" alt="From Dust to Gold" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-g6jo">
+          <img decoding="async" loading="lazy" src="images/portfolio/dust-to-gold.jpg" alt="From Dust to Gold" style="transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;" data-editor-id="jbc-1777551171912-g6jo">
+          <img class="jbc-cinematic-cover" decoding="async" loading="lazy" src="images/portfolio/dust-to-gold.jpg" alt="" aria-hidden="true">
           <div class="overlay">
             <span data-editor-id="jbc-1777551171912-l5i4">Strategy</span>
             <h3 data-editor-id="jbc-1777551171912-iay2" class="">From Dust to Gold</h3>
           </div>
         </div>
       </div>
-      <div style="text-align: center;" data-editor-id="jbc-1777551171912-e6pe" class="">
-        <a href="portfolio.html" class="btn btn-outline" data-editor-id="jbc-1777551171912-f74t" style="transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);">View All Work</a>
+      <!-- Subtle scroll progress indicator -->
+      <div class="jbc-gallery-progress" aria-hidden="true">
+        <div class="jbc-gallery-progress-inner"></div>
       </div>
     </div>
+
+    <!-- CTA button — sits below the pin zone, scrolls normally -->
+    <div class="container jbc-gallery-footer" data-editor-id="jbc-1777551171912-e6pe">
+      <a href="portfolio.html" class="btn btn-outline" data-editor-id="jbc-1777551171912-f74t" style="transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);">View All Work</a>
+    </div>
+
   </section>
 
   <!-- ========== TESTIMONIAL ========== -->
@@ -261,7 +261,7 @@ git push origin master
   </section>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="footer jbc-editorial-footer" data-editor-id="footer-section"><div class="editor-decoration editor-image" data-asset-type="image" data-asset-parent="Footer" data-editor-id="image-002"><img src="images/magnific_swap-the-lady-in-img1-wit_2903671142-1777665351148.png" alt="" data-editor-id="jbc-1777631316948-65ho"></div>
+  <footer class="footer jbc-editorial-footer" data-editor-id="footer-section"><div class="editor-decoration editor-image" data-asset-type="image" data-asset-parent="Footer" data-editor-id="image-002"><img decoding="async" loading="lazy" src="images/magnific_swap-the-lady-in-img1-wit_2903671142-1777665351148.jpg" alt="" data-editor-id="jbc-1777631316948-65ho"></div>
     <div class="footer-grid" data-editor-id="footer-grid">
       <div class="footer-brand" data-editor-id="footer-brand">
         <div class="nav-logo" data-editor-id="jbc-1777551171912-6rjw">
@@ -280,7 +280,7 @@ git push origin master
         <a href="about.html" data-editor-id="jbc-1777551171910-ksqz" class="">About</a>
         <a href="services.html" data-editor-id="jbc-1777551171910-g8ev" class="">Services</a>
         <a href="portfolio.html" data-editor-id="jbc-1777551171910-0pho" class="">Portfolio</a>
-        <a href="blog.html" data-editor-id="jbc-1777551171910-ucwv" class="">Blog</a>
+        <a href="magazine.html" data-editor-id="jbc-1777551171910-ucwv" class="">Magazine</a>
       </div>
       <div class="footer-col" data-editor-id="jbc-1777551171910-ooc8">
         <h4 data-editor-id="jbc-1777551171910-9xhd" class="">Services</h4>
