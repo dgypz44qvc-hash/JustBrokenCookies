@@ -41,7 +41,7 @@ body {
   background:var(--charcoal);
   color:var(--cream);
   line-height:1.75;
-  overflow-x:hidden;
+  overflow-x:clip; /* clip instead of hidden — preserves position:sticky for children */
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   position:relative;
@@ -7298,7 +7298,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.16) 42%,
       rgba(7,5,5,0.86) 100%
     ),
-    url("../images/eyestory.png") !important;
+    url("../images/eyestory.jpg") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -7413,7 +7413,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.04) 42%,
       rgba(7,5,5,0.58) 100%
     ),
-    url("../images/eyestory.png") !important;
+    url("../images/eyestory.jpg") !important;
 
   /* contain preserves the full original 16:9 image, no ugly zoom crop */
   background-size: contain !important;
@@ -7510,7 +7510,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.04) 42%,
       rgba(7,5,5,0.58) 100%
     ),
-    url("../images/eyestory.png") !important;
+    url("../images/eyestory.jpg") !important;
 
   /* COVER fills the whole section, no boxed image */
   background-size: cover !important;
@@ -7636,7 +7636,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.04) 42%,
       rgba(7,5,5,0.58) 100%
     ),
-    url("../images/eyestory.png") !important;
+    url("../images/eyestory.jpg") !important;
 
   /* COVER fills the whole section, no boxed image */
   background-size: cover !important;
@@ -7982,7 +7982,7 @@ footer.footer .social-links,
       rgba(7,5,5,0.10) 45%,
       rgba(7,5,5,0.82) 100%
     ),
-    url("../images/eyestory.png") !important;
+    url("../images/eyestory.jpg") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -9024,3 +9024,832 @@ body:not([data-editor-id]) .portfolio-item img {
     opacity: 0.92 !important;
   }
 }
+
+/* =========================================================
+   CINEMATIC HERO-LIGHT IMAGE COVERS
+   The cover layer carries the BW/cinematic look; the image below stays clean.
+   ========================================================= */
+
+.portfolio-item,
+.portfolio-item.jbc-editorial-work-item,
+.blog-card-image,
+.team-card,
+.about-image,
+.service-detail-image,
+.mag-featured-image,
+.mag-article-image {
+  position: relative !important;
+  overflow: hidden !important;
+  background: #050505 !important;
+  isolation: isolate !important;
+}
+
+.portfolio-item img,
+.portfolio-item.jbc-editorial-work-item img,
+.blog-card-image img,
+.team-card img,
+.about-image img,
+.service-detail-image img,
+.mag-featured-image img,
+.mag-article-image img {
+  position: relative !important;
+  z-index: 0 !important;
+  filter: none !important;
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.portfolio-item::before,
+.portfolio-item.jbc-editorial-work-item::before,
+.blog-card-image::before,
+.team-card::before,
+.about-image::before,
+.service-detail-image::before,
+.mag-featured-image::before,
+.mag-article-image::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  background:
+    linear-gradient(90deg, rgba(5,5,5,0.46) 0%, rgba(5,5,5,0.08) 28%, rgba(5,5,5,0.12) 70%, rgba(5,5,5,0.48) 100%),
+    linear-gradient(180deg, rgba(5,5,5,0.36) 0%, rgba(5,5,5,0.05) 42%, rgba(5,5,5,0.5) 100%),
+    radial-gradient(ellipse at 18% 12%, rgba(232,137,29,0.22) 0%, rgba(232,137,29,0.07) 30%, transparent 58%),
+    radial-gradient(ellipse at 82% 26%, rgba(201,58,110,0.18) 0%, rgba(201,58,110,0.06) 28%, transparent 62%) !important;
+  backdrop-filter: grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
+  -webkit-backdrop-filter: grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
+  mix-blend-mode: normal !important;
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-backdrop-filter 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.portfolio-item::after,
+.portfolio-item.jbc-editorial-work-item::after,
+.blog-card-image::after,
+.team-card::after,
+.about-image::after,
+.service-detail-image::after,
+.mag-featured-image::after,
+.mag-article-image::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  opacity: 0.3 !important;
+  background:
+    radial-gradient(ellipse at 22% 12%, rgba(240,230,218,0.34) 0%, rgba(232,137,29,0.18) 24%, transparent 52%),
+    linear-gradient(128deg, rgba(232,137,29,0.16) 0%, transparent 36%, rgba(232,72,72,0.13) 72%, transparent 100%) !important;
+  mix-blend-mode: screen !important;
+  transform: translate3d(-4%, -3%, 0) scale(1.05) !important;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.portfolio-item:hover img,
+.portfolio-item.jbc-editorial-work-item:hover img,
+.blog-card:hover .blog-card-image img,
+.team-card:hover img,
+.about-image:hover img,
+.service-detail:hover .service-detail-image img,
+.mag-featured:hover .mag-featured-image img,
+.mag-article:hover .mag-article-image img,
+.portfolio-item img.color-revealed,
+.blog-card-image img.color-revealed,
+.team-card img.color-revealed,
+.about-image img.color-revealed,
+.service-detail-image img.color-revealed,
+.mag-featured-image img.color-revealed,
+.mag-article-image img.color-revealed {
+  filter: none !important;
+}
+
+.portfolio-item:hover::before,
+.portfolio-item.jbc-editorial-work-item:hover::before,
+.blog-card:hover .blog-card-image::before,
+.team-card:hover::before,
+.about-image:hover::before,
+.service-detail:hover .service-detail-image::before,
+.mag-featured:hover .mag-featured-image::before,
+.mag-article:hover .mag-article-image::before,
+.portfolio-item:has(img.color-revealed)::before,
+.blog-card-image:has(img.color-revealed)::before,
+.team-card:has(img.color-revealed)::before,
+.about-image:has(img.color-revealed)::before,
+.service-detail-image:has(img.color-revealed)::before,
+.mag-featured-image:has(img.color-revealed)::before,
+.mag-article-image:has(img.color-revealed)::before {
+  opacity: 0.82 !important;
+  backdrop-filter: grayscale(0.62) sepia(0.2) saturate(1.08) contrast(1.08) brightness(0.92) !important;
+  -webkit-backdrop-filter: grayscale(0.62) sepia(0.2) saturate(1.08) contrast(1.08) brightness(0.92) !important;
+}
+
+.portfolio-item:hover::after,
+.portfolio-item.jbc-editorial-work-item:hover::after,
+.blog-card:hover .blog-card-image::after,
+.team-card:hover::after,
+.about-image:hover::after,
+.service-detail:hover .service-detail-image::after,
+.mag-featured:hover .mag-featured-image::after,
+.mag-article:hover .mag-article-image::after,
+.portfolio-item:has(img.color-revealed)::after,
+.blog-card-image:has(img.color-revealed)::after,
+.team-card:has(img.color-revealed)::after,
+.about-image:has(img.color-revealed)::after,
+.service-detail-image:has(img.color-revealed)::after,
+.mag-featured-image:has(img.color-revealed)::after,
+.mag-article-image:has(img.color-revealed)::after {
+  opacity: 0.78 !important;
+  transform: translate3d(0, 0, 0) scale(1.1) !important;
+}
+
+.portfolio-item .overlay,
+.portfolio-item.jbc-editorial-work-item .overlay {
+  z-index: 4 !important;
+  background:
+    linear-gradient(to top, rgba(5,5,5,0.9), rgba(5,5,5,0.36) 42%, rgba(5,5,5,0) 100%) !important;
+}
+
+.team-card-info,
+.blog-card-content {
+  position: relative !important;
+  z-index: 4 !important;
+}
+
+.team-card::before,
+.team-card::after {
+  bottom: auto !important;
+  height: calc(100% - 112px) !important;
+  min-height: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+@media (max-width: 768px) {
+  .portfolio-item::before,
+  .portfolio-item.jbc-editorial-work-item::before,
+  .blog-card-image::before,
+  .team-card::before,
+  .about-image::before,
+  .service-detail-image::before,
+  .mag-featured-image::before,
+  .mag-article-image::before {
+    opacity: 0.9 !important;
+  }
+
+  .portfolio-item::after,
+  .portfolio-item.jbc-editorial-work-item::after,
+  .blog-card-image::after,
+  .team-card::after,
+  .about-image::after,
+  .service-detail-image::after,
+  .mag-featured-image::after,
+  .mag-article-image::after {
+    opacity: 0.58 !important;
+  }
+}
+
+/* =========================================================
+   IMAGE COVER FILTER CORRECTION
+   Keeps real images untouched; only the cover overlay carries the BW mood.
+   ========================================================= */
+
+.portfolio-item img,
+.portfolio-item.jbc-editorial-work-item img,
+.blog-card-image img,
+.team-card img,
+.about-image img,
+.service-detail-image img,
+.mag-featured-image img,
+.mag-article-image img {
+  filter: none !important;
+}
+
+.portfolio-item:hover img,
+.portfolio-item.jbc-editorial-work-item:hover img,
+.blog-card:hover .blog-card-image img,
+.team-card:hover img,
+.about-image:hover img,
+.service-detail:hover .service-detail-image img,
+.mag-featured:hover .mag-featured-image img,
+.mag-article:hover .mag-article-image img,
+.portfolio-item img.color-revealed,
+.blog-card-image img.color-revealed,
+.team-card img.color-revealed,
+.about-image img.color-revealed,
+.service-detail-image img.color-revealed,
+.mag-featured-image img.color-revealed,
+.mag-article-image img.color-revealed {
+  filter: none !important;
+}
+
+.portfolio-item::before,
+.portfolio-item.jbc-editorial-work-item::before,
+.blog-card-image::before,
+.team-card::before,
+.about-image::before,
+.service-detail-image::before,
+.mag-featured-image::before,
+.mag-article-image::before {
+  opacity: 1 !important;
+  background: rgba(5, 5, 5, 0.08) !important;
+  backdrop-filter: grayscale(0.92) sepia(0.1) saturate(0.82) contrast(1.08) brightness(0.9) !important;
+  -webkit-backdrop-filter: grayscale(0.92) sepia(0.1) saturate(0.82) contrast(1.08) brightness(0.9) !important;
+  mix-blend-mode: normal !important;
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-backdrop-filter 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.portfolio-item::after,
+.portfolio-item.jbc-editorial-work-item::after,
+.blog-card-image::after,
+.team-card::after,
+.about-image::after,
+.service-detail-image::after,
+.mag-featured-image::after,
+.mag-article-image::after {
+  opacity: 0.22 !important;
+  background:
+    radial-gradient(ellipse at 22% 12%, rgba(240,230,218,0.22) 0%, rgba(232,137,29,0.10) 28%, transparent 56%),
+    linear-gradient(135deg, rgba(232,137,29,0.10) 0%, transparent 38%, rgba(201,58,110,0.08) 78%, transparent 100%) !important;
+  mix-blend-mode: screen !important;
+}
+
+.portfolio-item:hover::before,
+.portfolio-item.jbc-editorial-work-item:hover::before,
+.blog-card:hover .blog-card-image::before,
+.team-card:hover::before,
+.about-image:hover::before,
+.service-detail:hover .service-detail-image::before,
+.mag-featured:hover .mag-featured-image::before,
+.mag-article:hover .mag-article-image::before,
+.portfolio-item:has(img.color-revealed)::before,
+.blog-card-image:has(img.color-revealed)::before,
+.team-card:has(img.color-revealed)::before,
+.about-image:has(img.color-revealed)::before,
+.service-detail-image:has(img.color-revealed)::before,
+.mag-featured-image:has(img.color-revealed)::before,
+.mag-article-image:has(img.color-revealed)::before {
+  opacity: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.portfolio-item:hover::after,
+.portfolio-item.jbc-editorial-work-item:hover::after,
+.blog-card:hover .blog-card-image::after,
+.team-card:hover::after,
+.about-image:hover::after,
+.service-detail:hover .service-detail-image::after,
+.mag-featured:hover .mag-featured-image::after,
+.mag-article:hover .mag-article-image::after,
+.portfolio-item:has(img.color-revealed)::after,
+.blog-card-image:has(img.color-revealed)::after,
+.team-card:has(img.color-revealed)::after,
+.about-image:has(img.color-revealed)::after,
+.service-detail-image:has(img.color-revealed)::after,
+.mag-featured-image:has(img.color-revealed)::after,
+.mag-article-image:has(img.color-revealed)::after {
+  opacity: 0.5 !important;
+}
+
+/* =========================================================
+   REAL BW COVER IMAGE REVEAL
+   JS adds .jbc-cinematic-cover; the original image below stays unfiltered.
+   ========================================================= */
+
+.jbc-cinematic-image-box {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+.jbc-cinematic-base {
+  position: relative !important;
+  z-index: 0 !important;
+  filter: none !important;
+}
+
+.jbc-cinematic-cover {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: inherit !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  filter: grayscale(1) sepia(0.14) saturate(0.78) contrast(1.1) brightness(0.88) !important;
+  transform: scale(1.012) !important;
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.jbc-cinematic-image-box::before {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.jbc-cinematic-image-box::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  opacity: 0.26 !important;
+  background:
+    radial-gradient(ellipse at 18% 10%, rgba(240,230,218,0.24) 0%, rgba(232,137,29,0.12) 26%, transparent 58%),
+    linear-gradient(135deg, rgba(232,137,29,0.11) 0%, transparent 42%, rgba(201,58,110,0.09) 78%, transparent 100%) !important;
+  mix-blend-mode: screen !important;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.jbc-cinematic-image-box:hover > .jbc-cinematic-cover,
+.blog-card:hover .blog-card-image > .jbc-cinematic-cover,
+.service-detail:hover .service-detail-image > .jbc-cinematic-cover,
+.mag-featured:hover .mag-featured-image > .jbc-cinematic-cover,
+.mag-article:hover .mag-article-image > .jbc-cinematic-cover,
+.jbc-cinematic-image-box.jbc-image-revealed > .jbc-cinematic-cover {
+  opacity: 0 !important;
+  transform: scale(1.055) !important;
+}
+
+.jbc-cinematic-image-box:hover::after,
+.blog-card:hover .blog-card-image::after,
+.service-detail:hover .service-detail-image::after,
+.mag-featured:hover .mag-featured-image::after,
+.mag-article:hover .mag-article-image::after,
+.jbc-cinematic-image-box.jbc-image-revealed::after {
+  opacity: 0.46 !important;
+  transform: scale(1.04) !important;
+}
+
+.portfolio-item .overlay,
+.portfolio-item.jbc-editorial-work-item .overlay,
+#featured-work .portfolio-item .overlay,
+#featured-work .portfolio-item.jbc-editorial-work-item .overlay,
+.portfolio-grid-full .portfolio-item .overlay {
+  position: absolute !important;
+  z-index: 12 !important;
+  opacity: 0 !important;
+  transform: translateY(10px) !important;
+  visibility: visible !important;
+}
+
+.portfolio-item:hover .overlay,
+.portfolio-item.jbc-editorial-work-item:hover .overlay,
+#featured-work .portfolio-item:hover .overlay,
+#featured-work .portfolio-item.jbc-editorial-work-item:hover .overlay,
+.portfolio-grid-full .portfolio-item:hover .overlay {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.portfolio-item .overlay *,
+.portfolio-item.jbc-editorial-work-item .overlay *,
+#featured-work .portfolio-item .overlay *,
+.portfolio-grid-full .portfolio-item .overlay * {
+  position: relative !important;
+  z-index: 13 !important;
+  visibility: visible !important;
+}
+
+.team-card-info,
+.blog-card-content {
+  position: relative !important;
+  z-index: 12 !important;
+}
+
+.mag-cat-badge {
+  position: absolute !important;
+  z-index: 12 !important;
+}
+
+.team-card > .jbc-cinematic-cover,
+.team-card::after {
+  inset: 0 0 auto 0 !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* =========================================================
+   SELECTED WORK STATIC CINEMATIC COVERS
+   Filters only the real cover image; the base image stays untouched.
+   ========================================================= */
+
+#featured-work .portfolio-item.jbc-editorial-work-item {
+  isolation: isolate !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item img:not(.jbc-cinematic-cover) {
+  position: relative !important;
+  z-index: 0 !important;
+  filter: none !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item > .jbc-cinematic-cover {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 5 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: inherit !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  filter: grayscale(1) sepia(0.08) saturate(0.62) contrast(1.16) brightness(0.82) !important;
+  transform: scale(1.012) !important;
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+  opacity: 0.56 !important;
+  background:
+    linear-gradient(90deg, rgba(4,4,4,0.42) 0%, rgba(4,4,4,0.08) 35%, rgba(4,4,4,0.5) 100%),
+    linear-gradient(180deg, rgba(4,4,4,0.2) 0%, rgba(4,4,4,0.02) 44%, rgba(4,4,4,0.58) 100%),
+    radial-gradient(ellipse at 18% 10%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 28%, transparent 58%) !important;
+  mix-blend-mode: normal !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 7 !important;
+  pointer-events: none !important;
+  opacity: 0.42 !important;
+  background:
+    radial-gradient(ellipse at 20% 12%, rgba(245,245,245,0.28) 0%, rgba(232,137,29,0.1) 30%, transparent 62%),
+    linear-gradient(132deg, rgba(255,255,255,0.08) 0%, transparent 34%, rgba(201,58,110,0.12) 74%, transparent 100%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 5px) !important;
+  mix-blend-mode: screen !important;
+  transform: translate3d(-2%, -2%, 0) scale(1.04) !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item:hover > .jbc-cinematic-cover,
+#featured-work .portfolio-item.jbc-editorial-work-item.jbc-image-revealed > .jbc-cinematic-cover {
+  opacity: 0 !important;
+  transform: scale(1.055) !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item:hover::before,
+#featured-work .portfolio-item.jbc-editorial-work-item.jbc-image-revealed::before {
+  opacity: 0.28 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item:hover::after,
+#featured-work .portfolio-item.jbc-editorial-work-item.jbc-image-revealed::after {
+  opacity: 0.58 !important;
+  transform: translate3d(0, 0, 0) scale(1.08) !important;
+}
+
+#featured-work .portfolio-item.jbc-editorial-work-item .overlay {
+  z-index: 12 !important;
+}
+
+
+/* =========================================================
+   CODROPS HORIZONTAL PARALLAX GALLERY
+   #featured-work — Desktop sticky horizontal scroll
+   Mobile — swipeable snap row
+   ========================================================= */
+
+/* ---------- Section header (above pin zone) ---------- */
+.jbc-gallery-header {
+  padding-bottom: 0;
+}
+
+/* ---------- CTA footer (below pin zone) ---------- */
+.jbc-gallery-footer {
+  text-align: center;
+  padding-top: 3.5rem;
+  padding-bottom: 4rem;
+}
+
+/* ---------- Progress bar ---------- */
+.jbc-gallery-progress {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 1px;
+  background: rgba(240, 230, 218, 0.15);
+  overflow: hidden;
+  border-radius: 1px;
+}
+.jbc-gallery-progress-inner {
+  width: 0%;
+  height: 100%;
+  background: var(--gold, #E8891D);
+  transition: width 0.1s linear;
+  border-radius: 1px;
+}
+
+/* =========================================================
+   DESKTOP — sticky horizontal gallery
+   ========================================================= */
+@media (min-width: 769px) {
+
+  /* Section: position:relative so sticky child works; JS sets minHeight for scroll travel */
+  #featured-work {
+    overflow: visible !important;
+    position: relative !important;
+    isolation: isolate !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Pin zone: STICKY — stays locked to viewport while user scrolls through the section.
+     overflow:hidden clips the wide track to a full-viewport window.
+     CSS sticky works here because body now uses overflow-x:clip (not hidden). */
+  #featured-work .jbc-gallery-pin {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box !important;
+    cursor: grab !important;
+    user-select: none !important;
+    z-index: 2 !important;
+  }
+  #featured-work .jbc-gallery-pin:active {
+    cursor: grabbing !important;
+  }
+
+  /* Track: horizontal card strip, gap matches site card spacing */
+  #featured-work .portfolio-grid.jbc-gallery-track {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: unset !important;
+    gap: 24px !important;
+    margin: 0 !important;
+    padding: 0 6vw !important;        /* breathing room at edges */
+    will-change: transform;
+    flex-shrink: 0 !important;
+    width: max-content !important;
+    align-items: center !important;   /* vertically centre cards in pin */
+  }
+
+  /* Cards: same visual DNA as site cards — border-radius 10px, border, shadow */
+  #featured-work .portfolio-item.jbc-editorial-work-item {
+    flex-shrink: 0 !important;
+    width: 38vw !important;           /* medium — shows ~2 cards + peek of next */
+    height: 54vh !important;          /* proportional landscape crop */
+    border-radius: 10px !important;   /* matches .portfolio-item & .process-card */
+    border: var(--border) !important;
+    box-shadow: var(--shadow-soft) !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  /* Base image: oversized 125% for parallax room (Codrops technique) */
+  #featured-work .portfolio-item.jbc-editorial-work-item > img:not(.jbc-cinematic-cover) {
+    position: absolute !important;
+    top: 0 !important;
+    left: -12.5% !important;
+    width: 125% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: filter 0.6s ease !important;
+    pointer-events: none !important;
+    will-change: transform;
+  }
+
+  /* Cinematic colour cover: same oversized treatment */
+  #featured-work .portfolio-item.jbc-editorial-work-item .jbc-cinematic-cover {
+    position: absolute !important;
+    top: 0 !important;
+    left: -12.5% !important;
+    width: 125% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: opacity 0.6s var(--ease-out-expo), filter 0.6s ease !important;
+    pointer-events: none !important;
+    will-change: transform;
+  }
+
+  /* Hover: fade to colour */
+  #featured-work .portfolio-item.jbc-editorial-work-item:hover .jbc-cinematic-cover,
+  #featured-work .portfolio-item.jbc-editorial-work-item.jbc-image-revealed .jbc-cinematic-cover {
+    opacity: 0 !important;
+  }
+
+  /* Progress bar: thin line at bottom of viewport */
+  #featured-work .jbc-gallery-progress {
+    position: absolute !important;
+    bottom: 1.5rem !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 2px !important;
+    background: rgba(255,255,255,0.12) !important;
+    z-index: 10 !important;
+  }
+  #featured-work .jbc-gallery-progress-inner {
+    height: 100% !important;
+    background: var(--gold, #E8891D) !important;
+    width: 0% !important;
+    transition: width 0.1s linear !important;
+  }
+
+}
+
+/* =========================================================
+   MOBILE — clean horizontal swipe gallery
+   No sticky, no scroll hijacking, no page overflow
+   ========================================================= */
+@media (max-width: 768px) {
+
+  #featured-work {
+    padding-bottom: 0 !important;
+    overflow: hidden; /* contain the swipe track — no page overflow */
+  }
+
+  .jbc-gallery-header {
+    padding-bottom: 1.5rem;
+  }
+
+  /* Pin zone: not sticky on mobile — just a plain block */
+  .jbc-gallery-pin {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    padding-bottom: 0;
+  }
+
+  /* Hide the progress bar on mobile */
+  .jbc-gallery-progress {
+    display: none;
+  }
+
+  /* Track: horizontal scrollable snap row */
+  #featured-work .portfolio-grid.jbc-gallery-track {
+    display: flex !important;
+    flex-direction: row !important;
+    grid-template-columns: unset !important;
+    gap: 1rem !important;
+    margin-top: 0 !important;
+    padding: 0 5vw 1.5rem 5vw;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Hide scrollbar visually but keep swipe functional */
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE/Edge */
+    /* Prevent this from causing page-level overflow */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #featured-work .portfolio-grid.jbc-gallery-track::-webkit-scrollbar {
+    display: none;               /* Chrome/Safari */
+  }
+
+  /* Cards: 82vw wide, tall enough for good image crop */
+  #featured-work .portfolio-item.jbc-editorial-work-item {
+    flex-shrink: 0 !important;
+    width: 82vw !important;
+    height: 62vw !important;
+    aspect-ratio: unset !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    scroll-snap-align: start;
+  }
+
+  /* Images: standard 100% on mobile — no parallax treatment */
+  #featured-work .portfolio-item.jbc-editorial-work-item > img:not(.jbc-cinematic-cover),
+  #featured-work .portfolio-item.jbc-editorial-work-item .jbc-cinematic-cover {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transform: none !important;
+  }
+
+  /* Show colour image on mobile (no hover available) */
+  #featured-work .portfolio-item.jbc-editorial-work-item .jbc-cinematic-cover {
+    opacity: 0 !important;
+  }
+
+  /* CTA footer: tighter on mobile */
+  .jbc-gallery-footer {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+
+  /* Ensure testimonial section that follows is not pushed/overlapping */
+  .testimonial-section {
+    margin-top: 0;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Additional mobile breakpoints — fine-tune card sizing */
+@media (max-width: 430px) {
+  #featured-work .portfolio-item.jbc-editorial-work-item {
+    width: 83vw !important;
+    height: 64vw !important;
+  }
+}
+@media (max-width: 390px) {
+  #featured-work .portfolio-item.jbc-editorial-work-item {
+    width: 84vw !important;
+    height: 65vw !important;
+  }
+}
+@media (max-width: 375px) {
+  #featured-work .portfolio-item.jbc-editorial-work-item {
+    width: 85vw !important;
+    height: 66vw !important;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION — disable horizontal sticky movement
+   Falls back to stacked grid on desktop, plain swipe on mobile
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  @media (min-width: 769px) {
+    /* JS will not run the gallery — reset everything to a clean 2-col grid */
+    #featured-work {
+      min-height: auto !important;
+      height: auto !important;
+    }
+    .jbc-gallery-pin {
+      position: static !important;
+      height: auto !important;
+      overflow: visible !important;
+      padding-bottom: 2rem !important;
+    }
+    #featured-work .portfolio-grid.jbc-gallery-track {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      flex-direction: unset !important;
+      gap: 24px !important;
+      padding: 0 !important;
+      transform: none !important;
+      will-change: auto !important;
+    }
+    #featured-work .portfolio-item.jbc-editorial-work-item {
+      width: auto !important;
+      height: auto !important;
+      aspect-ratio: 4 / 3 !important;
+    }
+    #featured-work .portfolio-item.jbc-editorial-work-item > img:not(.jbc-cinematic-cover),
+    #featured-work .portfolio-item.jbc-editorial-work-item .jbc-cinematic-cover {
+      left: 0 !important;
+      width: 100% !important;
+      transform: none !important;
+    }
+    .jbc-gallery-progress {
+      display: none !important;
+    }
+  }
+
+}
+
