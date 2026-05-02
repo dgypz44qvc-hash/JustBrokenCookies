@@ -11083,3 +11083,75 @@ body {
   background-color: transparent !important;
 }
 
+
+/* =========================================================
+   Testimonial section
+   Remove background image only
+   ========================================================= */
+
+.testimonial-section,
+.testimonial-section.jbc-floral-testimonial,
+.testimonial-section.jbc-floral-cta,
+section.testimonial-section {
+  background-image: none !important;
+  background: #050505 !important;
+}
+
+/* Remove image/pattern pseudo-layers only in testimonial */
+.testimonial-section::before,
+.testimonial-section::after,
+.testimonial-section .testi-brutal::before,
+.testimonial-section .testi-brutal::after {
+  background-image: none !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  content: none !important;
+  display: none !important;
+}
+
+/* Keep testimonial content visible */
+.testimonial-section .testi-brutal,
+.testimonial-section .testi-content {
+  position: relative !important;
+  z-index: 2 !important;
+  background-image: none !important;
+}
+
+
+/* =========================================================
+   Testimonial section
+   Force remove all background images/patterns from testimonial area
+   ========================================================= */
+
+.testimonial-section,
+.testimonial-section *,
+.testimonial-section::before,
+.testimonial-section::after,
+.testimonial-section *::before,
+.testimonial-section *::after {
+  background-image: none !important;
+}
+
+/* Keep a clean solid background for the testimonial area */
+.testimonial-section {
+  background-color: #050505 !important;
+  background: #050505 !important;
+}
+
+/* Remove generated visual layers that may contain the image */
+.testimonial-section::before,
+.testimonial-section::after,
+.testimonial-section *::before,
+.testimonial-section *::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Keep testimonial text/content visible */
+.testimonial-section *,
+.testimonial-section .testi-brutal,
+.testimonial-section .testi-content {
+  visibility: visible !important;
+}
+
