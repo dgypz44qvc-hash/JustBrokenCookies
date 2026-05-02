@@ -10810,241 +10810,73 @@ body {
 
 
 /* =========================================================
-   Tighten gap between How We Build Stories and Selected Work
+   Selected Work
+   Restore roses background while keeping carousel stage transparent
    ========================================================= */
 
-/* Reduce bottom breathing room after the process/services cards */
-#services-overview,
-#services-overview.jbc-editorial-section {
-  padding-bottom: clamp(2.5rem, 4vw, 4rem) !important;
-  margin-bottom: 0 !important;
-}
-
-/* Bring Selected Work closer to the section above */
-#featured-work,
-#featured-work.jbc-editorial-section {
-  padding-top: clamp(2.5rem, 4vw, 4rem) !important;
-  margin-top: 0 !important;
-}
-
-/* Keep the Selected Work title/header compact */
-#featured-work .sec-header {
-  margin-top: 0 !important;
-  margin-bottom: clamp(1.8rem, 3vw, 3rem) !important;
-}
-
-/* Remove any accidental vertical offset from the Codrops cinema wrapper */
-#featured-work .portfolio-grid.jbc-codrops-cinema,
-#featured-work .jbc-cinema-pin,
-#featured-work .jbc-cinema-stage {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-}
-
-/* Mobile version */
-@media (max-width: 768px) {
-  #services-overview,
-  #services-overview.jbc-editorial-section {
-    padding-bottom: 2rem !important;
-  }
-
-  #featured-work,
-  #featured-work.jbc-editorial-section {
-    padding-top: 2rem !important;
-  }
-
-  #featured-work .sec-header {
-    margin-bottom: 1.5rem !important;
-  }
-}
-
-
-/* =========================================================
-   Restore Manifesto marquee section
-   ========================================================= */
-
-.manifesto {
-  display: block !important;
+/* Restore the section background layer */
+#featured-work.jbc-floral-work {
   position: relative !important;
+  background-image:
+    linear-gradient(rgba(5, 5, 5, 0.58), rgba(5, 5, 5, 0.72)),
+    url("../images/rosesthin.png") !important;
+  background-repeat: repeat !important;
+  background-size: 520px auto !important;
+  background-position: center top !important;
+  background-color: #050505 !important;
   overflow: hidden !important;
-  width: 100% !important;
-  min-height: auto !important;
-  padding: 2.2rem 0 !important;
-  margin: 0 !important;
-  background: #050505 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  z-index: 4 !important;
 }
 
-.manifesto-inner {
-  display: flex !important;
-  align-items: center !important;
-  gap: 3rem !important;
-  width: max-content !important;
-  white-space: nowrap !important;
-  animation: manifesto-scroll 38s linear infinite !important;
-  will-change: transform !important;
+/* Put actual content above the roses */
+#featured-work.jbc-floral-work > .container {
+  position: relative !important;
+  z-index: 2 !important;
+  background: transparent !important;
 }
 
-.manifesto-inner:hover {
-  animation-play-state: paused !important;
-}
-
-.manifesto span,
-.manifesto-inner span {
-  display: inline-block !important;
-  font-family: 'Inter', Arial, sans-serif !important;
-  font-size: clamp(0.85rem, 1vw, 1.05rem) !important;
-  line-height: 1 !important;
-  letter-spacing: 0.34em !important;
-  text-transform: uppercase !important;
-  color: rgba(255, 244, 235, 0.78) !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.manifesto span::after,
-.manifesto-inner span::after {
-  content: "✦" !important;
-  display: inline-block !important;
-  margin-left: 3rem !important;
-  color: #E8891D !important;
-  opacity: 0.9 !important;
-}
-
-@keyframes manifesto-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 768px) {
-  .manifesto {
-    padding: 1.6rem 0 !important;
-  }
-
-  .manifesto-inner {
-    gap: 2rem !important;
-    animation-duration: 32s !important;
-  }
-
-  .manifesto span,
-  .manifesto-inner span {
-    font-size: 0.74rem !important;
-    letter-spacing: 0.26em !important;
-  }
-
-  .manifesto span::after,
-  .manifesto-inner span::after {
-    margin-left: 2rem !important;
-  }
-}
-
-
-/* =========================================================
-   Selected Work, Codrops cinematic carousel
-   SAFE title refinement only
-   Does not change roses background or section size
-   ========================================================= */
-
-/* Hide only the separate floating carousel caption */
-#featured-work .jbc-cinema-copy {
-  display: none !important;
-}
-
-/* Place the card label neatly inside the image, bottom-left */
-#featured-work .jbc-cinema-panel-meta {
+/* Do NOT let previous transparency rules kill the section itself */
+#featured-work.jbc-floral-work::before,
+#featured-work.jbc-floral-work::after {
+  content: "" !important;
   display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
   pointer-events: none !important;
+}
 
+/* Soft dark veil for readability, not a black box */
+#featured-work.jbc-floral-work::before {
   position: absolute !important;
-  left: 1.15rem !important;
-  bottom: 1.05rem !important;
-  z-index: 12 !important;
-
-  width: auto !important;
-  max-width: 280px !important;
-
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  transform: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* Small category line */
-#featured-work .jbc-cinema-panel-meta > span {
-  display: block !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(232, 137, 29, 0.10), transparent 34%),
+    linear-gradient(90deg, rgba(0,0,0,0.74), rgba(0,0,0,0.46), rgba(0,0,0,0.78)) !important;
   opacity: 1 !important;
-  visibility: visible !important;
-
-  font-family: 'Inter', Arial, sans-serif !important;
-  font-size: 0.52rem !important;
-  line-height: 1 !important;
-  letter-spacing: 0.26em !important;
-  text-transform: uppercase !important;
-  font-weight: 600 !important;
-
-  color: rgba(255, 244, 235, 0.76) !important;
-  margin: 0 0 0.38rem 0 !important;
 }
 
-/* Main card title, compact and JBC palette-aligned */
-#featured-work .jbc-cinema-panel-meta strong {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-
-  font-family: 'Playfair Display', Georgia, serif !important;
-  font-size: clamp(1.05rem, 1.45vw, 1.72rem) !important;
-  line-height: 0.98 !important;
-  letter-spacing: -0.035em !important;
-  font-weight: 700 !important;
-
-  color: #E8891D !important;
-  text-transform: none !important;
-  max-width: 11ch !important;
-  margin: 0 !important;
-
-  text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.58),
-    0 8px 24px rgba(0, 0, 0, 0.42) !important;
-}
-
-/* Remove only label panel/box, not section pseudo-elements */
-#featured-work .jbc-cinema-panel-meta::before,
-#featured-work .jbc-cinema-panel-meta::after {
-  content: none !important;
+/* Keep this empty so it does not create extra visual blocks */
+#featured-work.jbc-floral-work::after {
   display: none !important;
+}
+
+/* Keep the Codrops carousel container transparent over the restored roses */
+#featured-work .portfolio-grid.jbc-codrops-cinema,
+#featured-work .jbc-codrops-cinema,
+#featured-work .jbc-cinema-pin,
+#featured-work .jbc-cinema-stage,
+#featured-work .jbc-cinema-ring {
   background: transparent !important;
+  background-color: transparent !important;
   box-shadow: none !important;
 }
 
-/* Mobile, keep it tidy inside the image */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel-meta {
-    left: 0.9rem !important;
-    bottom: 0.85rem !important;
-    max-width: 230px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.48rem !important;
-    letter-spacing: 0.2em !important;
-    margin-bottom: 0.3rem !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(1rem, 5vw, 1.45rem) !important;
-    line-height: 1 !important;
-    max-width: 11ch !important;
-  }
+/* Prevent carousel overlays from becoming black slabs */
+#featured-work .jbc-cinema-pin::before,
+#featured-work .jbc-cinema-pin::after,
+#featured-work .jbc-cinema-stage::before,
+#featured-work .jbc-cinema-stage::after,
+#featured-work .jbc-cinema-ring::before,
+#featured-work .jbc-cinema-ring::after {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
