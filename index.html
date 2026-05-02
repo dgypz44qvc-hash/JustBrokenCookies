@@ -12,6 +12,23 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/editor-overrides.css">
 
+cd /Users/vale/Claude/Projects/website
+
+git status
+
+git add . \
+  ':!node_modules' \
+  ':!backups' \
+  ':!emergency-backups' \
+  ':!editor-audit' \
+  ':!JBC' \
+  ':!*.zip' \
+  ':!*.DS_Store'
+
+git commit -m "Update live site to match local version"
+
+git push origin master
+
 
 
 

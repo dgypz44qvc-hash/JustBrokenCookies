@@ -8243,3 +8243,784 @@ footer.footer .social-links,
     transform: none !important;
   }
 }
+
+/* =========================================================
+   TESTIMONIAL + FOOTER FINAL IMAGE FRAMING
+   Repositions the portrait details without stretching the artwork.
+   ========================================================= */
+
+.testimonial-section::before,
+.testimonial-section.jbc-floral-testimonial::before {
+  background-size: cover !important;
+  background-position: center 62% !important;
+  transform: translateY(18px) scale(1.04) !important;
+  opacity: 0.84 !important;
+}
+
+@media (max-width: 768px) {
+  .testimonial-section::before,
+  .testimonial-section.jbc-floral-testimonial::before {
+    background-position: center 66% !important;
+    transform: translateY(14px) scale(1.08) !important;
+  }
+}
+
+footer.footer,
+.footer.jbc-editorial-footer,
+[data-editor-id="footer-section"] {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: clamp(420px, 31vw, 560px) !important;
+  padding: clamp(78px, 8vw, 128px) clamp(28px, 5vw, 78px) clamp(58px, 6vw, 96px) !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: #070505 !important;
+}
+
+footer.footer::before,
+.footer.jbc-editorial-footer::before,
+footer.footer::after,
+.footer.jbc-editorial-footer::after {
+  content: none !important;
+  display: none !important;
+}
+
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.74 !important;
+  position: absolute !important;
+  inset: 0 !important;
+  left: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  min-height: 100% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center 54% !important;
+  transform: none !important;
+  filter: brightness(0.72) contrast(1.03) saturate(0.94) !important;
+}
+
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(7,5,5,0.9) 0%, rgba(7,5,5,0.36) 24%, rgba(7,5,5,0.24) 58%, rgba(7,5,5,0.78) 100%),
+    linear-gradient(180deg, rgba(7,5,5,0.82) 0%, rgba(7,5,5,0.12) 38%, rgba(7,5,5,0.88) 100%) !important;
+}
+
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  position: relative !important;
+  z-index: 3 !important;
+  min-height: 260px !important;
+  align-items: start !important;
+  background: transparent !important;
+}
+
+footer.footer .footer-brand,
+footer.footer .footer-col,
+footer.footer .footer-bottom,
+footer.footer .social-links,
+.footer.jbc-editorial-footer .footer-brand,
+.footer.jbc-editorial-footer .footer-col,
+.footer.jbc-editorial-footer .footer-bottom,
+.footer.jbc-editorial-footer .social-links {
+  position: relative !important;
+  z-index: 4 !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer,
+  [data-editor-id="footer-section"] {
+    min-height: 620px !important;
+    padding: 72px 28px 54px !important;
+  }
+
+  footer.footer [data-editor-id="image-002"] img,
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+    object-position: center center !important;
+  }
+}
+
+/* =========================================================
+   FOOTER BANNER CORRECTION
+   Treats the footer artwork as a banner, not a full-bleed portrait.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer,
+[data-editor-id="footer-section"] {
+  height: clamp(330px, 24vw, 430px) !important;
+  min-height: clamp(330px, 24vw, 430px) !important;
+  max-height: 430px !important;
+  padding: clamp(48px, 5vw, 74px) clamp(42px, 6vw, 92px) !important;
+  box-sizing: border-box !important;
+}
+
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  opacity: 0.66 !important;
+}
+
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: min(1680px, 100vw) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  transform: translate(-50%, -50%) !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  filter: brightness(0.66) contrast(1.02) saturate(0.92) !important;
+}
+
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
+  background:
+    linear-gradient(90deg, rgba(7,5,5,0.96) 0%, rgba(7,5,5,0.64) 18%, rgba(7,5,5,0.28) 52%, rgba(7,5,5,0.74) 100%),
+    linear-gradient(180deg, rgba(7,5,5,0.92) 0%, rgba(7,5,5,0.18) 42%, rgba(7,5,5,0.94) 100%) !important;
+}
+
+footer.footer .footer-grid,
+.footer.jbc-editorial-footer .footer-grid {
+  min-height: 0 !important;
+  height: 100% !important;
+  align-items: center !important;
+}
+
+@media (max-width: 768px) {
+  footer.footer,
+  .footer.jbc-editorial-footer,
+  [data-editor-id="footer-section"] {
+    height: auto !important;
+    min-height: 560px !important;
+    max-height: none !important;
+    padding: 64px 28px 48px !important;
+  }
+
+  footer.footer [data-editor-id="image-002"] img,
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+    width: auto !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  footer.footer .footer-grid,
+  .footer.jbc-editorial-footer .footer-grid {
+    height: auto !important;
+    align-items: start !important;
+  }
+}
+
+/* =========================================================
+   FINAL FOOTER BLEND + MOBILE PROPORTION PASS
+   Subtle edge blends, balanced mobile section sizing.
+   ========================================================= */
+
+footer.footer,
+.footer.jbc-editorial-footer,
+[data-editor-id="footer-section"] {
+  background: #050505 !important;
+}
+
+footer.footer [data-editor-id="image-002"],
+.footer.jbc-editorial-footer [data-editor-id="image-002"] {
+  opacity: 0.62 !important;
+}
+
+footer.footer [data-editor-id="image-002"] img,
+.footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+  filter: brightness(0.68) contrast(1.02) saturate(0.92) !important;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.28) 5%, #000 17%, #000 72%, rgba(0,0,0,0.42) 88%, transparent 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.18) 0%, #000 20%, #000 82%, rgba(0,0,0,0.28) 100%) !important;
+  mask-image:
+    linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.28) 5%, #000 17%, #000 72%, rgba(0,0,0,0.42) 88%, transparent 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.18) 0%, #000 20%, #000 82%, rgba(0,0,0,0.28) 100%) !important;
+  -webkit-mask-composite: source-in !important;
+  mask-composite: intersect !important;
+}
+
+footer.footer [data-editor-id="image-002"]::after,
+.footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
+  background:
+    linear-gradient(90deg, rgba(5,5,5,0.36) 0%, rgba(5,5,5,0.08) 28%, rgba(5,5,5,0.06) 62%, rgba(5,5,5,0.34) 100%),
+    linear-gradient(180deg, rgba(5,5,5,0.42) 0%, rgba(5,5,5,0.08) 48%, rgba(5,5,5,0.46) 100%) !important;
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .nav .container {
+    width: min(92%, 430px) !important;
+    padding: 13px 0 !important;
+  }
+
+  .nav-logo {
+    font-size: clamp(0.5rem, 2.15vw, 0.62rem) !important;
+    letter-spacing: clamp(2.6px, 1vw, 4px) !important;
+    white-space: nowrap !important;
+  }
+
+  .hamburger {
+    transform: scale(0.86) !important;
+    transform-origin: right center !important;
+  }
+
+  .nav-links {
+    width: min(82vw, 330px) !important;
+    gap: 28px !important;
+  }
+
+  section,
+  .jbc-editorial-section,
+  #services-overview,
+  #featured-work,
+  .testimonial-section,
+  .cta-section {
+    width: 100% !important;
+    padding: clamp(46px, 12vw, 72px) 0 !important;
+    margin: 0 !important;
+  }
+
+  .container,
+  .page-header .container,
+  .footer .container {
+    width: min(91vw, 430px) !important;
+    max-width: 430px !important;
+  }
+
+  .hero.jbc-floral-hero {
+    min-height: 0 !important;
+    padding-top: 54px !important;
+  }
+
+  .hero.jbc-floral-hero > picture {
+    aspect-ratio: 4 / 5 !important;
+  }
+
+  .hero.jbc-floral-hero .hero-full-bg {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+  }
+
+  .manifesto-inner {
+    padding: 20px 0 !important;
+    min-height: 74px !important;
+  }
+
+  .manifesto-inner span {
+    font-size: clamp(1.15rem, 6.2vw, 1.7rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .sec-header,
+  .page-header {
+    margin-bottom: clamp(24px, 7vw, 36px) !important;
+  }
+
+  .sec-header h2,
+  .section-title,
+  .page-title,
+  .page-header h1,
+  .cta-section h2 {
+    font-size: clamp(2.1rem, 11vw, 3.45rem) !important;
+    line-height: 0.98 !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .sec-header span,
+  .section-subtitle,
+  .page-subtitle {
+    font-size: clamp(0.72rem, 3.2vw, 0.9rem) !important;
+    line-height: 1.55 !important;
+  }
+
+  .services-grid,
+  .portfolio-grid,
+  .portfolio-grid-full,
+  .values-grid,
+  .process-grid,
+  .team-grid,
+  .blog-grid,
+  .about-grid,
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: clamp(16px, 4.5vw, 22px) !important;
+  }
+
+  .service-card,
+  .service-card.jbc-editorial-card,
+  .value-card,
+  .process-card,
+  .blog-card,
+  .team-card,
+  .contact-form-wrap,
+  .contact-info,
+  .testi-brutal,
+  .service-cinema,
+  .service-cinema-inner {
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: clamp(20px, 5.8vw, 28px) !important;
+  }
+
+  .service-card h3,
+  .value-card h3,
+  .process-card h3 {
+    font-size: clamp(2rem, 10vw, 3.2rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .service-card p,
+  .service-card div,
+  .value-card p,
+  .process-card p,
+  .blog-card p,
+  .team-card p,
+  .testi-content blockquote,
+  .cta-section p,
+  .about-content p,
+  .contact-info p {
+    font-size: clamp(0.86rem, 3.7vw, 0.98rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  .portfolio-item,
+  .portfolio-item.jbc-editorial-work-item,
+  .blog-card-image,
+  .team-card img,
+  .about-image,
+  .service-detail-image {
+    aspect-ratio: 4 / 5 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+  }
+
+  .portfolio-item img,
+  .portfolio-item.jbc-editorial-work-item img,
+  .blog-card-image img,
+  .team-card img,
+  .about-image img,
+  .service-detail-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  .portfolio-item .overlay {
+    padding: clamp(18px, 5vw, 24px) !important;
+  }
+
+  .portfolio-item .overlay h3 {
+    font-size: clamp(1.55rem, 8vw, 2.35rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .cta-section .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  footer.footer,
+  .footer.jbc-editorial-footer,
+  [data-editor-id="footer-section"] {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: clamp(48px, 12vw, 66px) clamp(22px, 6vw, 30px) clamp(34px, 9vw, 50px) !important;
+  }
+
+  footer.footer [data-editor-id="image-002"],
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    opacity: 0.46 !important;
+  }
+
+  footer.footer [data-editor-id="image-002"] img,
+  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
+    left: 50% !important;
+    top: 50% !important;
+    width: auto !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    transform: translate(-50%, -50%) !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.44) 9%, #000 24%, #000 74%, rgba(0,0,0,0.48) 91%, transparent 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.22) 0%, #000 18%, #000 84%, rgba(0,0,0,0.34) 100%) !important;
+    mask-image:
+      linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.44) 9%, #000 24%, #000 74%, rgba(0,0,0,0.48) 91%, transparent 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.22) 0%, #000 18%, #000 84%, rgba(0,0,0,0.34) 100%) !important;
+  }
+
+  footer.footer [data-editor-id="image-002"]::after,
+  .footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
+    background:
+      linear-gradient(90deg, rgba(5,5,5,0.42) 0%, rgba(5,5,5,0.12) 34%, rgba(5,5,5,0.36) 100%),
+      linear-gradient(180deg, rgba(5,5,5,0.48) 0%, rgba(5,5,5,0.1) 48%, rgba(5,5,5,0.56) 100%) !important;
+  }
+
+  footer.footer .footer-grid,
+  .footer.jbc-editorial-footer .footer-grid,
+  [data-editor-id="footer-grid"] {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    align-items: start !important;
+  }
+
+  footer.footer .footer-brand,
+  footer.footer .footer-col,
+  .footer.jbc-editorial-footer .footer-brand,
+  .footer.jbc-editorial-footer .footer-col {
+    padding: clamp(18px, 5vw, 24px) 0 !important;
+  }
+
+  footer.footer .footer-bottom,
+  .footer.jbc-editorial-footer .footer-bottom,
+  [data-editor-id="footer-bottom"] {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 18px 0 0 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .sec-header h2,
+  .section-title,
+  .page-title,
+  .page-header h1,
+  .cta-section h2 {
+    font-size: clamp(1.95rem, 10.5vw, 2.75rem) !important;
+  }
+
+  .service-card h3,
+  .value-card h3,
+  .process-card h3 {
+    font-size: clamp(1.85rem, 9.6vw, 2.55rem) !important;
+  }
+
+  .portfolio-item .overlay h3 {
+    font-size: clamp(1.4rem, 7.4vw, 2rem) !important;
+  }
+}
+
+/* =========================================================
+   INNER PAGES FLORAL PLACEMENT PASS
+   Excludes the home page, softens floral edges and removes hard seams.
+   ========================================================= */
+
+body:not([data-editor-id]) .jbc-floral-page-header,
+body:not([data-editor-id]) .mag-header,
+body:not([data-editor-id]) .jbc-floral-about-story,
+body:not([data-editor-id]) .jbc-floral-about-values,
+body:not([data-editor-id]) .jbc-floral-about-stats,
+body:not([data-editor-id]) .jbc-floral-service-detail,
+body:not([data-editor-id]) .jbc-floral-service-process,
+body:not([data-editor-id]) .jbc-floral-portfolio-grid,
+body:not([data-editor-id]) .jbc-floral-blog-grid,
+body:not([data-editor-id]) .jbc-floral-blog-post,
+body:not([data-editor-id]) .jbc-floral-contact {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background-color: #050505 !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-page-header::before,
+body:not([data-editor-id]) .mag-header::before,
+body:not([data-editor-id]) .jbc-floral-about-story::before,
+body:not([data-editor-id]) .jbc-floral-about-values::before,
+body:not([data-editor-id]) .jbc-floral-about-stats::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-1::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-2::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-3::before,
+body:not([data-editor-id]) .jbc-floral-service-process::before,
+body:not([data-editor-id]) .jbc-floral-portfolio-grid::before,
+body:not([data-editor-id]) .jbc-floral-blog-grid::before,
+body:not([data-editor-id]) .jbc-floral-blog-post::before,
+body:not([data-editor-id]) .jbc-floral-contact::before {
+  content: "" !important;
+  display: block !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  background-image: url("../images/jbc-floral-wide-desktop.jpg") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  filter: saturate(1.04) contrast(1.02) brightness(0.86) !important;
+  mix-blend-mode: normal !important;
+  -webkit-mask-image:
+    radial-gradient(ellipse at center, #000 0%, #000 38%, rgba(0,0,0,0.58) 62%, rgba(0,0,0,0.18) 80%, transparent 100%) !important;
+  mask-image:
+    radial-gradient(ellipse at center, #000 0%, #000 38%, rgba(0,0,0,0.58) 62%, rgba(0,0,0,0.18) 80%, transparent 100%) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-page-header::before,
+body:not([data-editor-id]) .mag-header::before {
+  inset: -34% -10% -24% auto !important;
+  width: min(920px, 88vw) !important;
+  height: min(760px, 82vw) !important;
+  background-position: right top !important;
+  opacity: 0.24 !important;
+  transform: rotate(-4deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-page-header::after,
+body:not([data-editor-id]) .mag-header::after,
+body:not([data-editor-id]) .jbc-floral-about-story::after,
+body:not([data-editor-id]) .jbc-floral-about-values::after,
+body:not([data-editor-id]) .jbc-floral-about-stats::after,
+body:not([data-editor-id]) .jbc-floral-service-detail::after,
+body:not([data-editor-id]) .jbc-floral-service-process::after,
+body:not([data-editor-id]) .jbc-floral-portfolio-grid::after,
+body:not([data-editor-id]) .jbc-floral-blog-grid::after,
+body:not([data-editor-id]) .jbc-floral-blog-post::after,
+body:not([data-editor-id]) .jbc-floral-contact::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(5,5,5,0.68) 0%, rgba(5,5,5,0.08) 28%, rgba(5,5,5,0.08) 68%, rgba(5,5,5,0.7) 100%),
+    linear-gradient(180deg, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.08) 34%, rgba(5,5,5,0.1) 66%, rgba(5,5,5,0.76) 100%) !important;
+  opacity: 0.88 !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-page-header > *,
+body:not([data-editor-id]) .mag-header > *,
+body:not([data-editor-id]) .jbc-floral-about-story > *,
+body:not([data-editor-id]) .jbc-floral-about-values > *,
+body:not([data-editor-id]) .jbc-floral-about-stats > *,
+body:not([data-editor-id]) .jbc-floral-service-detail > *,
+body:not([data-editor-id]) .jbc-floral-service-process > *,
+body:not([data-editor-id]) .jbc-floral-portfolio-grid > *,
+body:not([data-editor-id]) .jbc-floral-blog-grid > *,
+body:not([data-editor-id]) .jbc-floral-blog-post > *,
+body:not([data-editor-id]) .jbc-floral-contact > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-about-story::before {
+  width: min(880px, 72vw) !important;
+  height: min(880px, 72vw) !important;
+  left: -18% !important;
+  top: -18% !important;
+  opacity: 0.2 !important;
+  transform: rotate(4deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-about-values::before {
+  width: min(820px, 68vw) !important;
+  height: min(820px, 68vw) !important;
+  right: -16% !important;
+  bottom: -22% !important;
+  opacity: 0.22 !important;
+  transform: rotate(-7deg) scaleX(-1) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-about-stats::before {
+  width: min(760px, 62vw) !important;
+  height: min(760px, 62vw) !important;
+  left: 50% !important;
+  top: 50% !important;
+  opacity: 0.16 !important;
+  transform: translate(-50%, -50%) rotate(10deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-service-detail-1::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-3::before {
+  width: min(780px, 66vw) !important;
+  height: min(780px, 66vw) !important;
+  right: -14% !important;
+  top: -16% !important;
+  opacity: 0.2 !important;
+  transform: rotate(-5deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-service-detail-2::before {
+  width: min(780px, 66vw) !important;
+  height: min(780px, 66vw) !important;
+  left: -16% !important;
+  bottom: -18% !important;
+  opacity: 0.2 !important;
+  transform: rotate(5deg) scaleX(-1) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-service-process::before {
+  width: min(900px, 74vw) !important;
+  height: min(900px, 74vw) !important;
+  left: -18% !important;
+  bottom: -24% !important;
+  opacity: 0.2 !important;
+  transform: rotate(8deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-portfolio-grid::before {
+  width: min(980px, 76vw) !important;
+  height: min(980px, 76vw) !important;
+  right: -18% !important;
+  top: 44% !important;
+  opacity: 0.18 !important;
+  transform: translateY(-50%) rotate(6deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-blog-grid::before {
+  width: min(860px, 72vw) !important;
+  height: min(860px, 72vw) !important;
+  left: -18% !important;
+  top: -16% !important;
+  opacity: 0.2 !important;
+  transform: rotate(-6deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-blog-post::before {
+  width: min(760px, 64vw) !important;
+  height: min(760px, 64vw) !important;
+  right: -14% !important;
+  top: 80px !important;
+  opacity: 0.16 !important;
+  transform: rotate(4deg) !important;
+}
+
+body:not([data-editor-id]) .jbc-floral-contact::before {
+  width: min(920px, 74vw) !important;
+  height: min(920px, 74vw) !important;
+  right: -16% !important;
+  bottom: -22% !important;
+  opacity: 0.22 !important;
+  transform: rotate(-10deg) scaleX(-1) !important;
+}
+
+body:not([data-editor-id]) .about-image,
+body:not([data-editor-id]) .service-detail-image,
+body:not([data-editor-id]) .mag-featured-image,
+body:not([data-editor-id]) .portfolio-item {
+  background: #050505 !important;
+}
+
+body:not([data-editor-id]) .about-image img,
+body:not([data-editor-id]) .service-detail-image img,
+body:not([data-editor-id]) .mag-featured-image img,
+body:not([data-editor-id]) .portfolio-item img {
+  -webkit-mask-image:
+    linear-gradient(90deg, rgba(0,0,0,0.92) 0%, #000 8%, #000 92%, rgba(0,0,0,0.92) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.9) 0%, #000 9%, #000 91%, rgba(0,0,0,0.9) 100%) !important;
+  mask-image:
+    linear-gradient(90deg, rgba(0,0,0,0.92) 0%, #000 8%, #000 92%, rgba(0,0,0,0.92) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.9) 0%, #000 9%, #000 91%, rgba(0,0,0,0.9) 100%) !important;
+  -webkit-mask-composite: source-in !important;
+  mask-composite: intersect !important;
+}
+
+@media (max-width: 768px) {
+  body:not([data-editor-id]) .jbc-floral-page-header::before,
+  body:not([data-editor-id]) .mag-header::before {
+    inset: -18% -24% auto auto !important;
+    width: 116vw !important;
+    height: 82vw !important;
+    opacity: 0.18 !important;
+    background-image: url("../images/jbc-floral-wide-mobile.jpg") !important;
+    background-position: center top !important;
+  }
+
+  body:not([data-editor-id]) .jbc-floral-about-story::before,
+  body:not([data-editor-id]) .jbc-floral-about-values::before,
+  body:not([data-editor-id]) .jbc-floral-about-stats::before,
+  body:not([data-editor-id]) .jbc-floral-service-detail-1::before,
+  body:not([data-editor-id]) .jbc-floral-service-detail-2::before,
+  body:not([data-editor-id]) .jbc-floral-service-detail-3::before,
+  body:not([data-editor-id]) .jbc-floral-service-process::before,
+  body:not([data-editor-id]) .jbc-floral-portfolio-grid::before,
+  body:not([data-editor-id]) .jbc-floral-blog-grid::before,
+  body:not([data-editor-id]) .jbc-floral-blog-post::before,
+  body:not([data-editor-id]) .jbc-floral-contact::before {
+    width: 132vw !important;
+    height: 132vw !important;
+    left: 50% !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: -22vw !important;
+    opacity: 0.15 !important;
+    background-image: url("../images/jbc-floral-wide-mobile.jpg") !important;
+    background-size: contain !important;
+    background-position: center center !important;
+    transform: translateX(-50%) rotate(0deg) !important;
+  }
+
+  body:not([data-editor-id]) .jbc-floral-page-header::after,
+  body:not([data-editor-id]) .mag-header::after,
+  body:not([data-editor-id]) .jbc-floral-about-story::after,
+  body:not([data-editor-id]) .jbc-floral-about-values::after,
+  body:not([data-editor-id]) .jbc-floral-about-stats::after,
+  body:not([data-editor-id]) .jbc-floral-service-detail::after,
+  body:not([data-editor-id]) .jbc-floral-service-process::after,
+  body:not([data-editor-id]) .jbc-floral-portfolio-grid::after,
+  body:not([data-editor-id]) .jbc-floral-blog-grid::after,
+  body:not([data-editor-id]) .jbc-floral-blog-post::after,
+  body:not([data-editor-id]) .jbc-floral-contact::after {
+    background:
+      linear-gradient(90deg, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.1) 34%, rgba(5,5,5,0.72) 100%),
+      linear-gradient(180deg, rgba(5,5,5,0.76) 0%, rgba(5,5,5,0.08) 42%, rgba(5,5,5,0.82) 100%) !important;
+    opacity: 0.92 !important;
+  }
+}
