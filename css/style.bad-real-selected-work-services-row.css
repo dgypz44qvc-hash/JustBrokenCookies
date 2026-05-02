@@ -12568,3 +12568,52 @@ section.testimonial-section span {
   }
 }
 
+
+/* =========================================================
+   Selected Work
+   Real service titles row, separate from Codrops carousel
+   ========================================================= */
+
+#featured-work .jbc-work-services-row {
+  position: relative !important;
+  z-index: 50 !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: clamp(0.8rem, 2vw, 1.6rem) !important;
+
+  margin: 0 0 clamp(1.2rem, 2vw, 2rem) 0 !important;
+  padding: 0 !important;
+}
+
+#featured-work .jbc-work-services-row span {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(1.05rem, 1.35vw, 1.65rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.035em !important;
+  font-weight: 700 !important;
+
+  color: #E8891D !important;
+  text-align: left !important;
+
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.72),
+    0 8px 22px rgba(0, 0, 0, 0.42) !important;
+}
+
+@media (max-width: 768px) {
+  #featured-work .jbc-work-services-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.75rem 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #featured-work .jbc-work-services-row span {
+    font-size: 1.05rem !important;
+  }
+}
+
