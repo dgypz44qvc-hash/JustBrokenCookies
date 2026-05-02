@@ -11048,38 +11048,3 @@ body {
   }
 }
 
-
-/* =========================================================
-   Selected Work
-   Rose pattern background only
-   Does not change section size or carousel layout
-   ========================================================= */
-
-#featured-work,
-#featured-work.jbc-floral-work {
-  background-image:
-    linear-gradient(rgba(5, 5, 5, 0.56), rgba(5, 5, 5, 0.68)),
-    url("../images/rosesthin.png") !important;
-  background-repeat: repeat !important;
-  background-size: 520px auto !important;
-  background-position: center top !important;
-  background-color: #050505 !important;
-}
-
-/* Keep the content and carousel floating above the rose background */
-#featured-work > .container {
-  position: relative !important;
-  z-index: 2 !important;
-  background: transparent !important;
-}
-
-/* Keep Codrops carousel stage transparent over the roses */
-#featured-work .portfolio-grid.jbc-codrops-cinema,
-#featured-work .jbc-codrops-cinema,
-#featured-work .jbc-cinema-pin,
-#featured-work .jbc-cinema-stage,
-#featured-work .jbc-cinema-ring {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
