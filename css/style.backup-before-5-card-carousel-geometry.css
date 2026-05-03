@@ -9950,7 +9950,7 @@ body:not([data-editor-id]) .portfolio-item img {
   -webkit-backface-visibility: hidden !important;
   transform:
     translate(-50%, -50%)
-    rotateY(calc(var(--i) * 72deg))
+    rotateY(calc(var(--i) * 92deg))
     translateZ(clamp(300px, 38vw, 560px)) !important;
   transition:
     opacity 0.24s linear,

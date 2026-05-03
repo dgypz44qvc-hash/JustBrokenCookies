@@ -149,12 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const angle = index * panelStep + rotation;
         const focus = clamp(1 - circularDifference(angle) / (panelStep * 1.42), 0, 1);
         panel.style.setProperty('--focus', focus.toFixed(3));
-
-        /* Keep the active/front card visually dominant.
-           This removes the unwanted vertical side-panel slice. */
-        const visualOpacity = focus < 0.18 ? 0 : Math.pow(focus, 2.35);
-        panel.style.setProperty('--panel-visibility', visualOpacity.toFixed(3));
-        panel.style.zIndex = String(Math.round(focus * 1000));
       });
 
       const nextIndex = clamp(Math.round(progress * (panels.length - 1)), 0, panels.length - 1);

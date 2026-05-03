@@ -22,107 +22,86 @@
     }
   </style>
 
-  <style id="jbc-carousel-transparent-rose-corner-layer">
-    /* Transparent rose corner overlay on each Selected Work carousel card.
-       Uses images/transp-rosecrn-hq.png as a real image layer.
-       No carousel mechanics touched. */
+  <style id="jbc-carousel-real-vignette-layer">
+    /* =========================================================
+       JBC CAROUSEL REAL VIGNETTE LAYER
+       Actual span layer inside each card, not pseudo-element.
+       Darkens only the outer edges and corners.
+       No carousel mechanics touched.
+       ========================================================= */
 
     #featured-work .jbc-cinema-panel {
       position: absolute !important;
       overflow: hidden !important;
       isolation: isolate !important;
-      border-radius: 34px !important;
     }
 
-    #featured-work .jbc-cinema-panel > img:not(.jbc-card-corner-frame) {
-      position: relative !important;
-      z-index: 1 !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      object-position: center center !important;
-      border-radius: inherit !important;
-      opacity: 1 !important;
-      filter: none !important;
+    /* Undo previous mask experiments */
+    #featured-work .jbc-cinema-panel > img {
       -webkit-mask-image: none !important;
       mask-image: none !important;
+      opacity: 1 !important;
+      filter: none !important;
     }
 
-        #featured-work .jbc-cinema-panel > img.jbc-card-corner-frame {
+    /* Hide old rose frame test, if it is still in the HTML */
+    #featured-work .jbc-card-roseframe {
+      display: none !important;
+    }
+
+    /* Real vignette layer, above image, below title */
+    #featured-work .jbc-card-edge-vignette {
       position: absolute !important;
-
-      /* Use only the top-right decorative portion */
-      top: -4% !important;
-      right: -5% !important;
-      left: auto !important;
-      bottom: auto !important;
-
-      width: 64% !important;
-      height: 82% !important;
-      max-width: none !important;
+      inset: 0 !important;
+      z-index: 50 !important;
       display: block !important;
-
-      object-fit: contain !important;
-      object-position: top right !important;
-      border-radius: 0 !important;
-
-      z-index: 55 !important;
       pointer-events: none !important;
+      border-radius: inherit !important;
 
-      /* Visible, but not overpowering */
-      opacity: calc(0.58 + (var(--focus, 0) * 0.18)) !important;
+      background:
+        radial-gradient(circle at 0% 0%,
+          rgba(5, 5, 5, 0.88) 0%,
+          rgba(5, 5, 5, 0.50) 4%,
+          rgba(5, 5, 5, 0.18) 9%,
+          transparent 15%),
+        radial-gradient(circle at 100% 0%,
+          rgba(5, 5, 5, 0.88) 0%,
+          rgba(5, 5, 5, 0.50) 4%,
+          rgba(5, 5, 5, 0.18) 9%,
+          transparent 15%),
+        radial-gradient(circle at 0% 100%,
+          rgba(5, 5, 5, 0.88) 0%,
+          rgba(5, 5, 5, 0.50) 4%,
+          rgba(5, 5, 5, 0.18) 9%,
+          transparent 15%),
+        radial-gradient(circle at 100% 100%,
+          rgba(5, 5, 5, 0.88) 0%,
+          rgba(5, 5, 5, 0.50) 4%,
+          rgba(5, 5, 5, 0.18) 9%,
+          transparent 15%),
 
-      filter: saturate(0.94) contrast(0.96) !important;
-      mix-blend-mode: normal !important;
+        linear-gradient(to right,
+          rgba(5, 5, 5, 0.46) 0%,
+          rgba(5, 5, 5, 0.22) 2.4%,
+          transparent 6.5%,
+          transparent 93.5%,
+          rgba(5, 5, 5, 0.22) 97.6%,
+          rgba(5, 5, 5, 0.46) 100%),
 
-      /* Fade the floral overlay toward the centre of the photo */
-      -webkit-mask-image:
-        linear-gradient(to left,
-          #000 0%,
-          #000 58%,
-          rgba(0,0,0,0.68) 72%,
-          transparent 100%),
         linear-gradient(to bottom,
-          #000 0%,
-          #000 62%,
-          rgba(0,0,0,0.60) 78%,
-          transparent 100%) !important;
-      -webkit-mask-composite: source-in !important;
+          rgba(5, 5, 5, 0.50) 0%,
+          rgba(5, 5, 5, 0.24) 2.8%,
+          transparent 7%,
+          transparent 93%,
+          rgba(5, 5, 5, 0.24) 97.2%,
+          rgba(5, 5, 5, 0.50) 100%) !important;
 
-      mask-image:
-        linear-gradient(to left,
-          #000 0%,
-          #000 58%,
-          rgba(0,0,0,0.68) 72%,
-          transparent 100%),
-        linear-gradient(to bottom,
-          #000 0%,
-          #000 62%,
-          rgba(0,0,0,0.60) 78%,
-          transparent 100%) !important;
-      mask-composite: intersect !important;
+      opacity: 0.78 !important;
     }
 
     #featured-work .jbc-cinema-panel-meta {
       position: relative !important;
       z-index: 80 !important;
-    }
-  </style>
-
-
-  <style id="jbc-carousel-side-bar-fix">
-    /* Hide unwanted neighbouring carousel slices without changing the carousel mechanics. */
-
-    #featured-work .jbc-cinema-panel {
-      opacity: var(--panel-visibility, 1) !important;
-      backface-visibility: hidden !important;
-      -webkit-backface-visibility: hidden !important;
-      will-change: transform, opacity !important;
-    }
-
-    #featured-work .jbc-cinema-panel.is-active {
-      opacity: 1 !important;
-      z-index: 1000 !important;
     }
   </style>
 
@@ -195,7 +174,7 @@
             <div class="jbc-cinema-ring">
               <a href="portfolio.html" class="jbc-cinema-panel is-active" data-title="Creations" data-kicker="Studio" style="--i: 0; --focus: 1.000;" data-editor-id="work-title-card-creations">
                 <img src="images/creations-title-card.svg" alt="Creations" data-editor-id="work-title-card-creations-image">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <span class="jbc-card-edge-vignette" aria-hidden="true"></span>
                 <span class="jbc-cinema-panel-meta">
                   <span>Studio</span>
                   <strong>Creations</strong>
@@ -204,7 +183,7 @@
 
 <a href="portfolio.html" class="jbc-cinema-panel" data-title="Photography &amp; Videography" data-kicker="Campaign" style="--i: 1; --focus: 0.000;" data-editor-id="jbc-1777751808357-i78n">
                 <img src="images/portfolio/the-way-home.jpg" alt="Photography and Videography" data-editor-id="jbc-1777751808357-1is0">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <span class="jbc-card-edge-vignette" aria-hidden="true"></span>
                 <span class="jbc-cinema-panel-meta">
                   <span>Campaign</span>
                   <strong>Photography &amp; Videography</strong>
@@ -212,7 +191,7 @@
               </a>
               <a href="portfolio.html" class="jbc-cinema-panel" data-title="Brand Storytelling" data-kicker="Visual" style="--i: 2; --focus: 0.000;" data-editor-id="jbc-1777751808357-u1zu">
                 <img src="images/portfolio/sunset-silk.jpg" alt="Brand Storytelling" data-editor-id="jbc-1777751808357-z2mm">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <span class="jbc-card-edge-vignette" aria-hidden="true"></span>
                 <span class="jbc-cinema-panel-meta">
                   <span>Visual</span>
                   <strong>Brand Storytelling</strong>
@@ -220,7 +199,7 @@
               </a>
               <a href="portfolio.html" class="jbc-cinema-panel" data-title="Web Designs" data-kicker="Editorial" style="--i: 3; --focus: 0.000;" data-editor-id="jbc-1777751808357-5qkf">
                 <img src="images/portfolio/voices-unheard.jpg" alt="Web Designs" data-editor-id="jbc-1777751808357-j9y7">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <span class="jbc-card-edge-vignette" aria-hidden="true"></span>
                 <span class="jbc-cinema-panel-meta">
                   <span>Editorial</span>
                   <strong>Web Designs</strong>
@@ -228,7 +207,7 @@
               </a>
               <a href="portfolio.html" class="jbc-cinema-panel" data-title="Corporate Marketing" data-kicker="Strategy" style="--i: 4; --focus: 0.000;" data-editor-id="jbc-1777751808357-imvj">
                 <img src="images/portfolio/dust-to-gold.jpg" alt="Corporate Marketing" data-editor-id="jbc-1777751808357-oupn">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <span class="jbc-card-edge-vignette" aria-hidden="true"></span>
                 <span class="jbc-cinema-panel-meta">
                   <span>Strategy</span>
                   <strong>Corporate Marketing</strong>

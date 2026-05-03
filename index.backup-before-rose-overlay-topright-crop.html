@@ -48,81 +48,29 @@
       mask-image: none !important;
     }
 
-        #featured-work .jbc-cinema-panel > img.jbc-card-corner-frame {
+    #featured-work .jbc-cinema-panel > img.jbc-card-corner-frame {
       position: absolute !important;
-
-      /* Use only the top-right decorative portion */
-      top: -4% !important;
-      right: -5% !important;
-      left: auto !important;
-      bottom: auto !important;
-
-      width: 64% !important;
-      height: 82% !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
       max-width: none !important;
       display: block !important;
-
-      object-fit: contain !important;
-      object-position: top right !important;
-      border-radius: 0 !important;
-
+      object-fit: cover !important;
+      object-position: center center !important;
+      border-radius: inherit !important;
       z-index: 55 !important;
       pointer-events: none !important;
 
-      /* Visible, but not overpowering */
-      opacity: calc(0.58 + (var(--focus, 0) * 0.18)) !important;
+      /* Lower opacity so small cutout imperfections are less visible */
+      opacity: 1 !important;
 
-      filter: saturate(0.94) contrast(0.96) !important;
+      filter: saturate(0.9) contrast(0.94) !important;
       mix-blend-mode: normal !important;
-
-      /* Fade the floral overlay toward the centre of the photo */
-      -webkit-mask-image:
-        linear-gradient(to left,
-          #000 0%,
-          #000 58%,
-          rgba(0,0,0,0.68) 72%,
-          transparent 100%),
-        linear-gradient(to bottom,
-          #000 0%,
-          #000 62%,
-          rgba(0,0,0,0.60) 78%,
-          transparent 100%) !important;
-      -webkit-mask-composite: source-in !important;
-
-      mask-image:
-        linear-gradient(to left,
-          #000 0%,
-          #000 58%,
-          rgba(0,0,0,0.68) 72%,
-          transparent 100%),
-        linear-gradient(to bottom,
-          #000 0%,
-          #000 62%,
-          rgba(0,0,0,0.60) 78%,
-          transparent 100%) !important;
-      mask-composite: intersect !important;
     }
 
     #featured-work .jbc-cinema-panel-meta {
       position: relative !important;
       z-index: 80 !important;
-    }
-  </style>
-
-
-  <style id="jbc-carousel-side-bar-fix">
-    /* Hide unwanted neighbouring carousel slices without changing the carousel mechanics. */
-
-    #featured-work .jbc-cinema-panel {
-      opacity: var(--panel-visibility, 1) !important;
-      backface-visibility: hidden !important;
-      -webkit-backface-visibility: hidden !important;
-      will-change: transform, opacity !important;
-    }
-
-    #featured-work .jbc-cinema-panel.is-active {
-      opacity: 1 !important;
-      z-index: 1000 !important;
     }
   </style>
 

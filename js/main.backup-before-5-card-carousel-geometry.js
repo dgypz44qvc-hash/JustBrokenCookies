@@ -136,8 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = root.getBoundingClientRect();
       const travel = Math.max(1, rect.height - window.innerHeight);
       const progress = clamp(-rect.top / travel, 0, 1);
-      const panelStep = 360 / panels.length;
-      const maxRotation = (panels.length - 1) * panelStep;
+      const maxRotation = (panels.length - 1) * 92;
       const rotation = -(progress * maxRotation);
       const driftX = pointerX * 8;
       const driftY = pointerY * -4;
@@ -146,15 +145,9 @@ document.addEventListener('DOMContentLoaded', () => {
       ring.style.transform = `rotateX(${driftY.toFixed(2)}deg) rotateY(${(rotation + driftX).toFixed(2)}deg)`;
 
       panels.forEach((panel, index) => {
-        const angle = index * panelStep + rotation;
-        const focus = clamp(1 - circularDifference(angle) / (panelStep * 1.42), 0, 1);
+        const angle = index * 92 + rotation;
+        const focus = clamp(1 - circularDifference(angle) / 118, 0, 1);
         panel.style.setProperty('--focus', focus.toFixed(3));
-
-        /* Keep the active/front card visually dominant.
-           This removes the unwanted vertical side-panel slice. */
-        const visualOpacity = focus < 0.18 ? 0 : Math.pow(focus, 2.35);
-        panel.style.setProperty('--panel-visibility', visualOpacity.toFixed(3));
-        panel.style.zIndex = String(Math.round(focus * 1000));
       });
 
       const nextIndex = clamp(Math.round(progress * (panels.length - 1)), 0, panels.length - 1);

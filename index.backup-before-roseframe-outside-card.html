@@ -11,120 +11,83 @@
   <link rel="preload" as="image" href="images/heromultiroses-1280.jpg" imagesrcset="images/heromultiroses-900.jpg 900w, images/heromultiroses-1280.jpg 1280w, images/heromultiroses-1920.jpg 1920w" imagesizes="100vw" media="(min-width: 769px)" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/editor-overrides.css">
-  <style id="jbc-carousel-creations-real-image-fix">
-    #featured-work .jbc-cinema-panel > img[src$="creations-title-card.svg"] {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      object-position: center center !important;
-      display: block !important;
-      border-radius: inherit !important;
-    }
-  </style>
 
-  <style id="jbc-carousel-transparent-rose-corner-layer">
-    /* Transparent rose corner overlay on each Selected Work carousel card.
-       Uses images/transp-rosecrn-hq.png as a real image layer.
-       No carousel mechanics touched. */
+  <style id="jbc-carousel-roseframe-final-override">
+    /* =========================================================
+       JBC CAROUSEL ROSE FRAME TEST
+       Real image layer inside every carousel card
+       ========================================================= */
 
     #featured-work .jbc-cinema-panel {
       position: absolute !important;
-      overflow: hidden !important;
+      overflow: visible !important;
       isolation: isolate !important;
-      border-radius: 34px !important;
     }
 
-    #featured-work .jbc-cinema-panel > img:not(.jbc-card-corner-frame) {
+    /* Photo layer */
+    #featured-work .jbc-cinema-panel > img:not(.jbc-card-roseframe) {
       position: relative !important;
       z-index: 1 !important;
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important;
-      object-position: center center !important;
       border-radius: inherit !important;
-      opacity: 1 !important;
-      filter: none !important;
-      -webkit-mask-image: none !important;
-      mask-image: none !important;
     }
 
-        #featured-work .jbc-cinema-panel > img.jbc-card-corner-frame {
+    /* Rose frame layer, stronger selector than the generic img rule */
+    #featured-work .jbc-cinema-panel > img.jbc-card-roseframe {
       position: absolute !important;
-
-      /* Use only the top-right decorative portion */
-      top: -4% !important;
-      right: -5% !important;
-      left: auto !important;
-      bottom: auto !important;
-
-      width: 64% !important;
-      height: 82% !important;
-      max-width: none !important;
       display: block !important;
 
-      object-fit: contain !important;
-      object-position: top right !important;
+      left: -10% !important;
+      top: -13% !important;
+      width: 120% !important;
+      height: 126% !important;
+      max-width: none !important;
+
+      z-index: 35 !important;
+      object-fit: fill !important;
       border-radius: 0 !important;
 
-      z-index: 55 !important;
       pointer-events: none !important;
+      opacity: calc(0.55 + (var(--focus, 0) * 0.35)) !important;
 
-      /* Visible, but not overpowering */
-      opacity: calc(0.58 + (var(--focus, 0) * 0.18)) !important;
+      transform: scale(calc(0.985 + (var(--focus, 0) * 0.035))) !important;
+      transform-origin: center center !important;
 
-      filter: saturate(0.94) contrast(0.96) !important;
-      mix-blend-mode: normal !important;
-
-      /* Fade the floral overlay toward the centre of the photo */
-      -webkit-mask-image:
-        linear-gradient(to left,
-          #000 0%,
-          #000 58%,
-          rgba(0,0,0,0.68) 72%,
-          transparent 100%),
-        linear-gradient(to bottom,
-          #000 0%,
-          #000 62%,
-          rgba(0,0,0,0.60) 78%,
-          transparent 100%) !important;
-      -webkit-mask-composite: source-in !important;
-
-      mask-image:
-        linear-gradient(to left,
-          #000 0%,
-          #000 58%,
-          rgba(0,0,0,0.68) 72%,
-          transparent 100%),
-        linear-gradient(to bottom,
-          #000 0%,
-          #000 62%,
-          rgba(0,0,0,0.60) 78%,
-          transparent 100%) !important;
-      mask-composite: intersect !important;
+      filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.55)) !important;
     }
 
+    /* Turn off the previous pseudo overlay while testing the real image layer */
+    #featured-work .jbc-cinema-panel::after {
+      content: none !important;
+      display: none !important;
+      background: none !important;
+    }
+
+    /* Keep card titles above rose decoration */
     #featured-work .jbc-cinema-panel-meta {
       position: relative !important;
-      z-index: 80 !important;
+      z-index: 60 !important;
+    }
+
+    @media (max-width: 768px) {
+      #featured-work .jbc-cinema-panel > img.jbc-card-roseframe {
+        left: -12% !important;
+        top: -14% !important;
+        width: 124% !important;
+        height: 128% !important;
+        opacity: 0.78 !important;
+      }
     }
   </style>
 
 
-  <style id="jbc-carousel-side-bar-fix">
-    /* Hide unwanted neighbouring carousel slices without changing the carousel mechanics. */
 
-    #featured-work .jbc-cinema-panel {
-      opacity: var(--panel-visibility, 1) !important;
-      backface-visibility: hidden !important;
-      -webkit-backface-visibility: hidden !important;
-      will-change: transform, opacity !important;
-    }
 
-    #featured-work .jbc-cinema-panel.is-active {
-      opacity: 1 !important;
-      z-index: 1000 !important;
-    }
-  </style>
+
+
+
 
 </head><body class="" data-editor-id="jbc-1777582870310-2u4w">
 <!-- ========== PRELOADER ========== -->
@@ -189,46 +152,37 @@
         <span>The Work</span>
       </div>
 
-      <div class="portfolio-grid jbc-codrops-cinema" data-jbc-codrops-cinema="" data-editor-id="portfolio-grid">
+      <div class="portfolio-grid jbc-codrops-cinema" data-jbc-codrops-cinema="" data-editor-id="portfolio-grid" style="--jbc-cinema-progress: 1.0000;">
         <div class="jbc-cinema-pin">
           <div class="jbc-cinema-stage" aria-label="Selected work cinematic showcase">
-            <div class="jbc-cinema-ring">
-              <a href="portfolio.html" class="jbc-cinema-panel is-active" data-title="Creations" data-kicker="Studio" style="--i: 0; --focus: 1.000;" data-editor-id="work-title-card-creations">
-                <img src="images/creations-title-card.svg" alt="Creations" data-editor-id="work-title-card-creations-image">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
-                <span class="jbc-cinema-panel-meta">
-                  <span>Studio</span>
-                  <strong>Creations</strong>
-                </span>
-              </a>
-
-<a href="portfolio.html" class="jbc-cinema-panel" data-title="Photography &amp; Videography" data-kicker="Campaign" style="--i: 1; --focus: 0.000;" data-editor-id="jbc-1777751808357-i78n">
+            <div class="jbc-cinema-ring" style="transform: rotateX(0deg) rotateY(-276deg);">
+              <a href="portfolio.html" class="jbc-cinema-panel" data-title="Photography &amp; Videography" data-kicker="Campaign" style="--i: 0; --focus: 0.288;" data-editor-id="jbc-1777751808357-i78n">
                 <img src="images/portfolio/the-way-home.jpg" alt="Photography and Videography" data-editor-id="jbc-1777751808357-1is0">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <img class="jbc-card-roseframe" src="images/roseframe-carousel-overlay.png" alt="" aria-hidden="true" loading="eager">
                 <span class="jbc-cinema-panel-meta">
                   <span>Campaign</span>
                   <strong>Photography &amp; Videography</strong>
                 </span>
               </a>
-              <a href="portfolio.html" class="jbc-cinema-panel" data-title="Brand Storytelling" data-kicker="Visual" style="--i: 2; --focus: 0.000;" data-editor-id="jbc-1777751808357-u1zu">
+              <a href="portfolio.html" class="jbc-cinema-panel" data-title="Brand Storytelling" data-kicker="Visual" style="--i: 1; --focus: 0.000;" data-editor-id="jbc-1777751808357-u1zu">
                 <img src="images/portfolio/sunset-silk.jpg" alt="Brand Storytelling" data-editor-id="jbc-1777751808357-z2mm">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <img class="jbc-card-roseframe" src="images/roseframe-carousel-overlay.png" alt="" aria-hidden="true" loading="eager">
                 <span class="jbc-cinema-panel-meta">
                   <span>Visual</span>
                   <strong>Brand Storytelling</strong>
                 </span>
               </a>
-              <a href="portfolio.html" class="jbc-cinema-panel" data-title="Web Designs" data-kicker="Editorial" style="--i: 3; --focus: 0.000;" data-editor-id="jbc-1777751808357-5qkf">
+              <a href="portfolio.html" class="jbc-cinema-panel" data-title="Web Designs" data-kicker="Editorial" style="--i: 2; --focus: 0.220;" data-editor-id="jbc-1777751808357-5qkf">
                 <img src="images/portfolio/voices-unheard.jpg" alt="Web Designs" data-editor-id="jbc-1777751808357-j9y7">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <img class="jbc-card-roseframe" src="images/roseframe-carousel-overlay.png" alt="" aria-hidden="true" loading="eager">
                 <span class="jbc-cinema-panel-meta">
                   <span>Editorial</span>
                   <strong>Web Designs</strong>
                 </span>
               </a>
-              <a href="portfolio.html" class="jbc-cinema-panel" data-title="Corporate Marketing" data-kicker="Strategy" style="--i: 4; --focus: 0.000;" data-editor-id="jbc-1777751808357-imvj">
+              <a href="portfolio.html" class="jbc-cinema-panel is-active" data-title="Corporate Marketing" data-kicker="Strategy" style="--i: 3; --focus: 1.000;" data-editor-id="jbc-1777751808357-imvj">
                 <img src="images/portfolio/dust-to-gold.jpg" alt="Corporate Marketing" data-editor-id="jbc-1777751808357-oupn">
-                <img class="jbc-card-corner-frame" src="images/transp-rosecrn-hq.png" alt="" aria-hidden="true" loading="eager">
+                <img class="jbc-card-roseframe" src="images/roseframe-carousel-overlay.png" alt="" aria-hidden="true" loading="eager">
                 <span class="jbc-cinema-panel-meta">
                   <span>Strategy</span>
                   <strong>Corporate Marketing</strong>
@@ -236,8 +190,8 @@
               </a>
             </div>
             <div class="jbc-cinema-copy" aria-live="polite">
-              <span class="jbc-cinema-kicker">Studio</span>
-              <h3 data-editor-id="jbc-1777751808357-7a9o">Creations</h3>
+              <span class="jbc-cinema-kicker">Strategy</span>
+              <h3 data-editor-id="jbc-1777751808357-7a9o">Corporate Marketing</h3>
             </div>
             <div class="jbc-cinema-streaks" aria-hidden="true">
               <span></span>
