@@ -1532,7 +1532,7 @@
   width: min(82%, 920px) !important;
 
   font-family: "Dancing Script", "Brush Script MT", cursive !important;
-  font-size: clamp(1.19rem, 6.16vw, 2.38rem) !important;
+  font-size: clamp(1.75rem, 4.35vw, 4.75rem) !important;
   font-weight: 400 !important;
   line-height: 0.9 !important;
   letter-spacing: 0 !important;

@@ -10549,3 +10549,27 @@ section.testimonial-section span {
   margin-bottom: 55px !important;
 }
 
+/* =========================================================
+   MOBILE ESSENTIALS — page-transition hide + overflow fix
+   Restored from stripped block 44 (mobile CSS cleanup, May 2026)
+   ========================================================= */
+@media (max-width: 968px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Prevent full-screen black overlay from blocking mobile view */
+  .preloader.loaded,
+  .page-transition:not(.active) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .nav { z-index: 1000 !important; }
+  .hamburger { display: flex !important; position: relative !important; z-index: 1003 !important; }
+}
+

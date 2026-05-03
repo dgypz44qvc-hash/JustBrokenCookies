@@ -101,32 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!ring || !stage || panels.length === 0 || reducedMotion) return;
 
-    /* JBC CAROUSEL SCROLL SLOWDOWN START
-       Slows the whole Selected Work carousel by increasing its scroll range.
-       1.5 = 50% slower. Does not change rotation math, card order, images, or titles. */
-    const JBC_CINEMA_SCROLL_SLOWDOWN = 1.5;
-    let jbcCinemaBaseHeight = null;
-
-    const applyCinemaScrollSlowdown = () => {
-      if (window.innerWidth <= 768) {
-        root.style.height = '';
-        root.style.minHeight = '';
-        jbcCinemaBaseHeight = null;
-        return;
-      }
-
-      root.style.height = '';
-      root.style.minHeight = '';
-
-      const naturalHeight = root.getBoundingClientRect().height;
-      jbcCinemaBaseHeight = Math.max(naturalHeight, window.innerHeight * 2);
-
-      root.style.height = `${jbcCinemaBaseHeight * JBC_CINEMA_SCROLL_SLOWDOWN}px`;
-    };
-
-    applyCinemaScrollSlowdown();
-    /* JBC CAROUSEL SCROLL SLOWDOWN END */
-
     let activeIndex = -1;
     let pointerX = 0;
     let pointerY = 0;
@@ -255,10 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', () => {
-      applyCinemaScrollSlowdown();
-      requestUpdate();
-    }, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
     requestUpdate();
   })();
 

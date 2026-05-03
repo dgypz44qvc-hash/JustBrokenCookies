@@ -1512,29 +1512,26 @@
   z-index: 6 !important;
 }
 
-/* JBC CAROUSEL SCRIPT TITLES START
-   Final non-Creations title behaviour:
-   black, bigger, centered, hidden on side cards, fades in/out with focus.
-   Creations title is not touched.
-*/
 
-#featured-work .jbc-cinema-panel > .jbc-carousel-script-title {
+
+/* JBC CAROUSEL SCRIPT TITLES START */
+
+#featured-work .jbc-carousel-script-title {
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
-  z-index: 120 !important;
-
-  transform: translate(-50%, -50%) scale(calc(0.92 + (var(--focus, 0) * 0.08))) !important;
+  z-index: 75 !important;
+  transform: translate(-50%, -50%) !important;
 
   pointer-events: none !important;
   white-space: normal !important;
   text-align: center !important;
-  width: min(82%, 920px) !important;
+  width: min(88%, 980px) !important;
 
   font-family: "Dancing Script", "Brush Script MT", cursive !important;
-  font-size: clamp(1.19rem, 6.16vw, 2.38rem) !important;
+  font-size: clamp(1.19rem, 5.625vw, 2.125rem) !important;
   font-weight: 400 !important;
-  line-height: 0.9 !important;
+  line-height: 0.92 !important;
   letter-spacing: 0 !important;
 
   color: #050505 !important;
@@ -1546,32 +1543,26 @@
   text-shadow: none !important;
   filter: none !important;
 
-  /* Hide on side cards. Fade in only when the card is nearly front-facing. */
-  opacity: clamp(0, calc((var(--focus, 0) - 0.62) * 2.9), 1) !important;
-  visibility: visible !important;
-
-  transition:
-    opacity 0.28s linear,
-    transform 0.28s linear !important;
+  /* Fade in/out with the carousel focus.
+     Fully hidden on side cards, visible only as the card rolls into focus. */
+  opacity: clamp(0, calc((var(--focus, 0) - 0.18) * 1.55), 1) !important;
 }
 
-/* Hide the original card title label so only the fading script title is seen. */
+/* Keep the small original label if you still want it below.
+   Hide only the big duplicated strong label inside the card itself. */
 #featured-work .jbc-cinema-panel:has(.jbc-carousel-script-title) .jbc-cinema-panel-meta strong {
   display: none !important;
 }
 
-/* Keep the small kicker only if visible, but low-key. */
 #featured-work .jbc-cinema-panel:has(.jbc-carousel-script-title) .jbc-cinema-panel-meta {
-  z-index: 80 !important;
+  bottom: 22px !important;
 }
 
-/* Mobile: keep titles smaller only if mobile carousel is still visible. */
 @media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel > .jbc-carousel-script-title {
-    font-size: clamp(1.35rem, 7vw, 2.7rem) !important;
-    width: 84% !important;
+  #featured-work .jbc-carousel-script-title {
+    font-size: clamp(1.9rem, 9vw, 3.4rem) !important;
+    width: 86% !important;
   }
 }
 
 /* JBC CAROUSEL SCRIPT TITLES END */
-
