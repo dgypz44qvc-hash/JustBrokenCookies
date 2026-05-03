@@ -12839,3 +12839,225 @@ section.testimonial-section span {
   z-index: 1 !important;
 }
 
+
+/* =========================================================
+   Selected Work
+   Restore visible section title
+   ========================================================= */
+
+#featured-work .sec-header {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 999 !important;
+  margin-top: 0 !important;
+  margin-bottom: clamp(1.2rem, 2vw, 2rem) !important;
+}
+
+#featured-work .sec-header h2 {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  font-family: 'Inter', Arial, sans-serif !important;
+  font-size: clamp(0.72rem, 0.95vw, 0.95rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.55em !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+
+  color: rgba(255, 244, 235, 0.92) !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8) !important;
+}
+
+#featured-work .sec-header span {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(90deg, #E8891D, rgba(255,255,255,0.18)) !important;
+  height: 1px !important;
+}
+
+/* Keep title above any Codrops/rose layers */
+#featured-work > .container {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+
+/* =========================================================
+   Selected Work carousel
+   Narrower visual container + 30% smaller rounded cards
+   Safe: does not touch carousel JS, sticky pin, scroll height, or transforms
+   ========================================================= */
+
+/* Make the visible carousel stage feel narrower and more editorial */
+#featured-work .jbc-cinema-stage {
+  width: min(100%, 980px) !important;
+  max-width: 980px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border-radius: 34px !important;
+}
+
+/* Keep the 3D ring inside the narrower stage */
+#featured-work .jbc-cinema-ring {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Make all carousel cards around 30% smaller */
+#featured-work .jbc-cinema-panel,
+#featured-work .jbc-cinema-panel.is-active,
+#featured-work .jbc-cinema-panel[style*="--focus"] {
+  width: clamp(220px, 24vw, 380px) !important;
+  height: clamp(300px, 34vw, 500px) !important;
+  border-radius: 30px !important;
+  overflow: hidden !important;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.42),
+    0 4px 18px rgba(0, 0, 0, 0.32) !important;
+}
+
+/* Round the actual image corners too */
+#featured-work .jbc-cinema-panel img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 30px !important;
+  overflow: hidden !important;
+}
+
+/* Keep title layers, if present, above the image */
+#featured-work .jbc-cinema-panel-meta,
+#featured-work .jbc-force-card-title {
+  z-index: 30 !important;
+}
+
+/* Mobile, smaller but still usable */
+@media (max-width: 768px) {
+  #featured-work .jbc-cinema-stage {
+    width: min(100%, 340px) !important;
+    max-width: 340px !important;
+    border-radius: 26px !important;
+  }
+
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel.is-active,
+  #featured-work .jbc-cinema-panel[style*="--focus"] {
+    width: min(62vw, 240px) !important;
+    height: min(82vw, 330px) !important;
+    border-radius: 24px !important;
+  }
+
+  #featured-work .jbc-cinema-panel img {
+    border-radius: 24px !important;
+  }
+}/* Narrow the visible carousel container */
+#featured-work .portfolio-grid.jbc-codrops-cinema {
+  width: min(100%, 960px) !important;
+  max-width: 960px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Narrow the sticky visual area without changing sticky behaviour */
+#featured-work .jbc-cinema-pin {
+  width: min(100%, 960px) !important;
+  max-width: 960px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Make the actual stage narrower and less vertically huge */
+#featured-work .jbc-cinema-stage {
+  width: min(100%, 960px) !important;
+  max-width: 960px !important;
+  height: clamp(430px, 52vh, 560px) !important;
+  min-height: clamp(430px, 52vh, 560px) !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  border-radius: 34px !important;
+}
+
+/* Keep ring filling the new stage, no transform changes */
+#featured-work .jbc-cinema-ring {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Make carousel cards panoramic/landscape */
+#featured-work .jbc-cinema-panel,
+#featured-work .jbc-cinema-panel.is-active,
+#featured-work .jbc-cinema-panel[style*="--focus"] {
+  width: clamp(300px, 34vw, 460px) !important;
+  height: clamp(170px, 19vw, 260px) !important;
+
+  aspect-ratio: 16 / 9 !important;
+  border-radius: 28px !important;
+  overflow: hidden !important;
+
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.42),
+    0 4px 18px rgba(0, 0, 0, 0.30) !important;
+}
+
+/* Make images fill the panoramic cards */
+#featured-work .jbc-cinema-panel img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+
+  border-radius: 28px !important;
+}
+
+/* Mobile: keep stage usable, cards landscape but not microscopic */
+@media (max-width: 768px) {#featured-work .portfolio-grid.jbc-codrops-cinema,
+  #featured-work .jbc-cinema-pin,
+  #featured-work .jbc-cinema-stage {
+    width: min(100%, 340px) !important;
+    max-width: 340px !important;
+  }
+
+  #featured-work .jbc-cinema-stage {
+    height: 360px !important;
+    min-height: 360px !important;
+    border-radius: 24px !important;
+  }
+
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel.is-active,
+  #featured-work .jbc-cinema-panel[style*="--focus"] {
+    width: min(76vw, 290px) !important;
+    height: min(43vw, 164px) !important;
+    aspect-ratio: 16 / 9 !important;
+    border-radius: 22px !important;
+  }
+
+  #featured-work .jbc-cinema-panel img {
+    border-radius: 22px !important;
+  }
+}
+
+
+
+
+/* =========================================================
+   Selected Work title
+   Use global sec-header style with matching spacing
+   ========================================================= */
+
+#featured-work .sec-header.jbc-work-created-title {
+  margin-bottom: 55px !important;
+}
+
+@media (max-width: 768px) {
+  #featured-work .sec-header.jbc-work-created-title {
+    margin-bottom: 38px !important;
+  }
+}

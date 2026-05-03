@@ -165,17 +165,20 @@
 }
 
 [data-editor-id="jbc-1777751808357-i78n"] {
-  left: 1004px !important;
-  top: 846px !important;
-  width: 49px !important;
-  height: 230px !important;
+  left: 461px !important;
+  top: 8px !important;
+  width: 652px !important;
+  height: 393px !important;
+  opacity: 1 !important;
   z-index: 0 !important;
+  color: rgb(240, 230, 218) !important;
+  background-color: rgb(0, 0, 0) !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  border-radius: 28px !important;
 }
 
-[data-editor-id="portfolio-grid"] {
-  left: -39px !important;
-  top: -10px !important;
-}
+
 
 [data-editor-id="jbc-1777751808357-u1zu"] {
   left: 1057px !important;
@@ -196,7 +199,26 @@
   top: 1px !important;
 }
 
-[data-editor-id="jbc-1777551171912-y3ue"] {
-  left: -27px !important;
-  top: -30px !important;
+
+
+[data-editor-id="work-created-title"] {
+  left: -155px !important;
+  top: -12px !important;
+}
+
+[data-editor-id="portfolio-grid"] {
+  left: -23px !important;
+  top: -26px !important;
+  width: 960px !important;
+  height: 1533px !important;
+}
+
+[data-editor-id="jbc-1777551171912-f74t"] {
+  left: -4px !important;
+  top: -114px !important;
+  transform: translate(-2.80342px, -2.12914px) !important;
+}
+
+[data-editor-id="jbc-1777804146350-242e"] {
+  position: relative !important;
 }
