@@ -1446,41 +1446,44 @@
 }
 
 
+
 /* JBC CREATIONS SCROLL FADE TITLE START */
 
 #featured-work .jbc-cinema-panel:first-child {
-  position: absolute !important;
-  isolation: isolate !important;
+  position: absolute;
+  isolation: isolate;
 }
 
-#featured-work .jbc-creations-scroll-title {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  z-index: 90 !important;
-  transform: translate(-50%, -50%) scale(calc(0.985 + (var(--creations-hero-reveal, 0) * 0.025))) !important;
+#featured-work .jbc-cinema-panel:first-child::before {
+  content: "Creations";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 70;
+  transform:
+    translate(-50%, -50%)
+    scale(calc(0.96 + (var(--creations-title-reveal, 0) * 0.04)));
+  opacity: var(--creations-title-reveal, 0);
+  pointer-events: none;
 
-  opacity: clamp(0, calc(var(--creations-hero-reveal, 0) * 1.05), 1) !important;
+  font-family: "Dancing Script", "Brush Script MT", cursive;
+  font-size: clamp(5rem, 12vw, 13rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0;
 
-  pointer-events: none !important;
-  white-space: nowrap !important;
+  color: #E84848;
+  background: linear-gradient(120deg, #E8891D 0%, #E84848 42%, #C93A6E 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 
-  font-family: "Dancing Script", "Brush Script MT", cursive !important;
-  font-size: clamp(5rem, 12vw, 13rem) !important;
-  font-weight: 400 !important;
-  line-height: 0.9 !important;
-  letter-spacing: 0 !important;
+  text-shadow: none;
+  filter: none;
 
-  color: #E84848 !important;
-  background: linear-gradient(120deg, #E8891D 0%, #E84848 42%, #C93A6E 100%) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-
-  text-shadow: none !important;
-  filter: none !important;
-
-  transition: opacity 0.12s linear, transform 0.12s linear !important;
+  transition:
+    opacity 0.18s linear,
+    transform 0.18s linear;
 }
 
 #featured-work .jbc-cinema-panel:first-child .jbc-cinema-panel-meta {
@@ -1488,8 +1491,8 @@
 }
 
 @media (max-width: 768px) {
-  #featured-work .jbc-creations-scroll-title {
-    font-size: clamp(4rem, 19vw, 7rem) !important;
+  #featured-work .jbc-cinema-panel:first-child::before {
+    font-size: clamp(4rem, 19vw, 7rem);
   }
 }
 

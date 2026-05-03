@@ -1458,9 +1458,9 @@
   left: 50% !important;
   top: 50% !important;
   z-index: 90 !important;
-  transform: translate(-50%, -50%) scale(calc(0.985 + (var(--creations-hero-reveal, 0) * 0.025))) !important;
+  transform: translate(-50%, -50%) scale(calc(0.94 + (var(--jbc-cinema-progress, 0) * 0.06))) !important;
 
-  opacity: clamp(0, calc(var(--creations-hero-reveal, 0) * 1.05), 1) !important;
+  opacity: clamp(0, calc((var(--jbc-cinema-progress, 0) - 0.04) * 2.4), 1) !important;
 
   pointer-events: none !important;
   white-space: nowrap !important;

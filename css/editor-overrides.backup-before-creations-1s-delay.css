@@ -1460,7 +1460,7 @@
   z-index: 90 !important;
   transform: translate(-50%, -50%) scale(calc(0.985 + (var(--creations-hero-reveal, 0) * 0.025))) !important;
 
-  opacity: clamp(0, calc(var(--creations-hero-reveal, 0) * 1.05), 1) !important;
+  opacity: clamp(0, calc(var(--creations-hero-reveal, 0) * 1.15), 1) !important;
 
   pointer-events: none !important;
   white-space: nowrap !important;

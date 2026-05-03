@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (navbar) {
     let lastScroll = 0;
     let ticking = false;
-    let creationsRevealStartedAt = null;
 
     window.addEventListener('scroll', () => {
       if (!ticking) {
@@ -136,27 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const rect = root.getBoundingClientRect();
 
-      /* Creations title reveal waits 1 second after the Selected Work section starts entering
-         from the hero, then fades in slowly. */
-      const creationsIsEntering = rect.top < window.innerHeight && rect.bottom > 0;
-
-      if (creationsIsEntering && creationsRevealStartedAt === null) {
-        creationsRevealStartedAt = performance.now();
-        keepCreationsFadeAlive();
-      }
-
-      if (!creationsIsEntering) {
-        creationsRevealStartedAt = null;
-      }
-
-      const creationsDelayElapsed = creationsRevealStartedAt === null
-        ? 0
-        : Math.max(0, performance.now() - creationsRevealStartedAt - 1000);
-
-      const creationsTimeReveal = clamp(creationsDelayElapsed / 1800, 0, 1);
-      const creationsPositionReveal = clamp((window.innerHeight - rect.top) / (window.innerHeight * 0.95), 0, 1);
-      const creationsHeroReveal = Math.min(creationsTimeReveal, creationsPositionReveal);
-
+      /* Creations title reveal starts as soon as the user scrolls down from the hero,
+         before the carousel rotation effect properly begins. */
+      const creationsHeroReveal = clamp((window.innerHeight - rect.top) / (window.innerHeight * 1.15), 0, 1);
       root.style.setProperty('--creations-hero-reveal', creationsHeroReveal.toFixed(4));
 
       const travel = Math.max(1, rect.height - window.innerHeight);
@@ -188,24 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const nextIndex = clamp(Math.round(progress * (panels.length - 1)), 0, panels.length - 1);
       setActiveCopy(nextIndex);
-    };
-
-    let creationsTitleFadeRAF = null;
-
-    const keepCreationsFadeAlive = () => {
-      if (creationsTitleFadeRAF) return;
-
-      const tick = () => {
-        requestUpdate();
-
-        if (creationsRevealStartedAt !== null) {
-          creationsTitleFadeRAF = requestAnimationFrame(tick);
-        } else {
-          creationsTitleFadeRAF = null;
-        }
-      };
-
-      creationsTitleFadeRAF = requestAnimationFrame(tick);
     };
 
     const requestUpdate = () => {

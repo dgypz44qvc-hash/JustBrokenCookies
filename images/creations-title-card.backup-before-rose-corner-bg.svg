@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="jbcText" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8891D"/>
+      <stop offset="46%" stop-color="#E84848"/>
+      <stop offset="100%" stop-color="#C93A6E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#050505"/>
+  <image href="jbc-floral-square.jpg" x="-160" y="-520" width="2240" height="2240" preserveAspectRatio="xMidYMid slice" opacity="0.42"/>
+  <rect width="1920" height="1080" fill="#050505" opacity="0.42"/>
+
+  <text x="50%" y="55%"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        font-family="Georgia, 'Playfair Display', serif"
+        font-size="210"
+        font-weight="900"
+        letter-spacing="-13"
+        fill="url(#jbcText)"
+       >Creations</text>
+</svg>

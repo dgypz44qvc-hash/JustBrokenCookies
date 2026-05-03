@@ -2675,92 +2675,8 @@ section { padding:var(--section-pad) 0; position:relative; }
    Less rose on mobile, more breathing room
    ========================================================= */
 
-@media (max-width: 768px) {
-  #services-overview::before {
-    width: 390px;
-    height: 640px;
-    right: -220px;
-    top: 96px;
-    opacity: 0.10;
-  }
-
-  #services-overview .service-card:nth-child(1)::after {
-    width: 230px;
-    height: 250px;
-    right: -98px;
-    bottom: -88px;
-    opacity: 0.22;
-  }
-
-  #services-overview .service-card:nth-child(2)::after {
-    width: 270px;
-    height: 290px;
-    right: -130px;
-    top: -68px;
-    opacity: 0.18;
-  }
-
-  #services-overview .service-card:nth-child(3)::after {
-    width: 250px;
-    height: 230px;
-    left: -116px;
-    bottom: -70px;
-    opacity: 0.20;
-  }
-
-  #featured-work::before {
-    width: 300px;
-    height: 500px;
-    right: -170px;
-    top: 60px;
-    opacity: 0.07;
-  }
-
-  .testimonial-section::before {
-    background-size: 150%;
-    background-position: center right;
-    opacity: 0.18;
-  }
-
-  .cta-section::after {
-    width: 310px;
-    height: 500px;
-    right: -165px;
-    bottom: -180px;
-    opacity: 0.09;
-  }
-
-  .footer::before {
-    width: 340px;
-    height: 580px;
-    right: -175px;
-    bottom: -220px;
-    opacity: 0.12;
-  }
-}
 
 /* Small phones, reduce slightly again */
-@media (max-width: 430px) {
-  #services-overview .service-card:nth-child(1)::after {
-    opacity: 0.20;
-  }
-
-  #services-overview .service-card:nth-child(2)::after {
-    opacity: 0.16;
-  }
-
-  #services-overview .service-card:nth-child(3)::after {
-    opacity: 0.18;
-  }
-
-  .testimonial-section::before {
-    opacity: 0.16;
-  }
-
-  .footer::before {
-    opacity: 0.10;
-  }
-}
 /* =========================================================
    JBC ROSE VISIBILITY BOOST
    Makes rose decorations around 50% more visible
@@ -2799,61 +2715,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   opacity: 0.195 !important;
 }
 
-@media (max-width: 768px) {
-  #services-overview::before {
-    opacity: 0.15 !important;
-  }
 
-  #services-overview .service-card:nth-child(1)::after {
-    opacity: 0.33 !important;
-  }
-
-  #services-overview .service-card:nth-child(2)::after {
-    opacity: 0.27 !important;
-  }
-
-  #services-overview .service-card:nth-child(3)::after {
-    opacity: 0.30 !important;
-  }
-
-  #featured-work::before {
-    opacity: 0.105 !important;
-  }
-
-  .testimonial-section::before {
-    opacity: 0.27 !important;
-  }
-
-  .cta-section::after {
-    opacity: 0.135 !important;
-  }
-
-  .footer::before {
-    opacity: 0.18 !important;
-  }
-}
-
-@media (max-width: 430px) {
-  #services-overview .service-card:nth-child(1)::after {
-    opacity: 0.30 !important;
-  }
-
-  #services-overview .service-card:nth-child(2)::after {
-    opacity: 0.24 !important;
-  }
-
-  #services-overview .service-card:nth-child(3)::after {
-    opacity: 0.27 !important;
-  }
-
-  .testimonial-section::before {
-    opacity: 0.24 !important;
-  }
-
-  .footer::before {
-    opacity: 0.15 !important;
-  }
-}
 /* =========================================================
    JBC ROSE VISIBILITY MAX TEST
    Pushes rose decorations to full opacity for testing
@@ -2897,19 +2759,6 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Mobile too */
-@media (max-width: 768px) {
-  #services-overview::before,
-  #services-overview .service-card:nth-child(1)::after,
-  #services-overview .service-card:nth-child(2)::after,
-  #services-overview .service-card:nth-child(3)::after,
-  #featured-work::before,
-  .testimonial-section::before,
-  .cta-section::after,
-  .footer::before,
-  .blog-card::after {
-    opacity: 1 !important;
-  }
-}
 /* =========================================================
    JBC ROSE PATTERN PRELOAD HELPER
    Keeps decorative rose asset loaded before CSS backgrounds need it
@@ -3010,28 +2859,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Mobile, much lighter so the hero doesn't get crowded */
-@media (max-width: 768px) {
-  .hero::after {
-    width: 360px;
-    height: 620px;
-    right: -205px;
-    top: 90px;
-    opacity: 0.38;
-    background-size: cover;
-    background-position: center;
-    transform: scaleX(-1) rotate(-6deg);
-  }
-}
 
-@media (max-width: 430px) {
-  .hero::after {
-    width: 320px;
-    height: 560px;
-    right: -190px;
-    top: 90px;
-    opacity: 0.32;
-  }
-}
 /* =========================================================
    JBC HERO ROSE, OPTION 2 EXACT PLACEMENT
    Diagonal flow behind subject
@@ -3114,62 +2942,9 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Tablet, push further right so it does not cover face/text */
-@media (max-width: 968px) {
-  .hero::after {
-    width: 470px;
-    height: 720px;
-    right: -265px;
-    top: 52px;
-    opacity: 0.44;
-    transform: rotate(-12deg) scaleX(-1);
-  }
-}
 
 /* Mobile, same idea but quieter */
-@media (max-width: 768px) {
-  .hero::after {
-    width: 390px;
-    height: 640px;
-    right: -235px;
-    top: 82px;
-    opacity: 0.36;
-    background-size: cover;
-    background-position: center;
-    transform: rotate(-10deg) scaleX(-1);
 
-    -webkit-mask-image:
-      linear-gradient(
-        118deg,
-        transparent 0%,
-        transparent 28%,
-        rgba(0, 0, 0, 0.18) 42%,
-        rgba(0, 0, 0, 0.84) 62%,
-        rgba(0, 0, 0, 0.58) 76%,
-        transparent 100%
-      );
-
-    mask-image:
-      linear-gradient(
-        118deg,
-        transparent 0%,
-        transparent 28%,
-        rgba(0, 0, 0, 0.18) 42%,
-        rgba(0, 0, 0, 0.84) 62%,
-        rgba(0, 0, 0, 0.58) 76%,
-        transparent 100%
-      );
-  }
-}
-
-@media (max-width: 430px) {
-  .hero::after {
-    width: 330px;
-    height: 560px;
-    right: -205px;
-    top: 80px;
-    opacity: 0.30;
-  }
-}
 /* =========================================================
    JBC HERO ROSE FINAL OVERRIDE
    Paste at VERY BOTTOM of style.css
@@ -3259,64 +3034,10 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Tablet, push floral layer further right */
-@media (max-width: 968px) {
-  .hero::after {
-    width: 500px !important;
-    height: 760px !important;
-    right: -285px !important;
-    top: 42px !important;
-    opacity: 0.46 !important;
-    background-position: center !important;
-    transform: rotate(-12deg) scaleX(-1) !important;
-  }
-}
 
 /* Mobile, quieter and further from the title */
-@media (max-width: 768px) {
-  .hero::after {
-    width: 400px !important;
-    height: 660px !important;
-    right: -245px !important;
-    top: 82px !important;
-    opacity: 0.36 !important;
-    background-size: cover !important;
-    background-position: center !important;
-    transform: rotate(-10deg) scaleX(-1) !important;
-
-    -webkit-mask-image:
-      linear-gradient(
-        118deg,
-        transparent 0%,
-        transparent 30%,
-        rgba(0, 0, 0, 0.16) 43%,
-        rgba(0, 0, 0, 0.86) 63%,
-        rgba(0, 0, 0, 0.50) 76%,
-        transparent 100%
-      ) !important;
-
-    mask-image:
-      linear-gradient(
-        118deg,
-        transparent 0%,
-        transparent 30%,
-        rgba(0, 0, 0, 0.16) 43%,
-        rgba(0, 0, 0, 0.86) 63%,
-        rgba(0, 0, 0, 0.50) 76%,
-        transparent 100%
-      ) !important;
-  }
-}
 
 /* Small phones, keep it elegant, not crowded */
-@media (max-width: 430px) {
-  .hero::after {
-    width: 335px !important;
-    height: 570px !important;
-    right: -210px !important;
-    top: 78px !important;
-    opacity: 0.30 !important;
-  }
-}
 /* =========================================================
    JBC ROSE EDGE FADE ONLY
    Keeps rose artwork sharp
@@ -3455,34 +3176,6 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Mobile, keep same concept but slightly larger fade zone */
-@media (max-width: 768px) {
-  #services-overview::before,
-  #featured-work::before,
-  .cta-section::after,
-  .footer::before,
-  #services-overview .service-card::after,
-  .blog-card::after {
-    -webkit-mask-image:
-      radial-gradient(
-        ellipse at center,
-        black 0%,
-        black 52%,
-        rgba(0, 0, 0, 0.65) 66%,
-        rgba(0, 0, 0, 0.26) 80%,
-        transparent 98%
-      ) !important;
-
-    mask-image:
-      radial-gradient(
-        ellipse at center,
-        black 0%,
-        black 52%,
-        rgba(0, 0, 0, 0.65) 66%,
-        rgba(0, 0, 0, 0.26) 80%,
-        transparent 98%
-      ) !important;
-  }
-}
 /* =========================================================
    JBC ROSE FINAL FIX
    1. Hero: diagonal pattern behind portrait/image
@@ -3688,61 +3381,10 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Tablet */
-@media (max-width: 968px) {
-  .hero::after {
-    width: 560px !important;
-    height: 760px !important;
-    left: 48% !important;
-    top: 26px !important;
-    opacity: 0.42 !important;
-    transform: rotate(-16deg) scaleX(-1) !important;
-  }
-}
 
 /* Mobile, lighter and pushed behind/right of portrait */
-@media (max-width: 768px) {
-  .hero::after {
-    width: 430px !important;
-    height: 660px !important;
-    left: 52% !important;
-    top: 70px !important;
-    opacity: 0.34 !important;
-    transform: rotate(-13deg) scaleX(-1) !important;
-
-    -webkit-mask-image:
-      linear-gradient(
-        118deg,
-        transparent 0%,
-        transparent 22%,
-        rgba(0, 0, 0, 0.18) 36%,
-        #000 54%,
-        rgba(0, 0, 0, 0.54) 72%,
-        transparent 100%
-      ) !important;
-
-    mask-image:
-      linear-gradient(
-        118deg,
-        transparent 0%,
-        transparent 22%,
-        rgba(0, 0, 0, 0.18) 36%,
-        #000 54%,
-        rgba(0, 0, 0, 0.54) 72%,
-        transparent 100%
-      ) !important;
-  }
-}
 
 /* Small phones */
-@media (max-width: 430px) {
-  .hero::after {
-    width: 360px !important;
-    height: 590px !important;
-    left: 54% !important;
-    top: 72px !important;
-    opacity: 0.28 !important;
-  }
-}
 /* =========================================================
    JBC HERO ROSE VIDEO BACKGROUND
    Removes current hero floral background/pattern
@@ -3797,18 +3439,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Mobile, slightly softer so it does not crowd the hero */
-@media (max-width: 768px) {
-  .hero-rose-video {
-    opacity: 0.38;
-    object-position: center center;
-  }
-}
 
-@media (max-width: 430px) {
-  .hero-rose-video {
-    opacity: 0.32;
-  }
-}
 /* =========================================================
    JBC HERO ROSE VIDEO FIX
    Fixes video sizing and stops it pushing hero text down
@@ -3893,19 +3524,7 @@ section { padding:var(--section-pad) 0; position:relative; }
 }
 
 /* Mobile, keep video visible but calmer */
-@media (max-width: 768px) {
-  .hero-rose-video {
-    object-fit: contain !important;
-    object-position: center center !important;
-    opacity: 0.38 !important;
-  }
-}
 
-@media (max-width: 430px) {
-  .hero-rose-video {
-    opacity: 0.30 !important;
-  }
-}
 /* =========================================================
    JBC HERO VIDEO EXTEND BEHIND NAV
    Lets rose video overflow behind the top navigation bar
@@ -3973,24 +3592,7 @@ body {
 }
 
 /* Mobile, less intense behind nav */
-@media (max-width: 768px) {
-  .hero-rose-video {
-    top: -90px !important;
-    height: calc(100% + 90px) !important;
-    opacity: 0.38 !important;
-    object-position: center top !important;
-  }
 
-  .nav {
-    background: rgba(5, 5, 5, 0.86) !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero-rose-video {
-    opacity: 0.30 !important;
-  }
-}
 /* =========================================================
    JBC HERO VIDEO RESET + TRANSPARENT NAV ONLY
    Fixes video pushed upward / hero pushed down
@@ -4074,23 +3676,7 @@ body {
 }
 
 /* Mobile nav a little more readable */
-@media (max-width: 768px) {
-  .nav {
-    background: rgba(5, 5, 5, 0.58) !important;
-  }
 
-  .hero-rose-video {
-    opacity: 0.38 !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero-rose-video {
-    opacity: 0.30 !important;
-  }
-}
 /* =========================================================
    JBC HERO PHOTO + ROSE VIDEO LAYERING FIX
    Photo returns, photo edges fade, video flowers overlay photo,
@@ -4202,42 +3788,7 @@ body {
 }
 
 /* Mobile, calmer video and slightly stronger portrait */
-@media (max-width: 768px) {
-  .hero-rose-video {
-    opacity: 0.34 !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-  }
 
-  .hero .hero-photo-layer picture,
-  .hero .hero-photo-layer img {
-    -webkit-mask-image:
-      radial-gradient(
-        ellipse at center,
-        black 0%,
-        black 62%,
-        rgba(0, 0, 0, 0.65) 78%,
-        rgba(0, 0, 0, 0.25) 92%,
-        transparent 100%
-      ) !important;
-
-    mask-image:
-      radial-gradient(
-        ellipse at center,
-        black 0%,
-        black 62%,
-        rgba(0, 0, 0, 0.65) 78%,
-        rgba(0, 0, 0, 0.25) 92%,
-        transparent 100%
-      ) !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero-rose-video {
-    opacity: 0.28 !important;
-  }
-}
 /* video hidden, no override needed */
 /* =========================================================
    JBC HERO STATIC BACKGROUND IMAGE
@@ -4328,30 +3879,10 @@ body {
 }
 
 /* Tablet */
-@media (max-width: 968px) {
-  .hero::before {
-    width: 60% !important;
-    opacity: 1 !important;
-    background-size: 440px 440px !important;
-  }
-}
 
 /* Mobile */
-@media (max-width: 768px) {
-  .hero::before {
-    width: 65% !important;
-    opacity: 1 !important;
-    background-size: 380px 380px !important;
-  }
-}
 
 /* Small phones */
-@media (max-width: 430px) {
-  .hero::before {
-    opacity: 1 !important;
-    background-size: 320px 320px !important;
-  }
-}
 
 /* =========================================================
    HERO DOTTED ACCENT LINE (restored)
@@ -4367,22 +3898,6 @@ body {
   display: none !important;
 }
 
-@media (max-width: 968px) {
-  .hero-content::after {
-    right: 76px !important;
-    top: -40px !important;
-    height: 48vh !important;
-    opacity: 0.62 !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero-content::after {
-    right: 50px !important;
-    height: 40vh !important;
-    opacity: 0.5 !important;
-  }
-}
 
 /* =========================================================
    MASTER ROSE OVERRIDE — 100% OPACITY + SOFT EDGE FADE
@@ -4542,30 +4057,6 @@ body {
 }
 
 /* Mobile — same 100%, same feathered edges */
-@media (max-width: 768px) {
-  #services-overview.jbc-floral-process::before,
-  .service-card.jbc-editorial-card::before,
-  #featured-work.jbc-floral-work::before,
-  .testimonial-section.jbc-floral-testimonial::before,
-  .cta-section.jbc-floral-cta::before,
-  .footer.jbc-editorial-footer::before,
-  .hero::before,
-  .jbc-floral-page-header::before,
-  .jbc-floral-about-story::before,
-  .jbc-floral-about-values::before,
-  .jbc-floral-about-stats::before,
-  .jbc-floral-service-detail-1::before,
-  .jbc-floral-service-detail-2::before,
-  .jbc-floral-service-detail-3::before,
-  .jbc-floral-service-process::before,
-  .jbc-floral-portfolio-grid::before,
-  .jbc-floral-blog-grid::before,
-  .jbc-floral-blog-post::before,
-  .jbc-floral-contact::before,
-  .service-cinema.visible .service-cinema-inner::before {
-    opacity: 1 !important;
-  }
-}
 
 /* Kill testimonial roses completely */
 .testimonial-section::before,
@@ -4730,343 +4221,11 @@ body {
    Keeps the live mobile page visible and tunes the new image hero
    ========================================================= */
 
-@media (max-width: 968px) {
-  html,
-  body {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  .preloader.loaded,
-  .page-transition:not(.active) {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  .nav {
-    z-index: 1000 !important;
-  }
-
-  .hamburger {
-    display: flex !important;
-    position: relative !important;
-    z-index: 1003 !important;
-  }
-
-  .nav-links {
-    position: fixed !important;
-    inset: 0 0 0 auto !important;
-    width: min(82vw, 360px) !important;
-    height: 100vh !important;
-    height: 100svh !important;
-    right: auto !important;
-    left: 100% !important;
-    display: flex !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    transform: translateX(0) !important;
-    transition: left 0.45s var(--ease-out-expo), opacity 0.3s ease, visibility 0.3s ease !important;
-  }
-
-  .nav-links.open {
-    left: calc(100% - min(82vw, 360px)) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero.jbc-floral-hero {
-    min-height: clamp(520px, 72svh, 680px) !important;
-    height: clamp(520px, 72svh, 680px) !important;
-    padding: 72px 0 0 !important;
-    justify-content: flex-start !important;
-    overflow: hidden !important;
-    background-color: #050505 !important;
-    background-size: cover !important;
-    background-position: 26% center !important;
-  }
-
-  .hero .hero-full-bg {
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    transform: scale(1.01) !important;
-  }
-
-  .hero .jbc-custom,
-  .hero .hero-photo-layer,
-  .hero-content,
-  .hero-oil-wrap,
-  .hero-mega,
-  .hero .tag,
-  .hero-bottom,
-  .hero-content::after,
-  .hero::before,
-  .hero::after {
-    display: none !important;
-  }
-
-  .manifesto {
-    position: relative !important;
-    z-index: 5 !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero.jbc-floral-hero {
-    min-height: clamp(470px, 68svh, 610px) !important;
-    height: clamp(470px, 68svh, 610px) !important;
-    background-position: 23% center !important;
-  }
-
-  .hero .hero-full-bg {
-    object-position: center center !important;
-    transform: scale(1.01) !important;
-  }
-}
 
 /* =========================================================
    MOBILE HERO COMPACT ARTWORK + ONE-BLOCK FOOTER
    ========================================================= */
 
-@media (max-width: 768px) {
-  body,
-  .nav,
-  .nav.scrolled,
-  .manifesto,
-  .jbc-editorial-section,
-  .footer.jbc-editorial-footer,
-  #services-overview,
-  #featured-work,
-  .testimonial-section,
-  .cta-section {
-    background-color: #050505 !important;
-  }
-
-  .nav,
-  .nav.scrolled {
-    background: rgba(5, 5, 5, 0.96) !important;
-  }
-
-  .nav-links {
-    background: rgba(5, 5, 5, 0.98) !important;
-  }
-
-  .manifesto,
-  .jbc-editorial-section,
-  .footer.jbc-editorial-footer {
-    background-image: none !important;
-  }
-
-  .service-card,
-  .service-card.jbc-editorial-card,
-  .portfolio-item,
-  .portfolio-item.jbc-editorial-work-item,
-  .testi-brutal,
-  .testi-content,
-  .cta-section .container,
-  .footer.jbc-editorial-footer .footer-grid,
-  .service-cinema,
-  .service-cinema-inner {
-    background: #050505 !important;
-    background-color: #050505 !important;
-    border-color: rgba(255, 255, 255, 0.14) !important;
-  }
-
-  .service-card::before,
-  .service-card::after,
-  .portfolio-item::before,
-  .portfolio-item::after,
-  .testi-brutal::before,
-  .testi-brutal::after,
-  .cta-section::before,
-  .cta-section::after {
-    background-color: transparent !important;
-  }
-
-  #services-overview,
-  #featured-work,
-  .testimonial-section,
-  .cta-section,
-  .footer.jbc-editorial-footer {
-    position: relative !important;
-    isolation: isolate !important;
-  }
-
-  #services-overview::before,
-  .cta-section::before,
-  .footer.jbc-editorial-footer::before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 0 !important;
-    pointer-events: none !important;
-    background-image:
-      linear-gradient(180deg, rgba(5, 5, 5, 0.64), rgba(5, 5, 5, 0.94)),
-      url("../images/jbc-floral-portrait-mobile.jpg") !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center top !important;
-    opacity: 0.34 !important;
-    filter: saturate(0.92) contrast(1.08) brightness(0.68) !important;
-  }
-
-  #featured-work::before,
-  .testimonial-section::before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 0 !important;
-    pointer-events: none !important;
-    background-image:
-      linear-gradient(180deg, rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.92)),
-      url("../images/jbc-floral-wide-mobile.jpg") !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    opacity: 0.26 !important;
-    filter: saturate(0.9) contrast(1.06) brightness(0.66) !important;
-  }
-
-  .service-card.jbc-editorial-card::before,
-  .portfolio-item.jbc-editorial-work-item::before,
-  .testi-brutal::before {
-    background-image:
-      linear-gradient(180deg, rgba(5, 5, 5, 0.52), rgba(5, 5, 5, 0.88)),
-      url("../images/jbc-floral-square.jpg") !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    opacity: 0.18 !important;
-    filter: saturate(0.85) contrast(1.08) brightness(0.6) !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-grid::before {
-    content: none !important;
-    display: none !important;
-    background: none !important;
-    background-image: none !important;
-  }
-
-  #services-overview > *,
-  #featured-work > *,
-  .testimonial-section > *,
-  .cta-section > *,
-  .footer.jbc-editorial-footer > * {
-    position: relative !important;
-    z-index: 2 !important;
-  }
-
-  .service-card.jbc-editorial-card,
-  .portfolio-item.jbc-editorial-work-item,
-  .testi-brutal,
-  .footer.jbc-editorial-footer .footer-grid {
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35) !important;
-    backdrop-filter: blur(2px) !important;
-  }
-
-  .hero.jbc-floral-hero {
-    min-height: clamp(390px, 98vw, 560px) !important;
-    height: clamp(390px, 98vw, 560px) !important;
-    padding: 76px 0 24px !important;
-    background: #050505 !important;
-  }
-
-  .hero > picture {
-    top: 74px !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: min(80vw, 440px) !important;
-    height: min(80vw, 440px) !important;
-    transform: translateX(-50%) !important;
-    overflow: hidden !important;
-    border-radius: 10px !important;
-  }
-
-  .hero .hero-full-bg {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    transform: none !important;
-  }
-
-  .footer.jbc-editorial-footer {
-    padding: 34px 22px 26px !important;
-  }
-
-  .footer.jbc-editorial-footer::before {
-    background-image:
-      linear-gradient(180deg, rgba(5, 5, 5, 0.76), rgba(5, 5, 5, 0.9)),
-      url("../images/footer-story-bg-mobile.jpg") !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-    opacity: 0.52 !important;
-    filter: saturate(0.86) contrast(1.06) brightness(0.7) !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-grid {
-    display: block !important;
-    border: 1px solid rgba(240, 230, 218, 0.12) !important;
-    background: #0b0b0b !important;
-    padding: 28px 22px !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-brand {
-    padding: 0 !important;
-    border: 0 !important;
-    text-align: left !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-brand p {
-    max-width: none !important;
-    margin: 14px 0 20px !important;
-    font-size: 0.8rem !important;
-    line-height: 1.65 !important;
-  }
-
-  .footer.jbc-editorial-footer .social-links {
-    justify-content: flex-start !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-col {
-    display: none !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-bottom {
-    border: 0 !important;
-    padding: 16px 0 0 !important;
-    gap: 6px !important;
-    text-align: left !important;
-    align-items: flex-start !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero.jbc-floral-hero {
-    min-height: clamp(360px, 102vw, 500px) !important;
-    height: clamp(360px, 102vw, 500px) !important;
-  }
-
-  .hero > picture {
-    top: 72px !important;
-    width: min(82vw, 360px) !important;
-    height: min(82vw, 360px) !important;
-  }
-}
 
 /* =========================================================
    WARM CINEMATIC BLACK-AND-WHITE IMAGE TREATMENT
@@ -5109,55 +4268,6 @@ body {
   background-color: #0b0b0b !important;
 }
 
-@media (max-width: 768px) {
-  .hero.jbc-floral-hero {
-    min-height: calc(min(98vw, 680px) + 96px) !important;
-    height: calc(min(98vw, 680px) + 96px) !important;
-    padding: 74px 0 22px !important;
-  }
-
-  .hero.jbc-floral-hero > picture {
-    display: block !important;
-    position: absolute !important;
-    top: 74px !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: min(98vw, 680px) !important;
-    height: auto !important;
-    aspect-ratio: 1 / 1 !important;
-    transform: translateX(-50%) !important;
-    overflow: hidden !important;
-    border-radius: 0 !important;
-    z-index: 20 !important;
-  }
-
-  .hero.jbc-floral-hero .hero-full-bg {
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-    transform: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: 21 !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .hero.jbc-floral-hero {
-    min-height: calc(100vw + 90px) !important;
-    height: calc(100vw + 90px) !important;
-  }
-
-  .hero.jbc-floral-hero > picture {
-    top: 72px !important;
-    width: 100vw !important;
-  }
-}
 
 /* =========================================================
    SITE-WIDE BLACK THEME OVERRIDE
@@ -5199,12 +4309,6 @@ body[data-editor-id],
   background-color: transparent !important;
 }
 
-@media (max-width: 968px) {
-  .nav-links,
-  .nav-links.open {
-    background: rgba(5, 5, 5, 0.98) !important;
-  }
-}
 
 .service-card,
 .service-card.jbc-editorial-card,
@@ -5623,7 +4727,6 @@ footer.footer .jbc-custom,
 }
 
 
-
 /* =========================================================
    FOOTER PORTRAIT BACKGROUND, CLEAN REBUILD
    Uses: images/footer-story-bg-desktop.jpg
@@ -5720,29 +4823,6 @@ footer.footer,
   padding-bottom: 72px !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer::before,
-  .footer.jbc-editorial-footer::before {
-    inset: 0 !important;
-    height: auto !important;
-    opacity: 0.38 !important;
-    background-image:
-      linear-gradient(
-        90deg,
-        rgba(9,7,7,0.96) 0%,
-        rgba(9,7,7,0.62) 48%,
-        rgba(9,7,7,0.88) 100%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(9,7,7,0.98) 0%,
-        rgba(9,7,7,0.34) 38%,
-        rgba(9,7,7,0.90) 100%
-      ),
-      url("../images/footer-story-bg-mobile.jpg") !important;
-    background-position: center center !important;
-  }
-}
 
 .footer.jbc-editorial-footer .footer-grid::before,
 .footer.jbc-editorial-footer .footer-grid::after,
@@ -5855,29 +4935,6 @@ footer.footer,
 }
 
 /* Mobile, use the optimized portrait background without the old strip */
-@media (max-width: 768px) {
-  footer.footer::before,
-  .footer.jbc-editorial-footer::before {
-    inset: 0 !important;
-    height: auto !important;
-    opacity: 0.38 !important;
-    background-image:
-      linear-gradient(
-        90deg,
-        rgba(8,6,6,0.96) 0%,
-        rgba(8,6,6,0.62) 48%,
-        rgba(8,6,6,0.88) 100%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(8,6,6,0.98) 0%,
-        rgba(8,6,6,0.34) 38%,
-        rgba(8,6,6,0.90) 100%
-      ),
-      url("../images/footer-story-bg-mobile.jpg") !important;
-    background-position: center center !important;
-  }
-}
 
 
 /* =========================================================
@@ -5982,18 +5039,6 @@ footer.footer .social-links,
   display: flex !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer {
-    min-height: 420px !important;
-  }
-
-  footer.footer::before,
-  .footer.jbc-editorial-footer::before {
-    opacity: 0.58 !important;
-    background-position: center center !important;
-  }
-}
 
 /* =========================================================
    FOOTER IMAGE STRIP, CORRECT IMAGE
@@ -6099,20 +5144,6 @@ footer.footer .social-links,
 }
 
 /* Mobile version, slightly taller so the image does not get chopped */
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer {
-    min-height: 500px !important;
-  }
-
-  footer.footer::before,
-  .footer.jbc-editorial-footer::before {
-    min-height: 500px !important;
-    opacity: 0.48 !important;
-    background-size: cover !important;
-    background-position: center center !important;
-  }
-}
 
 
 /* =========================================================
@@ -6206,17 +5237,6 @@ footer.footer .social-links,
 }
 
 /* Mobile, full width but softer */
-@media (max-width: 768px) {
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"],
-  footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
-  .footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
-    left: 0 !important;
-    width: 100% !important;
-    height: 230px !important;
-    opacity: 0.42 !important;
-  }
-}
 
 
 /* =========================================================
@@ -6344,234 +5364,11 @@ footer.footer i,
   z-index: 7 !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"],
-  footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
-  .footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
-    left: 0 !important;
-    width: 100% !important;
-    height: 240px !important;
-    opacity: 0.46 !important;
-  }
-}
 
 /* =========================================================
    FINAL MOBILE HOMEPAGE REPAIR - LAST OVERRIDE
    ========================================================= */
 
-@media (max-width: 768px) {
-  html,
-  body {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-    background: #050505 !important;
-  }
-
-  .hero.jbc-floral-hero {
-    display: block !important;
-    min-height: 0 !important;
-    height: auto !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: #050505 !important;
-    overflow: hidden !important;
-    isolation: isolate !important;
-  }
-
-  .hero.jbc-floral-hero > picture {
-    display: block !important;
-    position: relative !important;
-    inset: auto !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1920 / 1073 !important;
-    transform: none !important;
-    overflow: hidden !important;
-    border-radius: 0 !important;
-    z-index: 1 !important;
-    pointer-events: none !important;
-    background: #050505 !important;
-  }
-
-  .hero.jbc-floral-hero .hero-full-bg {
-    display: block !important;
-    position: relative !important;
-    inset: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    min-width: 0 !important;
-    min-height: 0 !important;
-    aspect-ratio: 1920 / 1073 !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-    transform: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: 1 !important;
-  }
-
-  .hero.jbc-floral-hero .hero-bottom,
-  .hero.jbc-floral-hero .jbc-custom,
-  .hero.jbc-floral-hero .hero-photo-layer,
-  .hero.jbc-floral-hero .hero-content,
-  .hero.jbc-floral-hero .hero-oil-wrap,
-  .hero.jbc-floral-hero .hero-mega,
-  .hero.jbc-floral-hero .tag,
-  .hero.jbc-floral-hero::before,
-  .hero.jbc-floral-hero::after {
-    display: none !important;
-    content: none !important;
-  }
-
-  .manifesto {
-    margin-top: 0 !important;
-    background: #050505 !important;
-  }
-
-  .manifesto-inner {
-    padding: 18px 0 !important;
-  }
-
-  .manifesto-inner span {
-    font-size: clamp(1.1rem, 6vw, 1.8rem) !important;
-  }
-
-  .jbc-editorial-section,
-  #services-overview,
-  #featured-work,
-  .testimonial-section,
-  .cta-section {
-    padding: 44px 0 !important;
-    background-color: #050505 !important;
-  }
-
-  .container {
-    width: min(90%, 420px) !important;
-  }
-
-  .sec-header {
-    margin-bottom: 26px !important;
-  }
-
-  .sec-header h2,
-  .section-title,
-  .cta-section h2 {
-    font-size: clamp(2rem, 10vw, 3.2rem) !important;
-    line-height: 0.96 !important;
-    letter-spacing: 0 !important;
-  }
-
-  .services-grid,
-  .portfolio-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  .service-card,
-  .service-card.jbc-editorial-card,
-  .portfolio-item,
-  .portfolio-item.jbc-editorial-work-item,
-  .testi-brutal,
-  .testi-content,
-  .cta-section .container,
-  .service-cinema,
-  .service-cinema-inner {
-    width: 100% !important;
-    min-height: 0 !important;
-    padding: 22px !important;
-    border-radius: 8px !important;
-    background-color: #090909 !important;
-    box-shadow: none !important;
-  }
-
-  .service-card h3 {
-    font-size: clamp(2rem, 11vw, 3.3rem) !important;
-    line-height: 0.92 !important;
-  }
-
-  .service-card p,
-  .service-card div,
-  .testi-content blockquote,
-  .cta-section p {
-    font-size: 0.88rem !important;
-    line-height: 1.62 !important;
-  }
-
-  .portfolio-item,
-  .portfolio-item.jbc-editorial-work-item {
-    aspect-ratio: 4 / 5 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .portfolio-item img,
-  .portfolio-item.jbc-editorial-work-item img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .portfolio-item .overlay {
-    padding: 20px !important;
-  }
-
-  .portfolio-item .overlay h3 {
-    font-size: clamp(1.65rem, 8vw, 2.5rem) !important;
-    line-height: 1 !important;
-  }
-
-  .testi-brutal {
-    width: min(90%, 420px) !important;
-    margin: 0 auto !important;
-  }
-
-  .footer.jbc-editorial-footer .footer-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .nav .container {
-    padding: 12px 0 !important;
-  }
-
-  .nav-logo {
-    font-size: 0.56rem !important;
-    letter-spacing: 3.2px !important;
-  }
-
-  .hero.jbc-floral-hero > picture,
-  .hero.jbc-floral-hero .hero-full-bg {
-    aspect-ratio: 1920 / 1073 !important;
-  }
-
-  .jbc-editorial-section,
-  #services-overview,
-  #featured-work,
-  .testimonial-section,
-  .cta-section {
-    padding: 38px 0 !important;
-  }
-
-  .service-card,
-  .service-card.jbc-editorial-card,
-  .testi-brutal,
-  .testi-content,
-  .cta-section .container,
-  .service-cinema,
-  .service-cinema-inner {
-    padding: 18px !important;
-  }
-}
 
 /* =========================================================
    FOOTER FINAL IMAGE + TRANSPARENT TEXT AREAS
@@ -6696,18 +5493,6 @@ footer.footer i,
 .footer.jbc-editorial-footer i {
   position: relative !important;
   z-index: 7 !important;
-}
-
-@media (max-width: 768px) {
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"],
-  footer.footer .editor-decoration.editor-image[data-editor-id="image-002"],
-  .footer.jbc-editorial-footer .editor-decoration.editor-image[data-editor-id="image-002"] {
-    left: 0 !important;
-    width: 100% !important;
-    height: 240px !important;
-    opacity: 0.46 !important;
-  }
 }
 
 
@@ -6877,21 +5662,6 @@ footer.footer i,
   opacity: 1 !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer {
-    min-height: 500px !important;
-  }
-
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
-    left: 0 !important;
-    width: 100% !important;
-    height: 245px !important;
-    opacity: 0.48 !important;
-  }
-}
-
 
 /* =========================================================
    FOOTER IMAGE FULL AREA FIX
@@ -7006,24 +5776,6 @@ footer.footer i,
   z-index: 7 !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer {
-    min-height: 500px !important;
-  }
-
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
-    min-height: 500px !important;
-    opacity: 0.42 !important;
-  }
-
-  footer.footer [data-editor-id="image-002"] img,
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
-    object-position: center center !important;
-  }
-}
-
 
 /* =========================================================
    FOOTER IMAGE OPACITY BOOST
@@ -7035,12 +5787,6 @@ footer.footer [data-editor-id="image-002"],
   opacity: 0.68 !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
-    opacity: 0.55 !important;
-  }
-}
 
 /* =========================================================
    PROCESS CARDS, GENTLE FLORAL REPAIR
@@ -7397,19 +6143,6 @@ footer.footer [data-editor-id="image-002"],
   text-shadow: 0 8px 30px rgba(0,0,0,0.88) !important;
 }
 
-@media (max-width: 768px) {
-  .cta-section,
-  .cta-section.jbc-floral-cta {
-    min-height: 500px !important;
-  }
-
-  .cta-section::before,
-  .cta-section.jbc-floral-cta::before {
-    opacity: 0.56 !important;
-    background-position: center center !important;
-  }
-}
-
 
 /* =========================================================
    CTA EYESTORY, CORRECT ORIENTATION + 16:9 FIT + OPACITY BOOST
@@ -7483,15 +6216,6 @@ footer.footer [data-editor-id="image-002"],
   z-index: 5 !important;
 }
 
-@media (max-width: 768px) {
-  .cta-section::before,
-  .cta-section.jbc-floral-cta::before {
-    background-size: contain !important;
-    background-position: center center !important;
-    opacity: 0.82 !important;
-  }
-}
-
 
 /* =========================================================
    CTA EYESTORY FINAL ORIENTATION + FULL COVER
@@ -7603,21 +6327,6 @@ footer.footer [data-editor-id="image-002"],
   box-shadow: none !important;
 }
 
-@media (max-width: 768px) {
-  .cta-section,
-  .cta-section.jbc-floral-cta {
-    min-height: 500px !important;
-  }
-
-  .cta-section::before,
-  .cta-section.jbc-floral-cta::before {
-    background-size: cover !important;
-    background-position: center center !important;
-    transform: none !important;
-    opacity: 0.82 !important;
-  }
-}
-
 
 /* =========================================================
    CTA EYESTORY FINAL ORIENTATION + FULL COVER
@@ -7727,21 +6436,6 @@ footer.footer [data-editor-id="image-002"],
   background: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
-}
-
-@media (max-width: 768px) {
-  .cta-section,
-  .cta-section.jbc-floral-cta {
-    min-height: 500px !important;
-  }
-
-  .cta-section::before,
-  .cta-section.jbc-floral-cta::before {
-    background-size: cover !important;
-    background-position: center center !important;
-    transform: none !important;
-    opacity: 0.82 !important;
-  }
 }
 
 
@@ -7862,28 +6556,6 @@ footer.footer .social-links,
 }
 
 /* Mobile containment */
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer {
-    min-height: 460px !important;
-  }
-
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
-    left: 0 !important;
-    width: 100% !important;
-    height: 230px !important;
-    max-height: 230px !important;
-    opacity: 0.44 !important;
-  }
-
-  footer.footer [data-editor-id="image-002"] img,
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
-    width: 116% !important;
-    object-position: 42% center !important;
-    transform: translateX(-5%) !important;
-  }
-}
 
 
 /* =========================================================
@@ -8073,14 +6745,6 @@ footer.footer .social-links,
   box-shadow: none !important;
 }
 
-@media (max-width: 768px) {
-  .testimonial-section::before,
-  .testimonial-section.jbc-floral-testimonial::before {
-    opacity: 0.42 !important;
-    background-position: center center !important;
-  }
-}
-
 
 /* =========================================================
    TESTIMONIAL EYESTORY, OPACITY BOOST + NO FILTER
@@ -8100,14 +6764,6 @@ footer.footer .social-links,
   opacity: 0.22 !important;
 }
 
-@media (max-width: 768px) {
-  .testimonial-section::before,
-  .testimonial-section.jbc-floral-testimonial::before {
-    opacity: 0.62 !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-  }
-}
 
 /* =========================================================
    PROCESS ROSES, NATURAL RATIO + FEATHERED EDGES
@@ -8167,28 +6823,6 @@ footer.footer .social-links,
   mask-composite: intersect !important;
 }
 
-@media (max-width: 768px) {
-  #services-overview.jbc-floral-process::before {
-    inset: -5% -10% !important;
-    background-image: url("../images/jbc-floral-wide-mobile.jpg") !important;
-    background-size: min(760px, 145vw) auto !important;
-    background-position: center top 10% !important;
-    opacity: 0.42 !important;
-
-    -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, #000 9%, #000 74%, transparent 100%) !important;
-    mask-image:
-      linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, #000 9%, #000 74%, transparent 100%) !important;
-  }
-
-  #services-overview .service-card::before,
-  #services-overview .jbc-editorial-card::before {
-    background-size: 118% auto !important;
-    opacity: 0.22 !important;
-  }
-}
 
 /* =========================================================
    PROCESS CARDS, EDITORIAL FLORAL PLACEMENT
@@ -8257,20 +6891,6 @@ footer.footer .social-links,
   z-index: 3 !important;
 }
 
-@media (max-width: 768px) {
-  #services-overview .service-card.jbc-editorial-card::before {
-    inset: -14% !important;
-    background-size: 165% auto !important;
-    opacity: 0.58 !important;
-  }
-
-  #services-overview .jbc-editorial-card-1::before,
-  #services-overview .jbc-editorial-card-2::before,
-  #services-overview .jbc-editorial-card-3::before {
-    background-position: center top !important;
-    transform: none !important;
-  }
-}
 
 /* =========================================================
    TESTIMONIAL + FOOTER FINAL IMAGE FRAMING
@@ -8285,13 +6905,6 @@ footer.footer .social-links,
   opacity: 0.84 !important;
 }
 
-@media (max-width: 768px) {
-  .testimonial-section::before,
-  .testimonial-section.jbc-floral-testimonial::before {
-    background-position: center 66% !important;
-    transform: translateY(14px) scale(1.08) !important;
-  }
-}
 
 footer.footer,
 .footer.jbc-editorial-footer,
@@ -8386,19 +6999,6 @@ footer.footer .social-links,
   z-index: 4 !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer,
-  [data-editor-id="footer-section"] {
-    min-height: 620px !important;
-    padding: 72px 28px 54px !important;
-  }
-
-  footer.footer [data-editor-id="image-002"] img,
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
-    object-position: center center !important;
-  }
-}
 
 /* =========================================================
    FOOTER BANNER CORRECTION
@@ -8453,30 +7053,6 @@ footer.footer .footer-grid,
   align-items: center !important;
 }
 
-@media (max-width: 768px) {
-  footer.footer,
-  .footer.jbc-editorial-footer,
-  [data-editor-id="footer-section"] {
-    height: auto !important;
-    min-height: 560px !important;
-    max-height: none !important;
-    padding: 64px 28px 48px !important;
-  }
-
-  footer.footer [data-editor-id="image-002"] img,
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
-    width: auto !important;
-    height: 100% !important;
-    min-width: 100% !important;
-    transform: translate(-50%, -50%) !important;
-  }
-
-  footer.footer .footer-grid,
-  .footer.jbc-editorial-footer .footer-grid {
-    height: auto !important;
-    align-items: start !important;
-  }
-}
 
 /* =========================================================
    FINAL FOOTER BLEND + MOBILE PROPORTION PASS
@@ -8514,282 +7090,6 @@ footer.footer [data-editor-id="image-002"]::after,
     linear-gradient(180deg, rgba(5,5,5,0.42) 0%, rgba(5,5,5,0.08) 48%, rgba(5,5,5,0.46) 100%) !important;
 }
 
-@media (max-width: 768px) {
-  html,
-  body {
-    width: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  .nav .container {
-    width: min(92%, 430px) !important;
-    padding: 13px 0 !important;
-  }
-
-  .nav-logo {
-    font-size: clamp(0.5rem, 2.15vw, 0.62rem) !important;
-    letter-spacing: clamp(2.6px, 1vw, 4px) !important;
-    white-space: nowrap !important;
-  }
-
-  .hamburger {
-    transform: scale(0.86) !important;
-    transform-origin: right center !important;
-  }
-
-  .nav-links {
-    width: min(82vw, 330px) !important;
-    gap: 28px !important;
-  }
-
-  section,
-  .jbc-editorial-section,
-  #services-overview,
-  #featured-work,
-  .testimonial-section,
-  .cta-section {
-    width: 100% !important;
-    padding: clamp(46px, 12vw, 72px) 0 !important;
-    margin: 0 !important;
-  }
-
-  .container,
-  .page-header .container,
-  .footer .container {
-    width: min(91vw, 430px) !important;
-    max-width: 430px !important;
-  }
-
-  .hero.jbc-floral-hero {
-    min-height: 0 !important;
-    padding-top: 54px !important;
-  }
-
-  .hero.jbc-floral-hero > picture {
-    aspect-ratio: 4 / 5 !important;
-  }
-
-  .hero.jbc-floral-hero .hero-full-bg {
-    width: 100% !important;
-    height: 100% !important;
-    aspect-ratio: auto !important;
-    object-fit: cover !important;
-    object-position: center top !important;
-  }
-
-  .manifesto-inner {
-    padding: 20px 0 !important;
-    min-height: 74px !important;
-  }
-
-  .manifesto-inner span {
-    font-size: clamp(1.15rem, 6.2vw, 1.7rem) !important;
-    line-height: 1.05 !important;
-  }
-
-  .sec-header,
-  .page-header {
-    margin-bottom: clamp(24px, 7vw, 36px) !important;
-  }
-
-  .sec-header h2,
-  .section-title,
-  .page-title,
-  .page-header h1,
-  .cta-section h2 {
-    font-size: clamp(2.1rem, 11vw, 3.45rem) !important;
-    line-height: 0.98 !important;
-    letter-spacing: 0 !important;
-    overflow-wrap: anywhere !important;
-  }
-
-  .sec-header span,
-  .section-subtitle,
-  .page-subtitle {
-    font-size: clamp(0.72rem, 3.2vw, 0.9rem) !important;
-    line-height: 1.55 !important;
-  }
-
-  .services-grid,
-  .portfolio-grid,
-  .portfolio-grid-full,
-  .values-grid,
-  .process-grid,
-  .team-grid,
-  .blog-grid,
-  .about-grid,
-  .contact-grid {
-    grid-template-columns: 1fr !important;
-    gap: clamp(16px, 4.5vw, 22px) !important;
-  }
-
-  .service-card,
-  .service-card.jbc-editorial-card,
-  .value-card,
-  .process-card,
-  .blog-card,
-  .team-card,
-  .contact-form-wrap,
-  .contact-info,
-  .testi-brutal,
-  .service-cinema,
-  .service-cinema-inner {
-    width: 100% !important;
-    min-height: 0 !important;
-    padding: clamp(20px, 5.8vw, 28px) !important;
-  }
-
-  .service-card h3,
-  .value-card h3,
-  .process-card h3 {
-    font-size: clamp(2rem, 10vw, 3.2rem) !important;
-    line-height: 0.98 !important;
-  }
-
-  .service-card p,
-  .service-card div,
-  .value-card p,
-  .process-card p,
-  .blog-card p,
-  .team-card p,
-  .testi-content blockquote,
-  .cta-section p,
-  .about-content p,
-  .contact-info p {
-    font-size: clamp(0.86rem, 3.7vw, 0.98rem) !important;
-    line-height: 1.65 !important;
-  }
-
-  .portfolio-item,
-  .portfolio-item.jbc-editorial-work-item,
-  .blog-card-image,
-  .team-card img,
-  .about-image,
-  .service-detail-image {
-    aspect-ratio: 4 / 5 !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: hidden !important;
-  }
-
-  .portfolio-item img,
-  .portfolio-item.jbc-editorial-work-item img,
-  .blog-card-image img,
-  .team-card img,
-  .about-image img,
-  .service-detail-image img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-  }
-
-  .portfolio-item .overlay {
-    padding: clamp(18px, 5vw, 24px) !important;
-  }
-
-  .portfolio-item .overlay h3 {
-    font-size: clamp(1.55rem, 8vw, 2.35rem) !important;
-    line-height: 1.02 !important;
-  }
-
-  .cta-section .container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  footer.footer,
-  .footer.jbc-editorial-footer,
-  [data-editor-id="footer-section"] {
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    padding: clamp(48px, 12vw, 66px) clamp(22px, 6vw, 30px) clamp(34px, 9vw, 50px) !important;
-  }
-
-  footer.footer [data-editor-id="image-002"],
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] {
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 100% !important;
-    opacity: 0.46 !important;
-  }
-
-  footer.footer [data-editor-id="image-002"] img,
-  .footer.jbc-editorial-footer [data-editor-id="image-002"] img {
-    left: 50% !important;
-    top: 50% !important;
-    width: auto !important;
-    height: 100% !important;
-    min-width: 100% !important;
-    transform: translate(-50%, -50%) !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.44) 9%, #000 24%, #000 74%, rgba(0,0,0,0.48) 91%, transparent 100%),
-      linear-gradient(180deg, rgba(0,0,0,0.22) 0%, #000 18%, #000 84%, rgba(0,0,0,0.34) 100%) !important;
-    mask-image:
-      linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.44) 9%, #000 24%, #000 74%, rgba(0,0,0,0.48) 91%, transparent 100%),
-      linear-gradient(180deg, rgba(0,0,0,0.22) 0%, #000 18%, #000 84%, rgba(0,0,0,0.34) 100%) !important;
-  }
-
-  footer.footer [data-editor-id="image-002"]::after,
-  .footer.jbc-editorial-footer [data-editor-id="image-002"]::after {
-    background:
-      linear-gradient(90deg, rgba(5,5,5,0.42) 0%, rgba(5,5,5,0.12) 34%, rgba(5,5,5,0.36) 100%),
-      linear-gradient(180deg, rgba(5,5,5,0.48) 0%, rgba(5,5,5,0.1) 48%, rgba(5,5,5,0.56) 100%) !important;
-  }
-
-  footer.footer .footer-grid,
-  .footer.jbc-editorial-footer .footer-grid,
-  [data-editor-id="footer-grid"] {
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-    align-items: start !important;
-  }
-
-  footer.footer .footer-brand,
-  footer.footer .footer-col,
-  .footer.jbc-editorial-footer .footer-brand,
-  .footer.jbc-editorial-footer .footer-col {
-    padding: clamp(18px, 5vw, 24px) 0 !important;
-  }
-
-  footer.footer .footer-bottom,
-  .footer.jbc-editorial-footer .footer-bottom,
-  [data-editor-id="footer-bottom"] {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    width: 100% !important;
-    height: auto !important;
-    padding: 18px 0 0 !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .sec-header h2,
-  .section-title,
-  .page-title,
-  .page-header h1,
-  .cta-section h2 {
-    font-size: clamp(1.95rem, 10.5vw, 2.75rem) !important;
-  }
-
-  .service-card h3,
-  .value-card h3,
-  .process-card h3 {
-    font-size: clamp(1.85rem, 9.6vw, 2.55rem) !important;
-  }
-
-  .portfolio-item .overlay h3 {
-    font-size: clamp(1.4rem, 7.4vw, 2rem) !important;
-  }
-}
 
 /* =========================================================
    INNER PAGES FLORAL PLACEMENT PASS
@@ -9000,58 +7300,6 @@ body:not([data-editor-id]) .portfolio-item img {
   mask-composite: intersect !important;
 }
 
-@media (max-width: 768px) {
-  body:not([data-editor-id]) .jbc-floral-page-header::before,
-  body:not([data-editor-id]) .mag-header::before {
-    inset: -18% -24% auto auto !important;
-    width: 116vw !important;
-    height: 82vw !important;
-    opacity: 0.18 !important;
-    background-image: url("../images/jbc-floral-wide-mobile.jpg") !important;
-    background-position: center top !important;
-  }
-
-  body:not([data-editor-id]) .jbc-floral-about-story::before,
-  body:not([data-editor-id]) .jbc-floral-about-values::before,
-  body:not([data-editor-id]) .jbc-floral-about-stats::before,
-  body:not([data-editor-id]) .jbc-floral-service-detail-1::before,
-  body:not([data-editor-id]) .jbc-floral-service-detail-2::before,
-  body:not([data-editor-id]) .jbc-floral-service-detail-3::before,
-  body:not([data-editor-id]) .jbc-floral-service-process::before,
-  body:not([data-editor-id]) .jbc-floral-portfolio-grid::before,
-  body:not([data-editor-id]) .jbc-floral-blog-grid::before,
-  body:not([data-editor-id]) .jbc-floral-blog-post::before,
-  body:not([data-editor-id]) .jbc-floral-contact::before {
-    width: 132vw !important;
-    height: 132vw !important;
-    left: 50% !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: -22vw !important;
-    opacity: 0.15 !important;
-    background-image: url("../images/jbc-floral-wide-mobile.jpg") !important;
-    background-size: contain !important;
-    background-position: center center !important;
-    transform: translateX(-50%) rotate(0deg) !important;
-  }
-
-  body:not([data-editor-id]) .jbc-floral-page-header::after,
-  body:not([data-editor-id]) .mag-header::after,
-  body:not([data-editor-id]) .jbc-floral-about-story::after,
-  body:not([data-editor-id]) .jbc-floral-about-values::after,
-  body:not([data-editor-id]) .jbc-floral-about-stats::after,
-  body:not([data-editor-id]) .jbc-floral-service-detail::after,
-  body:not([data-editor-id]) .jbc-floral-service-process::after,
-  body:not([data-editor-id]) .jbc-floral-portfolio-grid::after,
-  body:not([data-editor-id]) .jbc-floral-blog-grid::after,
-  body:not([data-editor-id]) .jbc-floral-blog-post::after,
-  body:not([data-editor-id]) .jbc-floral-contact::after {
-    background:
-      linear-gradient(90deg, rgba(5,5,5,0.72) 0%, rgba(5,5,5,0.1) 34%, rgba(5,5,5,0.72) 100%),
-      linear-gradient(180deg, rgba(5,5,5,0.76) 0%, rgba(5,5,5,0.08) 42%, rgba(5,5,5,0.82) 100%) !important;
-    opacity: 0.92 !important;
-  }
-}
 
 /* =========================================================
    CINEMATIC HERO-LIGHT IMAGE COVERS
@@ -9216,29 +7464,6 @@ body:not([data-editor-id]) .portfolio-item img {
   aspect-ratio: 1 / 1 !important;
 }
 
-@media (max-width: 768px) {
-  .portfolio-item::before,
-  .portfolio-item.jbc-editorial-work-item::before,
-  .blog-card-image::before,
-  .team-card::before,
-  .about-image::before,
-  .service-detail-image::before,
-  .mag-featured-image::before,
-  .mag-article-image::before {
-    opacity: 0.9 !important;
-  }
-
-  .portfolio-item::after,
-  .portfolio-item.jbc-editorial-work-item::after,
-  .blog-card-image::after,
-  .team-card::after,
-  .about-image::after,
-  .service-detail-image::after,
-  .mag-featured-image::after,
-  .mag-article-image::after {
-    opacity: 0.58 !important;
-  }
-}
 
 /* =========================================================
    IMAGE COVER FILTER CORRECTION
@@ -9726,115 +7951,8 @@ body:not([data-editor-id]) .portfolio-item img {
    MOBILE — clean horizontal swipe gallery
    No sticky, no scroll hijacking, no page overflow
    ========================================================= */
-@media (max-width: 768px) {
-
-  #featured-work {
-    padding-bottom: 0 !important;
-    overflow: hidden; /* contain the swipe track — no page overflow */
-  }
-
-  .jbc-gallery-header {
-    padding-bottom: 1.5rem;
-  }
-
-  /* Pin zone: not sticky on mobile — just a plain block */
-  .jbc-gallery-pin {
-    position: relative;
-    height: auto;
-    overflow: visible;
-    padding-bottom: 0;
-  }
-
-  /* Hide the progress bar on mobile */
-  .jbc-gallery-progress {
-    display: none;
-  }
-
-  /* Track: horizontal scrollable snap row */
-  #featured-work .portfolio-grid.jbc-gallery-track {
-    display: flex !important;
-    flex-direction: row !important;
-    grid-template-columns: unset !important;
-    gap: 1rem !important;
-    margin-top: 0 !important;
-    padding: 0 5vw 1.5rem 5vw;
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    /* Hide scrollbar visually but keep swipe functional */
-    scrollbar-width: none;       /* Firefox */
-    -ms-overflow-style: none;    /* IE/Edge */
-    /* Prevent this from causing page-level overflow */
-    width: 100%;
-    box-sizing: border-box;
-  }
-  #featured-work .portfolio-grid.jbc-gallery-track::-webkit-scrollbar {
-    display: none;               /* Chrome/Safari */
-  }
-
-  /* Cards: 82vw wide, tall enough for good image crop */
-  #featured-work .portfolio-item.jbc-editorial-work-item {
-    flex-shrink: 0 !important;
-    width: 82vw !important;
-    height: 62vw !important;
-    aspect-ratio: unset !important;
-    border-radius: 14px !important;
-    overflow: hidden !important;
-    position: relative !important;
-    scroll-snap-align: start;
-  }
-
-  /* Images: standard 100% on mobile — no parallax treatment */
-  #featured-work .portfolio-item.jbc-editorial-work-item > img:not(.jbc-cinematic-cover),
-  #featured-work .portfolio-item.jbc-editorial-work-item .jbc-cinematic-cover {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    transform: none !important;
-  }
-
-  /* Show colour image on mobile (no hover available) */
-  #featured-work .portfolio-item.jbc-editorial-work-item .jbc-cinematic-cover {
-    opacity: 0 !important;
-  }
-
-  /* CTA footer: tighter on mobile */
-  .jbc-gallery-footer {
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-  }
-
-  /* Ensure testimonial section that follows is not pushed/overlapping */
-  .testimonial-section {
-    margin-top: 0;
-    position: relative;
-    z-index: 1;
-  }
-}
 
 /* Additional mobile breakpoints — fine-tune card sizing */
-@media (max-width: 430px) {
-  #featured-work .portfolio-item.jbc-editorial-work-item {
-    width: 83vw !important;
-    height: 64vw !important;
-  }
-}
-@media (max-width: 390px) {
-  #featured-work .portfolio-item.jbc-editorial-work-item {
-    width: 84vw !important;
-    height: 65vw !important;
-  }
-}
-@media (max-width: 375px) {
-  #featured-work .portfolio-item.jbc-editorial-work-item {
-    width: 85vw !important;
-    height: 66vw !important;
-  }
-}
 
 /* =========================================================
    REDUCED MOTION — disable horizontal sticky movement
@@ -10138,87 +8256,6 @@ body:not([data-editor-id]) .portfolio-item img {
   box-shadow: 0 0 12px rgba(232, 137, 29, 0.42) !important;
 }
 
-@media (max-width: 768px) {
-  #featured-work .portfolio-grid.jbc-codrops-cinema {
-    min-height: auto !important;
-    margin-top: 28px !important;
-    perspective: none !important;
-    overflow: visible !important;
-  }
-
-  #featured-work .jbc-cinema-pin {
-    position: relative !important;
-    top: auto !important;
-    height: auto !important;
-    display: block !important;
-    overflow: visible !important;
-  }
-
-  #featured-work .jbc-cinema-stage {
-    height: auto !important;
-    min-height: 0 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 5vw 24px !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    perspective: none !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    background:
-      linear-gradient(90deg, rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.88)) !important;
-  }
-
-  #featured-work .jbc-cinema-stage::-webkit-scrollbar {
-    display: none !important;
-  }
-
-  #featured-work .jbc-cinema-stage::before,
-  #featured-work .jbc-cinema-stage::after,
-  #featured-work .jbc-cinema-copy,
-  #featured-work .jbc-cinema-streaks,
-  #featured-work .jbc-cinema-progress {
-    display: none !important;
-  }
-
-  #featured-work .jbc-cinema-ring {
-    position: relative !important;
-    inset: auto !important;
-    z-index: 1 !important;
-    display: flex !important;
-    gap: 16px !important;
-    width: max-content !important;
-    transform: none !important;
-    transform-style: flat !important;
-  }
-
-  #featured-work .jbc-cinema-panel {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    flex: 0 0 min(82vw, 390px) !important;
-    width: min(82vw, 390px) !important;
-    aspect-ratio: 4 / 3 !important;
-    opacity: 1 !important;
-    transform: none !important;
-    scroll-snap-align: start !important;
-    backface-visibility: visible !important;
-  }
-
-  #featured-work .jbc-cinema-panel img {
-    transform: scale(1.02) !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta {
-    display: block !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(1.35rem, 8vw, 2.15rem) !important;
-    line-height: 0.96 !important;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   #featured-work .portfolio-grid.jbc-codrops-cinema {
@@ -10620,26 +8657,6 @@ body {
 }
 
 /* Mobile title sizing */
-@media (max-width: 768px) {
-  #featured-work .jbc-gallery-track .portfolio-item h1,
-  #featured-work .jbc-gallery-track .portfolio-item h2,
-  #featured-work .jbc-gallery-track .portfolio-item h3,
-  #featured-work .jbc-gallery-track .portfolio-item h4,
-  #featured-work .jbc-gallery-track .portfolio-item h5,
-  #featured-work .jbc-gallery-track .portfolio-item h6 {
-    font-size: clamp(2.7rem, 13vw, 4.8rem) !important;
-    line-height: 0.86 !important;
-  }
-
-  #featured-work .jbc-gallery-track .portfolio-item .portfolio-content,
-  #featured-work .jbc-gallery-track .portfolio-item .portfolio-info,
-  #featured-work .jbc-gallery-track .portfolio-item .portfolio-overlay,
-  #featured-work .jbc-gallery-track .portfolio-item .portfolio-text {
-    left: 1.4rem !important;
-    bottom: 1.3rem !important;
-    width: 82% !important;
-  }
-}
 
 
 /* =========================================================
@@ -10713,25 +8730,6 @@ body {
 }
 
 /* Mobile tuning */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel-meta {
-    left: 1.3rem !important;
-    bottom: 1.2rem !important;
-    width: 82% !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.62rem !important;
-    letter-spacing: 0.32em !important;
-    margin-bottom: 0.65rem !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(2.6rem, 12vw, 4.6rem) !important;
-    line-height: 0.86 !important;
-    max-width: 9ch !important;
-  }
-}
 
 
 /* =========================================================
@@ -10815,26 +8813,6 @@ body {
 }
 
 /* Mobile, keep it tidy inside the image */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel-meta {
-    left: 1rem !important;
-    bottom: 1rem !important;
-    width: calc(100% - 2rem) !important;
-    max-width: 300px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.52rem !important;
-    letter-spacing: 0.22em !important;
-    margin-bottom: 0.35rem !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(1.15rem, 6vw, 1.85rem) !important;
-    line-height: 0.98 !important;
-    max-width: 11ch !important;
-  }
-}
 
 
 /* =========================================================
@@ -10870,21 +8848,6 @@ body {
 }
 
 /* Mobile version */
-@media (max-width: 768px) {
-  #services-overview,
-  #services-overview.jbc-editorial-section {
-    padding-bottom: 2rem !important;
-  }
-
-  #featured-work,
-  #featured-work.jbc-editorial-section {
-    padding-top: 2rem !important;
-  }
-
-  #featured-work .sec-header {
-    margin-bottom: 1.5rem !important;
-  }
-}
 
 
 /* =========================================================
@@ -10947,28 +8910,6 @@ body {
   }
   to {
     transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 768px) {
-  .manifesto {
-    padding: 1.6rem 0 !important;
-  }
-
-  .manifesto-inner {
-    gap: 2rem !important;
-    animation-duration: 32s !important;
-  }
-
-  .manifesto span,
-  .manifesto-inner span {
-    font-size: 0.74rem !important;
-    letter-spacing: 0.26em !important;
-  }
-
-  .manifesto span::after,
-  .manifesto-inner span::after {
-    margin-left: 2rem !important;
   }
 }
 
@@ -11056,25 +8997,6 @@ body {
 }
 
 /* Mobile, keep it tidy inside the image */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel-meta {
-    left: 0.9rem !important;
-    bottom: 0.85rem !important;
-    max-width: 230px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.48rem !important;
-    letter-spacing: 0.2em !important;
-    margin-bottom: 0.3rem !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(1rem, 5vw, 1.45rem) !important;
-    line-height: 1 !important;
-    max-width: 11ch !important;
-  }
-}
 
 
 /* =========================================================
@@ -11149,7 +9071,6 @@ section.testimonial-section {
 }
 
 
-
 /* =========================================================
    How We Build Stories
    Collapse hidden service detail panel causing gap before Selected Work
@@ -11219,18 +9140,6 @@ section.testimonial-section {
 }
 
 /* Mobile, less aggressive */
-@media (max-width: 768px) {
-  #featured-work,
-  #featured-work.jbc-editorial-section,
-  #featured-work.jbc-floral-work {
-    padding-top: 0.3rem !important;
-    margin-top: -1rem !important;
-  }
-
-  #featured-work .sec-header {
-    margin-bottom: 0.8rem !important;
-  }
-}
 
 
 /* =========================================================
@@ -11941,14 +9850,6 @@ section.testimonial-section span {
 }
 
 /* Mobile, keep all cards equal too */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel,
-  #featured-work .jbc-cinema-panel.is-active,
-  #featured-work .jbc-cinema-panel[style*="--focus"] {
-    width: min(82vw, 360px) !important;
-    height: min(112vw, 520px) !important;
-  }
-}
 
 
 /* =========================================================
@@ -12035,29 +9936,6 @@ section.testimonial-section span {
 }
 
 /* Mobile, also 20% smaller and titles visible */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel,
-  #featured-work .jbc-cinema-panel.is-active,
-  #featured-work .jbc-cinema-panel[style*="--focus"] {
-    width: min(65.6vw, 288px) !important;
-    height: min(89.6vw, 416px) !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta {
-    left: 0.75rem !important;
-    bottom: 0.72rem !important;
-    max-width: 200px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.44rem !important;
-    letter-spacing: 0.18em !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(0.9rem, 4.2vw, 1.25rem) !important;
-  }
-}
 
 
 /* =========================================================
@@ -12157,27 +10035,6 @@ section.testimonial-section span {
 }
 
 /* Mobile */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel,
-  #featured-work .jbc-cinema-panel img {
-    border-radius: 22px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta {
-    left: 0.75rem !important;
-    bottom: 0.72rem !important;
-    max-width: 200px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.44rem !important;
-    letter-spacing: 0.18em !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(0.9rem, 4.2vw, 1.25rem) !important;
-  }
-}
 
 
 /* =========================================================
@@ -12261,28 +10118,6 @@ section.testimonial-section span {
 #featured-work .jbc-cinema-panel-meta > span,
 #featured-work .jbc-cinema-panel-meta strong {
   visibility: visible !important;
-}
-
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel,
-  #featured-work .jbc-cinema-panel img {
-    border-radius: 22px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta {
-    left: 0.75rem !important;
-    bottom: 0.72rem !important;
-    max-width: 210px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta > span {
-    font-size: 0.42rem !important;
-    letter-spacing: 0.18em !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    font-size: clamp(0.9rem, 4.2vw, 1.25rem) !important;
-  }
 }
 
 
@@ -12380,21 +10215,6 @@ section.testimonial-section span {
 }
 
 /* Mobile */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-panel::before {
-    left: 0.75rem !important;
-    bottom: 2.25rem !important;
-    font-size: 0.42rem !important;
-    letter-spacing: 0.18em !important;
-  }
-
-  #featured-work .jbc-cinema-panel::after {
-    left: 0.75rem !important;
-    bottom: 0.72rem !important;
-    font-size: clamp(0.9rem, 4.2vw, 1.25rem) !important;
-    max-width: 12ch !important;
-  }
-}
 
 
 /* =========================================================
@@ -12497,22 +10317,6 @@ section.testimonial-section span {
 }
 
 /* Mobile */
-@media (max-width: 768px) {
-  #featured-work .jbc-force-card-title {
-    left: 0.75rem !important;
-    bottom: 0.72rem !important;
-    max-width: 210px !important;
-  }
-
-  #featured-work .jbc-force-card-title span {
-    font-size: 0.42rem !important;
-    letter-spacing: 0.18em !important;
-  }
-
-  #featured-work .jbc-force-card-title strong {
-    font-size: clamp(0.9rem, 4.2vw, 1.25rem) !important;
-  }
-}
 
 
 /* =========================================================
@@ -12521,244 +10325,11 @@ section.testimonial-section span {
    Desktop untouched
    ========================================================= */
 
-@media (max-width: 768px) {
-
-  html,
-  body {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-
-  body {
-    position: relative !important;
-  }
-
-  /* Keep all main sections inside viewport */
-  section,
-  footer,
-  nav,
-  .container {
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-  }
-
-  .container {
-    width: min(100% - 2rem, 355px) !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  /* Off-canvas menu should not create page overflow while closed */
-  #navLinks {
-    width: min(82vw, 320px) !important;
-    max-width: 320px !important;
-    right: 0 !important;
-    left: auto !important;
-    transform: translateX(100%) !important;
-    overflow-x: hidden !important;
-  }
-
-  #navLinks.active,
-  #navLinks.open {
-    transform: translateX(0) !important;
-  }
-
-  #navLinks a {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Selected Work mobile carousel had collapsed to 26px, restore usable stage height */
-  #featured-work {
-    min-height: auto !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  #featured-work .portfolio-grid.jbc-codrops-cinema,
-  #featured-work .jbc-codrops-cinema,
-  #featured-work .jbc-cinema-pin,
-  #featured-work .jbc-cinema-stage {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-height: 420px !important;
-    height: 420px !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-  }
-
-  #featured-work .jbc-cinema-ring {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  #featured-work .jbc-cinema-panel {
-    width: min(68vw, 260px) !important;
-    height: min(92vw, 354px) !important;
-    max-width: 260px !important;
-    max-height: 354px !important;
-    border-radius: 22px !important;
-  }
-
-  #featured-work .jbc-cinema-panel img {
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 22px !important;
-    object-fit: cover !important;
-  }
-
-  /* Process section/card overflow cleanup */
-  #services-overview,
-  #services-overview .services-grid,
-  #services-overview .service-card {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  #services-overview .service-card,
-  #services-overview .jbc-editorial-card {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  /* Footer was too wide on mobile */
-  .footer,
-  .footer *,
-  .footer-brand,
-  .footer-col,
-  .footer .nav-logo,
-  .footer p,
-  .footer a,
-  .social-links {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  .footer-brand,
-  .footer-col {
-    width: 100% !important;
-  }
-
-  .social-links {
-    flex-wrap: wrap !important;
-  }
-}
-
 
 /* =========================================================
    Mobile overflow cleanup pass 2
    Fix process section left shift + footer width
    ========================================================= */
-
-@media (max-width: 768px) {
-
-  html,
-  body {
-    overflow-x: hidden !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Prevent any section from visually starting off-screen */
-  #featured-work,
-  #services-overview,
-  .testimonial-section,
-  .cta-section,
-  .footer {
-    left: 0 !important;
-    right: auto !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Normalize containers inside the main sections */
-  #featured-work > .container,
-  #services-overview > .container,
-  .testimonial-section > .container,
-  .cta-section > .container,
-  .footer .container {
-    width: calc(100vw - 2rem) !important;
-    max-width: 355px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Fix process cards/content drifting left */
-  #services-overview .services-grid,
-  #services-overview .service-card,
-  #services-overview .service-card > *,
-  #services-overview .jbc-editorial-card,
-  #services-overview .jbc-editorial-card > * {
-    left: 0 !important;
-    right: auto !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    transform: none !important;
-  }
-
-  #services-overview .service-card,
-  #services-overview .jbc-editorial-card {
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
-  /* Collapse unused serviceCinema panel on mobile */
-  #services-overview #serviceCinema,
-  #services-overview #serviceCinemaContent {
-    display: none !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  /* Footer overflow fix */
-  .footer,
-  .footer * {
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  .footer .container,
-  .footer-grid,
-  .footer-brand,
-  .footer-col,
-  .footer .nav-logo,
-  .footer p,
-  .footer a,
-  .footer h4,
-  .footer-bottom,
-  .social-links {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    left: 0 !important;
-    right: auto !important;
-    box-sizing: border-box !important;
-  }
-
-  .footer .nav-logo {
-    word-break: break-word !important;
-    overflow-wrap: anywhere !important;
-  }
-
-  .social-links {
-    flex-wrap: wrap !important;
-    justify-content: flex-start !important;
-  }
-}
 
 
 /* =========================================================
@@ -12766,65 +10337,6 @@ section.testimonial-section span {
    Correct file name: mobile-hero.png
    Desktop untouched
    ========================================================= */
-
-@media (max-width: 768px) {
-  .hero.jbc-floral-hero {
-    min-height: 100svh !important;
-    height: 100svh !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important;
-    background: #050505 !important;
-  }
-
-  .hero.jbc-floral-hero picture {
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 0 !important;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .hero.jbc-floral-hero .hero-full-bg {
-    content: url("images/mobile-hero.png") !important;
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    display: block !important;
-    transform: none !important;
-    filter: none !important;
-  }
-
-  .hero.jbc-floral-hero .hero-bottom,
-  .hero.jbc-floral-hero .jbc-custom,
-  .hero.jbc-floral-hero .hero-content,
-  .hero.jbc-floral-hero .hero-mega,
-  .hero.jbc-floral-hero .hero-oil-wrap,
-  .hero.jbc-floral-hero .tag {
-    display: none !important;
-  }
-
-  .hero.jbc-floral-hero::after {
-    content: "" !important;
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    height: 22vh !important;
-    z-index: 2 !important;
-    pointer-events: none !important;
-    background: linear-gradient(
-      180deg,
-      rgba(5, 5, 5, 0) 0%,
-      rgba(5, 5, 5, 0.38) 48%,
-      rgba(5, 5, 5, 1) 100%
-    ) !important;
-  }
-}
 
 
 /* =========================================================
@@ -12965,25 +10477,6 @@ section.testimonial-section span {
 }
 
 /* Mobile, smaller but still usable */
-@media (max-width: 768px) {
-  #featured-work .jbc-cinema-stage {
-    width: min(100%, 340px) !important;
-    max-width: 340px !important;
-    border-radius: 26px !important;
-  }
-
-  #featured-work .jbc-cinema-panel,
-  #featured-work .jbc-cinema-panel.is-active,
-  #featured-work .jbc-cinema-panel[style*="--focus"] {
-    width: min(62vw, 240px) !important;
-    height: min(82vw, 330px) !important;
-    border-radius: 24px !important;
-  }
-
-  #featured-work .jbc-cinema-panel img {
-    border-radius: 24px !important;
-  }
-}/* Narrow the visible carousel container */
 #featured-work .portfolio-grid.jbc-codrops-cinema {
   width: min(100%, 960px) !important;
   max-width: 960px !important;
@@ -13045,34 +10538,6 @@ section.testimonial-section span {
 }
 
 /* Mobile: keep stage usable, cards landscape but not microscopic */
-@media (max-width: 768px) {#featured-work .portfolio-grid.jbc-codrops-cinema,
-  #featured-work .jbc-cinema-pin,
-  #featured-work .jbc-cinema-stage {
-    width: min(100%, 340px) !important;
-    max-width: 340px !important;
-  }
-
-  #featured-work .jbc-cinema-stage {
-    height: 360px !important;
-    min-height: 360px !important;
-    border-radius: 24px !important;
-  }
-
-  #featured-work .jbc-cinema-panel,
-  #featured-work .jbc-cinema-panel.is-active,
-  #featured-work .jbc-cinema-panel[style*="--focus"] {
-    width: min(76vw, 290px) !important;
-    height: min(43vw, 164px) !important;
-    aspect-ratio: 16 / 9 !important;
-    border-radius: 22px !important;
-  }
-
-  #featured-work .jbc-cinema-panel img {
-    border-radius: 22px !important;
-  }
-}
-
-
 
 
 /* =========================================================
@@ -13084,8 +10549,3 @@ section.testimonial-section span {
   margin-bottom: 55px !important;
 }
 
-@media (max-width: 768px) {
-  #featured-work .sec-header.jbc-work-created-title {
-    margin-bottom: 38px !important;
-  }
-}
