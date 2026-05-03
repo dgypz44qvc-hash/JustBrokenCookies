@@ -2131,29 +2131,3 @@
   }
 }
 
-
-/* =========================================================
-   JBC CREATIONS COVER HERO-TAG FONT TEST
-   Uses the same clean editorial font language as the hero-side
-   Storytelling tag, while keeping the white colour, title scale,
-   thickness, and disproportionate spacing.
-   ========================================================= */
-
-#featured-work .jbc-creations-scroll-title {
-  font-family: var(--font-body) !important;
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.42em !important;
-  color: rgba(255, 255, 255, 0.96) !important;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.96) !important;
-}
-
-#featured-work .jbc-creations-scroll-title::before {
-  font-family: var(--font-body) !important;
-  font-weight: 800 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.48em !important;
-  color: rgba(255, 255, 255, 0.68) !important;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.68) !important;
-}
-
