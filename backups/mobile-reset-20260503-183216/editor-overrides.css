@@ -1,0 +1,1240 @@
+/* JBC local editor overrides */
+
+
+
+[data-editor-id="rose-1777461276486-tgxu"] {
+  left: 144px !important;
+  top: -475px !important;
+}
+
+[data-editor-id="rose-1777461279793-jpyp"] {
+  left: 182px !important;
+  top: -423px !important;
+}
+
+[data-editor-id="image-003"] {
+  position: absolute !important;
+  left: 48px !important;
+  top: 48px !important;
+  width: 320px !important;
+  height: 220px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="decor-004"] {
+  position: absolute !important;
+  left: 484px !important;
+  top: -86px !important;
+  width: 729px !important;
+  height: 1095px !important;
+  opacity: 0.9 !important;
+  z-index: 13 !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="hero-storytelling-tag"] {
+  opacity: 1 !important;
+}
+
+
+
+[data-editor-id="jbc-1777551171911-djsv"] {
+  left: 0px !important;
+  top: 0px !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+
+
+[data-editor-id="hero-title-line-1"] {
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+[data-editor-id="hero-section"] {
+  left: -4px !important;
+  top: 63px !important;
+  background-color: rgb(0, 0, 0) !important;
+  background-image: url("images/heromultiroses-1920.jpg") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+[data-editor-id="jbc-1777582870310-2u4w"] {
+  left: 0px !important;
+  top: 0px !important;
+}
+
+
+
+[data-editor-id="jbc-1777551738761-b55o"] {
+  left: -3px !important;
+  top: -8px !important;
+}
+
+[data-editor-id="footer-bottom"] {
+  left: 1px !important;
+  top: -442px !important;
+  width: 1209px !important;
+  height: 511px !important;
+}
+
+[data-editor-id="jbc-1777551171910-ooc8"] {
+  left: 0px !important;
+  top: 0px !important;
+}
+
+
+
+
+
+[data-editor-id="cta-section"] {
+  left: 1px !important;
+  top: 1px !important;
+}
+
+[data-editor-id="jbc-1777551171912-lnsb"] {
+  position: relative !important;
+  left: 0px !important;
+  top: 0px !important;
+  width: 371px !important;
+  height: 175px !important;
+}
+
+
+
+[data-editor-id="footer-brand"] {
+  position: relative !important;
+}
+
+[data-editor-id="footer-grid"] {
+  left: 0px !important;
+  top: -16px !important;
+  width: 1209px !important;
+  height: 240px !important;
+}
+
+[data-editor-id="image-002"] {
+  position: absolute !important;
+  left: 385px !important;
+  top: -4px !important;
+  width: 1516px !important;
+  height: 335px !important;
+  opacity: 0.25 !important;
+  z-index: 1001 !important;
+  color: rgb(240, 230, 218) !important;
+  background-color: rgb(0, 0, 0) !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  border-radius: 0px !important;
+  mix-blend-mode: normal !important;
+}
+
+[data-editor-id="jbc-1777551171910-f1lg"] {
+  position: relative !important;
+  display: none !important;
+}
+
+[data-editor-id="jbc-1777551171910-04hk"] {
+  position: relative !important;
+  display: none !important;
+}
+
+[data-editor-id="footer-section"] {
+  left: -6px !important;
+  top: -95px !important;
+  width: 1465px !important;
+  height: 230px !important;
+}
+
+[data-editor-id="process-section"] {
+  left: -18px !important;
+  top: -52px !important;
+  width: 1503px !important;
+  height: 878px !important;
+}
+
+[data-editor-id="jbc-1777551171910-docu"] {
+  position: relative !important;
+  left: 1px !important;
+  top: 0px !important;
+}
+
+[data-editor-id="jbc-1777751808357-i78n"] {
+  left: 461px !important;
+  top: 8px !important;
+  width: 652px !important;
+  height: 393px !important;
+  opacity: 1 !important;
+  z-index: 0 !important;
+  color: rgb(240, 230, 218) !important;
+  background-color: rgb(0, 0, 0) !important;
+  font-size: 16px !important;
+  letter-spacing: normal !important;
+  border-radius: 28px !important;
+}
+
+
+
+[data-editor-id="jbc-1777751808357-u1zu"] {
+  left: 1057px !important;
+  top: 608px !important;
+  width: 51px !important;
+  height: 145px !important;
+}
+
+[data-editor-id="jbc-1777751808357-5qkf"] {
+  left: 978px !important;
+  top: 514px !important;
+  width: 150px !important;
+  height: 237px !important;
+}
+
+[data-editor-id="jbc-1777551738761-3mns"] {
+  left: -3px !important;
+  top: 1px !important;
+}
+
+
+
+[data-editor-id="work-created-title"] {
+  left: -155px !important;
+  top: -12px !important;
+}
+
+[data-editor-id="portfolio-grid"] {
+  left: -23px !important;
+  top: -26px !important;
+  width: 960px !important;
+  height: 1533px !important;
+}
+
+[data-editor-id="jbc-1777551171912-f74t"] {
+  left: -4px !important;
+  top: -114px !important;
+  transform: translate(-2.80342px, -2.12914px) !important;
+}
+
+[data-editor-id="jbc-1777804146350-242e"] {
+  position: relative !important;
+}
+
+/* =========================================================
+   JBC SELECTED WORK OVERRIDE
+   Loaded last via editor-overrides.css
+   Desktop title match + larger landscape carousel cards
+   ========================================================= */
+
+@media (min-width: 769px) {
+  /* Match What We Create to How We Build Stories */
+  #featured-work .sec-header.jbc-work-created-title {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    width: 100% !important;
+    max-width: var(--container) !important;
+    margin: 0 auto 55px auto !important;
+    padding: 0 0 22px 0 !important;
+    border-bottom: var(--border) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title::before,
+  #featured-work .sec-header.jbc-work-created-title::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title h2 {
+    display: block !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    letter-spacing: 7px !important;
+    text-transform: uppercase !important;
+    color: var(--cream) !important;
+    background: none !important;
+    -webkit-text-fill-color: var(--cream) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    text-shadow: none !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title span {
+    display: block !important;
+    font-family: var(--font-display) !important;
+    font-size: 3.5rem !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    color: var(--taupe) !important;
+    background: none !important;
+    -webkit-text-fill-color: var(--taupe) !important;
+    opacity: 0.05 !important;
+    visibility: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  /* Make the visual stage tall enough for bigger landscape cards */
+  #featured-work .jbc-cinema-stage {
+    height: clamp(640px, 70vh, 800px) !important;
+    min-height: clamp(640px, 70vh, 800px) !important;
+    border-radius: 42px !important;
+  }
+
+  /* Biggest safe landscape cards without changing carousel JS or transforms */
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel.is-active,
+  #featured-work .jbc-cinema-panel[style*="--focus"] {
+    width: clamp(720px, 62vw, 1040px) !important;
+    height: clamp(405px, 34.8vw, 585px) !important;
+    aspect-ratio: 16 / 9 !important;
+    border-radius: 44px !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    box-shadow: 0 30px 95px rgba(0, 0, 0, 0.50) !important;
+  }
+
+  #featured-work .jbc-cinema-panel img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: 44px !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove orange/loading/progress line */
+  #featured-work .jbc-cinema-progress,
+  #featured-work .jbc-cinema-progress *,
+  #featured-work .jbc-gallery-progress,
+  #featured-work .jbc-gallery-progress *,
+  #featured-work .jbc-gallery-progress-inner,
+  #featured-work .jbc-gallery-progress-inner * {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Remove orange contour from generated overlays, keep actual image and text */
+  #featured-work .jbc-cinema-panel::before,
+  #featured-work .jbc-cinema-panel::after,
+  #featured-work .jbc-cinema-stage::before,
+  #featured-work .jbc-cinema-stage::after {
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #featured-work .sec-header.jbc-work-created-title {
+    margin-bottom: 38px !important;
+    padding-bottom: 18px !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title h2 {
+    font-size: 0.62rem !important;
+    letter-spacing: 5px !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title span {
+    font-size: 2.35rem !important;
+  }
+}
+
+
+/* =========================================================
+   JBC SELECTED WORK TITLE FINAL FIX
+   Align title like How We Build Stories + restore gradient underline
+   ========================================================= */
+
+@media (min-width: 769px) {
+  #featured-work .container {
+    overflow: visible !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title {
+    width: 100% !important;
+    max-width: var(--container) !important;
+
+    /* this is the important bit: inside the same container rhythm */
+    margin: 0 auto 55px auto !important;
+    padding: 0 0 22px 0 !important;
+
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+
+    border-bottom: 0 !important;
+    position: relative !important;
+    z-index: 9999 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+    translate: none !important;
+    overflow: visible !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title h2 {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-family: var(--font-body) !important;
+    font-size: 0.65rem !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+    letter-spacing: 7px !important;
+    text-transform: uppercase !important;
+
+    color: var(--cream) !important;
+    -webkit-text-fill-color: var(--cream) !important;
+    background: none !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: none !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title span {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-family: var(--font-display) !important;
+    font-size: 3.5rem !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+
+    color: var(--taupe) !important;
+    -webkit-text-fill-color: var(--taupe) !important;
+    background: none !important;
+
+    opacity: 0.05 !important;
+    visibility: visible !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  /* gradient/rainbow underline like the other editorial headers */
+  #featured-work .sec-header.jbc-work-created-title::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: 1px !important;
+    background: linear-gradient(
+      90deg,
+      var(--gold) 0%,
+      var(--blush) 34%,
+      var(--dusty-rose) 67%,
+      rgba(255,255,255,0.16) 100%
+    ) !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   JBC SELECTED WORK TITLE POSITION TUNE
+   Bring title down and shorten underline
+   ========================================================= */
+
+@media (min-width: 769px) {
+  #featured-work .sec-header.jbc-work-created-title {
+    width: 88% !important;
+    max-width: var(--container) !important;
+
+    /* bring the title down below the black band */
+    margin: clamp(42px, 5vw, 72px) auto 55px auto !important;
+    padding: 0 0 22px 0 !important;
+
+    border-bottom: 0 !important;
+    overflow: visible !important;
+  }
+
+  #featured-work .sec-header.jbc-work-created-title h2 {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    translate: none !important;
+  }
+
+  /* shorter gradient line, same width as the content container */
+  #featured-work .sec-header.jbc-work-created-title::before {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+
+/* =========================================================
+   JBC TEST CAROUSEL ROSE FRAME OVERLAY
+   Visual layer only, follows each rotating carousel card
+   Requires: images/roseframe-carousel-overlay.png
+   ========================================================= */
+
+#featured-work .jbc-cinema-panel {
+  position: absolute !important;
+  overflow: visible !important;
+}
+
+#featured-work .jbc-cinema-panel img {
+  border-radius: inherit !important;
+  overflow: hidden !important;
+}
+
+#featured-work .jbc-cinema-panel::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: -11% -9% -12% -9% !important;
+  z-index: 26 !important;
+  pointer-events: none !important;
+
+  background-image: url("../images/roseframe-carousel-overlay.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+
+  opacity: calc(0.34 + (var(--focus, 0) * 0.56)) !important;
+  transform: scale(calc(0.985 + (var(--focus, 0) * 0.035))) !important;
+  transform-origin: center center !important;
+  transition: opacity 0.45s var(--ease-out-expo), transform 0.45s var(--ease-out-expo) !important;
+
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.48)) !important;
+}
+
+#featured-work .jbc-cinema-panel-meta,
+#featured-work .jbc-cinema-copy {
+  position: relative !important;
+  z-index: 40 !important;
+}
+
+@media (max-width: 768px) {
+  #featured-work .jbc-cinema-panel::after {
+    inset: -13% -10% -13% -10% !important;
+    opacity: 0.72 !important;
+  }
+}
+
+/* =========================================================
+   JBC MOBILE RECOVERY PATCH
+   Safe mobile-only cleanup. Keeps hero visible, prevents overflow,
+   and makes the homepage readable without crushing the design.
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .container {
+    width: min(92%, 100% - 28px) !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* HERO RECOVERY */
+  .hero {
+    position: relative !important;
+    display: block !important;
+    min-height: 100svh !important;
+    height: 100svh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #050505 !important;
+  }
+
+  .hero picture {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .hero .hero-full-bg {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .hero::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(5,5,5,0.08) 0%,
+      rgba(5,5,5,0.02) 42%,
+      rgba(5,5,5,0.64) 100%
+    ) !important;
+  }
+
+  .hero-bottom {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 22px !important;
+    z-index: 3 !important;
+    transform: translateX(-50%) !important;
+    width: min(92%, 100% - 28px) !important;
+    padding-top: 14px !important;
+    border-top: 1px solid rgba(255,255,255,0.18) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .hero-bottom .desc,
+  .hero-bottom .scroll-txt {
+    color: rgba(240,230,218,0.78) !important;
+    font-size: 0.72rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* GENERAL MOBILE RHYTHM */
+  section:not(.hero) {
+    padding-top: clamp(58px, 15vw, 86px) !important;
+    padding-bottom: clamp(58px, 15vw, 86px) !important;
+  }
+
+  .sec-header {
+    margin-bottom: 28px !important;
+    padding-bottom: 16px !important;
+    gap: 16px !important;
+  }
+
+  .sec-header h2 {
+    font-size: 0.66rem !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.32em !important;
+  }
+
+  .sec-header span {
+    font-size: clamp(1.9rem, 11vw, 3rem) !important;
+    line-height: 0.85 !important;
+    opacity: 0.08 !important;
+    white-space: nowrap !important;
+  }
+
+  /* SELECTED WORK, SAFE MOBILE STACK */
+  #featured-work,
+  #featured-work > .container,
+  #featured-work .portfolio-grid.jbc-codrops-cinema,
+  #featured-work .jbc-cinema-pin,
+  #featured-work .jbc-cinema-stage,
+  #featured-work .jbc-cinema-ring {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+    perspective: none !important;
+  }
+
+  #featured-work .portfolio-grid.jbc-codrops-cinema {
+    display: block !important;
+  }
+
+  #featured-work .jbc-cinema-pin,
+  #featured-work .jbc-cinema-stage,
+  #featured-work .jbc-cinema-ring {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+  }
+
+  #featured-work .jbc-cinema-ring {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    transform-style: flat !important;
+  }
+
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel.is-active {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+  }
+
+  #featured-work .jbc-cinema-panel > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: inherit !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta {
+    position: absolute !important;
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 16px !important;
+    z-index: 4 !important;
+  }
+
+  #featured-work .jbc-cinema-copy,
+  #featured-work .jbc-cinema-streaks,
+  #featured-work .jbc-cinema-progress,
+  #featured-work .jbc-card-corner-frame,
+  #featured-work .jbc-card-roseframe {
+    display: none !important;
+  }
+
+  /* PROCESS CARDS */
+  .services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .service-card {
+    padding: 30px 22px !important;
+    border-radius: 18px !important;
+  }
+
+  .service-card h3 {
+    font-size: clamp(1.8rem, 10vw, 2.5rem) !important;
+    line-height: 0.95 !important;
+  }
+
+  .service-card p,
+  .service-card div {
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+  }
+
+  .service-cinema-inner {
+    padding: 28px 22px !important;
+    border-radius: 18px !important;
+  }
+
+  /* TESTIMONIAL */
+  .testi-brutal {
+    display: block !important;
+  }
+
+  .testi-mark {
+    writing-mode: horizontal-tb !important;
+    padding: 18px 24px !important;
+    justify-content: flex-start !important;
+  }
+
+  .testimonial,
+  .testi-content {
+    padding: 42px 24px !important;
+  }
+
+  .testi-content blockquote {
+    font-size: clamp(1.15rem, 5.8vw, 1.55rem) !important;
+    line-height: 1.55 !important;
+  }
+
+  /* CTA */
+  .cta-section .section-title {
+    font-size: clamp(2.4rem, 15vw, 4.6rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  .cta-section .btn,
+  #featured-work .btn {
+    width: 100% !important;
+    max-width: 330px !important;
+    padding: 15px 22px !important;
+  }
+
+  /* FOOTER */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .footer .editor-decoration,
+  .footer .editor-image {
+    display: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .nav-logo {
+    font-size: 0.5rem !important;
+    letter-spacing: 0.28em !important;
+  }
+
+  .sec-header h2 {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.28em !important;
+  }
+
+  .service-card {
+    padding: 26px 20px !important;
+  }
+}
+
+/* =========================================================
+   JBC MOBILE RECOVERY PATCH
+   Safe mobile-only cleanup. Keeps hero visible, prevents overflow,
+   and makes the homepage readable without crushing the design.
+   ========================================================= */
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .container {
+    width: min(92%, 100% - 28px) !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* HERO RECOVERY */
+  .hero {
+    position: relative !important;
+    display: block !important;
+    min-height: 100svh !important;
+    height: 100svh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #050505 !important;
+  }
+
+  .hero picture {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .hero .hero-full-bg {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .hero::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(5,5,5,0.08) 0%,
+      rgba(5,5,5,0.02) 42%,
+      rgba(5,5,5,0.64) 100%
+    ) !important;
+  }
+
+  .hero-bottom {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 22px !important;
+    z-index: 3 !important;
+    transform: translateX(-50%) !important;
+    width: min(92%, 100% - 28px) !important;
+    padding-top: 14px !important;
+    border-top: 1px solid rgba(255,255,255,0.18) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .hero-bottom .desc,
+  .hero-bottom .scroll-txt {
+    color: rgba(240,230,218,0.78) !important;
+    font-size: 0.72rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* GENERAL MOBILE RHYTHM */
+  section:not(.hero) {
+    padding-top: clamp(58px, 15vw, 86px) !important;
+    padding-bottom: clamp(58px, 15vw, 86px) !important;
+  }
+
+  .sec-header {
+    margin-bottom: 28px !important;
+    padding-bottom: 16px !important;
+    gap: 16px !important;
+  }
+
+  .sec-header h2 {
+    font-size: 0.66rem !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.32em !important;
+  }
+
+  .sec-header span {
+    font-size: clamp(1.9rem, 11vw, 3rem) !important;
+    line-height: 0.85 !important;
+    opacity: 0.08 !important;
+    white-space: nowrap !important;
+  }
+
+  /* SELECTED WORK, SAFE MOBILE STACK */
+  #featured-work,
+  #featured-work > .container,
+  #featured-work .portfolio-grid.jbc-codrops-cinema,
+  #featured-work .jbc-cinema-pin,
+  #featured-work .jbc-cinema-stage,
+  #featured-work .jbc-cinema-ring {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+    perspective: none !important;
+  }
+
+  #featured-work .portfolio-grid.jbc-codrops-cinema {
+    display: block !important;
+  }
+
+  #featured-work .jbc-cinema-pin,
+  #featured-work .jbc-cinema-stage,
+  #featured-work .jbc-cinema-ring {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+  }
+
+  #featured-work .jbc-cinema-ring {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    transform-style: flat !important;
+  }
+
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel.is-active {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+  }
+
+  #featured-work .jbc-cinema-panel > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: inherit !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta {
+    position: absolute !important;
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 16px !important;
+    z-index: 4 !important;
+  }
+
+  #featured-work .jbc-cinema-copy,
+  #featured-work .jbc-cinema-streaks,
+  #featured-work .jbc-cinema-progress,
+  #featured-work .jbc-card-corner-frame,
+  #featured-work .jbc-card-roseframe {
+    display: none !important;
+  }
+
+  /* PROCESS CARDS */
+  .services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .service-card {
+    padding: 30px 22px !important;
+    border-radius: 18px !important;
+  }
+
+  .service-card h3 {
+    font-size: clamp(1.8rem, 10vw, 2.5rem) !important;
+    line-height: 0.95 !important;
+  }
+
+  .service-card p,
+  .service-card div {
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+  }
+
+  .service-cinema-inner {
+    padding: 28px 22px !important;
+    border-radius: 18px !important;
+  }
+
+  /* TESTIMONIAL */
+  .testi-brutal {
+    display: block !important;
+  }
+
+  .testi-mark {
+    writing-mode: horizontal-tb !important;
+    padding: 18px 24px !important;
+    justify-content: flex-start !important;
+  }
+
+  .testimonial,
+  .testi-content {
+    padding: 42px 24px !important;
+  }
+
+  .testi-content blockquote {
+    font-size: clamp(1.15rem, 5.8vw, 1.55rem) !important;
+    line-height: 1.55 !important;
+  }
+
+  /* CTA */
+  .cta-section .section-title {
+    font-size: clamp(2.4rem, 15vw, 4.6rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  .cta-section .btn,
+  #featured-work .btn {
+    width: 100% !important;
+    max-width: 330px !important;
+    padding: 15px 22px !important;
+  }
+
+  /* FOOTER */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .footer .editor-decoration,
+  .footer .editor-image {
+    display: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .nav-logo {
+    font-size: 0.5rem !important;
+    letter-spacing: 0.28em !important;
+  }
+
+  .sec-header h2 {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.28em !important;
+  }
+
+  .service-card {
+    padding: 26px 20px !important;
+  }
+}
+
+/* =========================================================
+   JBC MOBILE STATIC WORK CARDS
+   Mobile only: hide desktop 3D carousel and show simple work cards.
+   Desktop remains untouched.
+   ========================================================= */
+
+.jbc-mobile-work-grid {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Hide the full desktop 3D carousel only on mobile */
+  #featured-work .portfolio-grid.jbc-codrops-cinema {
+    display: none !important;
+  }
+
+  /* Show normal/default-style work cards instead */
+  #featured-work .jbc-mobile-work-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    width: 100% !important;
+    margin: 0 auto 30px !important;
+  }
+
+  #featured-work .jbc-mobile-work-card {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    aspect-ratio: 16 / 10 !important;
+    overflow: hidden !important;
+    border-radius: 22px !important;
+    background: #050505 !important;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34) !important;
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    text-decoration: none !important;
+  }
+
+  #featured-work .jbc-mobile-work-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block !important;
+    filter: brightness(0.9) contrast(1.02) !important;
+    transform: none !important;
+  }
+
+  #featured-work .jbc-mobile-work-card::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background:
+      linear-gradient(to top, rgba(5,5,5,0.82), rgba(5,5,5,0.16) 48%, transparent 75%) !important;
+    z-index: 1 !important;
+  }
+
+  #featured-work .jbc-mobile-work-card span,
+  #featured-work .jbc-mobile-work-card strong {
+    position: absolute !important;
+    left: 18px !important;
+    right: 18px !important;
+    z-index: 2 !important;
+  }
+
+  #featured-work .jbc-mobile-work-card span {
+    bottom: 52px !important;
+    font-size: 0.56rem !important;
+    letter-spacing: 0.32em !important;
+    text-transform: uppercase !important;
+    color: var(--gold) !important;
+    font-weight: 700 !important;
+  }
+
+  #featured-work .jbc-mobile-work-card strong {
+    bottom: 18px !important;
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.25rem, 6vw, 1.75rem) !important;
+    line-height: 1 !important;
+    color: var(--cream) !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  #featured-work .jbc-cinema-copy,
+  #featured-work .jbc-cinema-streaks,
+  #featured-work .jbc-cinema-progress {
+    display: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  #featured-work .jbc-mobile-work-grid {
+    gap: 15px !important;
+  }
+
+  #featured-work .jbc-mobile-work-card {
+    border-radius: 18px !important;
+  }
+
+  #featured-work .jbc-mobile-work-card span,
+  #featured-work .jbc-mobile-work-card strong {
+    left: 16px !important;
+    right: 16px !important;
+  }
+}
+
+
