@@ -11123,6 +11123,88 @@ section.testimonial-section {
 
 
 /* =========================================================
+   SAFE FIX
+   Selected Work spacing + rose background
+   Does NOT touch Codrops carousel mechanics
+   ========================================================= */
+
+/* 1. Reduce the real gap above Selected Work */
+#services-overview,
+#services-overview.jbc-editorial-section,
+#services-overview.jbc-floral-process {
+  padding-bottom: clamp(1.5rem, 3vw, 3rem) !important;
+  margin-bottom: 0 !important;
+}
+
+#featured-work,
+#featured-work.jbc-editorial-section,
+#featured-work.jbc-floral-work {
+  position: relative !important;
+  isolation: isolate !important;
+  padding-top: clamp(1.5rem, 3vw, 3rem) !important;
+  margin-top: 0 !important;
+  background-color: #050505 !important;
+  overflow: visible !important;
+}
+
+/* 2. Keep the title compact */
+#featured-work .sec-header {
+  margin-top: 0 !important;
+  margin-bottom: clamp(1.5rem, 3vw, 2.6rem) !important;
+}
+
+/* 3. Rose pattern layer behind everything, without touching carousel containers */
+#featured-work.jbc-floral-work::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+
+  background-image:
+    linear-gradient(rgba(5, 5, 5, 0.18), rgba(5, 5, 5, 0.42)),
+    url("../images/roses thin.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* 4. Do not use the second pseudo-layer */
+#featured-work.jbc-floral-work::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 5. Keep content above the rose layer */
+#featured-work > .container {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 6. Mobile spacing only, no carousel mechanics touched */
+@media (max-width: 768px) {
+  #services-overview,
+  #services-overview.jbc-editorial-section,
+  #services-overview.jbc-floral-process {
+    padding-bottom: 1.25rem !important;
+  }
+
+  #featured-work,
+  #featured-work.jbc-editorial-section,
+  #featured-work.jbc-floral-work {
+    padding-top: 1.25rem !important;
+  }
+
+  #featured-work .sec-header {
+    margin-bottom: 1.25rem !important;
+  }
+}
+
+
+/* =========================================================
    How We Build Stories
    Collapse hidden service detail panel causing gap before Selected Work
    Does not touch Codrops carousel
@@ -12796,46 +12878,5 @@ section.testimonial-section span {
       rgba(5, 5, 5, 1) 100%
     ) !important;
   }
-}
-
-
-/* =========================================================
-   Selected Work
-   Single clean rose background, not stretched, blended to black
-   Keeps only jbc-floral-square.jpg
-   ========================================================= */
-
-#featured-work,
-#featured-work.jbc-floral-work {
-  background-color: #050505 !important;
-
-  background-image:
-    linear-gradient(
-      180deg,
-      rgba(5, 5, 5, 1) 0%,
-      rgba(5, 5, 5, 0.72) 16%,
-      rgba(5, 5, 5, 0.18) 40%,
-      rgba(5, 5, 5, 0.18) 64%,
-      rgba(5, 5, 5, 0.92) 100%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(5, 5, 5, 0.98) 0%,
-      rgba(5, 5, 5, 0.44) 18%,
-      rgba(5, 5, 5, 0.08) 44%,
-      rgba(5, 5, 5, 0.38) 78%,
-      rgba(5, 5, 5, 1) 100%
-    ),
-    url("../images/jbc-floral-square.jpg") !important;
-
-  background-repeat: no-repeat, no-repeat, repeat !important;
-  background-size: 100% 100%, 100% 100%, 560px 560px !important;
-  background-position: center center, center center, center top !important;
-}
-
-/* Keep carousel mechanics alone, only allow the section background to show */
-#featured-work > .container {
-  position: relative !important;
-  z-index: 1 !important;
 }
 
