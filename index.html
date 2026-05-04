@@ -687,10 +687,11 @@
 
     stage.addEventListener('wheel', e => {
       if (isEntering) return;
-      e.preventDefault();
+      // passive: true means we never preventDefault — page scroll works freely
+      // carousel still responds to both vertical and horizontal wheel input
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       vX += delta * WHEEL_SENS * 20;
-    }, { passive: false });
+    }, { passive: true });
 
     stage.addEventListener('dragstart', e => e.preventDefault());
 
