@@ -11082,9 +11082,10 @@ section.testimonial-section span {
   user-select: none;
   cursor: grab;
 
-  /* Rose pattern background layer */
+  /* Rose pattern background layer — tile at natural size, no stretching */
   background-image: url('../images/jbc-floral-wide-desktop.webp');
-  background-size: cover;
+  background-size: auto;
+  background-repeat: repeat;
   background-position: center center;
   background-color: #050505;
 }
@@ -11185,6 +11186,37 @@ section.testimonial-section span {
   -webkit-user-drag: none;
   user-select: none;
   box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+
+  /* Default: desaturated with slight dim */
+  filter: grayscale(1) brightness(0.72) contrast(1.08);
+  transition: filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Full colour revealed on hover */
+.jbc-gs-card:hover .jbc-gs-card__img {
+  filter: grayscale(0) brightness(1) contrast(1);
+}
+
+/* Glossy sheen overlay — default state */
+.jbc-gs-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 14px;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.07) 45%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Gloss fades out on hover */
+.jbc-gs-card:hover::before {
+  opacity: 0;
 }
 
 /* Mobile: wider cards */
