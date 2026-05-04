@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* JBC CAROUSEL SCROLL SLOWDOWN START
        Slows the whole Selected Work carousel by increasing its scroll range.
-       1.5 = 50% slower. Does not change rotation math, card order, images, or titles. */
-    const JBC_CINEMA_SCROLL_SLOWDOWN = 1.5;
+       2.25 = 50% slower than the previous 1.5 setting. Does not change rotation math, card order, images, or titles. */
+    const JBC_CINEMA_SCROLL_SLOWDOWN = 2.25;
     let jbcCinemaBaseHeight = null;
 
     const applyCinemaScrollSlowdown = () => {

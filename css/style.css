@@ -11085,7 +11085,7 @@ section.testimonial-section span {
   text-align: center;
 }
 
-/* The carousel stage — full-width, 80vh tall */
+/* The carousel stage — transparent window over the section rose background */
 #jbc-gradient-stage {
   position: relative;
   width: 100%;
@@ -11097,47 +11097,16 @@ section.testimonial-section span {
   -webkit-user-select: none;
   user-select: none;
   cursor: grab;
-
-  /* Rose pattern background layer — tile at natural size, no stretching */
-  background-image: url('../images/jbc-floral-wide-desktop.webp');
-  background-size: auto;
-  background-repeat: repeat;
-  background-position: center center;
-  background-color: #050505;
-}
-
-/* Vignette veil — lighter centre so rose reads 30% stronger,
-   edges fade to near-black so the glow blends in naturally */
-#jbc-gradient-stage::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(
-    ellipse 85% 75% at 50% 50%,
-    rgba(5, 5, 5, 0.22) 0%,
-    rgba(5, 5, 5, 0.48) 55%,
-    rgba(5, 5, 5, 0.82) 100%
-  );
-  pointer-events: none;
+  background: transparent;
 }
 
 #jbc-gradient-stage.jbc-gs-dragging {
   cursor: grabbing;
 }
 
-/* Background gradient canvas — sits above the veil, blends rainbow over roses */
+/* Rainbow canvas off — section rose pattern shows through cleanly */
 #jbc-gs-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: block;
-  filter: blur(28px) saturate(1.3);
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.45;   /* soft — rose breathes through, rainbow is a tint not a flood */
+  display: none;
 }
 
 /* Loader overlay */
@@ -11206,15 +11175,16 @@ section.testimonial-section span {
 
   /* Default: desaturated with slight dim */
   filter: grayscale(1) brightness(0.72) contrast(1.08);
-  transition: filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Full colour revealed on hover */
-.jbc-gs-card:hover .jbc-gs-card__img {
+/* Centred card = full colour; all others stay BW gloss.
+   JS adds/removes .jbc-gs-card--lit on the centred card each frame. */
+.jbc-gs-card--lit .jbc-gs-card__img {
   filter: grayscale(0) brightness(1) contrast(1);
 }
 
-/* Glossy sheen overlay — default state */
+/* Glossy sheen overlay — always present on non-lit cards */
 .jbc-gs-card::before {
   content: '';
   position: absolute;
@@ -11228,11 +11198,11 @@ section.testimonial-section span {
     rgba(255, 255, 255, 0.07) 45%,
     rgba(0, 0, 0, 0.18) 100%
   );
-  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Gloss fades out on hover */
-.jbc-gs-card:hover::before {
+/* Gloss dissolves on the active centred card */
+.jbc-gs-card--lit::before {
   opacity: 0;
 }
 

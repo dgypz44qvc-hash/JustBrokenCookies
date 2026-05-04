@@ -383,7 +383,7 @@
     if (!stage || !cardsRoot) return; // bail if section not present
 
     // ── STATE ────────────────────────────────────────────────────────
-    let items = [], positions, activeIndex = -1, isEntering = true;
+    let items = [], positions, activeIndex = -1, isEntering = true, mouseIsOver = false;
     let CARD_W = 300, CARD_H = 400, STEP = CARD_W + GAP, TRACK = 0;
     let SCROLL_X = 0, VW_HALF = stage.offsetWidth * 0.5;
     let vX = 0, rafId = null, bgRAF = null, lastTime = 0, lastBgDraw = 0;
@@ -497,6 +497,12 @@
         const isCore = i === closestIdx || i === prev || i === next;
         const blur   = isCore ? 0 : 2 * Math.pow(Math.abs(norm), 1.1);
         items[i].el.style.filter = `blur(${blur.toFixed(2)}px)`;
+        // Centred card lit only while mouse is over the carousel
+        if (i === closestIdx && mouseIsOver) {
+          items[i].el.classList.add('jbc-gs-card--lit');
+        } else {
+          items[i].el.classList.remove('jbc-gs-card--lit');
+        }
       }
       if (closestIdx !== activeIndex) setActiveGradient(closestIdx);
     }
@@ -724,6 +730,13 @@
     window.addEventListener('resize', () => {
       clearTimeout(onResize._t);
       onResize._t = setTimeout(onResize, 80);
+    });
+
+    // Track whether cursor is inside the carousel — all cards go BW on leave
+    stage.addEventListener('mouseenter', () => { mouseIsOver = true; });
+    stage.addEventListener('mouseleave', () => {
+      mouseIsOver = false;
+      items.forEach(it => it.el.classList.remove('jbc-gs-card--lit'));
     });
 
     document.addEventListener('visibilitychange', () => {
