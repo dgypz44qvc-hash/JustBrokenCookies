@@ -377,7 +377,7 @@
     const stage     = document.getElementById('jbc-gradient-stage');
     const cardsRoot = document.getElementById('jbc-gs-cards');
     const bgCanvas  = document.getElementById('jbc-gs-bg');
-    const bgCtx     = bgCanvas ? bgCanvas.getContext('2d', { alpha: false }) : null;
+    const bgCtx     = bgCanvas ? bgCanvas.getContext('2d', { alpha: true }) : null;
     const loader    = document.getElementById('jbc-gs-loader');
 
     if (!stage || !cardsRoot) return; // bail if section not present
@@ -648,9 +648,8 @@
       lastBgDraw = now;
       resizeBG();
       const w = stage.clientWidth, h = stage.clientHeight;
-      // Dark base — matches JBC black brand
-      bgCtx.fillStyle = '#050505';
-      bgCtx.fillRect(0, 0, w, h);
+      // Transparent base — rose background + dark veil show through
+      bgCtx.clearRect(0, 0, w, h);
       const time = now * 0.0002;
       const cx = w * 0.5, cy = h * 0.5;
       const a1 = Math.min(w, h) * 0.35, a2 = Math.min(w, h) * 0.28;
@@ -781,7 +780,7 @@
       setActiveGradient(ci);
 
       resizeBG();
-      if (bgCtx) { bgCtx.fillStyle = '#050505'; bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height); }
+      if (bgCtx) { bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height); }
 
       startBG();
       await new Promise(r => setTimeout(r, 100));
