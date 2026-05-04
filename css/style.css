@@ -11224,3 +11224,57 @@ section.testimonial-section span {
   padding: 40px 0 72px;
 }
 
+/* ── Drag hint overlay ── */
+.jbc-gs-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+  animation: jbc-gs-hint-breathe 2.6s ease-in-out infinite;
+  transition: opacity 0.6s ease;
+}
+
+.jbc-gs-hint.jbc-gs-hint--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jbc-gs-hint__label {
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.jbc-gs-hint__arrow {
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.jbc-gs-hint__arrow--left  { animation: jbc-gs-nudge-left  1.8s ease-in-out infinite; }
+.jbc-gs-hint__arrow--right { animation: jbc-gs-nudge-right 1.8s ease-in-out infinite; }
+
+@keyframes jbc-gs-hint-breathe {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+@keyframes jbc-gs-nudge-left {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(-5px); }
+}
+
+@keyframes jbc-gs-nudge-right {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(5px); }
+}
+
