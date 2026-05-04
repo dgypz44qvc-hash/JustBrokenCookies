@@ -11120,7 +11120,8 @@ section.testimonial-section span {
   display: block;
   filter: blur(28px) saturate(1.3);
   pointer-events: none;
-  mix-blend-mode: screen;   /* rainbow colour adds to whatever is below */
+  mix-blend-mode: screen;
+  opacity: 0.45;   /* soft — rose breathes through, rainbow is a tint not a flood */
 }
 
 /* Loader overlay */
