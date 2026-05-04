@@ -11078,7 +11078,6 @@ section.testimonial-section span {
   max-height: 800px;
   overflow: hidden;
   perspective: 1800px;
-  overscroll-behavior: none;
   -webkit-user-select: none;
   user-select: none;
   cursor: grab;
