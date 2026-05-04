@@ -282,7 +282,7 @@
         <span class="jbc-gs-hint__arrow jbc-gs-hint__arrow--left">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="18,6 10,14 18,22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <span class="jbc-gs-hint__label">drag to explore</span>
+        <span class="jbc-gs-hint__label">Spin The Crumbles</span>
         <span class="jbc-gs-hint__arrow jbc-gs-hint__arrow--right">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="10,6 18,14 10,22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
@@ -749,15 +749,22 @@
       items.forEach(it => it.el.classList.remove('jbc-gs-card--lit'));
     });
 
-    // Hint — hide on first drag or horizontal swipe
+    // Hint — hide only when user actually scrolls/swipes the carousel
     const hint = document.getElementById('jbc-gs-hint');
     function hideHint() {
       if (!hint) return;
       hint.classList.add('jbc-gs-hint--hidden');
       setTimeout(() => { if (hint) hint.remove(); }, 700);
     }
-    stage.addEventListener('pointerdown', hideHint,   { once: true });
-    stage.addEventListener('wheel',       hideHint,   { once: true, passive: true });
+    stage.addEventListener('wheel', hideHint, { once: true, passive: true });
+    // Also hide on touch/pointer drag (after 8px movement, so a tap won't trigger it)
+    let hintDragStart = null;
+    stage.addEventListener('pointerdown', e => { hintDragStart = { x: e.clientX, y: e.clientY }; }, { passive: true });
+    stage.addEventListener('pointermove', e => {
+      if (!hintDragStart || !hint) return;
+      const dx = e.clientX - hintDragStart.x, dy = e.clientY - hintDragStart.y;
+      if (Math.sqrt(dx*dx + dy*dy) > 8) { hideHint(); hintDragStart = null; }
+    }, { passive: true });
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) { cancelCarousel(); if (bgRAF) cancelAnimationFrame(bgRAF); }
