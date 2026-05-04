@@ -11062,7 +11062,6 @@ section.testimonial-section span {
 #jbc-visual-gallery {
   padding: 0;
   position: relative;
-  isolation: isolate;
   overflow: hidden;
 
   /* Same dark base as the creations section */
@@ -11103,10 +11102,11 @@ section.testimonial-section span {
   );
 }
 
-/* Keep content above the pattern layer */
-#jbc-visual-gallery > * {
+/* Raise only the text/button above the pattern — leave carousel stage untouched */
+#jbc-visual-gallery .sec-header,
+#jbc-visual-gallery .jbc-gallery-cta {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 #jbc-visual-gallery .sec-header {
