@@ -1,23 +1,38 @@
 /* ============================================================
    JUSTBROKENCOOKIES — Mobile Stylesheet
-   Clean rebuild · Max-width 768px only · No desktop touch
+   Complete rebuild · All pages · 375 / 428 / 768px
    ============================================================ */
 
+
+/* ════════════════════════════════════════════════════════════
+   SMALL + MID MOBILE  (≤ 768px)
+   ════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
 
-  /* ── 0. GLOBAL ─────────────────────────────────────────── */
+  /* ── 0. GLOBAL RESET ────────────────────────────────────── */
   *, *::before, *::after {
     box-sizing: border-box !important;
+  }
+
+  html {
+    scroll-behavior: smooth !important;
   }
 
   html, body {
     overflow-x: hidden !important;
     width: 100% !important;
+    max-width: 100vw !important;
   }
 
   body {
     background: #050505 !important;
     color: #F0E6DA !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+
+  /* Remove all desktop scroll-snap / parallax pinning */
+  html, body, main, section, div {
+    scroll-snap-type: none !important;
   }
 
   .container {
@@ -25,11 +40,52 @@
     max-width: 100% !important;
     padding-left: 24px !important;
     padding-right: 24px !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* Kill desktop-only decoration */
+  .cursor-dot,
+  .cursor-ring,
+  .page-transition {
+    display: none !important;
+  }
+
+  /* Kill desktop background animations */
+  .jbc-floral-hero::before,
+  .jbc-floral-work::before,
+  .jbc-floral-process::before,
+  .jbc-floral-gallery::before,
+  .jbc-floral-testimonial::before,
+  .jbc-floral-cta::before,
+  .jbc-floral-about-story::before,
+  .jbc-floral-about-stats::before,
+  .jbc-floral-about-values::before,
+  .jbc-floral-service-process::before,
+  .jbc-floral-contact::before,
+  .jbc-floral-portfolio-grid::before,
+  .jbc-floral-page-header::before {
+    display: none !important;
+    background-image: none !important;
+    opacity: 0 !important;
+  }
+
+  /* Remove heavy blur animations on mobile */
+  [style*="filter: blur"],
+  [style*="will-change"] {
+    filter: none !important;
+    will-change: auto !important;
+  }
+
+  /* Gradient text — shared utility */
+  .gradient-text {
+    background: linear-gradient(135deg, #E8891D 0%, #E84848 60%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
   }
 
 
-  /* ── 1. PRELOADER ──────────────────────────────────────── */
+  /* ── 1. PRELOADER ───────────────────────────────────────── */
   .preloader {
     position: fixed !important;
     inset: 0 !important;
@@ -51,7 +107,9 @@
     flex-direction: row !important;
     gap: 0 !important;
     letter-spacing: 0.12em !important;
-    font-size: clamp(18px, 5vw, 24px) !important;
+    font-size: clamp(16px, 5vw, 22px) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
   }
 
   .preloader-logo .just   { color: #F0E6DA !important; }
@@ -59,11 +117,11 @@
   .preloader-logo .cookies{ color: #E84848 !important; }
 
   .preloader-line {
-    width: 48px !important;
+    width: 0 !important;
     height: 1px !important;
     background: #E8891D !important;
-    margin: 16px auto 0 !important;
-    animation: mbl-line-grow 1.2s ease forwards !important;
+    margin: 14px auto 0 !important;
+    animation: mbl-line-grow 1.2s ease forwards 0.3s !important;
   }
 
   @keyframes mbl-line-grow {
@@ -72,7 +130,7 @@
   }
 
 
-  /* ── 2. NAVIGATION ─────────────────────────────────────── */
+  /* ── 2. NAVIGATION ──────────────────────────────────────── */
   .nav {
     position: fixed !important;
     top: 0 !important;
@@ -80,11 +138,11 @@
     right: 0 !important;
     z-index: 1000 !important;
     padding: 0 !important;
-    background: rgba(5, 5, 5, 0.92) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-    height: 60px !important;
+    height: 58px !important;
+    background: rgba(5,5,5,0.94) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
     display: flex !important;
     align-items: center !important;
   }
@@ -96,31 +154,37 @@
     padding-left: 20px !important;
     padding-right: 20px !important;
     width: 100% !important;
+    height: 100% !important;
   }
 
   .nav-logo {
-    font-size: 13px !important;
-    letter-spacing: 0.14em !important;
+    font-size: 12px !important;
+    letter-spacing: 0.16em !important;
     text-decoration: none !important;
     display: flex !important;
+    align-items: center !important;
     gap: 0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
   }
 
   .nav-logo .just   { color: #F0E6DA !important; }
   .nav-logo .broken { color: #E8891D !important; }
   .nav-logo .cookies{ color: #E84848 !important; }
 
-  /* Full-screen overlay menu */
+  /* Desktop nav links → fullscreen overlay */
   .nav-links {
     display: none !important;
     position: fixed !important;
     inset: 0 !important;
-    background: #050505 !important;
+    background: rgba(5,5,5,0.98) !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 36px !important;
+    gap: 32px !important;
     z-index: 999 !important;
+    backdrop-filter: blur(20px) !important;
   }
 
   .nav-links.open {
@@ -129,582 +193,263 @@
 
   .nav-links a {
     font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(28px, 8vw, 40px) !important;
+    font-size: clamp(26px, 7.5vw, 38px) !important;
     font-weight: 400 !important;
-    color: #F0E6DA !important;
+    color: rgba(240,230,218,0.8) !important;
     text-decoration: none !important;
-    letter-spacing: 0.05em !important;
-    opacity: 0.85 !important;
-    transition: color 0.2s, opacity 0.2s !important;
+    letter-spacing: 0.04em !important;
+    transition: color 0.2s !important;
   }
 
   .nav-links a.active,
   .nav-links a:hover {
     color: #E8891D !important;
-    opacity: 1 !important;
   }
 
+  /* Hamburger */
   .hamburger {
     display: flex !important;
     flex-direction: column !important;
+    justify-content: center !important;
     gap: 5px !important;
     cursor: pointer !important;
     padding: 8px !important;
     z-index: 1001 !important;
+    background: transparent !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   .hamburger span {
     display: block !important;
-    width: 24px !important;
+    width: 22px !important;
     height: 1.5px !important;
     background: #F0E6DA !important;
     transition: transform 0.3s, opacity 0.3s !important;
+    border-radius: 1px !important;
   }
 
 
-  /* ── 3. HERO ───────────────────────────────────────────── */
-  .hero {
+  /* ── 3. HERO ────────────────────────────────────────────── */
+  .hero,
+  .jbc-floral-hero {
     position: relative !important;
     height: 100svh !important;
-    min-height: 600px !important;
+    min-height: 620px !important;
+    max-height: 900px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-end !important;
-    padding: 0 0 48px !important;
+    padding: 0 !important;
     overflow: hidden !important;
     background: #050505 !important;
   }
 
-  /* Hero background image */
-  .hero picture {
+  /* Mobile hero background image */
+  .hero picture,
+  .jbc-floral-hero picture {
     position: absolute !important;
     inset: 0 !important;
     z-index: 0 !important;
   }
 
-  .hero picture source,
-  .hero-full-bg {
+  .hero-full-bg,
+  .jbc-floral-hero picture img {
     position: absolute !important;
     inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    object-position: center top !important;
+    object-position: center 15% !important;
     display: block !important;
   }
 
-  /* Dark gradient over the image — bottom heavy so text is legible */
-  .hero::after {
+  /* Bottom-heavy dark gradient so text is legible */
+  .hero::after,
+  .jbc-floral-hero::after {
     content: '' !important;
     position: absolute !important;
     inset: 0 !important;
     z-index: 1 !important;
     background: linear-gradient(
       to bottom,
-      rgba(5,5,5,0.15) 0%,
-      rgba(5,5,5,0.05) 35%,
-      rgba(5,5,5,0.55) 65%,
-      rgba(5,5,5,0.92) 100%
+      rgba(5,5,5,0.1) 0%,
+      rgba(5,5,5,0.05) 30%,
+      rgba(5,5,5,0.45) 60%,
+      rgba(5,5,5,0.95) 100%
     ) !important;
     pointer-events: none !important;
   }
 
-  /* Agency wordmark — large editorial stacked */
+  /* Hero content containers */
   .hero-mega,
+  .hero-scroll-hint {
+    display: none !important;
+  }
+
   .hero-content {
     display: none !important;
   }
 
+  /* Bottom brand block */
   .hero-bottom {
     position: relative !important;
     z-index: 2 !important;
-    padding: 0 24px !important;
+    padding: 0 24px 52px !important;
     text-align: left !important;
   }
 
-  /* Inject the agency name as mobile hero headline via the logo inside hero-bottom */
   .hero-bottom .desc,
   .hero-bottom .scroll-txt {
     display: none !important;
   }
 
-  /* Mobile hero brand block */
-  .hero::before {
-    content: '' !important;
-    display: none !important;
-  }
-
-  /* Position the hero text at bottom */
-  .jbc-floral-hero {
-    justify-content: flex-end !important;
-  }
-
-  /* Mobile hero typographic block */
+  /* Inject big headline via pseudo-element */
   .hero-bottom::before {
-    content: 'JUSTBROKEN\ACOOKIES' !important;
+    content: 'JUST\ABROKEN\ACOOKIES' !important;
     white-space: pre !important;
     display: block !important;
     font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(42px, 12vw, 64px) !important;
+    font-size: clamp(38px, 11vw, 60px) !important;
     font-weight: 900 !important;
-    line-height: 1.05 !important;
-    letter-spacing: -0.02em !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.025em !important;
     color: #F0E6DA !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 14px !important;
   }
 
   .hero-bottom::after {
-    content: 'A storytelling agency crafting visuals, strategy & words' !important;
+    content: 'A storytelling agency — visuals, strategy & words' !important;
     display: block !important;
     font-family: 'Inter', Arial, sans-serif !important;
-    font-size: 13px !important;
+    font-size: 11px !important;
     font-weight: 300 !important;
-    letter-spacing: 0.08em !important;
-    color: rgba(240,230,218,0.65) !important;
+    letter-spacing: 0.12em !important;
+    color: rgba(240,230,218,0.6) !important;
     text-transform: uppercase !important;
-    margin-bottom: 32px !important;
+    margin-bottom: 30px !important;
   }
 
-  /* CTA button in hero area */
+  /* Hero CTA button */
   .hero .btn,
   .hero a.btn {
     display: inline-block !important;
     background: transparent !important;
-    border: 1px solid rgba(240,230,218,0.5) !important;
+    border: 1px solid rgba(240,230,218,0.45) !important;
     color: #F0E6DA !important;
-    padding: 14px 28px !important;
-    font-size: 11px !important;
-    letter-spacing: 0.18em !important;
+    padding: 13px 26px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
     font-family: 'Inter', Arial, sans-serif !important;
     font-weight: 500 !important;
+    border-radius: 0 !important;
+    transition: border-color 0.3s, color 0.3s !important;
+  }
+
+  /* Vertical "STORYTELLING" side strip */
+  .hero-side-text,
+  [class*="hero-side"],
+  [class*="side-text"] {
+    display: none !important;
   }
 
 
-  /* ── 4. MANIFESTO TICKER ───────────────────────────────── */
-  .manifesto {
+  /* ── 4. MANIFESTO TICKER ────────────────────────────────── */
+  .manifesto,
+  [class*="manifesto"] {
     overflow: hidden !important;
     white-space: nowrap !important;
-    padding: 14px 0 !important;
-    background: #0B0B0B !important;
-    border-top: 1px solid rgba(255,255,255,0.06) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-    font-size: 11px !important;
-    letter-spacing: 0.14em !important;
+    padding: 12px 0 !important;
+    background: #0a0a0a !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    font-size: 10px !important;
+    letter-spacing: 0.16em !important;
     text-transform: uppercase !important;
-    color: rgba(240,230,218,0.4) !important;
+    color: rgba(240,230,218,0.35) !important;
+  }
+
+  .manifesto .marquee-track {
+    display: flex !important;
+    white-space: nowrap !important;
   }
 
 
-  /* ── 5. SECTION HEADERS (shared) ───────────────────────── */
+  /* ── 5. SHARED SECTION TYPOGRAPHY ──────────────────────── */
+  section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   .sec-header {
-    padding: 56px 0 36px !important;
-    text-align: center !important;
+    padding: 52px 24px 32px !important;
+    text-align: left !important;
     border-bottom: none !important;
     display: block !important;
   }
 
-  .sec-header h2,
-  .sec-header h2[data-editor-id] {
+  .sec-header h2 {
     font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(28px, 8vw, 40px) !important;
+    font-size: clamp(26px, 7.5vw, 38px) !important;
     font-weight: 700 !important;
-    line-height: 1.15 !important;
+    line-height: 1.12 !important;
     color: #F0E6DA !important;
-    margin-bottom: 8px !important;
-    letter-spacing: -0.01em !important;
+    margin-bottom: 6px !important;
+    letter-spacing: -0.02em !important;
   }
 
-  .sec-header span {
-    font-size: 10px !important;
-    letter-spacing: 0.2em !important;
+  .sec-header span,
+  .section-label {
+    font-size: 9px !important;
+    letter-spacing: 0.22em !important;
     text-transform: uppercase !important;
     color: #E8891D !important;
     display: block !important;
-    margin-top: 6px !important;
+    margin-bottom: 8px !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
   .section-title {
     font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(26px, 7.5vw, 38px) !important;
-    line-height: 1.18 !important;
+    font-size: clamp(24px, 7vw, 36px) !important;
+    line-height: 1.15 !important;
     font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    color: #F0E6DA !important;
   }
 
   .section-subtitle {
-    font-size: 12px !important;
+    font-size: 11px !important;
     letter-spacing: 0.15em !important;
     text-transform: uppercase !important;
-    color: rgba(240,230,218,0.55) !important;
-    margin-bottom: 20px !important;
+    color: rgba(240,230,218,0.5) !important;
+    margin-bottom: 18px !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
-  .section-label {
-    font-size: 10px !important;
-    letter-spacing: 0.22em !important;
-    text-transform: uppercase !important;
-    color: #E8891D !important;
-    margin-bottom: 10px !important;
-  }
-
-
-  /* ── 6. CRUMBLES OF CREATIONS ──────────────────────────── */
-  #featured-work {
-    padding: 0 !important;
-    overflow: hidden !important;
-    background: #050505 !important;
-  }
-
-  /* Kill the 3D cinema entirely on mobile — replace with snap scroll */
-  #featured-work .jbc-cinema-pin,
-  #featured-work .jbc-cinema-stage,
-  #featured-work .jbc-cinema-ring,
-  #featured-work .jbc-cinema-streaks,
-  #featured-work .jbc-cinema-progress-bar,
-  #featured-work .jbc-cinema-counter,
-  .jbc-cinema-panel--closing-cover {
-    display: none !important;
-  }
-
-  #featured-work .container {
-    padding: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-
-  #featured-work .portfolio-grid.jbc-codrops-cinema {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: scroll !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    gap: 0 !important;
-    width: 100% !important;
-    min-height: 0 !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 0 8px !important;
-    perspective: none !important;
-    transform-style: flat !important;
-  }
-
-  #featured-work .portfolio-grid.jbc-codrops-cinema::-webkit-scrollbar {
-    display: none !important;
-  }
-
-  /* Each panel = full-width snap card */
-  #featured-work .jbc-cinema-panel {
-    position: relative !important;
-    flex: 0 0 80vw !important;
-    width: 80vw !important;
-    height: 60vw !important;
-    min-height: 240px !important;
-    max-height: 340px !important;
-    scroll-snap-align: center !important;
-    transform: none !important;
-    opacity: 1 !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    margin: 0 8px !important;
-    background: #0B0B0B !important;
-    border: none !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
-    display: block !important;
-    text-decoration: none !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-  }
-
-  /* First and last phantom spacers for centering */
-  #featured-work .portfolio-grid.jbc-codrops-cinema::before,
-  #featured-work .portfolio-grid.jbc-codrops-cinema::after {
-    content: '' !important;
-    flex: 0 0 10vw !important;
-    width: 10vw !important;
-    display: block !important;
-    background: none !important;
-  }
-
-  #featured-work .jbc-cinema-panel img {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    transform: none !important;
-    border-radius: 0 !important;
-    filter: none !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta {
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    padding: 40px 18px 16px !important;
-    background: linear-gradient(transparent, rgba(5,5,5,0.88)) !important;
-    z-index: 4 !important;
-    display: block !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta span {
-    display: block !important;
-    font-size: 9px !important;
-    letter-spacing: 0.2em !important;
-    text-transform: uppercase !important;
-    color: #E8891D !important;
-    margin-bottom: 4px !important;
-  }
-
-  #featured-work .jbc-cinema-panel-meta strong {
-    display: block !important;
-    font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #F0E6DA !important;
-    line-height: 1.2 !important;
-  }
-
-  /* Hide scroll title overlays */
-  .jbc-creations-scroll-title,
-  .jbc-carousel-script-title {
-    display: none !important;
-  }
-
-  /* Creations section CTA */
-  #featured-work > .container > div[style*="text-align"],
-  #featured-work .container div[data-editor-id="jbc-1777551171912-e6pe"] {
-    display: block !important;
-    text-align: center !important;
-    padding: 28px 24px !important;
-  }
-
-  /* Section title inside featured-work */
-  #featured-work .sec-header,
-  #featured-work h2,
-  #featured-work h3 {
-    display: block !important;
-    visibility: visible !important;
-  }
-
-
-  /* ── 7. HOW WE BUILD STORIES ───────────────────────────── */
-  #services-overview {
-    padding: 0 0 48px !important;
-    background: #050505 !important;
-  }
-
-  #services-overview .container {
-    padding: 0 24px !important;
-  }
-
-  .services-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0 !important;
-  }
-
-  /* Each service card — accordion style */
-  .service-card {
-    background: transparent !important;
-    border-top: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 0 !important;
-    padding: 28px 0 !important;
-    cursor: pointer !important;
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-    box-shadow: none !important;
-    display: block !important;
-  }
-
-  .service-card:last-of-type {
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-  }
-
-  .service-num {
-    font-size: 9px !important;
-    letter-spacing: 0.22em !important;
-    color: #E8891D !important;
-    text-transform: uppercase !important;
-    margin-bottom: 10px !important;
-    display: block !important;
-  }
-
-  .service-card h3 {
-    font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(24px, 6.5vw, 32px) !important;
-    font-weight: 700 !important;
-    color: #F0E6DA !important;
-    margin: 0 0 6px !important;
-    line-height: 1.1 !important;
-  }
-
-  .service-sub {
-    font-size: 10px !important;
-    letter-spacing: 0.2em !important;
-    text-transform: uppercase !important;
-    color: rgba(240,230,218,0.4) !important;
-    display: block !important;
-    margin-bottom: 14px !important;
-  }
-
-  .service-short {
+  .section-text {
     font-size: 14px !important;
-    line-height: 1.7 !important;
+    line-height: 1.75 !important;
     color: rgba(240,230,218,0.7) !important;
-    margin: 0 !important;
     font-weight: 300 !important;
   }
 
-  /* Cinema panel hidden on mobile */
-  .service-cinema {
-    display: none !important;
-  }
-
-  /* Expanded content hidden by default — tap reveals on desktop; mobile shows short only */
-  .service-expand {
-    display: none !important;
-  }
-
-
-  /* ── 8. SPIN THE CRUMBLES (Glimpses carousel) ──────────── */
-  #jbc-visual-gallery {
-    padding: 0 !important;
-    background: #050505 !important;
-    overflow: hidden !important;
-  }
-
-  #jbc-visual-gallery .container {
-    padding: 0 24px !important;
-  }
-
-  #jbc-visual-gallery .sec-header {
-    padding: 48px 0 32px !important;
-  }
-
-  /* The 3D gradient carousel — keep it but adapt sizing */
-  #jbc-gradient-stage {
-    height: 65vw !important;
-    min-height: 280px !important;
-    max-height: 420px !important;
-    cursor: grab !important;
-    touch-action: pan-y !important;
-  }
-
-  /* Cards: wider on mobile */
-  .jbc-gs-card {
-    width: min(54vw, 260px) !important;
-    -webkit-mask-image: radial-gradient(
-      ellipse 76% 78% at center,
-      black 38%,
-      rgba(0,0,0,0.5) 62%,
-      transparent 88%
-    ) !important;
-    mask-image: radial-gradient(
-      ellipse 76% 78% at center,
-      black 38%,
-      rgba(0,0,0,0.5) 62%,
-      transparent 88%
-    ) !important;
-  }
-
-  .jbc-gallery-cta {
-    text-align: center !important;
-    padding: 28px 24px 48px !important;
-  }
-
-  /* Hint pill */
-  .jbc-gs-hint {
-    padding: 10px 18px !important;
-    font-size: 10px !important;
-  }
-
-  .jbc-gs-hint__label {
-    font-size: 10px !important;
-    letter-spacing: 0.18em !important;
-  }
-
-
-  /* ── 9. TESTIMONIAL ────────────────────────────────────── */
-  .testimonial-section {
-    padding: 64px 0 !important;
-    background: #050505 !important;
-  }
-
-  .testi-brutal {
-    padding: 0 24px !important;
-    text-align: center !important;
-    max-width: 100% !important;
-    border: none !important;
-    background: transparent !important;
-  }
-
-  .testi-mark {
-    font-size: 9px !important;
-    letter-spacing: 0.22em !important;
-    text-transform: uppercase !important;
-    color: #E8891D !important;
-    margin-bottom: 28px !important;
+  .section-divider {
+    width: 40px !important;
+    height: 1px !important;
+    background: #E8891D !important;
+    margin: 16px 0 !important;
     display: block !important;
   }
 
-  .testi-mark span {
-    display: inline !important;
-  }
-
-  .testi-content blockquote {
-    font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(18px, 5vw, 24px) !important;
-    font-style: italic !important;
-    font-weight: 400 !important;
-    line-height: 1.6 !important;
-    color: #F0E6DA !important;
-    margin: 0 0 20px !important;
-    padding: 0 !important;
-    border: none !important;
-  }
-
-  .testi-content cite {
-    font-size: 11px !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: rgba(240,230,218,0.45) !important;
-    font-style: normal !important;
-  }
-
-
-  /* ── 10. CTA ───────────────────────────────────────────── */
-  .cta-section {
-    padding: 72px 0 80px !important;
-    background: #050505 !important;
-    text-align: center !important;
-  }
-
-  .cta-section .container {
-    padding: 0 24px !important;
-  }
-
-  .cta-section .section-title {
-    font-size: clamp(32px, 9vw, 48px) !important;
-    margin-bottom: 16px !important;
-  }
-
-  .cta-section .section-subtitle {
-    margin-bottom: 36px !important;
-  }
-
-  /* Buttons */
+  /* Buttons — shared */
   .btn {
     display: inline-block !important;
-    padding: 16px 32px !important;
-    font-size: 11px !important;
-    letter-spacing: 0.18em !important;
+    padding: 15px 30px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
     font-family: 'Inter', Arial, sans-serif !important;
@@ -712,6 +457,7 @@
     border-radius: 0 !important;
     cursor: pointer !important;
     transition: background 0.3s, color 0.3s, border-color 0.3s !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   .btn-primary {
@@ -727,24 +473,557 @@
   }
 
 
-  /* ── 11. FOOTER ────────────────────────────────────────── */
-  .footer {
+  /* ── 6. PAGE HEADER (inner pages) ──────────────────────── */
+  .page-header,
+  .jbc-floral-page-header {
+    padding-top: 100px !important;
+    padding-bottom: 52px !important;
+    text-align: center !important;
     background: #050505 !important;
-    padding: 56px 0 32px !important;
-    border-top: 1px solid rgba(255,255,255,0.08) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 280px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
-  /* Decorative image hidden on mobile */
-  .footer .editor-decoration {
+  /* Subtle floral wallpaper behind page header */
+  .page-header.jbc-floral-page-header,
+  .jbc-floral-page-header {
+    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .jbc-floral-page-header::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.72) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .page-header .container,
+  .jbc-floral-page-header .container {
+    position: relative !important;
+    z-index: 1 !important;
+    padding: 0 24px !important;
+  }
+
+  .page-header h1,
+  .page-header .section-title {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(32px, 9vw, 52px) !important;
+    font-weight: 700 !important;
+    color: #F0E6DA !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 10px !important;
+  }
+
+  .page-header .section-subtitle,
+  .page-header .section-label {
+    margin-bottom: 0 !important;
+  }
+
+
+  /* ── 7. FEATURED WORK (Crumbles of Creations) ───────────── */
+  #featured-work {
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #050505 !important;
+  }
+
+  /* Kill the 3D cinema on mobile */
+  #featured-work .jbc-cinema-pin,
+  #featured-work .jbc-cinema-stage,
+  #featured-work .jbc-cinema-ring,
+  #featured-work .jbc-cinema-streaks,
+  #featured-work .jbc-cinema-progress-bar,
+  #featured-work .jbc-cinema-counter,
+  .jbc-cinema-panel--closing-cover,
+  .jbc-creations-scroll-title,
+  .jbc-carousel-script-title {
+    display: none !important;
+  }
+
+  #featured-work .container {
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Snap-scroll horizontal carousel */
+  #featured-work .portfolio-grid.jbc-codrops-cinema {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: scroll !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 0 12px !important;
+    perspective: none !important;
+    transform-style: flat !important;
+    align-items: stretch !important;
+  }
+
+  #featured-work .portfolio-grid.jbc-codrops-cinema::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Phantom spacers for peek effect */
+  #featured-work .portfolio-grid.jbc-codrops-cinema::before,
+  #featured-work .portfolio-grid.jbc-codrops-cinema::after {
+    content: '' !important;
+    flex: 0 0 16px !important;
+    width: 16px !important;
+    min-width: 16px !important;
+    display: block !important;
+  }
+
+  /* Each card */
+  #featured-work .jbc-cinema-panel {
+    position: relative !important;
+    flex: 0 0 78vw !important;
+    width: 78vw !important;
+    height: 58vw !important;
+    min-height: 220px !important;
+    max-height: 360px !important;
+    scroll-snap-align: center !important;
+    transform: none !important;
+    opacity: 1 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    margin: 0 6px !important;
+    background: #111 !important;
+    border: none !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6) !important;
+    display: block !important;
+    text-decoration: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    will-change: auto !important;
+    transition: none !important;
+  }
+
+  #featured-work .jbc-cinema-panel img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    filter: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  /* Card meta overlay */
+  #featured-work .jbc-cinema-panel-meta {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 48px 16px 16px !important;
+    background: linear-gradient(transparent, rgba(5,5,5,0.9)) !important;
+    z-index: 4 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta span {
+    display: block !important;
+    font-size: 8px !important;
+    letter-spacing: 0.22em !important;
+    text-transform: uppercase !important;
+    color: #E8891D !important;
+    margin-bottom: 4px !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta strong {
+    display: block !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #F0E6DA !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Section header inside featured-work */
+  #featured-work .sec-header,
+  #featured-work h2,
+  #featured-work h3 {
+    display: block !important;
+    visibility: visible !important;
+    padding: 52px 24px 24px !important;
+  }
+
+  /* CTA link below carousel */
+  #featured-work > .container > div[style*="text-align"],
+  #featured-work .container div[data-editor-id*="e6pe"] {
+    display: block !important;
+    text-align: center !important;
+    padding: 24px 24px 40px !important;
+  }
+
+
+  /* ── 8. SERVICES OVERVIEW (How We Build Stories) ────────── */
+  #services-overview {
+    padding: 0 0 56px !important;
+    background: #050505 !important;
+    position: relative !important;
+  }
+
+  #services-overview .container {
+    padding: 0 24px !important;
+  }
+
+  /* Optional: subtle floral bg */
+  #services-overview {
+    background-image: url('../images/jbc-floral-accent-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+  }
+
+  #services-overview::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.88) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  #services-overview > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .services-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  /* Service cards — stacked accordion style */
+  .service-card {
+    background: transparent !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 0 !important;
+    padding: 28px 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    display: block !important;
+    cursor: default !important;
+    transition: none !important;
+  }
+
+  .service-card:last-of-type {
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  }
+
+  .service-num {
+    font-size: 9px !important;
+    letter-spacing: 0.24em !important;
+    color: #E8891D !important;
+    text-transform: uppercase !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(22px, 6vw, 30px) !important;
+    font-weight: 700 !important;
+    color: #F0E6DA !important;
+    margin: 0 0 6px !important;
+    line-height: 1.1 !important;
+  }
+
+  .service-sub {
+    font-size: 9px !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: rgba(240,230,218,0.35) !important;
+    display: block !important;
+    margin-bottom: 12px !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .service-short {
+    font-size: 13px !important;
+    line-height: 1.72 !important;
+    color: rgba(240,230,218,0.65) !important;
+    margin: 0 !important;
+    font-weight: 300 !important;
+  }
+
+  /* Hide desktop-only cinema panel and expand content */
+  .service-cinema,
+  .service-expand {
+    display: none !important;
+  }
+
+
+  /* ── 9. VISUAL GALLERY (Spin the Crumbles) ──────────────── */
+  #jbc-visual-gallery {
+    padding: 0 0 8px !important;
+    background: #050505 !important;
+    overflow: hidden !important;
+  }
+
+  #jbc-visual-gallery .container {
+    padding: 0 24px !important;
+  }
+
+  #jbc-visual-gallery .sec-header {
+    padding: 48px 0 28px !important;
+  }
+
+  /* Gradient carousel — keep but adapt */
+  #jbc-gradient-stage {
+    height: 64vw !important;
+    min-height: 260px !important;
+    max-height: 400px !important;
+    cursor: grab !important;
+    touch-action: pan-y !important;
+    user-select: none !important;
+  }
+
+  .jbc-gs-card {
+    width: min(56vw, 260px) !important;
+    -webkit-mask-image: radial-gradient(
+      ellipse 78% 80% at center,
+      black 36%,
+      rgba(0,0,0,0.45) 60%,
+      transparent 88%
+    ) !important;
+    mask-image: radial-gradient(
+      ellipse 78% 80% at center,
+      black 36%,
+      rgba(0,0,0,0.45) 60%,
+      transparent 88%
+    ) !important;
+  }
+
+  .jbc-gallery-cta {
+    text-align: center !important;
+    padding: 24px 24px 48px !important;
+  }
+
+  .jbc-gs-hint {
+    padding: 9px 16px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.18em !important;
+    margin: 0 auto 16px !important;
+    display: table !important;
+  }
+
+  .jbc-gs-hint__label {
+    font-size: 9px !important;
+    letter-spacing: 0.18em !important;
+  }
+
+
+  /* ── 10. TESTIMONIAL ────────────────────────────────────── */
+  .testimonial-section,
+  .jbc-floral-testimonial {
+    padding: 64px 0 72px !important;
+    background: #050505 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Floral wallpaper */
+  .jbc-floral-testimonial {
+    background-image: url('../images/jbc-floral-portrait-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center 30% !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+  }
+
+  .testimonial-section::before,
+  .jbc-floral-testimonial::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.80) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  .testimonial-section > *,
+  .jbc-floral-testimonial > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .testi-brutal {
+    padding: 0 28px !important;
+    text-align: center !important;
+    max-width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .testi-mark {
+    font-size: 9px !important;
+    letter-spacing: 0.24em !important;
+    text-transform: uppercase !important;
+    color: #E8891D !important;
+    margin-bottom: 24px !important;
+    display: block !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .testi-mark span { display: inline !important; }
+
+  .testi-content blockquote {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(17px, 4.8vw, 24px) !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    line-height: 1.65 !important;
+    color: #F0E6DA !important;
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .testi-content cite {
+    font-size: 10px !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: rgba(240,230,218,0.4) !important;
+    font-style: normal !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  /* Vertical side text in testimonial */
+  .testi-side,
+  [class*="testi-v-text"] {
+    display: none !important;
+  }
+
+
+  /* ── 11. CTA SECTION ────────────────────────────────────── */
+  .cta-section {
+    padding: 72px 0 80px !important;
+    background: #050505 !important;
+    text-align: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .cta-section.jbc-floral-cta {
+    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center bottom !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .cta-section::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.82) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  .cta-section > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .cta-section .container {
+    padding: 0 28px !important;
+  }
+
+  .cta-section .section-title {
+    font-size: clamp(30px, 8.5vw, 46px) !important;
+    margin-bottom: 14px !important;
+    line-height: 1.05 !important;
+  }
+
+  .cta-section .section-subtitle {
+    margin-bottom: 32px !important;
+  }
+
+  .cta-section .gradient-text {
+    background: linear-gradient(135deg, #E8891D 0%, #E84848 50%, #C93A6E 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+
+  /* ── 12. FOOTER ─────────────────────────────────────────── */
+  .footer,
+  .jbc-editorial-footer {
+    background: #050505 !important;
+    padding: 56px 0 36px !important;
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+    position: relative !important;
+  }
+
+  /* Optional footer wallpaper */
+  .footer.jbc-editorial-footer {
+    background-image: url('../images/footer-story-bg-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .footer::before,
+  .jbc-editorial-footer::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.93) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  .footer > *,
+  .jbc-editorial-footer > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Hide decorator images in footer */
+  .footer .editor-decoration,
+  .footer .editor-image {
     display: none !important;
   }
 
   .footer-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 40px 24px !important;
+    gap: 40px 20px !important;
     padding: 0 24px !important;
-    margin-bottom: 48px !important;
+    margin-bottom: 44px !important;
   }
 
   .footer-brand {
@@ -752,10 +1031,10 @@
   }
 
   .footer-brand .nav-logo {
-    font-size: 16px !important;
-    letter-spacing: 0.12em !important;
+    font-size: 14px !important;
+    letter-spacing: 0.14em !important;
     display: flex !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 14px !important;
   }
 
   .footer-brand .nav-logo .just   { color: #F0E6DA !important; }
@@ -764,34 +1043,33 @@
 
   .footer-brand p {
     font-size: 13px !important;
-    line-height: 1.75 !important;
-    color: rgba(240,230,218,0.55) !important;
+    line-height: 1.78 !important;
+    color: rgba(240,230,218,0.5) !important;
     margin-bottom: 24px !important;
-    max-width: 320px !important;
+    max-width: 340px !important;
+    font-weight: 300 !important;
   }
 
   .social-links {
     display: flex !important;
     gap: 20px !important;
+    flex-wrap: wrap !important;
   }
 
   .social-links a {
-    color: rgba(240,230,218,0.5) !important;
-    font-size: 18px !important;
+    color: rgba(240,230,218,0.45) !important;
+    font-size: 17px !important;
     text-decoration: none !important;
     transition: color 0.2s !important;
-  }
-
-  .social-links a:hover {
-    color: #E8891D !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   .footer-col h4 {
-    font-size: 10px !important;
-    letter-spacing: 0.2em !important;
+    font-size: 9px !important;
+    letter-spacing: 0.22em !important;
     text-transform: uppercase !important;
     color: #E8891D !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 14px !important;
     font-weight: 600 !important;
     font-family: 'Inter', Arial, sans-serif !important;
   }
@@ -799,88 +1077,754 @@
   .footer-col a {
     display: block !important;
     font-size: 13px !important;
-    color: rgba(240,230,218,0.6) !important;
+    color: rgba(240,230,218,0.55) !important;
     text-decoration: none !important;
     margin-bottom: 10px !important;
     letter-spacing: 0.02em !important;
     transition: color 0.2s !important;
-  }
-
-  .footer-col a:hover {
-    color: #F0E6DA !important;
+    font-weight: 300 !important;
   }
 
   .footer-bottom {
-    padding: 24px 24px 0 !important;
-    border-top: 1px solid rgba(255,255,255,0.06) !important;
+    padding: 20px 24px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.05) !important;
     text-align: center !important;
-    font-size: 10px !important;
+    font-size: 9px !important;
     letter-spacing: 0.2em !important;
-    color: rgba(240,230,218,0.2) !important;
+    color: rgba(240,230,218,0.18) !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
 
-  /* ── 12. MISC OVERRIDES ────────────────────────────────── */
+  /* ── 13. ABOUT PAGE ─────────────────────────────────────── */
+  .about-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
 
-  /* Kill cursor dot — no hover on mobile */
-  .cursor-dot,
-  .cursor-ring {
+  /* Story image fills full width on mobile */
+  .about-image {
+    width: 100% !important;
+    height: 70vw !important;
+    min-height: 280px !important;
+    max-height: 420px !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .about-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+    display: block !important;
+  }
+
+  .about-text {
+    padding: 36px 24px 48px !important;
+    background: #050505 !important;
+  }
+
+  .about-text h2 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(26px, 7.5vw, 38px) !important;
+    font-weight: 700 !important;
+    color: #F0E6DA !important;
+    line-height: 1.12 !important;
+    margin-bottom: 16px !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  .about-text p {
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+    color: rgba(240,230,218,0.68) !important;
+    margin-bottom: 16px !important;
+    font-weight: 300 !important;
+  }
+
+  /* Stats bar */
+  .about-stats {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0 !important;
+    padding: 0 0 56px !important;
+  }
+
+  .about-stats > * {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    padding: 28px 24px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    text-align: center !important;
+  }
+
+  .about-stats > *:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+  }
+
+  .about-stats strong,
+  .about-stats .stat-num {
+    display: block !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(32px, 9vw, 48px) !important;
+    font-weight: 700 !important;
+    color: #E8891D !important;
+    line-height: 1 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .about-stats span,
+  .about-stats p,
+  .about-stats .stat-label {
+    font-size: 9px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    color: rgba(240,230,218,0.45) !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  /* About sections with floral background */
+  .jbc-floral-about-story {
+    background-image: url('../images/jbc-floral-accent-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+  }
+
+  .jbc-floral-about-story > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Values section */
+  .jbc-floral-about-values {
+    padding: 56px 0 !important;
+    background: #070707 !important;
+  }
+
+  .about-values-grid,
+  [class*="values-grid"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 24px !important;
+  }
+
+  .value-card,
+  [class*="value-card"] {
+    padding: 28px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.08) !important;
+  }
+
+  .value-card:last-of-type { border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
+
+  .value-card h3,
+  [class*="value-card"] h3 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(20px, 5.5vw, 28px) !important;
+    font-weight: 600 !important;
+    color: #F0E6DA !important;
+    margin-bottom: 10px !important;
+    line-height: 1.15 !important;
+  }
+
+  .value-card p,
+  [class*="value-card"] p {
+    font-size: 13px !important;
+    line-height: 1.72 !important;
+    color: rgba(240,230,218,0.62) !important;
+    font-weight: 300 !important;
+  }
+
+
+  /* ── 14. SERVICES PAGE ──────────────────────────────────── */
+  .jbc-floral-service-process {
+    padding: 0 0 56px !important;
+    background: #050505 !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  /* Process section floral wallpaper */
+  .jbc-floral-service-process {
+    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+  }
+
+  .jbc-floral-service-process::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.88) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  .jbc-floral-service-process > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .jbc-floral-service-process .container {
+    padding: 0 24px !important;
+  }
+
+  /* Process cards stacked */
+  .process-card {
+    padding: 32px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.09) !important;
+    display: block !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+  }
+
+  .process-card:last-of-type {
+    border-bottom: 1px solid rgba(255,255,255,0.09) !important;
+  }
+
+  .p-num {
+    font-size: 9px !important;
+    letter-spacing: 0.24em !important;
+    color: #E8891D !important;
+    text-transform: uppercase !important;
+    display: block !important;
+    margin-bottom: 10px !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .process-card h3 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(22px, 6vw, 32px) !important;
+    font-weight: 700 !important;
+    color: #F0E6DA !important;
+    margin-bottom: 10px !important;
+    line-height: 1.1 !important;
+  }
+
+  .process-card p {
+    font-size: 13px !important;
+    line-height: 1.75 !important;
+    color: rgba(240,230,218,0.62) !important;
+    font-weight: 300 !important;
+    margin: 0 !important;
+  }
+
+
+  /* ── 15. PORTFOLIO PAGE ─────────────────────────────────── */
+  .jbc-floral-portfolio-grid {
+    padding: 0 0 64px !important;
+    background: #050505 !important;
+  }
+
+  .jbc-floral-portfolio-grid .container {
+    padding: 0 16px !important;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding: 0 24px 24px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .filter-bar::-webkit-scrollbar { display: none !important; }
+
+  .filter-bar button,
+  .filter-bar .filter-btn {
+    flex-shrink: 0 !important;
+    background: transparent !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    color: rgba(240,230,218,0.6) !important;
+    padding: 8px 16px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    font-family: 'Inter', sans-serif !important;
+    transition: border-color 0.2s, color 0.2s !important;
+    white-space: nowrap !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .filter-bar button.active,
+  .filter-bar .filter-btn.active {
+    border-color: #E8891D !important;
+    color: #E8891D !important;
+  }
+
+  /* Portfolio grid — 2 columns */
+  .portfolio-grid-full {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 8px !important;
+  }
+
+  .portfolio-item {
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 8px !important;
+    aspect-ratio: 3/4 !important;
+    background: #111 !important;
+    cursor: pointer !important;
+  }
+
+  .portfolio-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block !important;
+    transition: transform 0.4s ease !important;
+  }
+
+  .portfolio-item .overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(transparent 50%, rgba(5,5,5,0.88)) !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    padding: 12px !important;
+    opacity: 1 !important;
+  }
+
+  .portfolio-item .overlay h3 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #F0E6DA !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+  }
+
+  /* First item spans full width */
+  .portfolio-item:first-child {
+    grid-column: 1 / -1 !important;
+    aspect-ratio: 16/9 !important;
+  }
+
+
+  /* ── 16. CONTACT PAGE ───────────────────────────────────── */
+  .jbc-floral-contact {
+    padding: 0 0 64px !important;
+    background: #050505 !important;
+    position: relative !important;
+  }
+
+  .jbc-floral-contact {
+    background-image: url('../images/jbc-floral-portrait-mobile.jpg') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .jbc-floral-contact::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.90) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  .jbc-floral-contact > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .contact-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 0 24px !important;
+  }
+
+  .contact-info-wrap {
+    padding: 40px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+  }
+
+  .contact-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  .contact-info-item {
+    display: flex !important;
+    gap: 16px !important;
+    align-items: flex-start !important;
+  }
+
+  .contact-info-item i {
+    color: #E8891D !important;
+    font-size: 16px !important;
+    margin-top: 2px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .contact-info-item p,
+  .contact-info-item a {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    color: rgba(240,230,218,0.65) !important;
+    text-decoration: none !important;
+    font-weight: 300 !important;
+  }
+
+  /* Contact form */
+  .contact-form-wrap {
+    padding: 36px 0 0 !important;
+  }
+
+  .contact-form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .form-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form select {
+    width: 100% !important;
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 0 !important;
+    color: #F0E6DA !important;
+    padding: 14px 18px !important;
+    font-size: 13px !important;
+    font-family: 'Inter', Arial, sans-serif !important;
+    font-weight: 300 !important;
+    outline: none !important;
+    transition: border-color 0.2s !important;
+    -webkit-appearance: none !important;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #E8891D !important;
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: rgba(240,230,218,0.28) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .contact-form textarea {
+    min-height: 140px !important;
+    resize: vertical !important;
+  }
+
+  .contact-form .btn,
+  .contact-form button[type="submit"] {
+    width: 100% !important;
+    padding: 16px !important;
+    background: #E8891D !important;
+    color: #050505 !important;
+    border: none !important;
+    font-family: 'Inter', Arial, sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .form-success {
     display: none !important;
+    text-align: center !important;
+    padding: 32px 0 !important;
+    font-size: 14px !important;
+    color: #E8891D !important;
   }
 
-  /* Kill page transition */
-  .page-transition {
-    display: none !important;
+
+  /* ── 17. MAGAZINE PAGE ──────────────────────────────────── */
+  [class*="magazine"],
+  [class*="blog"] {
+    padding: 0 0 56px !important;
   }
 
-  /* Kill desktop-only decorative rose patterns on mobile */
-  .jbc-floral-hero::before,
-  .jbc-floral-work::before,
-  .jbc-floral-process::before,
-  .jbc-floral-gallery::before,
-  .jbc-floral-testimonial::before,
-  .jbc-floral-cta::before {
-    display: none !important;
-    background-image: none !important;
-    opacity: 0 !important;
+  [class*="magazine"] .container,
+  [class*="blog"] .container {
+    padding: 0 24px !important;
   }
 
-  /* Remove animation blur on mobile — too slow */
-  [style*="filter: blur"] {
-    filter: none !important;
+  [class*="post-grid"],
+  [class*="blog-grid"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
   }
 
-  /* Gradient text */
-  .gradient-text {
-    background: linear-gradient(135deg, #E8891D, #E84848) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
+  [class*="post-card"],
+  [class*="blog-card"] {
+    background: rgba(255,255,255,0.03) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  [class*="post-card"] img,
+  [class*="blog-card"] img {
+    width: 100% !important;
+    height: 52vw !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  [class*="post-content"],
+  [class*="blog-content"] {
+    padding: 20px 20px 24px !important;
+  }
+
+  [class*="post-title"],
+  [class*="blog-title"] {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: clamp(18px, 5vw, 24px) !important;
+    font-weight: 600 !important;
+    color: #F0E6DA !important;
+    line-height: 1.25 !important;
+    margin-bottom: 10px !important;
+  }
+
+  [class*="post-excerpt"],
+  [class*="blog-excerpt"] {
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    color: rgba(240,230,218,0.55) !important;
+    font-weight: 300 !important;
   }
 
 }
 
 
-/* ── Very small screens (< 375px) ─────────────────────────── */
+/* ════════════════════════════════════════════════════════════
+   SMALL PHONE  (≤ 428px  — iPhone Plus and below)
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 428px) {
+
+  .hero-bottom::before {
+    font-size: clamp(34px, 10vw, 48px) !important;
+  }
+
+  #featured-work .jbc-cinema-panel {
+    flex: 0 0 82vw !important;
+    width: 82vw !important;
+    height: 62vw !important;
+  }
+
+  .jbc-gs-card {
+    width: min(60vw, 240px) !important;
+  }
+
+  .portfolio-grid-full {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    padding: 0 6px !important;
+  }
+
+  .about-stats > * {
+    flex: 0 0 50% !important;
+    padding: 22px 16px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px 16px !important;
+  }
+
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   VERY SMALL PHONE  (≤ 375px  — iPhone SE / mini)
+   ════════════════════════════════════════════════════════════ */
 @media (max-width: 375px) {
 
   .nav-logo { font-size: 11px !important; }
 
   .hero-bottom::before {
-    font-size: 36px !important;
+    font-size: 32px !important;
+    letter-spacing: -0.03em !important;
   }
+
+  .hero-bottom { padding: 0 20px 44px !important; }
 
   #featured-work .jbc-cinema-panel {
     flex: 0 0 88vw !important;
     width: 88vw !important;
+    height: 66vw !important;
+    min-height: 200px !important;
   }
 
   .jbc-gs-card {
-    width: min(64vw, 240px) !important;
+    width: min(66vw, 220px) !important;
+  }
+
+  /* Single column portfolio on very small screens */
+  .portfolio-grid-full {
+    grid-template-columns: 1fr !important;
+  }
+
+  .portfolio-item:first-child {
+    grid-column: auto !important;
+    aspect-ratio: 3/4 !important;
   }
 
   .footer-grid {
     grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .about-stats > * {
+    flex: 0 0 50% !important;
+    padding: 20px 12px !important;
+  }
+
+  .about-stats strong,
+  .about-stats .stat-num {
+    font-size: 28px !important;
+  }
+
+  .contact-grid {
+    padding: 0 20px !important;
+  }
+
+  .container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .sec-header {
+    padding: 44px 20px 24px !important;
+  }
+
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   TABLET / LARGE MOBILE  (429px – 768px)
+   Extra comfort spacing for iPads in portrait
+   ════════════════════════════════════════════════════════════ */
+@media (min-width: 429px) and (max-width: 768px) {
+
+  .hero-bottom {
+    padding: 0 36px 64px !important;
+  }
+
+  .hero-bottom::before {
+    font-size: clamp(44px, 10vw, 60px) !important;
+  }
+
+  .sec-header {
+    padding: 60px 36px 40px !important;
+  }
+
+  .container {
+    padding-left: 36px !important;
+    padding-right: 36px !important;
+  }
+
+  /* 2-column service grid on tablet */
+  .services-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+  }
+
+  .service-card {
+    padding: 28px 16px 28px 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-right: none !important;
+  }
+
+  .service-card:nth-child(even) {
+    padding-left: 16px !important;
+    padding-right: 0 !important;
+    border-left: 1px solid rgba(255,255,255,0.07) !important;
+  }
+
+  /* Bigger portfolio grid on tablet */
+  .portfolio-grid-full {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    padding: 0 12px !important;
+  }
+
+  /* Featured work cards bigger on tablet */
+  #featured-work .jbc-cinema-panel {
+    flex: 0 0 60vw !important;
+    width: 60vw !important;
+    height: 44vw !important;
+    max-height: 400px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 40px 32px !important;
+    padding: 0 36px !important;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1 !important;
+  }
+
+  .about-grid {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+  }
+
+  .about-image {
+    width: 42% !important;
+    flex-shrink: 0 !important;
+    height: 100% !important;
+    min-height: 480px !important;
+  }
+
+  .about-text {
+    flex: 1 !important;
+    padding: 48px 32px !important;
+  }
+
+  .contact-grid {
+    flex-direction: row !important;
+    gap: 48px !important;
+  }
+
+  .contact-info-wrap {
+    flex: 0 0 38% !important;
+    border-bottom: none !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+    padding: 40px 32px 40px 0 !important;
+  }
+
+  .contact-form-wrap {
+    flex: 1 !important;
+    padding: 40px 0 0 !important;
   }
 
 }
