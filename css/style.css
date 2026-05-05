@@ -2319,7 +2319,8 @@ section { padding:var(--section-pad) 0; position:relative; }
   filter: saturate(1.15) contrast(1.08);
   transform: rotate(-6deg);
 }
-.jbc-floral-service-detail-2::before {
+.jbc-floral-service-detail-2::before,
+.jbc-floral-service-detail-4::before {
   content: "";
   position: absolute;
   pointer-events: none;
@@ -3927,6 +3928,7 @@ body {
 .jbc-floral-service-detail-1::before,
 .jbc-floral-service-detail-2::before,
 .jbc-floral-service-detail-3::before,
+.jbc-floral-service-detail-4::before,
 .jbc-floral-service-process::before,
 
 /* ---- PORTFOLIO PAGE ---- */
@@ -7121,6 +7123,7 @@ body:not([data-editor-id]) .jbc-floral-about-stats::before,
 body:not([data-editor-id]) .jbc-floral-service-detail-1::before,
 body:not([data-editor-id]) .jbc-floral-service-detail-2::before,
 body:not([data-editor-id]) .jbc-floral-service-detail-3::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-4::before,
 body:not([data-editor-id]) .jbc-floral-service-process::before,
 body:not([data-editor-id]) .jbc-floral-portfolio-grid::before,
 body:not([data-editor-id]) .jbc-floral-blog-grid::before,
@@ -7225,7 +7228,8 @@ body:not([data-editor-id]) .jbc-floral-service-detail-3::before {
   transform: rotate(-5deg) !important;
 }
 
-body:not([data-editor-id]) .jbc-floral-service-detail-2::before {
+body:not([data-editor-id]) .jbc-floral-service-detail-2::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-4::before {
   width: min(780px, 66vw) !important;
   height: min(780px, 66vw) !important;
   left: -16% !important;
@@ -8031,9 +8035,9 @@ body:not([data-editor-id]) .portfolio-item img {
 
 #featured-work .jbc-cinema-stage {
   position: relative !important;
-  width: min(100%, 1360px) !important;
+  width: 100% !important;
   height: clamp(520px, 72svh, 780px) !important;
-  margin: 0 auto !important;
+  margin: 0 !important;
   overflow: hidden !important;
   perspective: 1500px !important;
   transform-style: preserve-3d !important;
@@ -8145,6 +8149,24 @@ body:not([data-editor-id]) .portfolio-item img {
   box-shadow:
     0 38px 100px rgba(0, 0, 0, 0.72),
     0 0 42px rgba(232, 137, 29, 0.1) !important;
+}
+
+/* Soft edge fade — no black veil, just transparency toward edges */
+#featured-work .jbc-cinema-panel {
+  background: transparent !important;
+  border-color: transparent !important;
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 80% at center,
+    black 40%,
+    rgba(0,0,0,0.55) 65%,
+    transparent 90%
+  ) !important;
+  mask-image: radial-gradient(
+    ellipse 78% 80% at center,
+    black 40%,
+    rgba(0,0,0,0.55) 65%,
+    transparent 90%
+  ) !important;
 }
 
 #featured-work .jbc-cinema-panel-meta {
@@ -10432,13 +10454,13 @@ section.testimonial-section span {
    Safe: does not touch carousel JS, sticky pin, scroll height, or transforms
    ========================================================= */
 
-/* Make the visible carousel stage feel narrower and more editorial */
+/* Full-width carousel stage — matches hero width */
 #featured-work .jbc-cinema-stage {
-  width: min(100%, 980px) !important;
-  max-width: 980px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  border-radius: 34px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: 0 !important;
 }
 
 /* Keep the 3D ring inside the narrower stage */
@@ -10476,33 +10498,29 @@ section.testimonial-section span {
   z-index: 30 !important;
 }
 
-/* Mobile, smaller but still usable */
+/* Full-width — matches hero */
 #featured-work .portfolio-grid.jbc-codrops-cinema {
-  width: min(100%, 960px) !important;
-  max-width: 960px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
-/* Narrow the sticky visual area without changing sticky behaviour */
 #featured-work .jbc-cinema-pin {
-  width: min(100%, 960px) !important;
-  max-width: 960px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
-/* Make the actual stage narrower and less vertically huge */
 #featured-work .jbc-cinema-stage {
-  width: min(100%, 960px) !important;
-  max-width: 960px !important;
+  width: 100% !important;
+  max-width: 100% !important;
   height: clamp(430px, 52vh, 560px) !important;
   min-height: clamp(430px, 52vh, 560px) !important;
-
-  margin-left: auto !important;
-  margin-right: auto !important;
-
-  border-radius: 34px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: 0 !important;
 }
 
 /* Keep ring filling the new stage, no transform changes */
@@ -11067,17 +11085,17 @@ section.testimonial-section span {
      No pseudo-element, no z-index, no stacking-context interference with the carousel. */
   background-color: var(--charcoal);
   background-image:
-    linear-gradient(
-      90deg,
-      rgba(5, 5, 5, 0.58) 0%,
-      rgba(5, 5, 5, 0.65) 42%,
-      rgba(5, 5, 5, 0.88) 72%,
+    radial-gradient(
+      ellipse 65% 85% at center,
+      rgba(5, 5, 5, 0)    0%,
+      rgba(5, 5, 5, 0)    38%,
+      rgba(5, 5, 5, 0.72) 68%,
       rgba(5, 5, 5, 0.97) 100%
     ),
     var(--jbc-floral-pattern);
   background-repeat: no-repeat, repeat;
   background-size: 100% 100%, 620px auto;
-  background-position: 0 0, left top;
+  background-position: center center, left top;
 }
 
 #jbc-visual-gallery .sec-header {
@@ -11097,11 +11115,7 @@ section.testimonial-section span {
   -webkit-user-select: none;
   user-select: none;
   cursor: grab;
-  background-color: transparent;
-  background-image: var(--jbc-floral-pattern);
-  background-repeat: repeat;
-  background-size: 520px auto;
-  background-position: center top;
+  background: transparent;
 }
 
 #jbc-gradient-stage.jbc-gs-dragging {
@@ -11163,6 +11177,20 @@ section.testimonial-section span {
   will-change: transform, filter;
   transform-origin: 90% center;
   contain: layout paint;
+
+  /* Soft vignette edges — fades both image and veil into the background */
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 82% at center,
+    black 42%,
+    rgba(0,0,0,0.6) 68%,
+    transparent 92%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 82% at center,
+    black 42%,
+    rgba(0,0,0,0.6) 68%,
+    transparent 92%
+  );
 }
 
 .jbc-gs-card__img {
@@ -11177,18 +11205,17 @@ section.testimonial-section span {
   user-select: none;
   box-shadow: 0 24px 64px rgba(0,0,0,0.55);
 
-  /* Default: desaturated with slight dim */
-  filter: grayscale(1) brightness(0.72) contrast(1.08);
+  /* Slight dim only — veil handles the cover effect */
+  filter: brightness(0.78);
   transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Centred card = full colour; all others stay BW gloss.
-   JS adds/removes .jbc-gs-card--lit on the centred card each frame. */
+/* Centred card: full brightness, veil lifts */
 .jbc-gs-card--lit .jbc-gs-card__img {
-  filter: grayscale(0) brightness(1) contrast(1);
+  filter: brightness(1);
 }
 
-/* Glossy sheen overlay — always present on non-lit cards */
+/* Rose veil — thin rose pattern + dark blue tint layered over the photo */
 .jbc-gs-card::before {
   content: '';
   position: absolute;
@@ -11196,16 +11223,15 @@ section.testimonial-section span {
   z-index: 2;
   border-radius: 14px;
   pointer-events: none;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.07) 45%,
-    rgba(0, 0, 0, 0.18) 100%
-  );
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  background-image: var(--jbc-floral-pattern);
+  background-repeat: repeat;
+  background-size: 520px auto;
+  background-position: center center;
+  opacity: 1;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Gloss dissolves on the active centred card */
+/* Veil lifts on the active centred card */
 .jbc-gs-card--lit::before {
   opacity: 0;
 }
@@ -11286,3 +11312,16 @@ section.testimonial-section span {
   50%       { transform: translateX(6px); }
 }
 
+
+/* ── CRUMBLES OF CREATIONS — FULL HERO WIDTH ─────────────────────────
+   Override the .container constraint so the carousel stretches
+   edge-to-edge, matching the hero section.
+   ──────────────────────────────────────────────────────────────────── */
+#featured-work > .container {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
