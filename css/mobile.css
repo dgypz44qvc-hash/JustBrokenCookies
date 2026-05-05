@@ -230,6 +230,36 @@
   }
 
 
+  /* ── 2b. OVERRIDE GSAP/JS INLINE TRANSFORMS ON ALL SECTIONS ── */
+  /* GSAP ScrollTrigger applies opacity/transform/filter to sections in mid-scroll.
+     On mobile we kill these so every section is fully visible at all times. */
+  .hero,
+  .jbc-floral-hero,
+  .hero-bottom,
+  #featured-work,
+  #services-overview,
+  #jbc-visual-gallery,
+  .testimonial-section,
+  .jbc-floral-testimonial,
+  .cta-section,
+  .footer,
+  .jbc-editorial-footer,
+  .manifesto,
+  [data-editor-id="manifesto-section"] {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  /* Also kill any GSAP pin-spacer containers that add huge heights */
+  .pin-spacer {
+    position: static !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+
   /* ── 3. HERO ────────────────────────────────────────────── */
   .hero,
   .jbc-floral-hero {
@@ -297,6 +327,9 @@
     z-index: 2 !important;
     padding: 0 24px 52px !important;
     text-align: left !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 
   .hero-bottom .desc,
@@ -488,12 +521,12 @@
     justify-content: center !important;
   }
 
-  /* Subtle floral wallpaper behind page header */
+  /* Mobile page header wallpaper */
   .page-header.jbc-floral-page-header,
   .jbc-floral-page-header {
     background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
     background-size: cover !important;
-    background-position: center center !important;
+    background-position: center top !important;
     background-repeat: no-repeat !important;
   }
 
@@ -537,10 +570,12 @@
     background: #050505 !important;
   }
 
-  /* Kill the 3D cinema on mobile */
-  #featured-work .jbc-cinema-pin,
-  #featured-work .jbc-cinema-stage,
-  #featured-work .jbc-cinema-ring,
+  /* Flatten the 3D cinema into a horizontal snap-scroll strip.
+     IMPORTANT: do NOT hide .jbc-cinema-pin / .jbc-cinema-stage / .jbc-cinema-ring —
+     the actual panels (.jbc-cinema-panel) live inside .jbc-cinema-ring.
+     Instead we reset all their 3D layout properties and re-use the ring as the scroller. */
+
+  /* Kill only the decorative/UI overlays */
   #featured-work .jbc-cinema-streaks,
   #featured-work .jbc-cinema-progress-bar,
   #featured-work .jbc-cinema-counter,
@@ -556,8 +591,44 @@
     width: 100% !important;
   }
 
-  /* Snap-scroll horizontal carousel */
+  /* The outer portfolio-grid: reset its huge JS-set height */
   #featured-work .portfolio-grid.jbc-codrops-cinema {
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    perspective: none !important;
+    transform-style: flat !important;
+    transform: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Pin spacer — flatten it */
+  #featured-work .jbc-cinema-pin {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  /* Stage — flatten and make block */
+  #featured-work .jbc-cinema-stage {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    transform-style: flat !important;
+    perspective: none !important;
+    overflow: visible !important;
+  }
+
+  /* Ring — THIS becomes the horizontal scroll strip */
+  #featured-work .jbc-cinema-ring {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: scroll !important;
@@ -565,29 +636,18 @@
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
-    gap: 0 !important;
-    width: 100% !important;
     height: auto !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 0 12px !important;
-    perspective: none !important;
+    transform: none !important;
     transform-style: flat !important;
-    align-items: stretch !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 0 16px 16px !important;
+    margin: 0 !important;
+    align-items: flex-start !important;
   }
 
-  #featured-work .portfolio-grid.jbc-codrops-cinema::-webkit-scrollbar {
+  #featured-work .jbc-cinema-ring::-webkit-scrollbar {
     display: none !important;
-  }
-
-  /* Phantom spacers for peek effect */
-  #featured-work .portfolio-grid.jbc-codrops-cinema::before,
-  #featured-work .portfolio-grid.jbc-codrops-cinema::after {
-    content: '' !important;
-    flex: 0 0 16px !important;
-    width: 16px !important;
-    min-width: 16px !important;
-    display: block !important;
   }
 
   /* Each card */
@@ -615,6 +675,13 @@
     transition: none !important;
   }
 
+  /* Reset the JS-driven opacity/transform on each panel */
+  #featured-work .jbc-cinema-panel {
+    opacity: 1 !important;
+    --panel-visibility: 1 !important;
+    transform: none !important;
+  }
+
   #featured-work .jbc-cinema-panel img {
     position: absolute !important;
     inset: 0 !important;
@@ -627,6 +694,7 @@
     filter: none !important;
     -webkit-mask-image: none !important;
     mask-image: none !important;
+    opacity: 1 !important;
   }
 
   /* Card meta overlay */
@@ -691,11 +759,11 @@
     padding: 0 24px !important;
   }
 
-  /* Optional: subtle floral bg */
+  /* Mobile-optimized floral wallpaper */
   #services-overview {
-    background-image: url('../images/jbc-floral-accent-mobile.jpg') !important;
+    background-image: url('../images/mobilelanding-640.webp') !important;
     background-size: cover !important;
-    background-position: center center !important;
+    background-position: center 30% !important;
     background-repeat: no-repeat !important;
     background-attachment: scroll !important;
   }
@@ -851,11 +919,11 @@
     overflow: hidden !important;
   }
 
-  /* Floral wallpaper */
+  /* Mobile portrait wallpaper */
   .jbc-floral-testimonial {
-    background-image: url('../images/jbc-floral-portrait-mobile.jpg') !important;
+    background-image: url('../images/mobilelanding-768.webp') !important;
     background-size: cover !important;
-    background-position: center 30% !important;
+    background-position: center 20% !important;
     background-repeat: no-repeat !important;
     background-attachment: scroll !important;
   }
@@ -935,9 +1003,9 @@
   }
 
   .cta-section.jbc-floral-cta {
-    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-image: url('../images/mobilelanding-480.webp') !important;
     background-size: cover !important;
-    background-position: center bottom !important;
+    background-position: center 40% !important;
     background-repeat: no-repeat !important;
   }
 
@@ -1196,6 +1264,16 @@
     position: relative !important;
   }
 
+  .jbc-floral-about-story::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.82) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
   .jbc-floral-about-story > * {
     position: relative !important;
     z-index: 1 !important;
@@ -1250,9 +1328,9 @@
     overflow: visible !important;
   }
 
-  /* Process section floral wallpaper */
+  /* Process section — mobile floral wallpaper */
   .jbc-floral-service-process {
-    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-image: url('../images/jbc-floral-accent-mobile.jpg') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
@@ -1427,7 +1505,7 @@
   .jbc-floral-contact {
     background-image: url('../images/jbc-floral-portrait-mobile.jpg') !important;
     background-size: cover !important;
-    background-position: center top !important;
+    background-position: center 25% !important;
     background-repeat: no-repeat !important;
   }
 
