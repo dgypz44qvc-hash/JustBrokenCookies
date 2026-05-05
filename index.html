@@ -10,6 +10,7 @@
   <link rel="preload" as="image" href="images/hero-mobile-desktop-ratio-768.jpg" imagesrcset="images/hero-mobile-desktop-ratio-768.jpg 768w, images/hero-mobile-desktop-ratio-1080.jpg 1080w" imagesizes="100vw" media="(max-width: 768px)" fetchpriority="high">
   <link rel="preload" as="image" href="images/heromultiroses-1280.jpg" imagesrcset="images/heromultiroses-900.jpg 900w, images/heromultiroses-1280.jpg 1280w, images/heromultiroses-1920.jpg 1920w" imagesizes="100vw" media="(min-width: 769px)" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
   <link rel="stylesheet" href="css/editor-overrides.css">
   <style id="jbc-carousel-creations-real-image-fix">
     #featured-work .jbc-cinema-panel > img[src$="creations-title-card.webp"] {
@@ -92,7 +93,7 @@
     
   </div>
 <!-- ========== SELECTED WORK ========== -->
-<section id="featured-work" style="border-top: 2px solid rgb(255, 255, 255);" class="jbc-editorial-section jbc-floral-work" data-editor-id="featured-work-section">
+<section id="featured-work" style="" class="jbc-editorial-section jbc-floral-work" data-editor-id="featured-work-section">
     <div class="container" data-editor-id="jbc-1777551171912-30nb">
 <div class="portfolio-grid jbc-codrops-cinema" data-jbc-codrops-cinema="" data-editor-id="portfolio-grid">
         <div class="jbc-cinema-pin">
@@ -175,7 +176,7 @@
 
   <!-- ========== WORK ========== -->
 <!-- ========== SERVICES ========== -->
-  <section id="services-overview" style="border-top: 2px solid rgb(255, 255, 255);" class="jbc-editorial-section jbc-floral-process" data-editor-id="process-section">
+  <section id="services-overview" style="" class="jbc-editorial-section jbc-floral-process" data-editor-id="process-section">
     <div class="container" data-editor-id="jbc-1777551171912-y3ue">
       <div class="sec-header" data-editor-id="jbc-1777551738761-3mns">
         <h2 data-editor-id="process-heading" class="">How We Build Stories</h2>
@@ -262,7 +263,7 @@
 
 
   <!-- ========== VISUAL GALLERY CAROUSEL ========== -->
-  <section id="jbc-visual-gallery" class="jbc-editorial-section jbc-floral-gallery" style="border-top: 2px solid rgb(255, 255, 255);">
+  <section id="jbc-visual-gallery" class="jbc-editorial-section jbc-floral-gallery" style="">
     <div class="container">
       <div class="sec-header">
         <h2>A Glimpse of Our Work</h2>
@@ -362,7 +363,7 @@
     'use strict';
 
     // ── CONFIGURATION ───────────────────────────────────────────────
-    const IMAGES = [
+    const IMAGES_DESKTOP = [
       './images/portfolio/camera-mural.jpg',
       './images/portfolio/couple-sea.jpg',
       './images/portfolio/dust-to-gold.jpg',
@@ -373,6 +374,29 @@
       './images/portfolio/venice-arches.jpg',
       './images/portfolio/voices-unheard.jpg',
     ];
+
+    const IMAGES_MOBILE = [
+      './images/mobile/DSC03914.webp',
+      './images/mobile/DSC04179.webp',
+      './images/mobile/DSC04185.webp',
+      './images/mobile/DSC04187-2.webp',
+      './images/mobile/DSC04193.webp',
+      './images/mobile/DSC04211.webp',
+      './images/mobile/_DSC0835.webp',
+      './images/mobile/_DSC0832.webp',
+      './images/mobile/_DSC0824.webp',
+      './images/mobile/_DSC0763-2.webp',
+      './images/mobile/_DSC0740.webp',
+      './images/mobile/_DSC0719.webp',
+      './images/mobile/_DSC0684.webp',
+      './images/mobile/_DSC0680.webp',
+      './images/mobile/IMG_2005.webp',
+      './images/mobile/IMG_2051.webp',
+      './images/mobile/eyestory.webp',
+      './images/mobile/DSC03781.webp',
+    ];
+
+    const IMAGES = window.innerWidth <= 768 ? IMAGES_MOBILE : IMAGES_DESKTOP;
 
     const FRICTION    = 0.9;
     const WHEEL_SENS  = 0.6;
@@ -702,13 +726,11 @@
 
     stage.addEventListener('wheel', e => {
       if (isEntering) return;
-      // passive:true → browser NEVER waits on us, vertical page scroll is always instant
-      // Only react to horizontal swipe (trackpad two-finger left/right) to move cards
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         vX += e.deltaX * WHEEL_SENS * 20;
       }
-      // Vertical deltaY: we do nothing — page scrolls freely underneath
     }, { passive: true });
+
 
     stage.addEventListener('dragstart', e => e.preventDefault());
 

@@ -1827,25 +1827,18 @@ section { padding:var(--section-pad) 0; position:relative; }
    SELECTED WORK
    ========================================================= */
 #featured-work.jbc-floral-work {
-  background:
-    radial-gradient(circle at 100% 0%, rgba(139, 58, 139, 0.045), transparent 38%),
-    var(--charcoal);
+  background: var(--charcoal);
 }
 
-/* Selected Work — tiled, mirrored horizontally for variety */
+/* Rose pattern removed from Crumbles of Creations background */
 #featured-work.jbc-floral-work::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image: var(--jbc-floral-pattern);
-  background-repeat: repeat;
-  background-size: 620px 620px;
-  background-position: center;
-  opacity: 0.14;
-  filter: saturate(1.15) contrast(1.08);
-  transform: scaleX(-1);
+  background-image: none;
+  opacity: 0;
 }
 
 #featured-work .container {
@@ -11080,22 +11073,8 @@ section.testimonial-section span {
 #jbc-visual-gallery {
   padding: 0;
   overflow: hidden;
-
-  /* Rose pattern + dark fade + charcoal base — all in one background stack.
-     No pseudo-element, no z-index, no stacking-context interference with the carousel. */
   background-color: var(--charcoal);
-  background-image:
-    radial-gradient(
-      ellipse 65% 85% at center,
-      rgba(5, 5, 5, 0)    0%,
-      rgba(5, 5, 5, 0)    38%,
-      rgba(5, 5, 5, 0.72) 68%,
-      rgba(5, 5, 5, 0.97) 100%
-    ),
-    var(--jbc-floral-pattern);
-  background-repeat: no-repeat, repeat;
-  background-size: 100% 100%, 620px auto;
-  background-position: center center, left top;
+  background-image: none;
 }
 
 #jbc-visual-gallery .sec-header {
@@ -11324,4 +11303,18 @@ section.testimonial-section span {
   padding-right: 0 !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+
+/* ── CRUMBLES OF CREATIONS — NO ROSE BACKGROUND ─────────────────────
+   Suppress all previous rose pattern overrides on this section.
+   ──────────────────────────────────────────────────────────────────── */
+#featured-work.jbc-floral-work,
+#featured-work.jbc-floral-work::before,
+#featured-work.jbc-floral-work::after {
+  background-image: none !important;
+  opacity: 0 !important;
+}
+#featured-work.jbc-floral-work {
+  background: var(--charcoal) !important;
+  opacity: 1 !important;
 }
