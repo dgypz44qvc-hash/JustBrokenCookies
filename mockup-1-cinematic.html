@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 1 — Cinematic Scroll | JBC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#E8891D;--coral:#E84848;--magenta:#C93A6E;--purple:#8B3A8B;--black:#000;--white:#fff;}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;}
+.badge{position:fixed;top:20px;left:20px;z-index:999;background:var(--coral);color:#fff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:4px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:30px 60px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference;}
+nav .logo{font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:2px;}
+nav .logo .j{color:var(--gold);}
+nav .logo .b{color:var(--coral);}
+nav .logo .c{color:var(--purple);}
+nav ul{list-style:none;display:flex;gap:40px;}
+nav ul li a{color:#fff;text-decoration:none;font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;opacity:0.7;transition:opacity 0.3s;}
+nav ul li a:hover{opacity:1;}
+
+/* HERO — Full viewport cinematic */
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 30% 50%, rgba(232,137,29,0.08) 0%, transparent 60%),radial-gradient(ellipse at 70% 60%, rgba(139,58,139,0.06) 0%, transparent 50%);}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(4rem,10vw,9rem);font-weight:900;line-height:0.95;letter-spacing:-3px;position:relative;}
+.hero-title .line1{display:block;background:linear-gradient(135deg,var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-title .line2{display:block;background:linear-gradient(135deg,var(--coral),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-title .line3{display:block;background:linear-gradient(135deg,var(--magenta),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-family:'Dancing Script',cursive;font-size:clamp(1.2rem,3vw,2rem);color:var(--coral);margin-top:30px;opacity:0.8;}
+.scroll-indicator{position:absolute;bottom:40px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0.4;}
+.scroll-indicator span{font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--coral),transparent);}
+
+/* SECTION — Full viewport each */
+.full-section{min-height:100vh;display:flex;align-items:center;padding:0 80px;position:relative;}
+.full-section.right{justify-content:flex-end;}
+
+/* Intro */
+.intro-content{max-width:600px;}
+.intro-content .label{font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.intro-content h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.15;margin-bottom:30px;background:linear-gradient(135deg,#fff,#ccc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.intro-content p{font-size:1.05rem;line-height:1.9;color:#999;font-weight:300;}
+.glow-line{width:60px;height:2px;background:linear-gradient(90deg,var(--gold),var(--coral));margin:30px 0;}
+
+/* Services — Horizontal cards */
+.services-section{min-height:100vh;padding:120px 80px;position:relative;}
+.services-section .label{font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--coral);margin-bottom:15px;text-align:center;}
+.services-section h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);text-align:center;margin-bottom:80px;background:linear-gradient(135deg,#fff,#aaa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.services-row{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+.service-card{border:1px solid #222;padding:50px 40px;position:relative;overflow:hidden;transition:border-color 0.4s;}
+.service-card:hover{border-color:var(--coral);}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--coral),var(--purple));transform:scaleX(0);transition:transform 0.4s;transform-origin:left;}
+.service-card:hover::before{transform:scaleX(1);}
+.service-num{font-family:'Playfair Display',serif;font-size:5rem;opacity:0.06;position:absolute;top:10px;right:20px;line-height:1;}
+.service-card h3{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:8px;background:linear-gradient(135deg,var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.service-card .sub{font-family:'Dancing Script',cursive;color:var(--coral);font-size:0.95rem;margin-bottom:20px;display:block;}
+.service-card p{color:#777;font-size:0.9rem;line-height:1.8;font-weight:300;}
+
+/* Portfolio — Cinematic frames */
+.portfolio-section{padding:120px 80px;}
+.portfolio-section .label{font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:15px;}
+.portfolio-section h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);margin-bottom:60px;background:linear-gradient(135deg,#fff,#aaa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.cinema-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
+.cinema-frame{position:relative;overflow:hidden;aspect-ratio:16/9;background:#111;}
+.cinema-frame.tall{aspect-ratio:9/12;}
+.cinema-frame img{width:100%;height:100%;object-fit:cover;opacity:0.7;transition:opacity 0.5s,transform 0.8s;}
+.cinema-frame:hover img{opacity:1;transform:scale(1.05);}
+.cinema-frame .frame-info{position:absolute;bottom:0;left:0;right:0;padding:40px;background:linear-gradient(transparent,rgba(0,0,0,0.9));}
+.cinema-frame .frame-info span{font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.cinema-frame .frame-info h3{font-family:'Playfair Display',serif;font-size:1.8rem;margin-top:8px;}
+.cinema-right{display:grid;gap:20px;}
+
+/* Testimonial — Full screen */
+.testimonial{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px;position:relative;}
+.testimonial::before{content:'\201C';font-family:'Playfair Display',serif;font-size:15rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-70%);opacity:0.03;color:var(--coral);}
+.testimonial blockquote{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,2.2rem);font-weight:400;line-height:1.6;max-width:800px;font-style:italic;color:#ccc;}
+.testimonial cite{display:block;margin-top:30px;font-family:'Inter',sans-serif;font-style:normal;font-size:0.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--coral);}
+
+/* CTA */
+.cta{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px;position:relative;}
+.cta h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:15px;background:linear-gradient(135deg,var(--gold),var(--coral),var(--magenta),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.cta .sub{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--coral);margin-bottom:40px;}
+.btn-cta{display:inline-block;padding:16px 50px;border:1px solid var(--coral);color:#fff;text-decoration:none;font-size:0.75rem;letter-spacing:4px;text-transform:uppercase;transition:all 0.3s;}
+.btn-cta:hover{background:var(--coral);color:#000;}
+
+/* Footer */
+footer{border-top:1px solid #111;padding:60px 80px;display:flex;justify-content:space-between;align-items:center;}
+footer .f-logo{font-family:'Playfair Display',serif;font-size:0.9rem;letter-spacing:2px;}
+footer .f-copy{font-size:0.7rem;color:#555;letter-spacing:2px;}
+
+@media(max-width:768px){
+  nav{padding:20px 30px;}
+  nav ul{gap:20px;}
+  .full-section,.services-section,.portfolio-section{padding:60px 30px;}
+  .services-row{grid-template-columns:1fr;}
+  .cinema-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:20px;padding:40px 30px;}
+}
+</style>
+</head>
+<body>
+
+<div class="badge">Mockup 1 — Cinematic Scroll</div>
+
+<nav>
+  <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1 class="hero-title">
+    <span class="line1">Just</span>
+    <span class="line2">Broken</span>
+    <span class="line3">Cookies</span>
+  </h1>
+  <p class="hero-sub">storytelling agency</p>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="full-section">
+  <div class="intro-content">
+    <span class="label">What We Do</span>
+    <h2>Stories That Move People</h2>
+    <div class="glow-line"></div>
+    <p>We don't believe in polished perfection. We believe in the cracks — the unfinished, the imperfect, the real. That's where the best stories live. JustBrokenCookies finds those pieces and turns them into visual narratives, strategic direction, and written content that connects on a human level.</p>
+  </div>
+</section>
+
+<section class="services-section">
+  <span class="label">Our Craft</span>
+  <h2>Three Pillars of Story</h2>
+  <div class="services-row">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Visuals</h3>
+      <span class="sub">see the story</span>
+      <p>Photography, video, and motion design that stop the scroll and stay in the memory. We create visual stories that feel like a movie trailer for your brand.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Strategy</h3>
+      <span class="sub">map the story</span>
+      <p>Brand positioning, content strategy, and campaign architecture. We map the narrative arc before a single frame is shot or word is written.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Words</h3>
+      <span class="sub">speak the story</span>
+      <p>Copywriting, editorial content, and scriptwriting that carries your voice. From taglines to long-form stories, we write what people actually want to read.</p>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio-section">
+  <span class="label">Selected Work</span>
+  <h2>Stories We've Told</h2>
+  <div class="cinema-grid">
+    <div class="cinema-frame">
+      <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1200&q=80" alt="">
+      <div class="frame-info">
+        <span>Brand Campaign</span>
+        <h3>The Unfinished Room</h3>
+      </div>
+    </div>
+    <div class="cinema-right">
+      <div class="cinema-frame tall">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="">
+        <div class="frame-info">
+          <span>Visual Story</span>
+          <h3>Sunset & Silk</h3>
+        </div>
+      </div>
+      <div class="cinema-frame tall">
+        <img src="https://images.unsplash.com/photo-1531746790095-e5a6e6a15694?w=800&q=80" alt="">
+        <div class="frame-info">
+          <span>Content Strategy</span>
+          <h3>Voices Unheard</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div>
+    <blockquote>"They didn't just tell our story — they found a story we didn't even know we had. JustBrokenCookies made us fall in love with our own brand again."</blockquote>
+    <cite>Creative Director, Placeholder Brand</cite>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Let's Break Some Cookies</h2>
+  <p class="sub">your story is waiting</p>
+  <a href="#" class="btn-cta">Start a Project</a>
+</section>
+
+<footer>
+  <div class="f-logo"><span style="color:var(--gold)">Just</span><span style="color:var(--coral)">Broken</span><span style="color:var(--purple)">Cookies</span></div>
+  <div class="f-copy">&copy; 2026 JUSTBROKENCOOKIES. ALL RIGHTS RESERVED.</div>
+</footer>
+
+</body>
+</html>

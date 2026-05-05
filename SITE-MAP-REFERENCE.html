@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JBC Site Reference Map — Element Numbers</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #1a1a1a; color: #e0e0e0; padding: 30px; line-height: 1.6; }
+  h1 { text-align: center; font-size: 2rem; margin-bottom: 10px; background: linear-gradient(135deg, #E8891D, #E84848, #C93A6E, #8B3A8B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .intro { text-align: center; color: #999; margin-bottom: 40px; font-size: 0.95rem; }
+  .page-section { margin-bottom: 50px; border: 1px solid #333; border-radius: 12px; overflow: hidden; }
+  .page-header { background: linear-gradient(135deg, #E8891D22, #E8484822); padding: 18px 24px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+  .page-header h2 { font-size: 1.3rem; color: #fff; }
+  .page-header span { color: #999; font-size: 0.85rem; }
+  .elements { padding: 20px 24px; }
+  .group { margin-bottom: 20px; }
+  .group-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: #E84848; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #333; }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 6px 12px; vertical-align: top; font-size: 0.9rem; }
+  td:first-child { width: 50px; font-weight: bold; color: #E8891D; text-align: center; }
+  td:nth-child(2) { width: 80px; color: #888; font-size: 0.8rem; text-transform: uppercase; }
+  td:nth-child(3) { color: #ccc; }
+  tr:hover { background: #ffffff08; }
+  .type-img { color: #C93A6E !important; }
+  .type-text { color: #8B3A8B !important; }
+  .type-btn { color: #E8891D !important; }
+  .type-link { color: #4a9eff !important; }
+  .type-icon { color: #E84848 !important; }
+  .type-form { color: #2ecc71 !important; }
+  .legend { display: flex; gap: 24px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+  .legend span { font-size: 0.8rem; }
+  .legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .note { background: #E8891D15; border: 1px solid #E8891D33; border-radius: 8px; padding: 16px 20px; margin-bottom: 30px; font-size: 0.9rem; color: #ccc; }
+  .note strong { color: #E8891D; }
+  @media print { body { background: #fff; color: #333; } .page-header { background: #f5f5f5; } td:first-child { color: #E84848; } }
+</style>
+</head>
+<body>
+
+<h1>JustBrokenCookies — Site Element Reference Map</h1>
+<p class="intro">Your personal cheat sheet. Just say "change #42" and I'll know exactly what you mean.</p>
+
+<div class="note">
+  <strong>How to use:</strong> Each element on the website has a unique number. When you want to change something, just tell me the number and what you want. Examples: "Change image #61 to my new headshot" / "Update text #14 to say..." / "Replace #138 with my real project photo called sunset.jpg"
+</div>
+
+<div class="legend">
+  <span><span class="dot" style="background:#C93A6E;"></span>IMAGE</span>
+  <span><span class="dot" style="background:#8B3A8B;"></span>TEXT</span>
+  <span><span class="dot" style="background:#E8891D;"></span>BUTTON</span>
+  <span><span class="dot" style="background:#4a9eff;"></span>LINK</span>
+  <span><span class="dot" style="background:#E84848;"></span>ICON</span>
+  <span><span class="dot" style="background:#2ecc71;"></span>FORM</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- SHARED NAVIGATION (appears on every page)                     -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>NAVIGATION BAR (all pages)</h2><span>Shared across all pages</span></div>
+  <div class="elements">
+    <table>
+      <tr><td>1</td><td class="type-text">TEXT</td><td>Nav logo — "JustBrokenCookies" text</td></tr>
+      <tr><td>2</td><td class="type-link">LINK</td><td>Nav link — Home</td></tr>
+      <tr><td>3</td><td class="type-link">LINK</td><td>Nav link — About</td></tr>
+      <tr><td>4</td><td class="type-link">LINK</td><td>Nav link — Services</td></tr>
+      <tr><td>5</td><td class="type-link">LINK</td><td>Nav link — Portfolio</td></tr>
+      <tr><td>6</td><td class="type-link">LINK</td><td>Nav link — Blog</td></tr>
+      <tr><td>7</td><td class="type-link">LINK</td><td>Nav link — Contact</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HOME PAGE                                                      -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>HOME PAGE</h2><span>index.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Hero Section</div>
+      <table>
+        <tr><td>8</td><td class="type-img">IMAGE</td><td>Hero logo image (JBClogo2.png — main logo center of homepage)</td></tr>
+        <tr><td>9</td><td class="type-btn">BUTTON</td><td>"Explore Our Craft" button (links to Services)</td></tr>
+        <tr><td>10</td><td class="type-btn">BUTTON</td><td>"Start a Project" button (links to Contact)</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Intro — "What We Do"</div>
+      <table>
+        <tr><td>11</td><td class="type-text">TEXT</td><td>Section label: "What We Do"</td></tr>
+        <tr><td>12</td><td class="type-text">TEXT</td><td>Section title: "Stories That Move People"</td></tr>
+        <tr><td>13</td><td class="type-text">TEXT</td><td>Subtitle: "every brand has a broken cookie — a raw, imperfect truth"</td></tr>
+        <tr><td>14</td><td class="type-text">TEXT</td><td>Intro paragraph ("We don't believe in polished perfection...")</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Services Overview — "Three Pillars of Story"</div>
+      <table>
+        <tr><td>15</td><td class="type-text">TEXT</td><td>Section label: "Our Craft"</td></tr>
+        <tr><td>16</td><td class="type-text">TEXT</td><td>Section title: "Three Pillars of Story"</td></tr>
+        <tr><td>17</td><td class="type-img">IMAGE</td><td>Visuals card image (camera photo)</td></tr>
+        <tr><td>18</td><td class="type-icon">ICON</td><td>Visuals card icon (camera-retro)</td></tr>
+        <tr><td>19</td><td class="type-text">TEXT</td><td>Visuals card title: "Visuals"</td></tr>
+        <tr><td>20</td><td class="type-text">TEXT</td><td>Visuals card description text</td></tr>
+        <tr><td>21</td><td class="type-img">IMAGE</td><td>Strategy card image (planning photo)</td></tr>
+        <tr><td>22</td><td class="type-icon">ICON</td><td>Strategy card icon (compass)</td></tr>
+        <tr><td>23</td><td class="type-text">TEXT</td><td>Strategy card title: "Strategy"</td></tr>
+        <tr><td>24</td><td class="type-text">TEXT</td><td>Strategy card description text</td></tr>
+        <tr><td>25</td><td class="type-img">IMAGE</td><td>Words card image (writing photo)</td></tr>
+        <tr><td>26</td><td class="type-icon">ICON</td><td>Words card icon (feather-alt)</td></tr>
+        <tr><td>27</td><td class="type-text">TEXT</td><td>Words card title: "Words"</td></tr>
+        <tr><td>28</td><td class="type-text">TEXT</td><td>Words card description text</td></tr>
+        <tr><td>29</td><td class="type-btn">BUTTON</td><td>"See All Services" button</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Featured Work — "Stories We've Told"</div>
+      <table>
+        <tr><td>30</td><td class="type-text">TEXT</td><td>Section label: "Selected Work"</td></tr>
+        <tr><td>31</td><td class="type-text">TEXT</td><td>Section title: "Stories We've Told"</td></tr>
+        <tr><td>32</td><td class="type-text">TEXT</td><td>Subtitle: "a glimpse into our world"</td></tr>
+        <tr><td>33</td><td class="type-img">IMAGE</td><td>Portfolio item 1 image — "The Unfinished Room"</td></tr>
+        <tr><td>34</td><td class="type-text">TEXT</td><td>Portfolio item 1 label: "Brand Campaign"</td></tr>
+        <tr><td>35</td><td class="type-text">TEXT</td><td>Portfolio item 1 title: "The Unfinished Room"</td></tr>
+        <tr><td>36</td><td class="type-img">IMAGE</td><td>Portfolio item 2 image — "Sunset & Silk"</td></tr>
+        <tr><td>37</td><td class="type-text">TEXT</td><td>Portfolio item 2 label: "Visual Story"</td></tr>
+        <tr><td>38</td><td class="type-text">TEXT</td><td>Portfolio item 2 title: "Sunset & Silk"</td></tr>
+        <tr><td>39</td><td class="type-img">IMAGE</td><td>Portfolio item 3 image — "Voices Unheard"</td></tr>
+        <tr><td>40</td><td class="type-text">TEXT</td><td>Portfolio item 3 label: "Content Strategy"</td></tr>
+        <tr><td>41</td><td class="type-text">TEXT</td><td>Portfolio item 3 title: "Voices Unheard"</td></tr>
+        <tr><td>42</td><td class="type-btn">BUTTON</td><td>"View All Work" button</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Testimonial</div>
+      <table>
+        <tr><td>43</td><td class="type-text">TEXT</td><td>Testimonial quote ("They didn't just tell our story...")</td></tr>
+        <tr><td>44</td><td class="type-text">TEXT</td><td>Testimonial author: "— Creative Director, Placeholder Brand"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Call-to-Action</div>
+      <table>
+        <tr><td>45</td><td class="type-text">TEXT</td><td>CTA label: "Ready?"</td></tr>
+        <tr><td>46</td><td class="type-text">TEXT</td><td>CTA title: "Let's Break Some Cookies"</td></tr>
+        <tr><td>47</td><td class="type-text">TEXT</td><td>CTA subtitle: "your story is waiting"</td></tr>
+        <tr><td>48</td><td class="type-text">TEXT</td><td>CTA paragraph ("Whether you have a product to launch...")</td></tr>
+        <tr><td>49</td><td class="type-btn">BUTTON</td><td>"Get In Touch" button</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SHARED FOOTER (appears on every page)                         -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>FOOTER (all pages)</h2><span>Shared across all pages</span></div>
+  <div class="elements">
+    <table>
+      <tr><td>50</td><td class="type-text">TEXT</td><td>Footer logo — "JustBrokenCookies" text</td></tr>
+      <tr><td>51</td><td class="type-text">TEXT</td><td>Footer description ("A storytelling agency that cracks open...")</td></tr>
+      <tr><td>52</td><td class="type-link">LINK</td><td>Footer social — Instagram</td></tr>
+      <tr><td>53</td><td class="type-link">LINK</td><td>Footer social — LinkedIn</td></tr>
+      <tr><td>54</td><td class="type-link">LINK</td><td>Footer social — Vimeo</td></tr>
+      <tr><td>55</td><td class="type-link">LINK</td><td>Footer social — Behance</td></tr>
+      <tr><td>56</td><td class="type-text">TEXT</td><td>Copyright: "© 2026 JustBrokenCookies. All rights reserved."</td></tr>
+      <tr><td>57</td><td class="type-text">TEXT</td><td>Tagline: "Crafted with broken cookies & love."</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ABOUT PAGE                                                     -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>ABOUT PAGE</h2><span>about.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Page Header</div>
+      <table>
+        <tr><td>58</td><td class="type-text">TEXT</td><td>Label: "Who We Are"</td></tr>
+        <tr><td>59</td><td class="type-text">TEXT</td><td>Title: "About Us"</td></tr>
+        <tr><td>60</td><td class="type-text">TEXT</td><td>Subtitle: "the story behind the storytellers"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Our Origin Story</div>
+      <table>
+        <tr><td>61</td><td class="type-img">IMAGE</td><td>About photo (woman — Creative Director placeholder)</td></tr>
+        <tr><td>62</td><td class="type-text">TEXT</td><td>Label: "Our Origin"</td></tr>
+        <tr><td>63</td><td class="type-text">TEXT</td><td>Title: "Born From the Cracks"</td></tr>
+        <tr><td>64</td><td class="type-text">TEXT</td><td>Origin paragraph 1 ("JustBrokenCookies was born from...")</td></tr>
+        <tr><td>65</td><td class="type-text">TEXT</td><td>Origin paragraph 2 ("We started as creatives...")</td></tr>
+        <tr><td>66</td><td class="type-text">TEXT</td><td>Origin paragraph 3 ("We're a team of visual artists...")</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Values</div>
+      <table>
+        <tr><td>67</td><td class="type-text">TEXT</td><td>Label: "What We Stand For"</td></tr>
+        <tr><td>68</td><td class="type-text">TEXT</td><td>Title: "Our Values"</td></tr>
+        <tr><td>69</td><td class="type-text">TEXT</td><td>Subtitle: "the principles that guide every story"</td></tr>
+        <tr><td>70</td><td class="type-icon">ICON</td><td>Value 1 icon (heart-crack)</td></tr>
+        <tr><td>71</td><td class="type-text">TEXT</td><td>Value 1 title: "Imperfection"</td></tr>
+        <tr><td>72</td><td class="type-text">TEXT</td><td>Value 1 text ("We celebrate the raw, the real...")</td></tr>
+        <tr><td>73</td><td class="type-icon">ICON</td><td>Value 2 icon (fire)</td></tr>
+        <tr><td>74</td><td class="type-text">TEXT</td><td>Value 2 title: "Passion"</td></tr>
+        <tr><td>75</td><td class="type-text">TEXT</td><td>Value 2 text ("We don't do half-hearted...")</td></tr>
+        <tr><td>76</td><td class="type-icon">ICON</td><td>Value 3 icon (handshake)</td></tr>
+        <tr><td>77</td><td class="type-text">TEXT</td><td>Value 3 title: "Partnership"</td></tr>
+        <tr><td>78</td><td class="type-text">TEXT</td><td>Value 3 text ("Your story is yours...")</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Stats</div>
+      <table>
+        <tr><td>79</td><td class="type-text">TEXT</td><td>Stat: "50+" — Stories Told</td></tr>
+        <tr><td>80</td><td class="type-text">TEXT</td><td>Stat: "30+" — Happy Clients</td></tr>
+        <tr><td>81</td><td class="type-text">TEXT</td><td>Stat: "3" — Creative Pillars</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Team</div>
+      <table>
+        <tr><td>82</td><td class="type-text">TEXT</td><td>Label: "The Crew"</td></tr>
+        <tr><td>83</td><td class="type-text">TEXT</td><td>Title: "Meet the Cookie Breakers"</td></tr>
+        <tr><td>84</td><td class="type-text">TEXT</td><td>Subtitle: "dreamers, doers, storytellers"</td></tr>
+        <tr><td>85</td><td class="type-img">IMAGE</td><td>Team member 1 photo (woman placeholder)</td></tr>
+        <tr><td>86</td><td class="type-text">TEXT</td><td>Team member 1 name: "Founder Name"</td></tr>
+        <tr><td>87</td><td class="type-text">TEXT</td><td>Team member 1 role: "Creative Director"</td></tr>
+        <tr><td>88</td><td class="type-img">IMAGE</td><td>Team member 2 photo (man placeholder)</td></tr>
+        <tr><td>89</td><td class="type-text">TEXT</td><td>Team member 2 name: "Team Member"</td></tr>
+        <tr><td>90</td><td class="type-text">TEXT</td><td>Team member 2 role: "Head of Strategy"</td></tr>
+        <tr><td>91</td><td class="type-img">IMAGE</td><td>Team member 3 photo (woman placeholder)</td></tr>
+        <tr><td>92</td><td class="type-text">TEXT</td><td>Team member 3 name: "Team Member"</td></tr>
+        <tr><td>93</td><td class="type-text">TEXT</td><td>Team member 3 role: "Lead Writer"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Call-to-Action</div>
+      <table>
+        <tr><td>94</td><td class="type-text">TEXT</td><td>CTA title: "Want to Work Together?"</td></tr>
+        <tr><td>95</td><td class="type-text">TEXT</td><td>CTA subtitle: "let's break some cookies"</td></tr>
+        <tr><td>96</td><td class="type-btn">BUTTON</td><td>"Get In Touch" button</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SERVICES PAGE                                                  -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>SERVICES PAGE</h2><span>services.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Page Header</div>
+      <table>
+        <tr><td>97</td><td class="type-text">TEXT</td><td>Label: "What We Offer"</td></tr>
+        <tr><td>98</td><td class="type-text">TEXT</td><td>Title: "Our Services"</td></tr>
+        <tr><td>99</td><td class="type-text">TEXT</td><td>Subtitle: "three pillars, one story"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Service 1 — Visuals</div>
+      <table>
+        <tr><td>100</td><td class="type-img">IMAGE</td><td>Visuals section image (camera/film photo)</td></tr>
+        <tr><td>101</td><td class="type-text">TEXT</td><td>Service number: "01"</td></tr>
+        <tr><td>102</td><td class="type-text">TEXT</td><td>Title: "Visuals"</td></tr>
+        <tr><td>103</td><td class="type-text">TEXT</td><td>Subtitle: "see the story"</td></tr>
+        <tr><td>104</td><td class="type-text">TEXT</td><td>Description paragraph</td></tr>
+        <tr><td>105</td><td class="type-text">TEXT</td><td>Service list: Brand Photography, Video Production, Motion Graphics, Social Media Content, Visual Brand Identity, Event Documentation</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Service 2 — Strategy</div>
+      <table>
+        <tr><td>106</td><td class="type-img">IMAGE</td><td>Strategy section image (planning/whiteboard photo)</td></tr>
+        <tr><td>107</td><td class="type-text">TEXT</td><td>Service number: "02"</td></tr>
+        <tr><td>108</td><td class="type-text">TEXT</td><td>Title: "Strategy"</td></tr>
+        <tr><td>109</td><td class="type-text">TEXT</td><td>Subtitle: "map the story"</td></tr>
+        <tr><td>110</td><td class="type-text">TEXT</td><td>Description paragraph</td></tr>
+        <tr><td>111</td><td class="type-text">TEXT</td><td>Service list: Brand Positioning, Content Strategy, Campaign Architecture, Audience Research, Social Media Strategy, Launch Strategy</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Service 3 — Words</div>
+      <table>
+        <tr><td>112</td><td class="type-img">IMAGE</td><td>Words section image (writing/notebook photo)</td></tr>
+        <tr><td>113</td><td class="type-text">TEXT</td><td>Service number: "03"</td></tr>
+        <tr><td>114</td><td class="type-text">TEXT</td><td>Title: "Words"</td></tr>
+        <tr><td>115</td><td class="type-text">TEXT</td><td>Subtitle: "speak the story"</td></tr>
+        <tr><td>116</td><td class="type-text">TEXT</td><td>Description paragraph</td></tr>
+        <tr><td>117</td><td class="type-text">TEXT</td><td>Service list: Brand Copywriting, Website Copy, Blog Posts, Scriptwriting, Social Media Captions, Email Sequences</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Process</div>
+      <table>
+        <tr><td>118</td><td class="type-text">TEXT</td><td>Label: "How We Work"</td></tr>
+        <tr><td>119</td><td class="type-text">TEXT</td><td>Title: "Our Process"</td></tr>
+        <tr><td>120</td><td class="type-text">TEXT</td><td>Subtitle: "from first hello to final story"</td></tr>
+        <tr><td>121</td><td class="type-text">TEXT</td><td>Process card 1 title: "Discover"</td></tr>
+        <tr><td>122</td><td class="type-text">TEXT</td><td>Process card 1 text ("We listen. We dig...")</td></tr>
+        <tr><td>123</td><td class="type-text">TEXT</td><td>Process card 2 title: "Design"</td></tr>
+        <tr><td>124</td><td class="type-text">TEXT</td><td>Process card 2 text ("We map the narrative arc...")</td></tr>
+        <tr><td>125</td><td class="type-text">TEXT</td><td>Process card 3 title: "Deliver"</td></tr>
+        <tr><td>126</td><td class="type-text">TEXT</td><td>Process card 3 text ("We produce, refine, and launch...")</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Call-to-Action</div>
+      <table>
+        <tr><td>127</td><td class="type-text">TEXT</td><td>CTA title: "Ready to Tell Your Story?"</td></tr>
+        <tr><td>128</td><td class="type-text">TEXT</td><td>CTA subtitle: "let's find the right combination"</td></tr>
+        <tr><td>129</td><td class="type-btn">BUTTON</td><td>"Start a Project" button</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PORTFOLIO PAGE                                                 -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>PORTFOLIO PAGE</h2><span>portfolio.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Page Header</div>
+      <table>
+        <tr><td>130</td><td class="type-text">TEXT</td><td>Label: "Our Work"</td></tr>
+        <tr><td>131</td><td class="type-text">TEXT</td><td>Title: "Portfolio"</td></tr>
+        <tr><td>132</td><td class="type-text">TEXT</td><td>Subtitle: "stories we've brought to life"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Filter Buttons</div>
+      <table>
+        <tr><td>133</td><td class="type-btn">BUTTON</td><td>Filter: "All"</td></tr>
+        <tr><td>134</td><td class="type-btn">BUTTON</td><td>Filter: "Visuals"</td></tr>
+        <tr><td>135</td><td class="type-btn">BUTTON</td><td>Filter: "Strategy"</td></tr>
+        <tr><td>136</td><td class="type-btn">BUTTON</td><td>Filter: "Words"</td></tr>
+        <tr><td>137</td><td class="type-btn">BUTTON</td><td>Filter: "Campaigns"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Portfolio Items</div>
+      <table>
+        <tr><td>138</td><td class="type-img">IMAGE</td><td>Project 1 image — "The Unfinished Room" (FEATURED, spans 2 columns)</td></tr>
+        <tr><td>139</td><td class="type-text">TEXT</td><td>Project 1: "Full Campaign" / "The Unfinished Room"</td></tr>
+        <tr><td>140</td><td class="type-img">IMAGE</td><td>Project 2 image — "Sunset & Silk"</td></tr>
+        <tr><td>141</td><td class="type-text">TEXT</td><td>Project 2: "Visual Story" / "Sunset & Silk"</td></tr>
+        <tr><td>142</td><td class="type-img">IMAGE</td><td>Project 3 image — "Voices Unheard"</td></tr>
+        <tr><td>143</td><td class="type-text">TEXT</td><td>Project 3: "Editorial" / "Voices Unheard"</td></tr>
+        <tr><td>144</td><td class="type-img">IMAGE</td><td>Project 4 image — "From Dust to Gold"</td></tr>
+        <tr><td>145</td><td class="type-text">TEXT</td><td>Project 4: "Brand Strategy" / "From Dust to Gold"</td></tr>
+        <tr><td>146</td><td class="type-img">IMAGE</td><td>Project 5 image — "The Last Frame"</td></tr>
+        <tr><td>147</td><td class="type-text">TEXT</td><td>Project 5: "Photography" / "The Last Frame"</td></tr>
+        <tr><td>148</td><td class="type-img">IMAGE</td><td>Project 6 image — "Breaking Point"</td></tr>
+        <tr><td>149</td><td class="type-text">TEXT</td><td>Project 6: "Launch Campaign" / "Breaking Point"</td></tr>
+        <tr><td>150</td><td class="type-img">IMAGE</td><td>Project 7 image — "Midnight Manifesto"</td></tr>
+        <tr><td>151</td><td class="type-text">TEXT</td><td>Project 7: "Copywriting" / "Midnight Manifesto"</td></tr>
+        <tr><td>152</td><td class="type-img">IMAGE</td><td>Project 8 image — "Slow Burn"</td></tr>
+        <tr><td>153</td><td class="type-text">TEXT</td><td>Project 8: "Video" / "Slow Burn"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Call-to-Action</div>
+      <table>
+        <tr><td>154</td><td class="type-text">TEXT</td><td>CTA title: "Your Story Could Be Next"</td></tr>
+        <tr><td>155</td><td class="type-text">TEXT</td><td>CTA subtitle: "let's make something unforgettable"</td></tr>
+        <tr><td>156</td><td class="type-btn">BUTTON</td><td>"Start a Project" button</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BLOG PAGE                                                      -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>BLOG PAGE</h2><span>blog.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Page Header</div>
+      <table>
+        <tr><td>157</td><td class="type-text">TEXT</td><td>Label: "Thoughts & Stories"</td></tr>
+        <tr><td>158</td><td class="type-text">TEXT</td><td>Title: "The Blog"</td></tr>
+        <tr><td>159</td><td class="type-text">TEXT</td><td>Subtitle: "where we share what we're thinking"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Blog Posts</div>
+      <table>
+        <tr><td>160</td><td class="type-img">IMAGE</td><td>Post 1 image (film/cinema photo)</td></tr>
+        <tr><td>161</td><td class="type-text">TEXT</td><td>Post 1 meta: "April 15, 2026 — Storytelling"</td></tr>
+        <tr><td>162</td><td class="type-text">TEXT</td><td>Post 1 title: "Why the Best Brand Stories Are the Ones You Almost Didn't Tell"</td></tr>
+        <tr><td>163</td><td class="type-text">TEXT</td><td>Post 1 excerpt</td></tr>
+        <tr><td>164</td><td class="type-img">IMAGE</td><td>Post 2 image (planning/strategy photo)</td></tr>
+        <tr><td>165</td><td class="type-text">TEXT</td><td>Post 2 meta: "April 8, 2026 — Strategy"</td></tr>
+        <tr><td>166</td><td class="type-text">TEXT</td><td>Post 2 title: "Content Strategy Is Not a Calendar — It's a Compass"</td></tr>
+        <tr><td>167</td><td class="type-text">TEXT</td><td>Post 2 excerpt</td></tr>
+        <tr><td>168</td><td class="type-img">IMAGE</td><td>Post 3 image (camera photo)</td></tr>
+        <tr><td>169</td><td class="type-text">TEXT</td><td>Post 3 meta: "March 28, 2026 — Visuals"</td></tr>
+        <tr><td>170</td><td class="type-text">TEXT</td><td>Post 3 title: "The Art of the Imperfect Frame: Why Raw Visuals Win"</td></tr>
+        <tr><td>171</td><td class="type-text">TEXT</td><td>Post 3 excerpt</td></tr>
+        <tr><td>172</td><td class="type-img">IMAGE</td><td>Post 4 image (writing/pen photo)</td></tr>
+        <tr><td>173</td><td class="type-text">TEXT</td><td>Post 4 meta: "March 15, 2026 — Words"</td></tr>
+        <tr><td>174</td><td class="type-text">TEXT</td><td>Post 4 title: "How to Write a Brand Voice That Doesn't Sound Like Everyone Else"</td></tr>
+        <tr><td>175</td><td class="type-text">TEXT</td><td>Post 4 excerpt</td></tr>
+        <tr><td>176</td><td class="type-img">IMAGE</td><td>Post 5 image (abstract/paint photo)</td></tr>
+        <tr><td>177</td><td class="type-text">TEXT</td><td>Post 5 meta: "March 2, 2026 — Culture"</td></tr>
+        <tr><td>178</td><td class="type-text">TEXT</td><td>Post 5 title: "Broken Cookies Taste Better: Our Manifesto"</td></tr>
+        <tr><td>179</td><td class="type-text">TEXT</td><td>Post 5 excerpt</td></tr>
+        <tr><td>180</td><td class="type-img">IMAGE</td><td>Post 6 image (art/creative photo)</td></tr>
+        <tr><td>181</td><td class="type-text">TEXT</td><td>Post 6 meta: "February 18, 2026 — Process"</td></tr>
+        <tr><td>182</td><td class="type-text">TEXT</td><td>Post 6 title: "Behind the Scenes: How We Build a Campaign from Zero"</td></tr>
+        <tr><td>183</td><td class="type-text">TEXT</td><td>Post 6 excerpt</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- CONTACT PAGE                                                   -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>CONTACT PAGE</h2><span>contact.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Page Header</div>
+      <table>
+        <tr><td>184</td><td class="type-text">TEXT</td><td>Label: "Let's Talk"</td></tr>
+        <tr><td>185</td><td class="type-text">TEXT</td><td>Title: "Get In Touch"</td></tr>
+        <tr><td>186</td><td class="type-text">TEXT</td><td>Subtitle: "every great story starts with a conversation"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Contact Form</div>
+      <table>
+        <tr><td>187</td><td class="type-form">FORM</td><td>Input field: "Your Name"</td></tr>
+        <tr><td>188</td><td class="type-form">FORM</td><td>Input field: "Your Email"</td></tr>
+        <tr><td>189</td><td class="type-form">FORM</td><td>Input field: "Subject"</td></tr>
+        <tr><td>190</td><td class="type-form">FORM</td><td>Dropdown: "What are you interested in?" (Visuals, Strategy, Words, Full Campaign, Something Else)</td></tr>
+        <tr><td>191</td><td class="type-form">FORM</td><td>Textarea: "Tell us about your project..."</td></tr>
+        <tr><td>192</td><td class="type-btn">BUTTON</td><td>"Send Message" submit button</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Contact Info Sidebar</div>
+      <table>
+        <tr><td>193</td><td class="type-text">TEXT</td><td>Label: "Prefer email?"</td></tr>
+        <tr><td>194</td><td class="type-text">TEXT</td><td>Title: "Drop Us a Line"</td></tr>
+        <tr><td>195</td><td class="type-text">TEXT</td><td>Description ("Whether you've got a fully baked idea...")</td></tr>
+        <tr><td>196</td><td class="type-link">LINK</td><td>Email: hello@justbrokencookies.com</td></tr>
+        <tr><td>197</td><td class="type-link">LINK</td><td>Website: www.justbrokencookies.com</td></tr>
+        <tr><td>198</td><td class="type-text">TEXT</td><td>Location: "Worldwide — Stories have no borders."</td></tr>
+        <tr><td>199</td><td class="type-link">LINK</td><td>Contact social — Instagram</td></tr>
+        <tr><td>200</td><td class="type-link">LINK</td><td>Contact social — LinkedIn</td></tr>
+        <tr><td>201</td><td class="type-link">LINK</td><td>Contact social — Vimeo</td></tr>
+        <tr><td>202</td><td class="type-link">LINK</td><td>Contact social — Behance</td></tr>
+        <tr><td>203</td><td class="type-link">LINK</td><td>Contact social — TikTok</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BLOG POST PAGE                                                 -->
+<!-- ============================================================ -->
+<div class="page-section">
+  <div class="page-header"><h2>BLOG POST — "Why the Best Brand Stories..."</h2><span>blog/post-01.html</span></div>
+  <div class="elements">
+
+    <div class="group">
+      <div class="group-title">Post Header</div>
+      <table>
+        <tr><td>204</td><td class="type-text">TEXT</td><td>Post date/category: "April 15, 2026 — Storytelling"</td></tr>
+        <tr><td>205</td><td class="type-text">TEXT</td><td>Post title: "Why the Best Brand Stories Are the Ones You Almost Didn't Tell"</td></tr>
+        <tr><td>206</td><td class="type-text">TEXT</td><td>Post author: "by the JustBrokenCookies team"</td></tr>
+      </table>
+    </div>
+
+    <div class="group">
+      <div class="group-title">Post Body</div>
+      <table>
+        <tr><td>207</td><td class="type-text">TEXT</td><td>Full article body text (all paragraphs and headings)</td></tr>
+        <tr><td>208</td><td class="type-text">TEXT</td><td>Post CTA text: "Got a story you're afraid to tell?"</td></tr>
+        <tr><td>209</td><td class="type-btn">BUTTON</td><td>"Let's Talk About It" button</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<div style="text-align: center; padding: 40px 0 20px; color: #555; font-size: 0.8rem;">
+  <p>Total elements: 209 | This file is for your reference only — it is NOT published to the live site.</p>
+  <p style="margin-top: 8px;">Generated April 23, 2026 by Claude for JustBrokenCookies</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 4 — Brutalist Storyteller | JBC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#E8891D;--coral:#E84848;--magenta:#C93A6E;--purple:#8B3A8B;}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;}
+.badge{position:fixed;top:20px;left:20px;z-index:999;background:#fff;color:#000;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:0;}
+
+nav{padding:20px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #fff;}
+nav .logo{font-family:'Inter',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;}
+nav ul{list-style:none;display:flex;gap:25px;}
+nav ul li a{color:#fff;text-decoration:none;font-size:0.65rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;transition:color 0.2s;}
+nav ul li a:hover{color:var(--coral);text-decoration:line-through;}
+
+/* HERO — Brutalist oversized type */
+.hero{padding:40px;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.hero-top .tag{font-size:0.6rem;letter-spacing:5px;text-transform:uppercase;color:var(--coral);writing-mode:vertical-rl;text-orientation:mixed;}
+.hero-mega{font-family:'Playfair Display',serif;font-weight:900;line-height:0.85;letter-spacing:-5px;}
+.hero-mega .l1{display:block;font-size:clamp(5rem,15vw,14rem);color:var(--gold);}
+.hero-mega .l2{display:block;font-size:clamp(5rem,15vw,14rem);color:var(--coral);margin-left:clamp(30px,8vw,120px);}
+.hero-mega .l3{display:block;font-size:clamp(5rem,15vw,14rem);color:var(--purple);}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;padding-top:20px;border-top:2px solid #fff;}
+.hero-bottom .desc{max-width:400px;font-size:0.85rem;line-height:1.7;color:#888;font-weight:300;}
+.hero-bottom .scroll-txt{font-size:0.6rem;letter-spacing:6px;text-transform:uppercase;color:#555;}
+
+/* MANIFESTO STRIP */
+.manifesto{padding:0 40px;border-top:2px solid #fff;border-bottom:2px solid #fff;overflow:hidden;}
+.manifesto-inner{display:flex;align-items:center;white-space:nowrap;padding:25px 0;animation:marquee 20s linear infinite;}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.manifesto-inner span{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:#555;margin:0 40px;}
+.manifesto-inner span .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--coral);margin:0 30px;vertical-align:middle;}
+
+/* SERVICES — Brutalist grid */
+.services-brutal{padding:60px 40px;}
+.services-brutal .sec-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;padding-bottom:15px;border-bottom:2px solid #fff;}
+.services-brutal .sec-header h2{font-family:'Inter',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;}
+.services-brutal .sec-header span{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;opacity:0.1;}
+.brutal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.brutal-card{border:1px solid #333;padding:45px 35px;position:relative;transition:all 0.3s;}
+.brutal-card:hover{background:#fff;color:#000;border-color:#fff;}
+.brutal-card:hover h3{-webkit-text-fill-color:#000;}
+.brutal-card:hover .b-sub{color:#000;}
+.brutal-card:hover p{color:#333;}
+.brutal-card .b-num{font-family:'Inter',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:5px;color:var(--coral);margin-bottom:20px;}
+.brutal-card h3{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;margin-bottom:5px;background:linear-gradient(var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.brutal-card .b-sub{font-family:'Dancing Script',cursive;color:var(--coral);margin-bottom:20px;display:block;}
+.brutal-card p{color:#666;font-size:0.85rem;line-height:1.8;font-weight:300;}
+
+/* WORK — Raw stack */
+.work-brutal{padding:60px 40px;border-top:2px solid #fff;}
+.work-brutal .sec-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;padding-bottom:15px;border-bottom:2px solid #fff;}
+.work-brutal .sec-header h2{font-family:'Inter',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;}
+.work-stack{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;}
+.work-item{position:relative;aspect-ratio:1;overflow:hidden;}
+.work-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(1.2);transition:filter 0.4s;}
+.work-item:hover img{filter:grayscale(0%);}
+.work-item .w-info{position:absolute;bottom:0;left:0;right:0;padding:20px;background:#000;opacity:0;transition:opacity 0.3s;border-top:2px solid var(--coral);}
+.work-item:hover .w-info{opacity:1;}
+.work-item .w-info span{font-size:0.55rem;letter-spacing:4px;text-transform:uppercase;color:var(--coral);}
+.work-item .w-info h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-top:4px;}
+
+/* TESTIMONIAL — Brutalist block */
+.testi-brutal{display:grid;grid-template-columns:auto 1fr;border-top:2px solid #fff;}
+.testi-mark{background:var(--coral);display:flex;align-items:center;justify-content:center;padding:40px;writing-mode:vertical-rl;}
+.testi-mark span{font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:6px;text-transform:uppercase;font-weight:700;}
+.testi-content{padding:60px;display:flex;flex-direction:column;justify-content:center;}
+.testi-content blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.6rem;line-height:1.6;color:#ccc;margin-bottom:20px;}
+.testi-content cite{font-style:normal;font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--coral);font-weight:600;}
+
+/* CTA — Massive type */
+.cta-brutal{padding:100px 40px;text-align:center;border-top:2px solid #fff;}
+.cta-brutal h2{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,7rem);font-weight:900;line-height:0.95;letter-spacing:-3px;margin-bottom:15px;}
+.cta-brutal h2 .w1{color:var(--gold);}
+.cta-brutal h2 .w2{color:var(--coral);}
+.cta-brutal h2 .w3{color:var(--magenta);}
+.cta-brutal h2 .w4{color:var(--purple);}
+.cta-brutal .cursive{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--coral);margin-bottom:40px;}
+.btn-brutal{display:inline-block;padding:16px 50px;background:#fff;color:#000;text-decoration:none;font-size:0.7rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;transition:all 0.2s;}
+.btn-brutal:hover{background:var(--coral);color:#fff;}
+
+footer{border-top:2px solid #fff;padding:30px 40px;display:flex;justify-content:space-between;font-size:0.6rem;letter-spacing:4px;text-transform:uppercase;font-weight:600;color:#666;}
+
+@media(max-width:768px){
+  .brutal-grid,.work-stack{grid-template-columns:1fr;}
+  .testi-brutal{grid-template-columns:1fr;}
+  .hero,.services-brutal,.work-brutal,.cta-brutal,footer{padding-left:25px;padding-right:25px;}
+}
+</style>
+</head>
+<body>
+<div class="badge">Mockup 4 — Brutalist Storyteller</div>
+
+<nav>
+  <div class="logo"><span style="color:var(--gold)">JUST</span><span style="color:var(--coral)">BROKEN</span><span style="color:var(--purple)">COOKIES</span></div>
+  <ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Work</a></li><li><a href="#">Blog</a></li><li><a href="#">Contact</a></li></ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-top"><div></div><div class="tag">Storytelling Agency &mdash; Est. 2026</div></div>
+  <div class="hero-mega">
+    <span class="l1">Just</span>
+    <span class="l2">Broken</span>
+    <span class="l3">Cookies</span>
+  </div>
+  <div class="hero-bottom">
+    <p class="desc">We don't believe in polished perfection. We believe in the cracks — the unfinished, the imperfect, the real. That's where the best stories live.</p>
+    <span class="scroll-txt">Scroll to explore &darr;</span>
+  </div>
+</section>
+
+<div class="manifesto">
+  <div class="manifesto-inner">
+    <span>Visuals<span class="dot"></span>Strategy<span class="dot"></span>Words<span class="dot"></span>Stories that move people<span class="dot"></span>Visuals<span class="dot"></span>Strategy<span class="dot"></span>Words<span class="dot"></span>Stories that move people</span>
+    <span>Visuals<span class="dot"></span>Strategy<span class="dot"></span>Words<span class="dot"></span>Stories that move people<span class="dot"></span>Visuals<span class="dot"></span>Strategy<span class="dot"></span>Words<span class="dot"></span>Stories that move people</span>
+  </div>
+</div>
+
+<section class="services-brutal">
+  <div class="sec-header"><h2>What We Do</h2><span>03</span></div>
+  <div class="brutal-grid">
+    <div class="brutal-card"><div class="b-num">NO. 01</div><h3>Visuals</h3><span class="b-sub">see the story</span><p>Photography, video, and motion design that stop the scroll and stay in the memory.</p></div>
+    <div class="brutal-card"><div class="b-num">NO. 02</div><h3>Strategy</h3><span class="b-sub">map the story</span><p>Brand positioning, content strategy, and campaign architecture for lasting impact.</p></div>
+    <div class="brutal-card"><div class="b-num">NO. 03</div><h3>Words</h3><span class="b-sub">speak the story</span><p>Copywriting, editorial content, and scriptwriting that carries your authentic voice.</p></div>
+  </div>
+</section>
+
+<section class="work-brutal">
+  <div class="sec-header"><h2>Selected Work</h2><span></span></div>
+  <div class="work-stack">
+    <div class="work-item"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=80" alt=""><div class="w-info"><span>Campaign</span><h3>The Unfinished Room</h3></div></div>
+    <div class="work-item"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt=""><div class="w-info"><span>Visual</span><h3>Sunset & Silk</h3></div></div>
+    <div class="work-item"><img src="https://images.unsplash.com/photo-1531746790095-e5a6e6a15694?w=600&q=80" alt=""><div class="w-info"><span>Editorial</span><h3>Voices Unheard</h3></div></div>
+    <div class="work-item"><img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=80" alt=""><div class="w-info"><span>Strategy</span><h3>From Dust to Gold</h3></div></div>
+  </div>
+</section>
+
+<section class="testi-brutal">
+  <div class="testi-mark"><span>Testimonial</span></div>
+  <div class="testi-content">
+    <blockquote>"They didn't just tell our story — they found a story we didn't even know we had."</blockquote>
+    <cite>Creative Director, Placeholder Brand</cite>
+  </div>
+</section>
+
+<section class="cta-brutal">
+  <h2><span class="w1">Let's </span><span class="w2">Break </span><span class="w3">Some </span><span class="w4">Cookies</span></h2>
+  <p class="cursive">your story is waiting</p>
+  <a href="#" class="btn-brutal">Start a Project</a>
+</section>
+
+<footer>
+  <span><span style="color:var(--gold)">JUST</span><span style="color:var(--coral)">BROKEN</span><span style="color:var(--purple)">COOKIES</span></span>
+  <span>&copy; 2026</span>
+</footer>
+</body>
+</html>

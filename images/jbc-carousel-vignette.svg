@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Strong but narrow edge fades, transparent centre -->
+    <linearGradient id="leftRight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.95"/>
+      <stop offset="2.5%" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="6%" stop-color="#000000" stop-opacity="0.22"/>
+      <stop offset="10%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="90%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="94%" stop-color="#000000" stop-opacity="0.22"/>
+      <stop offset="97.5%" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <linearGradient id="topBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.95"/>
+      <stop offset="3%" stop-color="#000000" stop-opacity="0.68"/>
+      <stop offset="7%" stop-color="#000000" stop-opacity="0.24"/>
+      <stop offset="11%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="89%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="93%" stop-color="#000000" stop-opacity="0.24"/>
+      <stop offset="97%" stop-color="#000000" stop-opacity="0.68"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Corner smoke, only in corners -->
+    <radialGradient id="tl" cx="0%" cy="0%" r="26%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="52%" stop-color="#000000" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="tr" cx="100%" cy="0%" r="26%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="52%" stop-color="#000000" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="bl" cx="0%" cy="100%" r="26%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="52%" stop-color="#000000" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="br" cx="100%" cy="100%" r="26%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#000000" stop-opacity="0.65"/>
+      <stop offset="52%" stop-color="#000000" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#leftRight)"/>
+  <rect width="1920" height="1080" fill="url(#topBottom)"/>
+  <rect width="1920" height="1080" fill="url(#tl)"/>
+  <rect width="1920" height="1080" fill="url(#tr)"/>
+  <rect width="1920" height="1080" fill="url(#bl)"/>
+  <rect width="1920" height="1080" fill="url(#br)"/>
+</svg>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — JustBrokenCookies</title>
+  <meta name="description" content="Explore the stories we've told — brand campaigns, visual stories, and content projects by JustBrokenCookies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preload" href="images/jbc-rose-pattern-bg.png" as="image" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+
+  <!-- ========== PRELOADER ========== -->
+  <div class="preloader">
+    <div>
+      <div class="preloader-logo">
+        <span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span>
+      </div>
+      <div class="preloader-line"></div>
+    </div>
+  </div>
+  <div class="page-transition"></div>
+
+  <!-- ========== CURSOR ========== -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+
+  <nav class="nav" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html" class="active">Work</a>
+        <a href="magazine.html">Magazine</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <section class="page-header jbc-floral-page-header">
+    <div class="container">
+      <div>
+        <p class="section-label">Our Work</p>
+        <h1 class="section-title"><span style="color:var(--gold);">Port</span><span style="color:var(--blush);">folio</span></h1>
+      </div>
+      <p class="section-subtitle" style="margin-bottom:0;">stories we've brought to life</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0;" class="jbc-editorial-section jbc-floral-portfolio-grid">
+    <div class="container">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="visuals">Define</button>
+        <button class="filter-btn" data-filter="strategy">Design</button>
+        <button class="filter-btn" data-filter="words">Describe</button>
+        <button class="filter-btn" data-filter="campaign">Campaigns</button>
+      </div>
+
+      <div class="portfolio-grid-full">
+        <div class="portfolio-item" data-category="campaign">
+          <img decoding="async" loading="lazy" src="images/portfolio/the-way-home.jpg" alt="The Unfinished Room" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Full Campaign</span><h3>The Unfinished Room</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="visuals">
+          <img decoding="async" loading="lazy" src="images/portfolio/sunset-silk.jpg" alt="Sunset and Silk" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Visual Story</span><h3>Sunset &amp; Silk</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="words">
+          <img decoding="async" loading="lazy" src="images/portfolio/voices-unheard.jpg" alt="Voices Unheard" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Editorial</span><h3>Voices Unheard</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="strategy">
+          <img decoding="async" loading="lazy" src="images/portfolio/dust-to-gold.jpg" alt="From Dust to Gold" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Brand Strategy</span><h3>From Dust to Gold</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="visuals">
+          <img decoding="async" loading="lazy" src="images/portfolio/venice-arches.jpg" alt="The Last Frame" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Photography</span><h3>The Last Frame</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="campaign">
+          <img decoding="async" loading="lazy" src="images/portfolio/gallery-scene.jpg" alt="Breaking Point" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Launch Campaign</span><h3>Breaking Point</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="words">
+          <img decoding="async" loading="lazy" src="images/portfolio/london-night.jpg" alt="Midnight Manifesto" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Copywriting</span><h3>Midnight Manifesto</h3></div>
+        </div>
+        <div class="portfolio-item" data-category="visuals">
+          <img decoding="async" loading="lazy" src="images/portfolio/couple-sea.jpg" alt="Slow Burn" style="width:100%; height:100%; object-fit:cover;">
+          <div class="overlay"><span>Video</span><h3>Slow Burn</h3></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section jbc-editorial-section jbc-floral-cta">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title"><span style="color:var(--gold);">Your </span><span style="color:var(--blush);">Story </span><span style="color:var(--dusty-rose);">Could Be </span><span style="color:var(--wine);">Next</span></h2>
+      <p class="section-subtitle">let's make something unforgettable</p>
+      <a href="contact.html" class="btn btn-primary">Start a Project</a>
+    </div>
+  </section>
+
+  <footer class="footer jbc-editorial-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></div>
+        <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+          <a href="#" aria-label="Behance"><i class="fab fa-behance"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navigate</h4><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="magazine.html">Magazine</a></div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html">Define</a><a href="services.html">Design</a><a href="services.html">Describe</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="mailto:hello@justbrokencookies.com">hello@justbrokencookies.com</a><a href="contact.html">Send a Message</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span><span style="color:var(--gold);">JUST</span><span style="color:var(--blush);">BROKEN</span><span style="color:var(--wine);">COOKIES</span></span>
+      <span>&copy; 2026</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/editor-refs.js"></script>
+</body>
+</html>

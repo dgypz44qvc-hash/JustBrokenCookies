@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 2 — Editorial Magazine | JBC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#E8891D;--coral:#E84848;--magenta:#C93A6E;--purple:#8B3A8B;--cream:#f5f0e8;}
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;}
+.badge{position:fixed;top:20px;left:20px;z-index:999;background:var(--magenta);color:#fff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:4px;}
+
+/* NAV — editorial thin bar */
+nav{padding:25px 60px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a1a;}
+nav .logo{font-family:'Playfair Display',serif;font-size:0.85rem;letter-spacing:4px;text-transform:uppercase;}
+nav ul{list-style:none;display:flex;gap:35px;}
+nav ul li a{color:#666;text-decoration:none;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;transition:color 0.3s;}
+nav ul li a:hover{color:var(--coral);}
+
+/* HERO — Magazine masthead style */
+.hero{padding:80px 60px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;min-height:90vh;align-items:center;}
+.hero-left{padding-right:40px;}
+.hero-issue{font-size:0.65rem;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:30px;display:flex;align-items:center;gap:15px;}
+.hero-issue::after{content:'';flex:1;height:1px;background:#333;}
+.hero-left h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,6vw,6rem);font-weight:900;line-height:0.95;margin-bottom:30px;}
+.hero-left h1 .w1{color:var(--gold);}
+.hero-left h1 .w2{color:var(--coral);}
+.hero-left h1 .w3{color:var(--purple);}
+.hero-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:1.3rem;color:#888;line-height:1.6;border-left:2px solid var(--coral);padding-left:25px;margin-bottom:40px;}
+.hero-meta{display:flex;gap:40px;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:#555;}
+.hero-right{position:relative;}
+.hero-img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(20%) contrast(1.1);}
+.hero-caption{position:absolute;bottom:-15px;right:-15px;background:var(--coral);padding:15px 25px;font-family:'Dancing Script',cursive;font-size:1.1rem;}
+
+/* EDITORIAL GRID — Magazine layout */
+.editorial-section{padding:100px 60px;border-top:1px solid #1a1a1a;}
+.editorial-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;padding-bottom:20px;border-bottom:1px solid #222;}
+.editorial-header .col-label{font-size:0.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);}
+.editorial-header h2{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;}
+.editorial-header .col-num{font-family:'Playfair Display',serif;font-size:4rem;opacity:0.1;}
+
+.mag-grid{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;gap:0;}
+.mag-divider{background:#222;}
+.mag-column{padding:0 35px;}
+.mag-column:first-child{padding-left:0;}
+.mag-column:last-child{padding-right:0;}
+.mag-column .col-num{font-family:'Playfair Display',serif;font-size:6rem;opacity:0.06;line-height:1;margin-bottom:10px;}
+.mag-column h3{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:6px;background:linear-gradient(135deg,var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.mag-column .col-sub{font-family:'Dancing Script',cursive;color:var(--coral);font-size:0.95rem;margin-bottom:20px;display:block;}
+.mag-column p{color:#777;font-size:0.88rem;line-height:1.85;font-weight:300;}
+.mag-column .divider{width:40px;height:1px;background:var(--coral);margin:25px 0;}
+
+/* FEATURED WORK — Magazine spread */
+.spread-section{padding:100px 60px;border-top:1px solid #1a1a1a;}
+.spread-header{margin-bottom:50px;}
+.spread-header .col-label{font-size:0.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.spread-header h2{font-family:'Playfair Display',serif;font-size:2.8rem;}
+.spread-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;grid-template-rows:auto auto;gap:15px;}
+.spread-item{position:relative;overflow:hidden;}
+.spread-item.featured{grid-row:span 2;}
+.spread-item img{width:100%;height:100%;object-fit:cover;min-height:250px;filter:grayscale(30%);transition:filter 0.5s;}
+.spread-item:hover img{filter:grayscale(0%);}
+.spread-item .info{position:absolute;bottom:0;left:0;padding:30px;background:linear-gradient(transparent,rgba(0,0,0,0.85));}
+.spread-item .info span{font-size:0.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.spread-item .info h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-top:5px;}
+
+/* PULL QUOTE */
+.pullquote-section{padding:100px 60px;border-top:1px solid #1a1a1a;display:flex;align-items:center;gap:60px;}
+.pq-mark{font-family:'Playfair Display',serif;font-size:12rem;line-height:1;color:var(--coral);opacity:0.15;flex-shrink:0;}
+.pq-content blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.8rem;line-height:1.6;color:#ccc;margin-bottom:20px;}
+.pq-content cite{font-style:normal;font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--coral);}
+
+/* CTA — Magazine closing */
+.cta-section{padding:120px 60px;text-align:center;border-top:1px solid #1a1a1a;}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);margin-bottom:10px;}
+.cta-section h2 span{background:linear-gradient(135deg,var(--gold),var(--coral),var(--magenta),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.cta-section .sub{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--coral);margin-bottom:40px;}
+.btn-ed{display:inline-block;padding:14px 45px;border:1px solid #444;color:#fff;text-decoration:none;font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;transition:all 0.3s;}
+.btn-ed:hover{border-color:var(--coral);background:rgba(232,72,72,0.1);}
+
+/* FOOTER */
+footer{border-top:1px solid #1a1a1a;padding:40px 60px;display:flex;justify-content:space-between;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:#444;}
+
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding:60px 30px;}
+  .mag-grid{grid-template-columns:1fr;gap:40px;}
+  .mag-divider{display:none;}
+  .mag-column{padding:0;}
+  .spread-grid{grid-template-columns:1fr;}
+  .spread-item.featured{grid-row:span 1;}
+  .pullquote-section{flex-direction:column;padding:60px 30px;}
+  .pq-mark{font-size:6rem;}
+  nav,.editorial-section,.spread-section,.cta-section,footer{padding-left:30px;padding-right:30px;}
+}
+</style>
+</head>
+<body>
+
+<div class="badge">Mockup 2 — Editorial Magazine</div>
+
+<nav>
+  <div class="logo"><span style="color:var(--gold)">Just</span><span style="color:var(--coral)">Broken</span><span style="color:var(--purple)">Cookies</span></div>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Blog</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-issue">Issue No. 01 &mdash; Storytelling Agency</div>
+    <h1><span class="w1">Just</span><span class="w2">Broken</span><span class="w3">Cookies</span></h1>
+    <p class="hero-tagline">We don't believe in polished perfection. We believe in the cracks &mdash; the unfinished, the imperfect, the real. That's where the best stories live.</p>
+    <div class="hero-meta">
+      <span>Visuals</span>
+      <span>Strategy</span>
+      <span>Words</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80" alt="">
+    <div class="hero-caption">storytelling agency</div>
+  </div>
+</section>
+
+<section class="editorial-section">
+  <div class="editorial-header">
+    <div>
+      <div class="col-label">Our Craft</div>
+      <h2>Three Pillars</h2>
+    </div>
+    <div class="col-num">03</div>
+  </div>
+  <div class="mag-grid">
+    <div class="mag-column">
+      <div class="col-num">01</div>
+      <h3>Visuals</h3>
+      <span class="col-sub">see the story</span>
+      <div class="divider"></div>
+      <p>Photography, video, and motion design that stop the scroll and stay in the memory. We create visual stories that feel like a movie trailer for your brand.</p>
+    </div>
+    <div class="mag-divider"></div>
+    <div class="mag-column">
+      <div class="col-num">02</div>
+      <h3>Strategy</h3>
+      <span class="col-sub">map the story</span>
+      <div class="divider"></div>
+      <p>Brand positioning, content strategy, and campaign architecture. We map the narrative arc before a single frame is shot or word is written.</p>
+    </div>
+    <div class="mag-divider"></div>
+    <div class="mag-column">
+      <div class="col-num">03</div>
+      <h3>Words</h3>
+      <span class="col-sub">speak the story</span>
+      <div class="divider"></div>
+      <p>Copywriting, editorial content, and scriptwriting that carries your voice. From taglines to long-form stories, we write what people actually want to read.</p>
+    </div>
+  </div>
+</section>
+
+<section class="spread-section">
+  <div class="spread-header">
+    <div class="col-label">Selected Work</div>
+    <h2>Stories We've Told</h2>
+  </div>
+  <div class="spread-grid">
+    <div class="spread-item featured">
+      <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=900&q=80" alt="">
+      <div class="info"><span>Full Campaign</span><h3>The Unfinished Room</h3></div>
+    </div>
+    <div class="spread-item">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80" alt="">
+      <div class="info"><span>Visual Story</span><h3>Sunset & Silk</h3></div>
+    </div>
+    <div class="spread-item">
+      <img src="https://images.unsplash.com/photo-1531746790095-e5a6e6a15694?w=700&q=80" alt="">
+      <div class="info"><span>Content Strategy</span><h3>Voices Unheard</h3></div>
+    </div>
+    <div class="spread-item">
+      <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=700&q=80" alt="">
+      <div class="info"><span>Brand Strategy</span><h3>From Dust to Gold</h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="pullquote-section">
+  <div class="pq-mark">&ldquo;</div>
+  <div class="pq-content">
+    <blockquote>"They didn't just tell our story &mdash; they found a story we didn't even know we had. JustBrokenCookies made us fall in love with our own brand again."</blockquote>
+    <cite>Creative Director, Placeholder Brand</cite>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2><span>Let's Break Some Cookies</span></h2>
+  <p class="sub">your story is waiting</p>
+  <a href="#" class="btn-ed">Start a Project</a>
+</section>
+
+<footer>
+  <span><span style="color:var(--gold)">Just</span><span style="color:var(--coral)">Broken</span><span style="color:var(--purple)">Cookies</span></span>
+  <span>&copy; 2026 All Rights Reserved</span>
+</footer>
+
+</body>
+</html>

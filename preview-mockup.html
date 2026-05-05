@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JustBrokenCookies — Website Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --gold: #E8891D;
+      --coral: #E84848;
+      --magenta: #C93A6E;
+      --purple: #8B3A8B;
+      --blush: #E8A0A0;
+      --black: #000000;
+      --dark: #0A0A0A;
+      --dark-gray: #1A1A1A;
+      --mid-gray: #2A2A2A;
+      --light-gray: #888888;
+      --off-white: #F0E6E0;
+      --sunset-gradient: linear-gradient(135deg, var(--gold), var(--coral), var(--magenta), var(--purple));
+      --sunset-text: linear-gradient(90deg, var(--gold), var(--coral), var(--magenta), var(--purple));
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #111;
+      color: var(--off-white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Page selector */
+    .page-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--dark-gray);
+      padding: 12px 0;
+    }
+    .page-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .page-nav-label {
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      flex-shrink: 0;
+    }
+    .page-btn {
+      background: none;
+      border: 1px solid var(--dark-gray);
+      color: var(--light-gray);
+      padding: 6px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .page-btn:hover, .page-btn.active {
+      border-color: var(--coral);
+      color: white;
+      background: rgba(232,72,72,0.15);
+    }
+
+    /* Mockup frame */
+    .mockup-wrapper {
+      max-width: 1200px;
+      margin: 80px auto 40px;
+      padding: 0 20px;
+    }
+    .browser-frame {
+      background: var(--dark);
+      border: 1px solid var(--dark-gray);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .browser-bar {
+      background: var(--dark-gray);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .browser-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .browser-dots span:nth-child(1) { background: #ff5f57; }
+    .browser-dots span:nth-child(2) { background: #ffbd2e; }
+    .browser-dots span:nth-child(3) { background: #28ca42; }
+    .browser-url {
+      flex: 1;
+      background: var(--black);
+      border-radius: 4px;
+      padding: 5px 14px;
+      font-size: 0.75rem;
+      color: var(--light-gray);
+    }
+
+    .page-content {
+      display: none;
+    }
+    .page-content.active {
+      display: block;
+    }
+
+    .gradient-text {
+      background: var(--sunset-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== NAVBAR inside mockup ===== */
+    .site-nav {
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .logo .j { color: var(--gold); }
+    .logo .b { color: var(--coral); }
+    .logo .c { color: var(--purple); }
+    .nav-items {
+      display: flex;
+      gap: 28px;
+    }
+    .nav-items span {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      cursor: default;
+    }
+    .nav-items span.act { color: white; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(232,137,29,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(139,58,139,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(232,72,72,0.04) 0%, transparent 50%);
+    }
+    .hero-frame {
+      position: absolute;
+      top: 20px; left: 20px; right: 20px; bottom: 20px;
+      border: 1px solid;
+      border-image: var(--sunset-gradient) 1;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .hero-tagline {
+      font-size: 0.7rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .hero-tagline .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--coral);
+      display: inline-block;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+    .hero-sub {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.3rem, 3vw, 2.2rem);
+      color: var(--blush);
+      margin-bottom: 30px;
+    }
+    .hero-desc {
+      max-width: 520px;
+      margin: 0 auto 36px;
+      color: var(--light-gray);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    .btn-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 12px 34px;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: default;
+    }
+    .btn-primary { background: var(--sunset-gradient); color: white; }
+    .btn-outline { background: transparent; border: 1px solid var(--coral); color: var(--off-white); }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      padding: 80px 40px;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+    .section-sub {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: var(--blush);
+      margin-bottom: 36px;
+    }
+    .section-text {
+      max-width: 650px;
+      color: var(--light-gray);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .centered { text-align: center; }
+    .centered .section-text { margin: 0 auto; }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .card {
+      background: var(--dark);
+      border: 1px solid var(--dark-gray);
+      padding: 40px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--sunset-gradient);
+    }
+    .card-icon { font-size: 2rem; margin-bottom: 18px; display: block; }
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .card p { color: var(--light-gray); font-size: 0.85rem; line-height: 1.7; }
+
+    /* ===== PORTFOLIO GRID ===== */
+    .port-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .port-item {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--dark-gray), var(--dark));
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .port-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    }
+    .port-item-text {
+      position: relative;
+      z-index: 2;
+    }
+    .port-item-text span {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--coral);
+    }
+    .port-item-text h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ===== TESTIMONIAL ===== */
+    .testimonial {
+      background: var(--dark);
+      border-top: 1px solid var(--dark-gray);
+      border-bottom: 1px solid var(--dark-gray);
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .testimonial blockquote {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      color: var(--off-white);
+      max-width: 700px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .testimonial cite {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      font-style: normal;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      border-top: 1px solid var(--dark-gray);
+      padding: 50px 40px 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .footer-brand p { color: var(--light-gray); font-size: 0.8rem; line-height: 1.7; max-width: 260px; margin-top: 10px; }
+    .footer h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+    .footer-links span {
+      display: block;
+      color: var(--light-gray);
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .social-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .social-row span {
+      width: 36px; height: 36px;
+      border: 1px solid var(--dark-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--off-white);
+      font-size: 0.9rem;
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--dark-gray);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--light-gray);
+    }
+
+    /* ===== ABOUT PAGE ===== */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .about-photo {
+      aspect-ratio: 3/4;
+      background: var(--dark-gray);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mid-gray);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      bottom: -8px; right: -8px;
+      width: 100%; height: 100%;
+      border: 1px solid;
+      border-image: var(--sunset-gradient) 1;
+      z-index: -1;
+    }
+    .stats-row {
+      display: flex;
+      gap: 40px;
+      margin-top: 36px;
+    }
+    .stat h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+    }
+    .stat p {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+    }
+
+    /* ===== SERVICES DETAIL ===== */
+    .svc-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      padding: 60px 0;
+      border-bottom: 1px solid var(--dark-gray);
+    }
+    .svc-detail:last-of-type { border-bottom: none; }
+    .svc-img {
+      aspect-ratio: 4/3;
+      background: var(--dark-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mid-gray);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .svc-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      opacity: 0.15;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .svc-list {
+      margin-top: 20px;
+      list-style: none;
+    }
+    .svc-list li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--dark-gray);
+      color: var(--light-gray);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .svc-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--coral);
+      flex-shrink: 0;
+    }
+
+    /* ===== BLOG CARDS ===== */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .blog-card {
+      background: var(--dark);
+      border: 1px solid var(--dark-gray);
+      overflow: hidden;
+    }
+    .blog-img {
+      aspect-ratio: 16/9;
+      background: var(--dark-gray);
+    }
+    .blog-body {
+      padding: 24px;
+    }
+    .blog-meta {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--light-gray);
+      margin-bottom: 10px;
+    }
+    .blog-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .blog-body p { color: var(--light-gray); font-size: 0.8rem; line-height: 1.7; margin-bottom: 14px; }
+    .read-more { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--coral); }
+
+    /* ===== CONTACT ===== */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+    .form-field {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--dark);
+      border: 1px solid var(--dark-gray);
+      color: var(--light-gray);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    textarea.form-field {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .contact-info-item {
+      margin-bottom: 24px;
+    }
+    .contact-info-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .contact-info-item p { color: var(--light-gray); font-size: 0.85rem; }
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: var(--sunset-gradient);
+      margin: 30px 0;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .pg-header {
+      padding: 100px 40px 60px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 30% 60%, rgba(232,137,29,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 40%, rgba(139,58,139,0.05) 0%, transparent 50%);
+    }
+
+    @media (max-width: 800px) {
+      .cards, .port-grid, .blog-grid { grid-template-columns: 1fr; }
+      .about-layout, .svc-detail, .contact-layout, .footer-grid { grid-template-columns: 1fr; }
+      .stats-row { flex-direction: column; gap: 20px; }
+      .nav-items { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE SELECTOR -->
+  <div class="page-nav">
+    <div class="page-nav-inner">
+      <span class="page-nav-label">Preview Page:</span>
+      <button class="page-btn active" onclick="showPage('home')">Home</button>
+      <button class="page-btn" onclick="showPage('about')">About</button>
+      <button class="page-btn" onclick="showPage('services')">Services</button>
+      <button class="page-btn" onclick="showPage('portfolio')">Portfolio</button>
+      <button class="page-btn" onclick="showPage('blog')">Blog</button>
+      <button class="page-btn" onclick="showPage('contact')">Contact</button>
+    </div>
+  </div>
+
+  <div class="mockup-wrapper">
+    <div class="browser-frame">
+
+      <!-- Browser bar -->
+      <div class="browser-bar">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url" id="urlBar">www.justbrokencookies.com</div>
+      </div>
+
+      <!-- ==================== HOME ==================== -->
+      <div class="page-content active" id="page-home">
+
+        <div class="site-nav">
+          <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+          <div class="nav-items">
+            <span class="act">Home</span>
+            <span>About</span>
+            <span>Services</span>
+            <span>Portfolio</span>
+            <span>Blog</span>
+            <span>Contact</span>
+          </div>
+        </div>
+
+        <div class="hero">
+          <div class="hero-frame"></div>
+          <div style="position: relative; z-index: 2;">
+            <div class="hero-tagline">
+              <span>Visuals</span><span class="dot"></span>
+              <span>Strategy</span><span class="dot"></span>
+              <span>Words</span>
+            </div>
+            <h1 class="hero-title gradient-text">JustBroken<br>Cookies</h1>
+            <p class="hero-sub">Storytelling Agency</p>
+            <p class="hero-desc">We crack open the ordinary to reveal extraordinary stories. Through visuals, strategy, and words, we tell the stories of products, concepts, and people that deserve to be heard.</p>
+            <div class="btn-row">
+              <span class="btn btn-primary">Explore Our Craft</span>
+              <span class="btn btn-outline">Start a Project</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section centered">
+          <p class="section-label">What We Do</p>
+          <h2 class="section-title gradient-text">Stories That Move People</h2>
+          <p class="section-sub">every brand has a broken cookie — a raw, imperfect truth</p>
+          <p class="section-text">We don't believe in polished perfection. We believe in the cracks — the unfinished, the imperfect, the real. That's where the best stories live.</p>
+        </div>
+
+        <div class="section centered">
+          <p class="section-label">Our Craft</p>
+          <h2 class="section-title gradient-text">Three Pillars of Story</h2>
+          <div class="cards">
+            <div class="card">
+              <span class="card-icon"><i class="fas fa-camera-retro" style="color: var(--gold);"></i></span>
+              <h3 class="gradient-text">Visuals</h3>
+              <p>Photography, video, and motion design that stop the scroll and stay in the memory.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon"><i class="fas fa-compass" style="color: var(--coral);"></i></span>
+              <h3 class="gradient-text">Strategy</h3>
+              <p>Brand positioning, content strategy, and campaign architecture.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon"><i class="fas fa-feather-alt" style="color: var(--purple);"></i></span>
+              <h3 class="gradient-text">Words</h3>
+              <p>Copywriting, editorial content, and scriptwriting that carries your voice.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-title gradient-text">Stories We've Told</h2>
+          <p class="section-sub">a glimpse into our world</p>
+          <div class="port-grid">
+            <div class="port-item"><div class="port-item-text"><span>Brand Campaign</span><h4>The Unfinished Room</h4></div></div>
+            <div class="port-item"><div class="port-item-text"><span>Visual Story</span><h4>Sunset &amp; Silk</h4></div></div>
+            <div class="port-item"><div class="port-item-text"><span>Content Strategy</span><h4>Voices Unheard</h4></div></div>
+          </div>
+        </div>
+
+        <div class="testimonial">
+          <blockquote>"They didn't just tell our story — they found a story we didn't even know we had. JustBrokenCookies made us fall in love with our own brand again."</blockquote>
+          <cite>— Creative Director, Placeholder Brand</cite>
+        </div>
+
+        <div class="section centered">
+          <p class="section-label">Ready?</p>
+          <h2 class="section-title gradient-text">Let's Break Some Cookies</h2>
+          <p class="section-sub">your story is waiting</p>
+          <span class="btn btn-primary">Get In Touch</span>
+        </div>
+
+        <div class="footer">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+              <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary.</p>
+              <div class="social-row">
+                <span><i class="fab fa-instagram"></i></span>
+                <span><i class="fab fa-linkedin-in"></i></span>
+                <span><i class="fab fa-vimeo-v"></i></span>
+                <span><i class="fab fa-behance"></i></span>
+              </div>
+            </div>
+            <div>
+              <h4>Navigate</h4>
+              <div class="footer-links"><span>About</span><span>Services</span><span>Portfolio</span><span>Blog</span></div>
+            </div>
+            <div>
+              <h4>Services</h4>
+              <div class="footer-links"><span>Visuals</span><span>Strategy</span><span>Words</span></div>
+            </div>
+            <div>
+              <h4>Contact</h4>
+              <div class="footer-links"><span>hello@justbrokencookies.com</span><span>Send a Message</span></div>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>&copy; 2026 JustBrokenCookies</span>
+            <span>Crafted with broken cookies &amp; love.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== ABOUT ==================== -->
+      <div class="page-content" id="page-about">
+        <div class="site-nav">
+          <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+          <div class="nav-items"><span>Home</span><span class="act">About</span><span>Services</span><span>Portfolio</span><span>Blog</span><span>Contact</span></div>
+        </div>
+        <div class="pg-header">
+          <p class="section-label">Who We Are</p>
+          <h1 class="section-title gradient-text">About Us</h1>
+          <p class="section-sub">the story behind the storytellers</p>
+        </div>
+        <div class="section">
+          <div class="about-layout">
+            <div class="about-photo">Founder Photo</div>
+            <div>
+              <p class="section-label">Our Origin</p>
+              <h2 class="section-title gradient-text">Born From the Cracks</h2>
+              <div class="divider"></div>
+              <p class="section-text">JustBrokenCookies was born from a simple belief: the most compelling stories aren't the polished ones. They're the ones with texture, with edges, with soul.</p>
+              <br>
+              <p class="section-text">We're a team of visual artists, strategists, and writers who obsess over the details that make a story unforgettable.</p>
+              <div class="stats-row">
+                <div class="stat"><h4 class="gradient-text">50+</h4><p>Stories Told</p></div>
+                <div class="stat"><h4 class="gradient-text">30+</h4><p>Happy Clients</p></div>
+                <div class="stat"><h4 class="gradient-text">3</h4><p>Creative Pillars</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section centered">
+          <p class="section-label">What We Stand For</p>
+          <h2 class="section-title gradient-text">Our Values</h2>
+          <div class="cards">
+            <div class="card">
+              <span class="card-icon"><i class="fas fa-heart-crack" style="color: var(--coral);"></i></span>
+              <h3 class="gradient-text">Imperfection</h3>
+              <p>We celebrate the raw, the real. The cracks are where the light gets in.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon"><i class="fas fa-fire" style="color: var(--gold);"></i></span>
+              <h3 class="gradient-text">Passion</h3>
+              <p>Every project gets our full creative fire.</p>
+            </div>
+            <div class="card">
+              <span class="card-icon"><i class="fas fa-handshake" style="color: var(--purple);"></i></span>
+              <h3 class="gradient-text">Partnership</h3>
+              <p>Every collaboration is a conversation, never a monologue.</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-bottom">
+            <span>&copy; 2026 JustBrokenCookies</span>
+            <span>Crafted with broken cookies &amp; love.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== SERVICES ==================== -->
+      <div class="page-content" id="page-services">
+        <div class="site-nav">
+          <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+          <div class="nav-items"><span>Home</span><span>About</span><span class="act">Services</span><span>Portfolio</span><span>Blog</span><span>Contact</span></div>
+        </div>
+        <div class="pg-header">
+          <p class="section-label">What We Offer</p>
+          <h1 class="section-title gradient-text">Our Services</h1>
+          <p class="section-sub">three pillars, one story</p>
+        </div>
+        <div class="section" style="padding-top: 0;">
+          <div class="svc-detail">
+            <div class="svc-img">Visual Reel</div>
+            <div>
+              <div class="svc-num gradient-text">01</div>
+              <h2 class="section-title gradient-text">Visuals</h2>
+              <p class="section-sub">see the story</p>
+              <p class="section-text">From cinematic brand films to scroll-stopping photography, we create visuals that capture emotion.</p>
+              <ul class="svc-list">
+                <li>Brand Photography &amp; Lifestyle Shoots</li>
+                <li>Video Production &amp; Direction</li>
+                <li>Motion Graphics &amp; Animation</li>
+                <li>Social Media Content Creation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="svc-detail" style="direction: rtl;">
+            <div class="svc-img" style="direction: ltr;">Strategy Framework</div>
+            <div style="direction: ltr;">
+              <div class="svc-num gradient-text">02</div>
+              <h2 class="section-title gradient-text">Strategy</h2>
+              <p class="section-sub">map the story</p>
+              <p class="section-text">We architect the narrative before a single pixel moves or word drops.</p>
+              <ul class="svc-list">
+                <li>Brand Positioning &amp; Voice</li>
+                <li>Content Strategy &amp; Editorial Planning</li>
+                <li>Campaign Architecture</li>
+                <li>Audience Research</li>
+              </ul>
+            </div>
+          </div>
+          <div class="svc-detail">
+            <div class="svc-img">Written Content</div>
+            <div>
+              <div class="svc-num gradient-text">03</div>
+              <h2 class="section-title gradient-text">Words</h2>
+              <p class="section-sub">speak the story</p>
+              <p class="section-text">From a single headline to a full brand narrative — every word earns its place.</p>
+              <ul class="svc-list">
+                <li>Brand Copywriting &amp; Taglines</li>
+                <li>Website &amp; Landing Page Copy</li>
+                <li>Scriptwriting for Video &amp; Audio</li>
+                <li>Blog Posts &amp; Editorial</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-bottom">
+            <span>&copy; 2026 JustBrokenCookies</span>
+            <span>Crafted with broken cookies &amp; love.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== PORTFOLIO ==================== -->
+      <div class="page-content" id="page-portfolio">
+        <div class="site-nav">
+          <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+          <div class="nav-items"><span>Home</span><span>About</span><span>Services</span><span class="act">Portfolio</span><span>Blog</span><span>Contact</span></div>
+        </div>
+        <div class="pg-header">
+          <p class="section-label">Our Work</p>
+          <h1 class="section-title gradient-text">Portfolio</h1>
+          <p class="section-sub">stories we've brought to life</p>
+        </div>
+        <div class="section" style="padding-top: 0;">
+          <div style="display: flex; justify-content: center; gap: 14px; margin-bottom: 40px; flex-wrap: wrap;">
+            <span class="btn btn-outline" style="padding: 8px 20px; border-color: var(--coral); color: white; background: rgba(232,72,72,0.15);">All</span>
+            <span class="btn btn-outline" style="padding: 8px 20px;">Visuals</span>
+            <span class="btn btn-outline" style="padding: 8px 20px;">Strategy</span>
+            <span class="btn btn-outline" style="padding: 8px 20px;">Words</span>
+            <span class="btn btn-outline" style="padding: 8px 20px;">Campaigns</span>
+          </div>
+          <div class="port-grid" style="grid-template-columns: 2fr 1fr; grid-template-rows: auto auto;">
+            <div class="port-item" style="grid-row: span 2; aspect-ratio: auto; min-height: 350px;"><div class="port-item-text"><span>Full Campaign</span><h4>The Unfinished Room</h4></div></div>
+            <div class="port-item"><div class="port-item-text"><span>Visual Story</span><h4>Sunset &amp; Silk</h4></div></div>
+            <div class="port-item"><div class="port-item-text"><span>Editorial</span><h4>Voices Unheard</h4></div></div>
+          </div>
+          <div class="port-grid" style="margin-top: 16px;">
+            <div class="port-item"><div class="port-item-text"><span>Brand Strategy</span><h4>From Dust to Gold</h4></div></div>
+            <div class="port-item"><div class="port-item-text"><span>Photography</span><h4>The Last Frame</h4></div></div>
+            <div class="port-item"><div class="port-item-text"><span>Launch Campaign</span><h4>Breaking Point</h4></div></div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-bottom">
+            <span>&copy; 2026 JustBrokenCookies</span>
+            <span>Crafted with broken cookies &amp; love.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== BLOG ==================== -->
+      <div class="page-content" id="page-blog">
+        <div class="site-nav">
+          <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+          <div class="nav-items"><span>Home</span><span>About</span><span>Services</span><span>Portfolio</span><span class="act">Blog</span><span>Contact</span></div>
+        </div>
+        <div class="pg-header">
+          <p class="section-label">Thoughts &amp; Stories</p>
+          <h1 class="section-title gradient-text">The Blog</h1>
+          <p class="section-sub">where we share what we're thinking</p>
+        </div>
+        <div class="section" style="padding-top: 0;">
+          <div class="blog-grid">
+            <div class="blog-card">
+              <div class="blog-img"></div>
+              <div class="blog-body">
+                <p class="blog-meta">April 15, 2026 — Storytelling</p>
+                <h3>Why the Best Brand Stories Are the Ones You Almost Didn't Tell</h3>
+                <p>The stories that resonate most are rarely the ones you planned from the start.</p>
+                <span class="read-more">Read More &rarr;</span>
+              </div>
+            </div>
+            <div class="blog-card">
+              <div class="blog-img"></div>
+              <div class="blog-body">
+                <p class="blog-meta">April 8, 2026 — Strategy</p>
+                <h3>Content Strategy Is Not a Calendar — It's a Compass</h3>
+                <p>Stop thinking of content strategy as a schedule to fill.</p>
+                <span class="read-more">Read More &rarr;</span>
+              </div>
+            </div>
+            <div class="blog-card">
+              <div class="blog-img"></div>
+              <div class="blog-body">
+                <p class="blog-meta">March 28, 2026 — Visuals</p>
+                <h3>The Art of the Imperfect Frame: Why Raw Visuals Win</h3>
+                <p>Over-polished content feels hollow. We make a case for visuals that feel alive.</p>
+                <span class="read-more">Read More &rarr;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-bottom">
+            <span>&copy; 2026 JustBrokenCookies</span>
+            <span>Crafted with broken cookies &amp; love.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CONTACT ==================== -->
+      <div class="page-content" id="page-contact">
+        <div class="site-nav">
+          <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+          <div class="nav-items"><span>Home</span><span>About</span><span>Services</span><span>Portfolio</span><span>Blog</span><span class="act">Contact</span></div>
+        </div>
+        <div class="pg-header">
+          <p class="section-label">Let's Talk</p>
+          <h1 class="section-title gradient-text">Get In Touch</h1>
+          <p class="section-sub">every great story starts with a conversation</p>
+        </div>
+        <div class="section" style="padding-top: 0;">
+          <div class="contact-layout">
+            <div>
+              <div class="form-row">
+                <input type="text" class="form-field" placeholder="Your Name" disabled>
+                <input type="email" class="form-field" placeholder="Your Email" disabled>
+              </div>
+              <input type="text" class="form-field" placeholder="Subject" disabled>
+              <select class="form-field" disabled>
+                <option>What are you interested in?</option>
+              </select>
+              <textarea class="form-field" placeholder="Tell us about your project, your brand, or your story..." disabled></textarea>
+              <span class="btn btn-primary" style="width: 100%; display: block; text-align: center;">Send Message</span>
+            </div>
+            <div>
+              <p class="section-label">Prefer email?</p>
+              <h3 class="section-title gradient-text" style="font-size: 1.3rem;">Drop Us a Line</h3>
+              <div class="divider"></div>
+              <p class="section-text" style="margin-bottom: 30px;">Whether you've got a fully baked idea or just a crumb of inspiration, we'd love to hear from you.</p>
+              <div class="contact-info-item">
+                <h4 class="gradient-text"><i class="fas fa-envelope" style="margin-right: 8px;"></i> Email</h4>
+                <p>hello@justbrokencookies.com</p>
+              </div>
+              <div class="contact-info-item">
+                <h4 class="gradient-text"><i class="fas fa-globe" style="margin-right: 8px;"></i> Website</h4>
+                <p>www.justbrokencookies.com</p>
+              </div>
+              <div class="contact-info-item">
+                <h4 class="gradient-text"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Based In</h4>
+                <p>Worldwide — Stories have no borders.</p>
+              </div>
+              <h4 class="gradient-text" style="font-family: 'Playfair Display', serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; margin-top: 24px; margin-bottom: 12px;">Follow Us</h4>
+              <div class="social-row">
+                <span><i class="fab fa-instagram"></i></span>
+                <span><i class="fab fa-linkedin-in"></i></span>
+                <span><i class="fab fa-vimeo-v"></i></span>
+                <span><i class="fab fa-behance"></i></span>
+                <span><i class="fab fa-tiktok"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="footer-bottom">
+            <span>&copy; 2026 JustBrokenCookies</span>
+            <span>Crafted with broken cookies &amp; love.</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /browser-frame -->
+  </div><!-- /mockup-wrapper -->
+
+  <script>
+    function showPage(page) {
+      // Hide all pages
+      document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+
+      // Show selected
+      document.getElementById('page-' + page).classList.add('active');
+      event.target.classList.add('active');
+
+      // Update URL bar
+      const urls = {
+        home: 'www.justbrokencookies.com',
+        about: 'www.justbrokencookies.com/about',
+        services: 'www.justbrokencookies.com/services',
+        portfolio: 'www.justbrokencookies.com/portfolio',
+        blog: 'www.justbrokencookies.com/blog',
+        contact: 'www.justbrokencookies.com/contact'
+      };
+      document.getElementById('urlBar').textContent = urls[page];
+
+      // Scroll to top of mockup
+      document.querySelector('.mockup-wrapper').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>

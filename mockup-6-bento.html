@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 6 — Bold Bento Gallery | JBC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#E8891D;--coral:#E84848;--magenta:#C93A6E;--purple:#8B3A8B;}
+body{background:#050505;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;}
+.badge{position:fixed;top:20px;left:20px;z-index:999;background:linear-gradient(135deg,var(--gold),var(--coral));color:#fff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:4px;}
+
+nav{padding:25px 50px;display:flex;justify-content:space-between;align-items:center;}
+nav .logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1rem;letter-spacing:1px;}
+nav .logo .j{color:var(--gold);}
+nav .logo .b{color:var(--coral);}
+nav .logo .c{color:var(--purple);}
+nav ul{list-style:none;display:flex;gap:30px;}
+nav ul li a{color:#666;text-decoration:none;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;transition:color 0.3s;}
+nav ul li a:hover{color:#fff;}
+.nav-cta{padding:10px 25px;border:1px solid var(--coral);color:var(--coral);text-decoration:none;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;transition:all 0.3s;border-radius:4px;}
+.nav-cta:hover{background:var(--coral);color:#fff;}
+
+/* HERO — Bento grid */
+.hero-bento{padding:30px 50px;display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:300px 300px;gap:15px;min-height:80vh;}
+.bento-hero{grid-row:span 2;position:relative;overflow:hidden;border-radius:16px;display:flex;flex-direction:column;justify-content:flex-end;padding:50px;}
+.bento-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;}
+.bento-hero .content{position:relative;z-index:1;}
+.bento-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:10px;}
+.bento-hero h1 .w1{color:var(--gold);}
+.bento-hero h1 .w2{color:var(--coral);}
+.bento-hero h1 .w3{color:var(--purple);}
+.bento-hero .tag{font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--coral);}
+
+.bento-card{border-radius:16px;overflow:hidden;position:relative;transition:transform 0.3s;}
+.bento-card:hover{transform:translateY(-3px);}
+.bento-text{background:#111;padding:35px;display:flex;flex-direction:column;justify-content:center;border:1px solid #1a1a1a;border-radius:16px;}
+.bento-text .bt-label{font-size:0.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.bento-text h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:8px;}
+.bento-text p{color:#666;font-size:0.85rem;line-height:1.7;font-weight:300;}
+
+.bento-img{overflow:hidden;border-radius:16px;}
+.bento-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;opacity:0.8;}
+.bento-img:hover img{transform:scale(1.05);opacity:1;}
+
+.bento-gradient{background:linear-gradient(135deg,var(--coral),var(--magenta));border-radius:16px;padding:35px;display:flex;flex-direction:column;justify-content:center;text-align:center;}
+.bento-gradient .stat{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;}
+.bento-gradient .stat-label{font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;margin-top:5px;opacity:0.8;}
+
+/* SERVICES BENTO */
+.services-bento{padding:30px 50px;}
+.sec-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.sec-label h2{font-family:'Playfair Display',serif;font-size:1.8rem;}
+.sec-label span{font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.svc-bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;}
+.svc-bento-card{background:#111;border:1px solid #1a1a1a;border-radius:16px;padding:40px 30px;transition:all 0.3s;position:relative;overflow:hidden;}
+.svc-bento-card:hover{border-color:var(--coral);background:#151515;transform:translateY(-3px);}
+.svc-bento-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--coral),var(--purple));opacity:0;transition:opacity 0.3s;}
+.svc-bento-card:hover::after{opacity:1;}
+.svc-bento-card .s-num{font-family:'Playfair Display',serif;font-size:4rem;opacity:0.04;position:absolute;right:15px;top:5px;}
+.svc-bento-card .s-icon{font-size:1.5rem;margin-bottom:20px;display:block;}
+.svc-bento-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:5px;background:linear-gradient(var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.svc-bento-card .sub{font-family:'Dancing Script',cursive;color:var(--coral);font-size:0.9rem;margin-bottom:15px;display:block;}
+.svc-bento-card p{color:#666;font-size:0.85rem;line-height:1.75;font-weight:300;}
+
+/* PORTFOLIO BENTO */
+.portfolio-bento{padding:50px 50px 30px;}
+.port-bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:250px 250px;gap:15px;}
+.port-item{position:relative;overflow:hidden;border-radius:16px;}
+.port-item.wide{grid-column:span 2;}
+.port-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:all 0.5s;}
+.port-item:hover img{filter:grayscale(0%);transform:scale(1.05);}
+.port-item .port-info{position:absolute;bottom:0;left:0;right:0;padding:25px;background:linear-gradient(transparent,rgba(0,0,0,0.9));border-radius:0 0 16px 16px;opacity:0;transition:opacity 0.3s;}
+.port-item:hover .port-info{opacity:1;}
+.port-item .port-info span{font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+.port-item .port-info h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-top:4px;}
+
+/* TESTIMONIAL */
+.testi-bento{padding:30px 50px;}
+.testi-bento-grid{display:grid;grid-template-columns:1fr 2fr;gap:15px;}
+.testi-avatar{background:linear-gradient(135deg,rgba(232,137,29,0.2),rgba(139,58,139,0.2));border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;}
+.testi-avatar .big-q{font-family:'Playfair Display',serif;font-size:8rem;line-height:1;background:linear-gradient(var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:0.3;}
+.testi-avatar p{font-family:'Dancing Script',cursive;color:var(--coral);font-size:1rem;margin-top:10px;}
+.testi-quote{background:#111;border:1px solid #1a1a1a;border-radius:16px;padding:50px;display:flex;flex-direction:column;justify-content:center;}
+.testi-quote blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;line-height:1.7;color:#ccc;margin-bottom:20px;}
+.testi-quote cite{font-style:normal;font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--coral);}
+
+/* CTA */
+.cta-bento{padding:30px 50px 50px;}
+.cta-bento-card{background:linear-gradient(135deg,rgba(232,137,29,0.08),rgba(232,72,72,0.08),rgba(139,58,139,0.08));border:1px solid #222;border-radius:16px;padding:80px;text-align:center;}
+.cta-bento-card h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);margin-bottom:10px;background:linear-gradient(135deg,var(--gold),var(--coral),var(--magenta),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.cta-bento-card .sub{font-family:'Dancing Script',cursive;color:var(--coral);font-size:1.2rem;margin-bottom:35px;}
+.btn-bento{display:inline-block;padding:14px 45px;background:linear-gradient(135deg,var(--coral),var(--magenta));color:#fff;text-decoration:none;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;border-radius:50px;transition:transform 0.2s;font-weight:500;}
+.btn-bento:hover{transform:scale(1.05);}
+
+footer{padding:30px 50px;display:flex;justify-content:space-between;font-size:0.65rem;color:#444;letter-spacing:2px;}
+
+@media(max-width:768px){
+  .hero-bento{grid-template-columns:1fr;grid-template-rows:auto;padding:20px;}
+  .bento-hero{grid-row:span 1;min-height:300px;}
+  .svc-bento-grid{grid-template-columns:1fr;}
+  .port-bento-grid{grid-template-columns:1fr;grid-template-rows:auto;}
+  .port-item.wide{grid-column:span 1;}
+  .testi-bento-grid{grid-template-columns:1fr;}
+  nav,.services-bento,.portfolio-bento,.testi-bento,.cta-bento,footer{padding-left:20px;padding-right:20px;}
+}
+</style>
+</head>
+<body>
+<div class="badge">Mockup 6 — Bold Bento Gallery</div>
+
+<nav>
+  <div class="logo"><span class="j">Just</span><span class="b">Broken</span><span class="c">Cookies</span></div>
+  <ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Portfolio</a></li><li><a href="#">Blog</a></li></ul>
+  <a href="#" class="nav-cta">Let's Talk</a>
+</nav>
+
+<section class="hero-bento">
+  <div class="bento-hero">
+    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1000&q=80" alt="">
+    <div class="content">
+      <div class="tag">storytelling agency</div>
+      <h1><span class="w1">Just</span><span class="w2">Broken</span><span class="w3">Cookies</span></h1>
+    </div>
+  </div>
+  <div class="bento-text">
+    <div class="bt-label">What We Do</div>
+    <h3>Stories That Move People</h3>
+    <p>We find the cracks — the raw, the imperfect — and turn them into stories that connect on a human level.</p>
+  </div>
+  <div class="bento-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt=""></div>
+  <div class="bento-gradient"><div class="stat">50+</div><div class="stat-label">Stories Told</div></div>
+  <div class="bento-img"><img src="https://images.unsplash.com/photo-1531746790095-e5a6e6a15694?w=600&q=80" alt=""></div>
+</section>
+
+<section class="services-bento">
+  <div class="sec-label"><h2>Our Craft</h2><span>Three Pillars</span></div>
+  <div class="svc-bento-grid">
+    <div class="svc-bento-card"><div class="s-num">01</div><span class="s-icon" style="color:var(--gold)">&#9711;</span><h3>Visuals</h3><span class="sub">see the story</span><p>Photography, video, and motion design that stop the scroll and stay in the memory.</p></div>
+    <div class="svc-bento-card"><div class="s-num">02</div><span class="s-icon" style="color:var(--coral)">&#9651;</span><h3>Strategy</h3><span class="sub">map the story</span><p>Brand positioning, content strategy, and campaign architecture for maximum impact.</p></div>
+    <div class="svc-bento-card"><div class="s-num">03</div><span class="s-icon" style="color:var(--purple)">&#9634;</span><h3>Words</h3><span class="sub">speak the story</span><p>Copywriting, editorial, and scriptwriting that carries your voice with intention.</p></div>
+  </div>
+</section>
+
+<section class="portfolio-bento">
+  <div class="sec-label"><h2>Selected Work</h2><span>Stories We've Told</span></div>
+  <div class="port-bento-grid">
+    <div class="port-item wide"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=900&q=80" alt=""><div class="port-info"><span>Full Campaign</span><h3>The Unfinished Room</h3></div></div>
+    <div class="port-item"><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=80" alt=""><div class="port-info"><span>Photography</span><h3>The Last Frame</h3></div></div>
+    <div class="port-item"><img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80" alt=""><div class="port-info"><span>Campaign</span><h3>Breaking Point</h3></div></div>
+    <div class="port-item"><img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=80" alt=""><div class="port-info"><span>Strategy</span><h3>From Dust to Gold</h3></div></div>
+    <div class="port-item"><img src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=600&q=80" alt=""><div class="port-info"><span>Copywriting</span><h3>Midnight Manifesto</h3></div></div>
+    <div class="port-item wide"><img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?w=900&q=80" alt=""><div class="port-info"><span>Video</span><h3>Slow Burn</h3></div></div>
+  </div>
+</section>
+
+<section class="testi-bento">
+  <div class="testi-bento-grid">
+    <div class="testi-avatar"><div class="big-q">&ldquo;</div><p>what our clients say</p></div>
+    <div class="testi-quote">
+      <blockquote>"They didn't just tell our story — they found a story we didn't even know we had. JustBrokenCookies made us fall in love with our own brand again."</blockquote>
+      <cite>Creative Director, Placeholder Brand</cite>
+    </div>
+  </div>
+</section>
+
+<section class="cta-bento">
+  <div class="cta-bento-card">
+    <h2>Let's Break Some Cookies</h2>
+    <p class="sub">your story is waiting</p>
+    <a href="#" class="btn-bento">Start a Project</a>
+  </div>
+</section>
+
+<footer>
+  <span><span style="color:var(--gold)">Just</span><span style="color:var(--coral)">Broken</span><span style="color:var(--purple)">Cookies</span></span>
+  <span>&copy; 2026 All Rights Reserved</span>
+</footer>
+</body>
+</html>

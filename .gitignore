@@ -1,0 +1,44 @@
+# Original unoptimized mobile images (use images/mobile/ WebP versions instead)
+images/images mobile/
+
+# Backup folders — local only
+backups/
+emergency-backups/
+editor-audit/
+
+# Node
+node_modules/
+package-lock.json
+
+# Backup HTML files
+*.backup-*.html
+*.bad-*.html
+index.backup-*.html
+
+# Backup SVGs
+images/*.backup-*.svg
+
+# Screenshots
+images/Screenshot*
+images/screenshot*
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Audit scripts & PNGs
+*.audit.js
+*-audit.js
+*-audit.png
+mobile-audit*
+mobile-screenshot*
+work-title-*
+selected-work-*
+section-gap-*
+services-internal-*
+
+# Zip archives
+*.zip
+
+# Editor temp
+editor.html
