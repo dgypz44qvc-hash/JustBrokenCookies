@@ -11372,6 +11372,149 @@ section.testimonial-section span {
   content: none;
 }
 
+.jbc-gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 54px);
+  background: rgba(4, 4, 5, 0);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.36s;
+}
+
+.jbc-gallery-lightbox--open {
+  background: rgba(4, 4, 5, 0.86);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.jbc-gallery-lightbox__frame {
+  width: min(92vw, 1160px);
+  max-height: 88vh;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 16px;
+  place-items: center;
+  transform: translateY(18px) scale(0.975);
+  opacity: 0;
+  filter: blur(10px);
+  transition:
+    transform 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.jbc-gallery-lightbox--open .jbc-gallery-lightbox__frame {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.jbc-gallery-lightbox__img {
+  max-width: 100%;
+  max-height: calc(88vh - 70px);
+  display: block;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow:
+    0 42px 120px rgba(0,0,0,0.62),
+    0 10px 34px rgba(0,0,0,0.34);
+}
+
+.jbc-gallery-lightbox__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.jbc-gallery-lightbox__more {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+  border-color 0.2s ease;
+}
+
+.jbc-gallery-lightbox__more {
+  padding: 0 24px;
+  border: 1px solid rgba(232, 137, 29, 0.56);
+  background: rgba(232, 137, 29, 0.12);
+  color: var(--gold, #e8891d);
+}
+
+.jbc-gallery-lightbox__more:hover,
+.jbc-gallery-lightbox__more:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(232, 137, 29, 0.22);
+  border-color: rgba(232, 137, 29, 0.92);
+  outline: none;
+}
+
+.jbc-gallery-lightbox__close {
+  position: fixed;
+  top: clamp(18px, 3vw, 34px);
+  right: clamp(18px, 3vw, 34px);
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(232, 137, 29, 0.46);
+  border-radius: 50%;
+  background: rgba(7, 7, 8, 0.54);
+  color: var(--gold, #e8891d);
+  font-family: var(--font-sans, sans-serif);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.jbc-gallery-lightbox--open .jbc-gallery-lightbox__close {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jbc-gallery-lightbox__close:hover,
+.jbc-gallery-lightbox__close:focus-visible {
+  background: rgba(232, 137, 29, 0.14);
+  border-color: rgba(232, 137, 29, 0.82);
+  outline: none;
+}
+
+body.jbc-gallery-lightbox-open {
+  overflow: hidden;
+}
+
 /* Mobile: wider cards */
 @media (max-width: 768px) {
   #jbc-gradient-stage {
@@ -11383,6 +11526,37 @@ section.testimonial-section span {
     width: min(88vw, 390px);
     aspect-ratio: 16 / 10;
     border-radius: 26px 16px 24px 18px / 22px 18px 24px 18px;
+  }
+
+  .jbc-gallery-lightbox {
+    padding: 18px;
+  }
+
+  .jbc-gallery-lightbox__img,
+  .jbc-gallery-lightbox__frame {
+    max-height: 82vh;
+  }
+
+  .jbc-gallery-lightbox__img {
+    max-height: calc(82vh - 82px);
+  }
+
+  .jbc-gallery-lightbox__actions {
+    justify-content: center;
+  }
+
+  .jbc-gallery-lightbox__more {
+    width: min(100%, 330px);
+    min-height: 40px;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+  }
+
+  .jbc-gallery-lightbox__close {
+    width: 38px;
+    height: 38px;
+    top: 14px;
+    right: 14px;
   }
 }
 
