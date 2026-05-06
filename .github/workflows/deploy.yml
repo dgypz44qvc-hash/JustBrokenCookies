@@ -30,6 +30,7 @@ jobs:
           mkdir -p _deploy/images/mobile _deploy/images/portfolio
           mkdir -p _deploy/images/about _deploy/images/blog
           mkdir -p _deploy/images/patterns _deploy/images/overlays
+          mkdir -p _deploy/images/sections
 
           # --- HTML pages (real pages only, no backups) ---
           for f in index.html about.html services.html contact.html \
@@ -55,9 +56,12 @@ jobs:
           # --- Root-level images (only the ones referenced in HTML/CSS) ---
           for f in \
             "footer-story-bg-desktop.jpg" \
+            "footer-story-bg-desktop.webp" \
             "footer-story-bg-mobile.jpg" \
             "hero-mobile-desktop-ratio-1080.jpg" \
+            "hero-mobile-desktop-ratio-1080.webp" \
             "hero-mobile-desktop-ratio-768.jpg" \
+            "hero-mobile-desktop-ratio-768.webp" \
             "heromobile-1280.jpg" "heromobile-1280.webp" \
             "heromobile-640.jpg"  "heromobile-640.webp" \
             "heromobile-900.jpg"  "heromobile-900.webp" \
@@ -65,10 +69,13 @@ jobs:
             "jbc-floral-accent-mobile.jpg" \
             "jbc-floral-portrait-mobile.jpg" \
             "jbc-floral-square.jpg" \
+            "jbc-floral-square.webp" \
             "jbc-floral-wide-desktop.jpg" \
             "jbc-floral-wide-mobile.jpg" \
             "jbc-rose-pattern-bg.png" \
+            "jbc-rose-pattern-bg.webp" \
             "roseframe-carousel-overlay.png" \
+            "roseframe-carousel-overlay.webp" \
             "creations-title-card.webp" \
             "creations-title-card.svg" \
             "eyestory.jpg" \
@@ -86,11 +93,15 @@ jobs:
           [ -d images/mobile ] && cp images/mobile/*.webp _deploy/images/mobile/ 2>/dev/null || true
 
           # --- Portfolio images ---
-          [ -d images/portfolio ] && cp images/portfolio/*.jpg _deploy/images/portfolio/ 2>/dev/null || true
+          [ -d images/portfolio ] && cp images/portfolio/*.jpg  _deploy/images/portfolio/ 2>/dev/null || true
+          [ -d images/portfolio ] && cp images/portfolio/*.webp _deploy/images/portfolio/ 2>/dev/null || true
 
           # --- About / Blog images ---
           [ -d images/about ] && cp images/about/*.jpg _deploy/images/about/ 2>/dev/null || true
           [ -d images/blog ]  && cp images/blog/*.jpg  _deploy/images/blog/  2>/dev/null || true
+
+          # --- Sections backgrounds ---
+          [ -d images/sections ]  && cp -r images/sections  _deploy/images/ 2>/dev/null || true
 
           # --- Patterns & Overlays ---
           [ -d images/patterns ]  && cp -r images/patterns  _deploy/images/ 2>/dev/null || true

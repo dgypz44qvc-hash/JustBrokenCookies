@@ -515,7 +515,7 @@
 /* =========================================================
    JBC TEST CAROUSEL ROSE FRAME OVERLAY
    Visual layer only, follows each rotating carousel card
-   Requires: images/roseframe-carousel-overlay.png
+   Requires: images/roseframe-carousel-overlay.webp
    ========================================================= */
 
 #featured-work .jbc-cinema-panel {
@@ -535,7 +535,7 @@
   z-index: 26 !important;
   pointer-events: none !important;
 
-  background-image: url("../images/roseframe-carousel-overlay.png") !important;
+  background-image: url("../images/roseframe-carousel-overlay.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: 100% 100% !important;
