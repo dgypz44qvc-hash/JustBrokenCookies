@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (navbar) {
     let lastScroll = 0;
     let ticking = false;
-    let creationsRevealStartedAt = null;
 
     window.addEventListener('scroll', () => {
       if (!ticking) {
@@ -131,6 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let pointerX = 0;
     let pointerY = 0;
     let ticking = false;
+
+    let creationsRevealStartedAt = null;
 
     const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
     const circularDifference = (angle) => {
