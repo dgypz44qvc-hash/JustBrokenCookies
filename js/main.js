@@ -5,6 +5,24 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ---- MOBILE: CLEAR ANY BAKED-IN SCROLL STATES ----
+  // When the page is saved by the editor mid-scroll, GSAP/parallax inline styles get baked
+  // into the HTML (opacity, transform, filter). CSS !important can't beat inline styles, so
+  // we clear them here before anything else runs.
+  if (window.innerWidth <= 768) {
+    const staleEls = document.querySelectorAll(
+      '.hero, .jbc-floral-hero, .hero-bottom, ' +
+      '#featured-work, #services-overview, #jbc-visual-gallery, ' +
+      '.testimonial-section, .cta-section, .footer'
+    );
+    staleEls.forEach(el => {
+      el.style.transform  = '';
+      el.style.opacity    = '';
+      el.style.filter     = '';
+      el.style.transition = '';
+    });
+  }
+
   // ---- PRELOADER ---- (max 600ms hard cap)
   const preloader = document.querySelector('.preloader');
   if (preloader) {
@@ -263,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     requestUpdate();
   })();
 
-  // ---- BLUR-TO-SHARP SCROLL REVEAL ----
+  // ---- SCROLL REVEAL ----
   const revealElements = document.querySelectorAll(
     '.fade-up, .reveal, .service-card, .value-card, .process-card, .blog-card, ' +
     '.portfolio-item, .team-card, .stat-item, .contact-info-item, ' +
@@ -271,28 +289,37 @@ document.addEventListener('DOMContentLoaded', () => {
     '.sec-header, .about-text, .testi-content, .about-image'
   );
 
+  const isMobileReveal = window.innerWidth <= 768;
+
   if (revealElements.length > 0) {
     revealElements.forEach(el => {
       /* Never touch user-added custom elements or hero elements */
       if (el.classList.contains('jbc-custom') || el.closest('.jbc-custom')) return;
       if (el.closest('.hero')) return;
+
       if (!el.classList.contains('fade-up') && !el.classList.contains('reveal')) {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.filter = 'blur(4px)';
-        el.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), ' +
-                              'transform 0.8s cubic-bezier(0.16,1,0.3,1), ' +
-                              'filter 0.8s cubic-bezier(0.16,1,0.3,1)';
+        el.style.transform = 'translateY(24px)';
+        if (!isMobileReveal) {
+          // Desktop: blur-to-sharp reveal
+          el.style.filter = 'blur(4px)';
+          el.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), ' +
+                                'transform 0.8s cubic-bezier(0.16,1,0.3,1), ' +
+                                'filter 0.8s cubic-bezier(0.16,1,0.3,1)';
+        } else {
+          // Mobile: clean fade-up, no blur (GPU-friendly, no jank)
+          el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+        }
       }
     });
+
+    const cardClasses = ['service-card','value-card','process-card',
+                         'blog-card','portfolio-item','team-card','stat-item'];
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Stagger siblings for card groups
           const parent = entry.target.parentElement;
-          const cardClasses = ['service-card','value-card','process-card',
-                               'blog-card','portfolio-item','team-card','stat-item'];
           const isCard = cardClasses.some(c => entry.target.classList.contains(c));
 
           let delay = 0;
@@ -301,7 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
               cardClasses.some(cc => c.classList.contains(cc))
             );
             const idx = siblings.indexOf(entry.target);
-            delay = Math.max(0, idx) * 100;
+            // Shorter stagger on mobile so cards don't wait ages
+            delay = Math.max(0, idx) * (isMobileReveal ? 60 : 100);
           }
 
           setTimeout(() => {
@@ -310,14 +338,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
               entry.target.style.opacity = '1';
               entry.target.style.transform = 'translateY(0)';
-              entry.target.style.filter = 'blur(0)';
-              // Clear inline styles after animation so CSS can take over (e.g. expand cards)
+              if (!isMobileReveal) entry.target.style.filter = 'blur(0)';
+              // Clear inline styles after animation so CSS can take over
               setTimeout(() => {
                 entry.target.style.transition = '';
-                entry.target.style.opacity = '';
+                entry.target.style.opacity   = '';
                 entry.target.style.transform = '';
-                entry.target.style.filter = '';
-              }, 900);
+                entry.target.style.filter    = '';
+              }, isMobileReveal ? 600 : 900);
             }
           }, delay);
 
@@ -326,28 +354,42 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, {
       threshold: 0.06,
-      rootMargin: '0px 0px -50px 0px'
+      // On mobile: no negative rootMargin so elements trigger as soon as they enter view
+      rootMargin: isMobileReveal ? '0px' : '0px 0px -50px 0px'
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
   }
 
-  // ---- IMAGE CLIP REVEAL ----
+  // ---- IMAGE CLIP / SLIDE REVEAL ----
   document.querySelectorAll('.about-image, .service-detail-image').forEach(el => {
-    el.style.clipPath = 'inset(100% 0 0 0)';
-    el.style.transition = 'clip-path 1.2s cubic-bezier(0.16,1,0.3,1)';
-
-    const imgObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.clipPath = 'inset(0 0 0 0)';
-          }, 200);
-          imgObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    imgObs.observe(el);
+    if (isMobileReveal) {
+      // Mobile: simple fade in instead of clip-path (avoids paint jank)
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 0.6s ease';
+      const imgFadeObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(() => { entry.target.style.opacity = '1'; }, 150);
+            imgFadeObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      imgFadeObs.observe(el);
+    } else {
+      // Desktop: cinematic clip-path wipe
+      el.style.clipPath = 'inset(100% 0 0 0)';
+      el.style.transition = 'clip-path 1.2s cubic-bezier(0.16,1,0.3,1)';
+      const imgObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setTimeout(() => { entry.target.style.clipPath = 'inset(0 0 0 0)'; }, 200);
+            imgObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      imgObs.observe(el);
+    }
   });
 
   // ---- PARALLAX ON HERO ----
@@ -357,9 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroTag = hero.querySelector('.tag');
     const heroBottom = hero.querySelector('.hero-bottom');
 
-    // Gentle opacity fade on scroll only — NO transform/sliding
+    // Gentle opacity fade on scroll — desktop only (mobile keeps hero fully visible)
     let heroTicking = false;
     window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768) return; // Mobile: no parallax fade, hero stays crisp
       if (!heroTicking) {
         requestAnimationFrame(() => {
           const scrollY = window.scrollY;
