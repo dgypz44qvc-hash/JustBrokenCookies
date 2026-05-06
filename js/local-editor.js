@@ -307,6 +307,17 @@
       parent.style.position = 'relative';
     }
 
+    // SWAP instead of STACK — if this section already has an editor-image layer,
+    // replace its src rather than inserting another element on top.
+    const existingImg = parent.querySelector('.editor-image img, .editor-decoration.editor-image img');
+    if (existingImg) {
+      existingImg.src = dataUrl;
+      existingImg.removeAttribute('srcset');
+      existingImg.removeAttribute('sizes');
+      window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
+      return;
+    }
+
     // Coords relative to parent (original editor formula)
     const pRect = parent.getBoundingClientRect();
     const left  = Math.max(0, Math.round(x - pRect.left + parent.scrollLeft));
