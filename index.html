@@ -270,9 +270,16 @@
         </div>
       </div>
       <canvas id="jbc-gs-bg" aria-hidden="true" width="2994" height="1436"></canvas>
+      <div class="jbc-gs-quote" aria-hidden="true">Small frames. Larger stories.</div>
       <div id="jbc-gs-cards" class="jbc-gs-cards" aria-label="Infinite image carousel" role="region"></div>
       <!-- Scroll hint — fades out on first interaction -->
       
+    </div>
+    <div id="jbc-gallery-lightbox" class="jbc-gallery-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+      <button class="jbc-gallery-lightbox__close" type="button" aria-label="Close image preview">x</button>
+      <div class="jbc-gallery-lightbox__frame">
+        <img id="jbc-gallery-lightbox-img" class="jbc-gallery-lightbox__img" alt="">
+      </div>
     </div>
     <div class="jbc-gallery-cta">
       <a href="portfolio.html" class="btn btn-outline">View Full Portfolio</a>
@@ -385,13 +392,19 @@
     const OVERLAP_MAX   = 160;
     const WHEEL_ACTIVE_TOP = 0.18;
     const WHEEL_ACTIVE_BOTTOM = 0.76;
+    const REVEAL_ACTIVE_TOP = 0.02;
+    const REVEAL_ACTIVE_BOTTOM = WHEEL_ACTIVE_TOP;
 
     // ── DOM ──────────────────────────────────────────────────────────
     const stage     = document.getElementById('jbc-gradient-stage');
     const cardsRoot = document.getElementById('jbc-gs-cards');
+    const quote     = stage ? stage.querySelector('.jbc-gs-quote') : null;
     const bgCanvas  = document.getElementById('jbc-gs-bg');
     const bgCtx     = bgCanvas ? bgCanvas.getContext('2d', { alpha: true }) : null;
     const loader    = document.getElementById('jbc-gs-loader');
+    const lightbox  = document.getElementById('jbc-gallery-lightbox');
+    const lightboxImg = document.getElementById('jbc-gallery-lightbox-img');
+    const lightboxClose = lightbox ? lightbox.querySelector('.jbc-gallery-lightbox__close') : null;
 
     if (!stage || !cardsRoot) return; // bail if section not present
 
@@ -453,7 +466,7 @@
         img.alt = '';
         card.appendChild(img);
         frag.appendChild(card);
-        items.push({ el: card, x: i * STEP, w: CARD_W, h: CARD_H });
+        items.push({ el: card, src, x: i * STEP, w: CARD_W, h: CARD_H });
       });
       cardsRoot.appendChild(frag);
     }
@@ -726,6 +739,65 @@
       return y >= WHEEL_ACTIVE_TOP && y <= WHEEL_ACTIVE_BOTTOM;
     }
 
+    function revealProgressForEvent(e) {
+      const r = stage.getBoundingClientRect();
+      const y = (e.clientY - r.top) / Math.max(1, r.height);
+      const raw = (y - REVEAL_ACTIVE_TOP) / Math.max(0.001, REVEAL_ACTIVE_BOTTOM - REVEAL_ACTIVE_TOP);
+      const p = Math.max(0, Math.min(1, raw));
+      return p * p * (3 - 2 * p);
+    }
+
+    function mix(a, b, p) {
+      return a + (b - a) * p;
+    }
+
+    function setRevealProgress(progress) {
+      const p = Math.max(0, Math.min(1, progress));
+      cardsRoot.style.setProperty('--jbc-gs-aperture-x', `${mix(16, 155, p).toFixed(2)}%`);
+      cardsRoot.style.setProperty('--jbc-gs-aperture-y', `${mix(12, 125, p).toFixed(2)}%`);
+      cardsRoot.style.setProperty('--jbc-gs-aperture-core', `${mix(0, 54, p).toFixed(2)}%`);
+      cardsRoot.style.setProperty('--jbc-gs-aperture-soft', `${mix(38, 76, p).toFixed(2)}%`);
+      cardsRoot.style.setProperty('--jbc-gs-aperture-feather', `${mix(66, 92, p).toFixed(2)}%`);
+      cardsRoot.style.setProperty('--jbc-gs-cards-opacity', mix(0.24, 1, p).toFixed(3));
+      cardsRoot.style.setProperty('--jbc-gs-cards-blur', `${mix(8, 0, p).toFixed(2)}px`);
+      cardsRoot.style.setProperty('--jbc-gs-cards-scale', mix(0.975, 1, p).toFixed(4));
+      if (quote) {
+        quote.style.setProperty('--jbc-gs-quote-opacity', mix(0.94, 0, p).toFixed(3));
+        quote.style.setProperty('--jbc-gs-quote-blur', `${mix(0, 10, p).toFixed(2)}px`);
+        quote.style.setProperty('--jbc-gs-quote-y', `${mix(-50, -54, p).toFixed(2)}%`);
+        quote.style.setProperty('--jbc-gs-quote-scale', mix(1, 0.96, p).toFixed(4));
+      }
+      stage.classList.toggle('jbc-gs-stage--revealed', p >= 0.98);
+    }
+
+    function setStageAwake(active) {
+      stage.classList.toggle('jbc-gs-stage--awake', active);
+    }
+
+    function setStageRevealed(active) {
+      setRevealProgress(active ? 1 : 0);
+    }
+
+    function openLightbox(src) {
+      if (!lightbox || !lightboxImg || !src) return;
+      lightboxImg.src = src;
+      lightbox.classList.add('jbc-gallery-lightbox--open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('jbc-gallery-lightbox-open');
+      vX = 0;
+      lightboxClose && lightboxClose.focus({ preventScroll: true });
+    }
+
+    function closeLightbox() {
+      if (!lightbox || !lightboxImg) return;
+      lightbox.classList.remove('jbc-gallery-lightbox--open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('jbc-gallery-lightbox-open');
+      setTimeout(() => {
+        if (!lightbox.classList.contains('jbc-gallery-lightbox--open')) lightboxImg.src = '';
+      }, 260);
+    }
+
     function onResize() {
       const prevStep = STEP || 1;
       const ratio = SCROLL_X / (items.length * prevStep);
@@ -754,10 +826,14 @@
       }
 
       if (!isWheelInCardBand(e)) {
+        setRevealProgress(revealProgressForEvent(e));
+        setStageAwake(false);
         vX = 0;
         return;
       }
 
+      setStageRevealed(true);
+      setStageAwake(true);
       e.preventDefault();
       lastCarouselDirection = direction;
       const modeScale = e.deltaMode === 1 ? 18 : e.deltaMode === 2 ? stage.clientHeight : 1;
@@ -778,10 +854,19 @@
     stage.addEventListener('dragstart', e => e.preventDefault());
 
     let dragging = false, lastX = 0, lastT = 0, lastDelta = 0;
+    let pressX = 0, pressY = 0, pressCard = null, hasSlid = false;
+    const CLICK_MOVE_LIMIT = 7;
 
     stage.addEventListener('pointerdown', e => {
       if (isEntering || e.target.closest('.frame')) return;
-      dragging = true; lastX = e.clientX; lastT = performance.now(); lastDelta = 0;
+      dragging = true;
+      pressX = e.clientX;
+      pressY = e.clientY;
+      pressCard = e.target.closest('.jbc-gs-card');
+      hasSlid = false;
+      lastX = e.clientX;
+      lastT = performance.now();
+      lastDelta = 0;
       stage.setPointerCapture(e.pointerId);
       stage.classList.add('jbc-gs-dragging');
     });
@@ -790,17 +875,47 @@
       if (!dragging) return;
       const now = performance.now(), dx = e.clientX - lastX;
       const dt = Math.max(1, now - lastT) / 1000;
+      const totalX = e.clientX - pressX;
+      const totalY = e.clientY - pressY;
+      if (Math.hypot(totalX, totalY) > CLICK_MOVE_LIMIT) hasSlid = true;
       lastCarouselDirection = dx < 0 ? 1 : -1;
+      carouselReleaseReady = false;
       SCROLL_X = mod(SCROLL_X - dx * DRAG_SENS, TRACK);
       lastDelta = dx / dt; lastX = e.clientX; lastT = now;
+      updateTransforms();
     });
 
     stage.addEventListener('pointerup', e => {
       if (!dragging) return;
       dragging = false;
       stage.releasePointerCapture(e.pointerId);
-      vX = -lastDelta * DRAG_SENS;
+      if (!hasSlid && pressCard) {
+        const img = pressCard.querySelector('.jbc-gs-card__img');
+        openLightbox(img ? img.currentSrc || img.src : '');
+        vX = 0;
+      } else {
+        vX = -lastDelta * DRAG_SENS;
+      }
+      pressCard = null;
       stage.classList.remove('jbc-gs-dragging');
+    });
+
+    stage.addEventListener('pointercancel', e => {
+      if (!dragging) return;
+      dragging = false;
+      pressCard = null;
+      if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
+      stage.classList.remove('jbc-gs-dragging');
+    });
+
+    if (lightbox) {
+      lightbox.addEventListener('click', e => {
+        if (e.target === lightbox || e.target === lightboxClose) closeLightbox();
+      });
+    }
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
     });
 
     window.addEventListener('resize', () => {
@@ -812,8 +927,15 @@
     stage.addEventListener('mouseenter', () => { mouseIsOver = true; });
     stage.addEventListener('mouseleave', () => {
       mouseIsOver = false;
+      setStageAwake(false);
+      setStageRevealed(false);
       items.forEach(it => it.el.classList.remove('jbc-gs-card--lit'));
     });
+
+    stage.addEventListener('mousemove', e => {
+      setRevealProgress(revealProgressForEvent(e));
+      if (!isWheelInCardBand(e)) setStageAwake(false);
+    }, { passive: true });
 
     // Hint — hide only when user actually scrolls/swipes the carousel
     const hint = document.getElementById('jbc-gs-hint');

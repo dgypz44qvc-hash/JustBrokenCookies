@@ -11167,10 +11167,124 @@ section.testimonial-section span {
 
 /* Cards container */
 #jbc-gs-cards {
+  --jbc-gs-aperture-x: 16%;
+  --jbc-gs-aperture-y: 12%;
+  --jbc-gs-aperture-core: 0%;
+  --jbc-gs-aperture-soft: 38%;
+  --jbc-gs-aperture-feather: 66%;
+  --jbc-gs-cards-opacity: 0.24;
+  --jbc-gs-cards-blur: 8px;
+  --jbc-gs-cards-scale: 0.975;
   position: absolute;
   inset: 0;
   z-index: 10;
   transform-style: preserve-3d;
+  opacity: var(--jbc-gs-cards-opacity);
+  filter: blur(var(--jbc-gs-cards-blur));
+  transform: scale(var(--jbc-gs-cards-scale));
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse var(--jbc-gs-aperture-x) var(--jbc-gs-aperture-y) at 50% 47%,
+      black var(--jbc-gs-aperture-core),
+      rgba(0,0,0,0.72) var(--jbc-gs-aperture-soft),
+      rgba(0,0,0,0.18) var(--jbc-gs-aperture-feather),
+      transparent 100%
+    );
+  mask-image:
+    radial-gradient(
+      ellipse var(--jbc-gs-aperture-x) var(--jbc-gs-aperture-y) at 50% 47%,
+      black var(--jbc-gs-aperture-core),
+      rgba(0,0,0,0.72) var(--jbc-gs-aperture-soft),
+      rgba(0,0,0,0.18) var(--jbc-gs-aperture-feather),
+      transparent 100%
+    );
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    --jbc-gs-aperture-x 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --jbc-gs-aperture-y 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --jbc-gs-aperture-core 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --jbc-gs-aperture-soft 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    --jbc-gs-aperture-feather 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@property --jbc-gs-aperture-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 16%;
+}
+
+@property --jbc-gs-aperture-y {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 12%;
+}
+
+@property --jbc-gs-aperture-core {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --jbc-gs-aperture-soft {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 38%;
+}
+
+@property --jbc-gs-aperture-feather {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 66%;
+}
+
+#jbc-gradient-stage.jbc-gs-stage--revealed #jbc-gs-cards {
+  --jbc-gs-aperture-x: 155%;
+  --jbc-gs-aperture-y: 125%;
+  --jbc-gs-aperture-core: 54%;
+  --jbc-gs-aperture-soft: 76%;
+  --jbc-gs-aperture-feather: 92%;
+  --jbc-gs-cards-opacity: 1;
+  --jbc-gs-cards-blur: 0px;
+  --jbc-gs-cards-scale: 1;
+}
+
+.jbc-gs-quote {
+  --jbc-gs-quote-opacity: 0.94;
+  --jbc-gs-quote-blur: 0px;
+  --jbc-gs-quote-y: -50%;
+  --jbc-gs-quote-scale: 1;
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  z-index: 18;
+  transform: translate(-50%, var(--jbc-gs-quote-y)) scale(var(--jbc-gs-quote-scale));
+  width: min(82vw, 920px);
+  pointer-events: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 7.4rem);
+  line-height: 0.92;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: var(--gold);
+  text-shadow:
+    0 14px 44px rgba(0,0,0,0.72),
+    0 2px 12px rgba(0,0,0,0.64);
+  opacity: var(--jbc-gs-quote-opacity);
+  filter: blur(var(--jbc-gs-quote-blur));
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#jbc-gradient-stage.jbc-gs-stage--revealed .jbc-gs-quote {
+  --jbc-gs-quote-opacity: 0;
+  --jbc-gs-quote-blur: 10px;
+  --jbc-gs-quote-y: -54%;
+  --jbc-gs-quote-scale: 0.96;
 }
 
 /* Individual card */
