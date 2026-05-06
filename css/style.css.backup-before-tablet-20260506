@@ -142,7 +142,6 @@ ul { list-style:none; }
   position:fixed; top:0; left:0; width:100%; z-index:1000;
   padding:0;
   background:rgba(5, 5, 5, 0.95);
-  -webkit-backdrop-filter: blur(20px); -webkit-backdrop-filter:blur(20px);
   backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
   transition:all 0.5s var(--ease-out-expo);
 }
@@ -428,7 +427,6 @@ section { padding:var(--section-pad) 0; position:relative; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   overflow-y: auto;
@@ -1000,12 +998,10 @@ section { padding:var(--section-pad) 0; position:relative; }
 
 /* Image clip reveal */
 .img-reveal {
-  -webkit-clip-path: inset(100% 0 0 0);
   clip-path:inset(100% 0 0 0);
   transition:clip-path 1s var(--ease-out-expo);
 }
 .img-reveal.visible {
-  -webkit-clip-path: inset(0 0 0 0);
   clip-path:inset(0 0 0 0);
 }
 
@@ -1041,7 +1037,6 @@ section { padding:var(--section-pad) 0; position:relative; }
     position:fixed; top:0; right:-100%;
     width:75%; height:100vh;
     background:rgba(42,34,30,0.98);
-    -webkit-backdrop-filter: blur(20px);
     backdrop-filter:blur(20px);
     flex-direction:column; justify-content:center;
     gap:35px; transition:right 0.5s var(--ease-out-expo);
@@ -2031,7 +2026,6 @@ section { padding:var(--section-pad) 0; position:relative; }
 .btn-outline {
   border-color: rgba(240, 230, 218, 0.28) !important;
   background: rgba(10, 10, 10, 0.20) !important;
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -3572,7 +3566,6 @@ body {
 /* Keep the nav above the video, but let video be visible behind it */
 .nav {
   background: rgba(5, 5, 5, 0.78) !important;
-  -webkit-backdrop-filter: blur(18px) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
   z-index: 1000 !important;
@@ -3665,7 +3658,6 @@ body {
 /* NAV ONLY: make it transparent/glassy, do not move it */
 .nav {
   background: rgba(5, 5, 5, 0.42) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   border-bottom: 1px solid rgba(240, 230, 218, 0.08) !important;
@@ -3785,7 +3777,6 @@ body {
 .nav {
   z-index: 1000 !important;
   background: rgba(5, 5, 5, 0.42) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -4305,7 +4296,6 @@ body[data-editor-id],
 .nav,
 .nav.scrolled {
   background: rgba(5, 5, 5, 0.86) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
 }
@@ -5880,7 +5870,6 @@ footer.footer [data-editor-id="image-002"],
     ) !important;
 
   opacity: 1 !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   -webkit-mask-image: none !important;
@@ -5999,7 +5988,6 @@ footer.footer [data-editor-id="image-002"],
     ) !important;
 
   opacity: 1 !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   -webkit-mask-image: none !important;
@@ -6489,7 +6477,6 @@ footer.footer [data-editor-id="image-002"],
   border: 0 !important;
   box-shadow: none !important;
 
-  -webkit-clip-path: inset(0 0 0 0) !important;
   clip-path: inset(0 0 0 0) !important;
 }
 
@@ -6957,7 +6944,6 @@ footer.footer [data-editor-id="image-002"],
   overflow: hidden !important;
   background: transparent !important;
   transform: none !important;
-  -webkit-clip-path: none !important;
   clip-path: none !important;
 }
 
@@ -7365,7 +7351,6 @@ body:not([data-editor-id]) .portfolio-item img {
     linear-gradient(180deg, rgba(5,5,5,0.36) 0%, rgba(5,5,5,0.05) 42%, rgba(5,5,5,0.5) 100%),
     radial-gradient(ellipse at 18% 12%, rgba(232,137,29,0.22) 0%, rgba(232,137,29,0.07) 30%, transparent 58%),
     radial-gradient(ellipse at 82% 26%, rgba(201,58,110,0.18) 0%, rgba(201,58,110,0.06) 28%, transparent 62%) !important;
-  -webkit-backdrop-filter: grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
   backdrop-filter: grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
   -webkit-backdrop-filter: grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
   mix-blend-mode: normal !important;
@@ -7432,7 +7417,6 @@ body:not([data-editor-id]) .portfolio-item img {
 .mag-featured-image:has(img.color-revealed)::before,
 .mag-article-image:has(img.color-revealed)::before {
   opacity: 0.82 !important;
-  -webkit-backdrop-filter: grayscale(0.62) sepia(0.2) saturate(1.08) contrast(1.08) brightness(0.92) !important;
   backdrop-filter: grayscale(0.62) sepia(0.2) saturate(1.08) contrast(1.08) brightness(0.92) !important;
   -webkit-backdrop-filter: grayscale(0.62) sepia(0.2) saturate(1.08) contrast(1.08) brightness(0.92) !important;
 }
@@ -7522,7 +7506,6 @@ body:not([data-editor-id]) .portfolio-item img {
 .mag-article-image::before {
   opacity: 1 !important;
   background: rgba(5, 5, 5, 0.08) !important;
-  -webkit-backdrop-filter: grayscale(0.92) sepia(0.1) saturate(0.82) contrast(1.08) brightness(0.9) !important;
   backdrop-filter: grayscale(0.92) sepia(0.1) saturate(0.82) contrast(1.08) brightness(0.9) !important;
   -webkit-backdrop-filter: grayscale(0.92) sepia(0.1) saturate(0.82) contrast(1.08) brightness(0.9) !important;
   mix-blend-mode: normal !important;
@@ -7563,7 +7546,6 @@ body:not([data-editor-id]) .portfolio-item img {
 .mag-featured-image:has(img.color-revealed)::before,
 .mag-article-image:has(img.color-revealed)::before {
   opacity: 0 !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -7627,7 +7609,6 @@ body:not([data-editor-id]) .portfolio-item img {
   content: none !important;
   display: none !important;
   opacity: 0 !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -7765,7 +7746,6 @@ body:not([data-editor-id]) .portfolio-item img {
     linear-gradient(180deg, rgba(4,4,4,0.2) 0%, rgba(4,4,4,0.02) 44%, rgba(4,4,4,0.58) 100%),
     radial-gradient(ellipse at 18% 10%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 28%, transparent 58%) !important;
   mix-blend-mode: normal !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   -webkit-mask-image: none !important;
@@ -7801,7 +7781,6 @@ body:not([data-editor-id]) .portfolio-item img {
 #featured-work .portfolio-item.jbc-editorial-work-item:hover::before,
 #featured-work .portfolio-item.jbc-editorial-work-item.jbc-image-revealed::before {
   opacity: 0.28 !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -8357,7 +8336,6 @@ body:not([data-editor-id]) .portfolio-item img {
   box-shadow: none !important;
   border: none !important;
   outline: none !important;
-  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -11269,7 +11247,6 @@ section.testimonial-section span {
   background: rgba(5, 5, 5, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 40px;
-  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: rgba(255, 255, 255, 0.92);

@@ -140,7 +140,6 @@
     padding: 0 !important;
     height: 58px !important;
     background: rgba(5,5,5,0.94) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
     border-bottom: 1px solid rgba(255,255,255,0.06) !important;
@@ -185,7 +184,6 @@
     justify-content: center !important;
     gap: 32px !important;
     z-index: 999 !important;
-    -webkit-backdrop-filter: blur(20px) !important;
     backdrop-filter: blur(20px) !important;
   }
 
@@ -1911,14 +1909,15 @@
 
 
 /* ════════════════════════════════════════════════════════════
-   TABLET  —  LANDSCAPE / HORIZONTAL ORIENTATION ONLY
-   Covers: iPad Mini landscape (1024×768), iPad Air landscape (1180×820),
-           iPad Pro 11" landscape (1194×834), iPad Pro 12.9" landscape (1366×1024).
+   TABLET  —  769px to 1180px
+   Covers: iPad Mini portrait (768), iPad Air portrait (820),
+           iPad Pro 11" portrait (834), iPad Pro 12.9" portrait (1024),
+           iPad Air/Pro landscape (1024–1180), small laptops in touch mode.
 
-   Only fires when the device is held horizontally (orientation: landscape).
-   Portrait tablets fall back to the mobile layout intentionally.
+   Strategy: restore 2-column grids, scale typography, keep the
+   desktop cinema running, add breathing room back in.
    ════════════════════════════════════════════════════════════ */
-@media (min-width: 900px) and (max-width: 1366px) and (orientation: landscape) {
+@media (min-width: 769px) and (max-width: 1180px) {
 
   /* ── 0. GLOBAL CONTAINER ────────────────────────────────── */
   .container {
@@ -1929,9 +1928,12 @@
   }
 
   /* ── 1. NAVIGATION ──────────────────────────────────────── */
+  /* Hamburger is already shown via style.css ≤968px.
+     On tablet the slide-in panel is 75vw by default — too wide.
+     Constrain it to feel like a side drawer, not a takeover. */
   .nav-links {
-    width: 50% !important;
-    max-width: 360px !important;
+    width: 55% !important;
+    max-width: 380px !important;
   }
 
   .nav-links a {
@@ -1942,18 +1944,20 @@
   /* ── 2. HERO ────────────────────────────────────────────── */
   .hero,
   .jbc-floral-hero {
-    padding: 100px 52px 56px !important;
-    min-height: 85vh !important;
+    padding: 110px 52px 64px !important;
+    min-height: 88vh !important;
   }
 
+  /* Desktop hero-mega runs at 14vw — at 1000px that's 140px, way too big.
+     Pull it back to a scale that fits a tablet screen elegantly. */
   .hero-mega .l1,
   .hero-mega .l2,
   .hero-mega .l3 {
-    font-size: clamp(3.6rem, 7.5vw, 5.6rem) !important;
+    font-size: clamp(3.8rem, 8.5vw, 6rem) !important;
   }
 
   .hero-mega .l2 {
-    margin-left: clamp(16px, 3vw, 52px) !important;
+    margin-left: clamp(16px, 3.5vw, 60px) !important;
   }
 
   .hero-mega {
@@ -1981,15 +1985,18 @@
   }
 
   .sec-header {
-    padding: 60px 0 36px !important;
+    padding: 64px 0 40px !important;
   }
 
   .sec-header h2,
   .section-title {
-    font-size: clamp(2rem, 4.2vw, 3rem) !important;
+    font-size: clamp(2rem, 4.5vw, 3rem) !important;
   }
 
   /* ── 5. FEATURED WORK (Cinema) ──────────────────────────── */
+  /* The desktop JS cinema runs on tablets ≥769px. It works well —
+     the scroll-pinning gives tablets a premium feel. Just tighten
+     the section header padding. */
   #featured-work {
     padding-bottom: 40px !important;
   }
@@ -1997,16 +2004,18 @@
   #featured-work .sec-header,
   #featured-work h2,
   #featured-work h3 {
-    padding: 60px 52px 32px !important;
+    padding: 64px 52px 36px !important;
   }
 
   /* ── 6. SERVICES — 2-column grid ────────────────────────── */
+  /* style.css ≤968px collapses this to 1-col — wrong for tablets */
   #services-overview .services-grid,
   .services-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 24px !important;
   }
 
+  /* If there's an odd 3rd card, centre it */
   .service-card:last-of-type:nth-child(odd) {
     grid-column: 1 / -1 !important;
     max-width: 540px !important;
@@ -2016,33 +2025,36 @@
   }
 
   .service-card {
-    padding: 40px 32px !important;
+    padding: 44px 36px !important;
   }
 
   .service-card h3 {
-    font-size: 1.7rem !important;
+    font-size: 1.8rem !important;
   }
 
+  /* Cinema detail panel still spans full width */
   .service-cinema {
     grid-column: 1 / -1 !important;
   }
 
   .service-cinema-inner {
-    padding: 32px 40px !important;
+    padding: 36px 40px !important;
   }
 
   /* ── 7. VISUAL GALLERY ───────────────────────────────────── */
   #jbc-visual-gallery .sec-header {
-    padding: 56px 0 32px !important;
+    padding: 60px 0 36px !important;
   }
 
   #jbc-gradient-stage {
-    height: 50vw !important;
-    min-height: 340px !important;
-    max-height: 540px !important;
+    height: 54vw !important;
+    min-height: 360px !important;
+    max-height: 580px !important;
   }
 
-  /* ── 8. TESTIMONIAL — 2-col layout ──────────────────────── */
+  /* ── 8. TESTIMONIAL — keep 2-col layout ─────────────────── */
+  /* style.css ≤968px makes this single column — restore the
+     branded side-text strip + content layout for tablets */
   .testi-brutal {
     display: grid !important;
     grid-template-columns: auto 1fr !important;
@@ -2061,21 +2073,21 @@
 
   .testimonial,
   .testi-content {
-    padding: 56px 48px !important;
+    padding: 60px 52px !important;
   }
 
   .testi-content blockquote {
-    font-size: clamp(1.1rem, 2.4vw, 1.4rem) !important;
+    font-size: clamp(1.1rem, 2.6vw, 1.45rem) !important;
     line-height: 1.68 !important;
   }
 
   /* ── 9. CTA ─────────────────────────────────────────────── */
   .cta-section {
-    padding: 80px 52px !important;
+    padding: 88px 52px !important;
   }
 
   .cta-section .section-title {
-    font-size: clamp(2rem, 4.5vw, 3.2rem) !important;
+    font-size: clamp(2.2rem, 5vw, 3.4rem) !important;
   }
 
   /* ── 10. FOOTER — 2+2 grid ───────────────────────────────── */
@@ -2085,6 +2097,7 @@
     gap: 40px 32px !important;
   }
 
+  /* Brand block spans full width in 2-col footer */
   .footer-brand {
     grid-column: 1 / -1 !important;
     border-right: none !important;
@@ -2093,21 +2106,22 @@
   }
 
   /* ── 11. ABOUT PAGE ──────────────────────────────────────── */
+  /* Keep the image+text side-by-side — it works beautifully on tablet */
   .about-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 0 !important;
   }
 
   .about-image {
-    height: 50vw !important;
-    max-height: 480px !important;
-    min-height: 320px !important;
+    height: 55vw !important;
+    max-height: 520px !important;
+    min-height: 360px !important;
     border-right: 1px solid rgba(255,255,255,0.06) !important;
     border-bottom: none !important;
   }
 
   .about-text {
-    padding: 48px 40px !important;
+    padding: 52px 44px !important;
   }
 
   .about-stats {
@@ -2120,7 +2134,7 @@
   }
 
   .value-card {
-    padding: 36px 28px !important;
+    padding: 40px 32px !important;
   }
 
   /* ── 12. SERVICES PAGE ───────────────────────────────────── */
@@ -2139,9 +2153,10 @@
   }
 
   .service-detail-content {
-    padding: 44px 40px !important;
+    padding: 48px 44px !important;
   }
 
+  /* Process grid — 2 col on tablet */
   .process-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 24px !important;
@@ -2158,8 +2173,10 @@
     gap: 20px !important;
   }
 
+  /* First featured item: full width */
   .portfolio-grid-full .portfolio-item:nth-child(1) {
     grid-column: 1 / -1 !important;
+    grid-row: span 1 !important;
   }
 
   /* ── 14. CONTACT PAGE ────────────────────────────────────── */
@@ -2169,25 +2186,25 @@
   }
 
   .contact-form-wrap {
-    padding: 48px 40px !important;
+    padding: 52px 44px !important;
     border-right: 1px solid rgba(255,255,255,0.06) !important;
     border-bottom: none !important;
   }
 
   .contact-info-wrap {
-    padding: 48px 40px !important;
+    padding: 52px 44px !important;
   }
 
-  /* ── 15. PAGE HEADER ─────────────────────────────────────── */
+  /* ── 15. PAGE HEADER (inner pages) ───────────────────────── */
   .page-header,
   .jbc-floral-page-header {
-    padding: 110px 0 72px !important;
-    min-height: 320px !important;
+    padding: 120px 0 80px !important;
+    min-height: 340px !important;
   }
 
   .page-header h1,
   .page-header .section-title {
-    font-size: clamp(2.4rem, 5vw, 3.8rem) !important;
+    font-size: clamp(2.6rem, 5.5vw, 4rem) !important;
   }
 
   /* ── 16. BLOG ────────────────────────────────────────────── */
@@ -2197,13 +2214,89 @@
   }
 
   .blog-card-content {
-    padding: 28px !important;
+    padding: 32px !important;
   }
 
   /* ── 17. TEAM ────────────────────────────────────────────── */
   .team-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 24px !important;
+  }
+
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   NARROW TABLET  —  769px to 900px
+   Targets: iPad Mini portrait (768), iPad Air portrait edge cases,
+            large phones in landscape (iPhone Pro Max, Galaxy Ultra).
+   At this width 2-col grids get too tight for content-heavy cards,
+   so we step select grids back to 1-col.
+   ════════════════════════════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 900px) {
+
+  /* Hero text: tighter */
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(3.4rem, 10vw, 5.2rem) !important;
+  }
+
+  /* Services: 2-col is too tight here — stack to 1 */
+  #services-overview .services-grid,
+  .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Cancel the centred-last-card rule */
+  .service-card:last-of-type:nth-child(odd) {
+    grid-column: auto !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* About: stack image over text */
+  .about-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-image {
+    height: 52vw !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  /* Contact: stack */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-form-wrap {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+  /* Testimonial: stack at narrow tablet */
+  .testi-brutal {
+    grid-template-columns: 1fr !important;
+  }
+
+  .testi-mark {
+    writing-mode: horizontal-tb !important;
+    padding: 22px 32px !important;
+  }
+
+  .testi-mark span {
+    writing-mode: horizontal-tb !important;
+    letter-spacing: 7px !important;
+  }
+
+  /* Service detail pages: stack */
+  .service-detail,
+  .service-detail.reverse {
+    grid-template-columns: 1fr !important;
+    direction: ltr !important;
   }
 
 }

@@ -3,6 +3,32 @@
    Dark Luxe Edition
    ============================================ */
 
+/* ── JBC LOADER — dismiss after 2.2s (desktop only, once per session) ── */
+(function () {
+  var loader = document.getElementById('jbc-loader');
+  if (!loader) return;
+
+  // Mobile: already hidden by CSS, but clean up the DOM immediately
+  if (window.innerWidth <= 768) { loader.remove(); return; }
+
+  // If already seen this session, skip instantly
+  if (sessionStorage.getItem('jbc_loaded')) { loader.remove(); return; }
+
+  function dismiss() {
+    if (!loader || loader.dataset.gone) return;
+    loader.dataset.gone = '1';
+    loader.classList.add('jbc-loader-out');
+    setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 950);
+    sessionStorage.setItem('jbc_loaded', '1');
+  }
+
+  // Primary: dismiss 2.2s after page starts loading
+  setTimeout(dismiss, 2200);
+
+  // Fallback: also dismiss on full load in case page is super fast
+  window.addEventListener('load', function () { setTimeout(dismiss, 400); }, { once: true });
+}());
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // ---- MOBILE: CLEAR ANY BAKED-IN SCROLL STATES ----
