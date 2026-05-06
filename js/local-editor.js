@@ -22,11 +22,14 @@
   const btnUndo      = document.getElementById('btn-undo');
   const btnRedo      = document.getElementById('btn-redo');
   const btnSave      = document.getElementById('btn-save');
+  const canvasWrap   = document.getElementById('canvas-wrap');
+  const vpToggle     = document.getElementById('vp-toggle');
 
   /* ── STATE ───────────────────────────────────────────── */
   let doc          = null;
   let win          = null;
   let layerMode    = 'none';   // 'none' | 'page-bg' | 'text' | 'section-bg'
+  let viewMode     = 'desktop'; // 'desktop' | 'mobile'
   let ctxTarget    = null;     // element right-clicked
   let textTarget   = null;     // element being edited as text
   let moveTarget   = null;     // element being moved
@@ -82,6 +85,8 @@
       doc = frame.contentDocument;
       win = frame.contentWindow;
       injectAgent();
+      // Re-apply mobile viewport after every page load if in mobile mode
+      if (viewMode === 'mobile') applyMobileViewport(doc);
       setStatus('Ready');
     } catch (e) {
       setStatus('Error loading page');
@@ -368,6 +373,147 @@
     window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
   };
 
+  // ── IN-PAGE RESIZE HANDLES (corner drag, aspect-ratio locked) ──
+  var _rEl = null, _rOvl = null, _rDir = null;
+  var _rSX, _rSW, _rSH, _rSL, _rAR;
+
+  function _rUpdatePos() {
+    if (!_rOvl || !_rEl) return;
+    var r = _rEl.getBoundingClientRect();
+    _rOvl.style.left   = r.left   + 'px';
+    _rOvl.style.top    = r.top    + 'px';
+    _rOvl.style.width  = r.width  + 'px';
+    _rOvl.style.height = r.height + 'px';
+  }
+
+  function _rCleanup() {
+    if (_rOvl) { _rOvl.remove(); _rOvl = null; }
+    document.removeEventListener('mousemove', _rOnMove, true);
+    document.removeEventListener('mouseup',   _rOnUp,   true);
+    document.removeEventListener('scroll',    _rUpdatePos, true);
+    _rEl = null; _rDir = null;
+  }
+
+  function _rOnMove(ev) {
+    if (!_rDir || !_rEl) return;
+    ev.preventDefault();
+    var dx = ev.clientX - _rSX;
+    var newW = (_rDir === 'se' || _rDir === 'ne')
+      ? Math.max(40, _rSW + dx)
+      : Math.max(40, _rSW - dx);
+    var newH = newW / _rAR;
+    var target = _rEl.closest('.editor-decoration.editor-image') || _rEl;
+    target.style.width  = newW + 'px';
+    target.style.height = newH + 'px';
+    if ((_rDir === 'nw' || _rDir === 'sw') && target.style.position === 'absolute') {
+      target.style.left = (_rSL + (_rSW - newW)) + 'px';
+    }
+    _rUpdatePos();
+  }
+
+  function _rOnUp() {
+    if (_rDir) {
+      _rDir = null;
+      window.parent.postMessage({ type: 'jbc_resize_done' }, '*');
+    }
+  }
+
+  window.__jbc_showResizeHandles = function() {
+    var el = window.__jbc_ctx_el;
+    if (!el) return;
+    _rCleanup();
+    var target = el.closest('.editor-decoration.editor-image') || el;
+    _rEl = target;
+    var img = (target.tagName === 'IMG') ? target : target.querySelector('img');
+    _rAR = (img && img.naturalWidth && img.naturalHeight)
+      ? img.naturalWidth / img.naturalHeight
+      : (target.offsetWidth / (target.offsetHeight || 1));
+    _rSL = parseInt(target.style.left) || 0;
+    _rOvl = document.createElement('div');
+    _rOvl.id = '__jbc_resize_ovl';
+    _rOvl.style.cssText = 'position:fixed;outline:2px solid #E8891D;outline-offset:1px;z-index:99998;pointer-events:none;box-sizing:border-box;';
+    _rUpdatePos();
+    var DIRS = ['nw','ne','sw','se'];
+    var CURSORS = { nw:'nw-resize', ne:'ne-resize', sw:'sw-resize', se:'se-resize' };
+    DIRS.forEach(function(d) {
+      var h = document.createElement('div');
+      h.style.cssText = 'position:absolute;width:12px;height:12px;background:#E8891D;border:2px solid #fff;border-radius:2px;pointer-events:all;box-sizing:border-box;cursor:' + CURSORS[d] + ';z-index:99999;';
+      if (d[0] === 'n') { h.style.top = '-6px'; } else { h.style.bottom = '-6px'; }
+      if (d[1] === 'w') { h.style.left = '-6px'; } else { h.style.right = '-6px'; }
+      h.addEventListener('mousedown', function(ev) {
+        ev.stopPropagation(); ev.preventDefault();
+        _rDir = d;
+        _rSX = ev.clientX;
+        var r = _rEl.getBoundingClientRect();
+        _rSW = r.width; _rSH = r.height;
+        _rSL = parseInt(_rEl.style.left) || 0;
+      });
+      _rOvl.appendChild(h);
+    });
+    document.body.appendChild(_rOvl);
+    document.addEventListener('mousemove', _rOnMove, true);
+    document.addEventListener('mouseup',   _rOnUp,   true);
+    document.addEventListener('scroll',    _rUpdatePos, true);
+  };
+
+  // ── SECTION HEIGHT DRAG HANDLE ──────────────────────────────
+  var _secEl = null, _secHandle = null;
+
+  function _secUpdatePos() {
+    if (!_secEl || !_secHandle) return;
+    var r = _secEl.getBoundingClientRect();
+    _secHandle.style.left  = (r.left + r.width * 0.25) + 'px';
+    _secHandle.style.top   = (r.bottom - 10) + 'px';
+    _secHandle.style.width = (r.width * 0.5)  + 'px';
+  }
+
+  function _secCleanup() {
+    if (_secHandle) { _secHandle.remove(); _secHandle = null; }
+    document.removeEventListener('scroll', _secUpdatePos, true);
+    _secEl = null;
+  }
+
+  window.__jbc_showSectionHandle = function() {
+    var el = window.__jbc_ctx_el;
+    if (!el) return;
+    _secCleanup();
+    var sec = el.closest('section,footer,header,.testimonial-section,.cta-section,#featured-work,#jbc-visual-gallery') || el;
+    _secEl = sec;
+    _secHandle = document.createElement('div');
+    _secHandle.id = '__jbc_sec_handle';
+    _secHandle.innerHTML = '<span style="pointer-events:none;color:#fff;font-size:10px;letter-spacing:2px;user-select:none;">⠿ drag to resize ⠿</span>';
+    _secHandle.style.cssText = 'position:fixed;height:22px;background:rgba(232,137,29,0.88);cursor:ns-resize;z-index:99999;display:flex;align-items:center;justify-content:center;border-radius:11px;box-shadow:0 2px 10px rgba(0,0,0,0.5);';
+    _secUpdatePos();
+    var dragging = false, startY, startH;
+    _secHandle.addEventListener('mousedown', function(ev) {
+      ev.stopPropagation(); ev.preventDefault();
+      dragging = true;
+      startY = ev.clientY;
+      startH = _secEl.getBoundingClientRect().height;
+    });
+    document.addEventListener('mousemove', function(ev) {
+      if (!dragging) return;
+      var dy = ev.clientY - startY;
+      var newH = Math.max(80, startH + dy);
+      _secEl.style.minHeight = newH + 'px';
+      _secUpdatePos();
+    });
+    document.addEventListener('mouseup', function() {
+      if (dragging) {
+        dragging = false;
+        window.parent.postMessage({ type: 'jbc_resize_done' }, '*');
+      }
+    });
+    document.addEventListener('scroll', _secUpdatePos, true);
+    document.body.appendChild(_secHandle);
+  };
+
+  // Clear all resize handles (called before context menu shows again)
+  window.__jbc_clearHandles = function() {
+    _rCleanup();
+    _secCleanup();
+  };
+
   window.__jbc_execText = function(cmd, value) {
     document.execCommand(cmd, false, value || null);
   };
@@ -393,6 +539,8 @@
 
     if (type === 'jbc_contextmenu') {
       ctxTarget = { selector, tagName, text };
+      // Clear any active resize/section handles before showing new menu
+      if (win && win.__jbc_clearHandles) win.__jbc_clearHandles();
       showCtxMenu(x, y);
     }
 
@@ -401,6 +549,10 @@
     }
 
     if (type === 'jbc_move_done') {
+      snapshot();
+    }
+
+    if (type === 'jbc_resize_done') {
       snapshot();
     }
   });
@@ -621,6 +773,20 @@
       });
     }
 
+    if (action === 'resize-el') {
+      if (win.__jbc_showResizeHandles) {
+        win.__jbc_showResizeHandles();
+        setStatus('Drag a corner to resize · right-click elsewhere when done');
+      }
+    }
+
+    if (action === 'resize-section') {
+      if (win.__jbc_showSectionHandle) {
+        win.__jbc_showSectionHandle();
+        setStatus('Drag the orange bar to resize section height · right-click elsewhere when done');
+      }
+    }
+
     if (action === 'add-layer') {
       pendingAddMode = 'layer';
       document.getElementById('upload-hint-txt').textContent = 'Click anywhere on the page to place';
@@ -756,7 +922,6 @@
   });
 
   /* ── CLICK CANVAS TO PLACE TOP-LAYER IMAGE ───────────── */
-  const canvasWrap = document.getElementById('canvas-wrap');
   canvasWrap.addEventListener('click', e => {
     if (!pendingImage || pendingAddMode === 'bg') return;
     removeDragGhost();
@@ -941,6 +1106,115 @@
     undoStack = [];
     redoStack = [];
     loadPage(pageSelect.value);
+  });
+
+  /* ── VIEWPORT TOGGLE (Desktop / Mobile) ─────────────── */
+
+  // Build the phone shell HTML once — it wraps the iframe in mobile mode
+  function buildPhoneShell() {
+    const shell = document.createElement('div');
+    shell.id = 'phone-shell';
+
+    const notchRow = document.createElement('div');
+    notchRow.id = 'phone-notch-row';
+
+    const statusBar = document.createElement('div');
+    statusBar.id = 'phone-status-bar';
+    statusBar.innerHTML = `
+      <span class="status-time">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+      <span class="status-icons">
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="white"><rect x="0" y="3" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="9" rx="1"/><rect x="8" y="0" width="3" height="11" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1" opacity=".3"/></svg>
+        <svg width="14" height="11" viewBox="0 0 24 18" fill="none" stroke="white" stroke-width="2"><path d="M1 8.5C3.5 5.5 7.5 3.5 12 3.5s8.5 2 11 5"/><path d="M4.5 12C6.5 9.5 9 8 12 8s5.5 1.5 7.5 4"/><path d="M8.5 15.5C9.8 14 10.9 13 12 13s2.2 1 3.5 2.5"/><circle cx="12" cy="18" r="1.5" fill="white" stroke="none"/></svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity=".35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="white"/><path d="M23 4v4a2 2 0 000-4z" fill="white" opacity=".4"/></svg>
+      </span>
+    `;
+
+    const homeBar = document.createElement('div');
+    homeBar.id = 'phone-home-bar';
+
+    shell.appendChild(statusBar);
+    shell.appendChild(frame); // move the actual iframe inside
+    shell.appendChild(homeBar);
+
+    return shell;
+  }
+
+  let phoneShell = null;
+  let phoneLabel = null;
+
+  function setViewMode(mode) {
+    if (mode === viewMode) return;
+
+    // Warn if there are unsaved changes before reloading
+    if (dirty && !confirm('Switching view will reload the page. Unsaved changes will be lost. Continue?')) return;
+    dirty = false;
+
+    viewMode = mode;
+
+    // Update toggle button states
+    vpToggle.querySelectorAll('.vp-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.vp === mode);
+    });
+
+    if (mode === 'mobile') {
+      canvasWrap.classList.add('canvas-mobile');
+
+      // Build phone shell once, move iframe inside it
+      if (!phoneShell) {
+        phoneShell = buildPhoneShell(); // moves frame inside shell
+        canvasWrap.appendChild(phoneShell);
+      } else {
+        phoneShell.style.display = '';
+        // Make sure frame is inside shell
+        if (frame.parentElement !== phoneShell) {
+          const homeBar = phoneShell.querySelector('#phone-home-bar');
+          phoneShell.insertBefore(frame, homeBar);
+        }
+      }
+
+      // Width label under the phone
+      if (!phoneLabel) {
+        phoneLabel = document.createElement('div');
+        phoneLabel.id = 'phone-label';
+        phoneLabel.textContent = '390px — Mobile';
+        canvasWrap.appendChild(phoneLabel);
+      }
+      phoneLabel.style.display = '';
+
+    } else {
+      canvasWrap.classList.remove('canvas-mobile');
+
+      // Move iframe back to canvas root
+      if (phoneShell) {
+        if (frame.parentElement === phoneShell) canvasWrap.insertBefore(frame, phoneShell);
+        phoneShell.style.display = 'none';
+      }
+      if (phoneLabel) phoneLabel.style.display = 'none';
+    }
+
+    // Reload so JS runs fresh with the correct viewport width.
+    // The 'load' handler will apply/restore the viewport meta after load.
+    loadPage(currentPage);
+  }
+
+  function applyMobileViewport(targetDoc) {
+    let vp = targetDoc.querySelector('meta[name="viewport"]');
+    if (!vp) { vp = targetDoc.createElement('meta'); vp.name = 'viewport'; targetDoc.head.appendChild(vp); }
+    // width=390 forces the page's CSS to evaluate at 390px → mobile.css fires
+    vp.content = 'width=390, initial-scale=1, maximum-scale=1';
+  }
+
+  function restoreDesktopViewport(targetDoc) {
+    let vp = targetDoc.querySelector('meta[name="viewport"]');
+    if (vp) vp.content = 'width=device-width, initial-scale=1';
+  }
+
+  // Wire up toggle buttons
+  vpToggle.querySelectorAll('.vp-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (btn.dataset.vp !== viewMode) setViewMode(btn.dataset.vp);
+    });
   });
 
   /* ── INIT ────────────────────────────────────────────── */

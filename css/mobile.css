@@ -1906,3 +1906,302 @@
   }
 
 }
+
+
+/* ════════════════════════════════════════════════════════════
+   TABLET  —  LANDSCAPE / HORIZONTAL ORIENTATION ONLY
+   Covers: iPad Mini landscape (1024×768), iPad Air landscape (1180×820),
+           iPad Pro 11" landscape (1194×834), iPad Pro 12.9" landscape (1366×1024).
+
+   Only fires when the device is held horizontally (orientation: landscape).
+   Portrait tablets fall back to the mobile layout intentionally.
+   ════════════════════════════════════════════════════════════ */
+@media (min-width: 900px) and (max-width: 1366px) and (orientation: landscape) {
+
+  /* ── 0. GLOBAL CONTAINER ────────────────────────────────── */
+  .container {
+    width: 90% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* ── 1. NAVIGATION ──────────────────────────────────────── */
+  .nav-links {
+    width: 50% !important;
+    max-width: 360px !important;
+  }
+
+  .nav-links a {
+    font-size: 0.65rem !important;
+    letter-spacing: 3px !important;
+  }
+
+  /* ── 2. HERO ────────────────────────────────────────────── */
+  .hero,
+  .jbc-floral-hero {
+    padding: 100px 52px 56px !important;
+    min-height: 85vh !important;
+  }
+
+  .hero-mega .l1,
+  .hero-mega .l2,
+  .hero-mega .l3 {
+    font-size: clamp(3.6rem, 7.5vw, 5.6rem) !important;
+  }
+
+  .hero-mega .l2 {
+    margin-left: clamp(16px, 3vw, 52px) !important;
+  }
+
+  .hero-mega {
+    letter-spacing: -4px !important;
+  }
+
+  .hero-bottom {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 20px !important;
+    padding-top: 20px !important;
+  }
+
+  /* ── 3. MANIFESTO TICKER ────────────────────────────────── */
+  .manifesto,
+  [class*="manifesto"] {
+    padding: 14px 0 !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 0.2em !important;
+  }
+
+  /* ── 4. SECTION SHARED ──────────────────────────────────── */
+  section {
+    padding: 80px 0 !important;
+  }
+
+  .sec-header {
+    padding: 60px 0 36px !important;
+  }
+
+  .sec-header h2,
+  .section-title {
+    font-size: clamp(2rem, 4.2vw, 3rem) !important;
+  }
+
+  /* ── 5. FEATURED WORK (Cinema) ──────────────────────────── */
+  #featured-work {
+    padding-bottom: 40px !important;
+  }
+
+  #featured-work .sec-header,
+  #featured-work h2,
+  #featured-work h3 {
+    padding: 60px 52px 32px !important;
+  }
+
+  /* ── 6. SERVICES — 2-column grid ────────────────────────── */
+  #services-overview .services-grid,
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  .service-card:last-of-type:nth-child(odd) {
+    grid-column: 1 / -1 !important;
+    max-width: 540px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+  }
+
+  .service-card {
+    padding: 40px 32px !important;
+  }
+
+  .service-card h3 {
+    font-size: 1.7rem !important;
+  }
+
+  .service-cinema {
+    grid-column: 1 / -1 !important;
+  }
+
+  .service-cinema-inner {
+    padding: 32px 40px !important;
+  }
+
+  /* ── 7. VISUAL GALLERY ───────────────────────────────────── */
+  #jbc-visual-gallery .sec-header {
+    padding: 56px 0 32px !important;
+  }
+
+  #jbc-gradient-stage {
+    height: 50vw !important;
+    min-height: 340px !important;
+    max-height: 540px !important;
+  }
+
+  /* ── 8. TESTIMONIAL — 2-col layout ──────────────────────── */
+  .testi-brutal {
+    display: grid !important;
+    grid-template-columns: auto 1fr !important;
+  }
+
+  .testi-mark {
+    writing-mode: vertical-rl !important;
+    padding: 40px 24px !important;
+    text-align: center !important;
+  }
+
+  .testi-mark span {
+    writing-mode: vertical-rl !important;
+    letter-spacing: 6px !important;
+  }
+
+  .testimonial,
+  .testi-content {
+    padding: 56px 48px !important;
+  }
+
+  .testi-content blockquote {
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem) !important;
+    line-height: 1.68 !important;
+  }
+
+  /* ── 9. CTA ─────────────────────────────────────────────── */
+  .cta-section {
+    padding: 80px 52px !important;
+  }
+
+  .cta-section .section-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem) !important;
+  }
+
+  /* ── 10. FOOTER — 2+2 grid ───────────────────────────────── */
+  .footer-grid,
+  .footer.jbc-editorial-footer .footer-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px 32px !important;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1 !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    padding-bottom: 32px !important;
+  }
+
+  /* ── 11. ABOUT PAGE ──────────────────────────────────────── */
+  .about-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+  }
+
+  .about-image {
+    height: 50vw !important;
+    max-height: 480px !important;
+    min-height: 320px !important;
+    border-right: 1px solid rgba(255,255,255,0.06) !important;
+    border-bottom: none !important;
+  }
+
+  .about-text {
+    padding: 48px 40px !important;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  .value-card {
+    padding: 36px 28px !important;
+  }
+
+  /* ── 12. SERVICES PAGE ───────────────────────────────────── */
+  .service-detail,
+  .service-detail.reverse {
+    grid-template-columns: 1fr 1fr !important;
+    direction: ltr !important;
+  }
+
+  .service-detail.reverse {
+    direction: rtl !important;
+  }
+
+  .service-detail > * {
+    direction: ltr !important;
+  }
+
+  .service-detail-content {
+    padding: 44px 40px !important;
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  /* ── 13. PORTFOLIO ───────────────────────────────────────── */
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  .portfolio-grid-full {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  .portfolio-grid-full .portfolio-item:nth-child(1) {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* ── 14. CONTACT PAGE ────────────────────────────────────── */
+  .contact-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+  }
+
+  .contact-form-wrap {
+    padding: 48px 40px !important;
+    border-right: 1px solid rgba(255,255,255,0.06) !important;
+    border-bottom: none !important;
+  }
+
+  .contact-info-wrap {
+    padding: 48px 40px !important;
+  }
+
+  /* ── 15. PAGE HEADER ─────────────────────────────────────── */
+  .page-header,
+  .jbc-floral-page-header {
+    padding: 110px 0 72px !important;
+    min-height: 320px !important;
+  }
+
+  .page-header h1,
+  .page-header .section-title {
+    font-size: clamp(2.4rem, 5vw, 3.8rem) !important;
+  }
+
+  /* ── 16. BLOG ────────────────────────────────────────────── */
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  .blog-card-content {
+    padding: 28px !important;
+  }
+
+  /* ── 17. TEAM ────────────────────────────────────────────── */
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+
+}
