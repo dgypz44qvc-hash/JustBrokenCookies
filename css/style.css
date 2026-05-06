@@ -10465,7 +10465,7 @@ section.testimonial-section span {
 
 /* =========================================================
    Selected Work carousel
-   Narrower visual container + 30% smaller rounded cards
+   Full-width cinematic stage + refined landscape cards
    Safe: does not touch carousel JS, sticky pin, scroll height, or transforms
    ========================================================= */
 
@@ -10484,7 +10484,7 @@ section.testimonial-section span {
   max-width: 100% !important;
 }
 
-/* Make all carousel cards around 30% smaller */
+/* Earlier fallback card size; final landscape sizing below wins */
 #featured-work .jbc-cinema-panel,
 #featured-work .jbc-cinema-panel.is-active,
 #featured-work .jbc-cinema-panel[style*="--focus"] {
@@ -10544,20 +10544,20 @@ section.testimonial-section span {
   height: 100% !important;
 }
 
-/* Make carousel cards panoramic/landscape */
+/* Make carousel cards 20% larger, refined, and properly landscape */
 #featured-work .jbc-cinema-panel,
 #featured-work .jbc-cinema-panel.is-active,
 #featured-work .jbc-cinema-panel[style*="--focus"] {
-  width: clamp(300px, 34vw, 460px) !important;
-  height: clamp(170px, 19vw, 260px) !important;
+  width: clamp(360px, 40.8vw, 552px) !important;
+  height: clamp(204px, 22.95vw, 311px) !important;
 
   aspect-ratio: 16 / 9 !important;
-  border-radius: 28px !important;
+  border-radius: 36px 20px 34px 24px / 30px 22px 34px 24px !important;
   overflow: hidden !important;
 
   box-shadow:
-    0 22px 70px rgba(0, 0, 0, 0.42),
-    0 4px 18px rgba(0, 0, 0, 0.30) !important;
+    0 28px 86px rgba(0, 0, 0, 0.46),
+    0 5px 20px rgba(0, 0, 0, 0.30) !important;
 }
 
 /* Make images fill the panoramic cards */
@@ -10567,7 +10567,15 @@ section.testimonial-section span {
   object-fit: cover !important;
   object-position: center center !important;
 
-  border-radius: 28px !important;
+  border-radius: inherit !important;
+}
+
+#featured-work .jbc-cinema-panel:nth-child(2n) {
+  border-radius: 24px 36px 22px 34px / 22px 30px 24px 34px !important;
+}
+
+#featured-work .jbc-cinema-panel:nth-child(3n) {
+  border-radius: 34px 24px 38px 20px / 28px 24px 34px 22px !important;
 }
 
 /* Mobile: keep stage usable, cards landscape but not microscopic */
@@ -10800,11 +10808,11 @@ section.testimonial-section span {
   #featured-work .jbc-cinema-panel,
   #featured-work .jbc-cinema-panel.is-active,
   #featured-work .jbc-cinema-panel[style] {
-    flex: 0 0 80vw !important;
-    width: 80vw !important;
-    max-width: 320px !important;
-    height: 52vw !important;
-    max-height: 220px !important;
+    flex: 0 0 86vw !important;
+    width: 86vw !important;
+    max-width: 384px !important;
+    height: 50vw !important;
+    max-height: 230px !important;
     scroll-snap-align: center !important;
     position: relative !important;
     /* Undo JS transform and opacity tricks */
@@ -10812,7 +10820,7 @@ section.testimonial-section span {
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
-    border-radius: 18px !important;
+    border-radius: 26px 16px 24px 18px / 22px 18px 24px 18px !important;
     overflow: hidden !important;
     box-shadow: 0 12px 40px rgba(0,0,0,0.45) !important;
     display: block !important;
@@ -10823,7 +10831,7 @@ section.testimonial-section span {
     height: 100% !important;
     object-fit: cover !important;
     object-position: center !important;
-    border-radius: 18px !important;
+    border-radius: inherit !important;
     display: block !important;
   }
 
