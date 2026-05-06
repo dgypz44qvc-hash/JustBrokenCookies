@@ -1,0 +1,114 @@
+name: Deploy JBC Site to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build slim deploy folder
+        run: |
+          mkdir -p _deploy/css _deploy/js
+          mkdir -p _deploy/images/mobile _deploy/images/portfolio
+          mkdir -p _deploy/images/about _deploy/images/blog
+          mkdir -p _deploy/images/patterns _deploy/images/overlays
+
+          # --- HTML pages (real pages only, no backups) ---
+          for f in index.html about.html services.html contact.html \
+                    portfolio.html magazine.html mobile-landing.html editor.html; do
+            [ -f "$f" ] && cp "$f" _deploy/
+          done
+
+          # --- CSS (active files only) ---
+          cp css/style.css _deploy/css/
+          cp css/mobile.css _deploy/css/
+          [ -f css/editor-overrides.css ] && cp css/editor-overrides.css _deploy/css/
+          [ -f css/local-editor.css ]     && cp css/local-editor.css _deploy/css/
+
+          # --- JS (active files only) ---
+          cp js/main.js _deploy/js/
+          [ -f js/app.js ]          && cp js/app.js _deploy/js/
+          [ -f js/local-editor.js ] && cp js/local-editor.js _deploy/js/
+          [ -f js/mobile-editor.js ] && cp js/mobile-editor.js _deploy/js/
+
+          # --- Fonts ---
+          [ -d fonts ] && cp -r fonts _deploy/
+
+          # --- Root-level images (only the ones referenced in HTML/CSS) ---
+          for f in \
+            "footer-story-bg-desktop.jpg" \
+            "footer-story-bg-mobile.jpg" \
+            "hero-mobile-desktop-ratio-1080.jpg" \
+            "hero-mobile-desktop-ratio-768.jpg" \
+            "heromobile-1280.jpg" "heromobile-1280.webp" \
+            "heromobile-640.jpg"  "heromobile-640.webp" \
+            "heromobile-900.jpg"  "heromobile-900.webp" \
+            "heromultiroses-1280.jpg" "heromultiroses-1920.jpg" "heromultiroses-900.jpg" \
+            "jbc-floral-accent-mobile.jpg" \
+            "jbc-floral-portrait-mobile.jpg" \
+            "jbc-floral-square.jpg" \
+            "jbc-floral-wide-desktop.jpg" \
+            "jbc-floral-wide-mobile.jpg" \
+            "jbc-rose-pattern-bg.png" \
+            "roseframe-carousel-overlay.png" \
+            "creations-title-card.webp" \
+            "creations-title-card.svg" \
+            "eyestory.jpg" \
+            "eyestory.webp" \
+            "mobilelanding-480.webp" "mobilelanding-640.webp" "mobilelanding-768.webp" \
+            "magnific_swap-the-lady-in-img1-wit_2903671142-1777665351148.webp" \
+            "hand-cursor.svg" \
+            "Vale flower walk.jpeg" \
+            "hero-portrait.jpg" \
+            "herobandw-1280.jpg" "herobandw-1920.jpg" "herobandw-900.jpg"; do
+            [ -f "images/$f" ] && cp "images/$f" "_deploy/images/"
+          done
+
+          # --- Mobile webp gallery images ---
+          [ -d images/mobile ] && cp images/mobile/*.webp _deploy/images/mobile/ 2>/dev/null || true
+
+          # --- Portfolio images ---
+          [ -d images/portfolio ] && cp images/portfolio/*.jpg _deploy/images/portfolio/ 2>/dev/null || true
+
+          # --- About / Blog images ---
+          [ -d images/about ] && cp images/about/*.jpg _deploy/images/about/ 2>/dev/null || true
+          [ -d images/blog ]  && cp images/blog/*.jpg  _deploy/images/blog/  2>/dev/null || true
+
+          # --- Patterns & Overlays ---
+          [ -d images/patterns ]  && cp -r images/patterns  _deploy/images/ 2>/dev/null || true
+          [ -d images/overlays ]  && cp -r images/overlays  _deploy/images/ 2>/dev/null || true
+
+          echo "=== Deploy folder size ==="
+          du -sh _deploy/
+          echo "=== File count ==="
+          find _deploy -type f | wc -l
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_deploy'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
