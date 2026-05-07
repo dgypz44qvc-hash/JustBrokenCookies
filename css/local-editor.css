@@ -611,5 +611,69 @@ html, body {
   box-shadow: 0 8px 24px rgba(0,0,0,0.6);
 }
 
+/* ── PLUS BUTTON + DROPDOWN ─────────────────────────────── */
+.plus-wrap { position: relative; }
+
+.plus-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--gold);
+  border-color: rgba(232,137,29,0.35);
+}
+.plus-btn:hover,
+.plus-btn.active {
+  background: rgba(232,137,29,0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.plus-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 260px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 6px;
+  z-index: 500;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+}
+
+.plus-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--cream);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+.plus-opt:hover { background: rgba(232,137,29,0.1); }
+
+.plus-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.plus-opt strong { display: block; font-size: 12px; font-weight: 600; line-height: 1.3; }
+.plus-opt small  { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
+
 /* ── UTILITY ─────────────────────────────────────────────── */
 .hidden { display: none !important; }

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JBC Editor</title>
+  <link rel="stylesheet" href="css/local-editor.css">
+</head>
+<body>
+<div id="editor-shell">
+
+  <!-- ── PRIMARY TOP BAR ─────────────────────────────────── -->
+  <header id="topbar">
+    <span class="brand"><span class="j">JUST</span><span class="b">BROKEN</span><span class="c">COOKIES</span></span>
+
+    <select id="page-select" title="Page">
+      <option value="index.html">Home</option>
+      <option value="about.html">About</option>
+      <option value="services.html">Services</option>
+      <option value="portfolio.html">Work</option>
+      <option value="magazine.html">Magazine</option>
+      <option value="contact.html">Contact</option>
+    </select>
+
+    <!-- LAYERS BUTTON + DROPDOWN -->
+    <div class="layers-wrap" id="layers-wrap">
+      <button id="btn-layers" class="tb-btn layers-btn">
+        Layers <span class="caret">▾</span>
+      </button>
+      <div id="layers-dropdown" class="layers-dropdown hidden">
+        <button class="layer-opt" data-layer="page-bg">
+          <span class="layer-letter">A</span>
+          <span>
+            <strong>Page Background</strong>
+            <small>Select background images &amp; patterns</small>
+          </span>
+        </button>
+        <button class="layer-opt" data-layer="text">
+          <span class="layer-letter">B</span>
+          <span>
+            <strong>Text</strong>
+            <small>Click any text to edit it</small>
+          </span>
+        </button>
+        <button class="layer-opt" data-layer="section-bg">
+          <span class="layer-letter">C</span>
+          <span>
+            <strong>Section Background</strong>
+            <small>Select section background images</small>
+          </span>
+        </button>
+        <button class="layer-opt layer-opt--off" data-layer="none">
+          <span class="layer-letter">✕</span>
+          <span>
+            <strong>Exit Layer Mode</strong>
+            <small>Return to browse</small>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="tb-sep"></div>
+
+    <!-- VIEWPORT TOGGLE -->
+    <div class="vp-toggle" id="vp-toggle">
+      <button class="vp-btn active" data-vp="desktop" title="Desktop view">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Desktop
+      </button>
+      <button class="vp-btn" data-vp="mobile" title="Mobile view (390px)">
+        <svg width="11" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
+        Mobile
+      </button>
+    </div>
+
+    <div class="tb-sep"></div>
+    <button id="btn-undo" class="tb-btn" title="Undo (⌘Z)">Undo</button>
+    <button id="btn-redo" class="tb-btn" title="Redo (⌘⇧Z)">Redo</button>
+    <div class="tb-sep"></div>
+
+    <!-- PLUS BUTTON + DROPDOWN -->
+    <div class="plus-wrap" id="plus-wrap">
+      <button id="btn-plus" class="tb-btn plus-btn">＋ Add</button>
+      <div id="plus-dropdown" class="plus-dropdown hidden">
+        <button class="plus-opt" data-add="text">
+          <span class="plus-letter">T</span>
+          <span><strong>Add Text</strong><small>Click anywhere to place a text block</small></span>
+        </button>
+        <button class="plus-opt" data-add="image">
+          <span class="plus-letter">🖼</span>
+          <span><strong>Add Image</strong><small>Upload &amp; click to place on page</small></span>
+        </button>
+        <button class="plus-opt" data-add="bg">
+          <span class="plus-letter">🎨</span>
+          <span><strong>Set Background</strong><small>Upload image as section background</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="tb-sep"></div>
+    <span id="status" class="status-txt">Loading…</span>
+    <button id="btn-save" class="tb-btn save-btn">Save</button>
+  </header>
+
+  <!-- ── SECONDARY TEXT TOOLBAR (hidden until text edit) ── -->
+  <div id="bar-text" class="bar-text hidden">
+    <button class="fmt-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+    <button class="fmt-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+    <button class="fmt-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+    <div class="tb-sep"></div>
+    <select id="txt-font-size" title="Font size">
+      <option>—</option>
+      <option value="12">12</option><option value="14">14</option>
+      <option value="16">16</option><option value="18">18</option>
+      <option value="20">20</option><option value="24">24</option>
+      <option value="28">28</option><option value="32">32</option>
+      <option value="36">36</option><option value="42">42</option>
+      <option value="48">48</option><option value="56">56</option>
+      <option value="64">64</option><option value="72">72</option>
+      <option value="96">96</option>
+    </select>
+    <label class="color-wrap" title="Text colour">
+      <input type="color" id="txt-color" value="#f0e6da">
+      <span>Color</span>
+    </label>
+    <div class="tb-sep"></div>
+    <button class="fmt-btn" data-cmd="justifyLeft" title="Align left">⇤</button>
+    <button class="fmt-btn" data-cmd="justifyCenter" title="Centre">≡</button>
+    <button class="fmt-btn" data-cmd="justifyRight" title="Align right">⇥</button>
+    <div class="tb-sep"></div>
+    <button id="btn-text-done" class="tb-btn done-btn">Done</button>
+  </div>
+
+  <!-- ── LAYER MODE INDICATOR ──────────────────────────── -->
+  <div id="layer-badge" class="layer-badge hidden">
+    <span id="layer-badge-text"></span>
+    <button id="btn-exit-layer" class="exit-layer-btn">✕ Exit</button>
+  </div>
+
+  <!-- ── CANVAS ─────────────────────────────────────────── -->
+  <main id="canvas-wrap">
+    <iframe id="site-frame" title="Website canvas"></iframe>
+    <!-- Overlay lives in editor frame — immune to iframe CSS/transforms -->
+    <div id="img-overlay"></div>
+  </main>
+
+  <!-- ── RIGHT-CLICK CONTEXT MENU ──────────────────────── -->
+  <div id="ctx-menu" class="ctx-menu hidden" role="menu">
+    <button class="ctx-item" data-action="edit" role="menuitem">✏️ Edit</button>
+    <button class="ctx-item" data-action="delete" role="menuitem">🗑 Delete</button>
+    <button class="ctx-item" data-action="move" role="menuitem">✥ Move</button>
+    <button class="ctx-item" data-action="duplicate" role="menuitem">⧉ Duplicate</button>
+    <button class="ctx-item ctx-item--resize" data-action="resize-el" role="menuitem">↔ Resize Object</button>
+    <button class="ctx-item ctx-item--resize" data-action="resize-section" role="menuitem">↕ Resize Section</button>
+    <div class="ctx-divider"></div>
+    <button class="ctx-item ctx-item--replace" data-action="replace-img" role="menuitem">🖼 Replace Image</button>
+    <button class="ctx-item ctx-item--replace" data-action="replace-bg" role="menuitem">🎨 Replace Background</button>
+    <div class="ctx-divider"></div>
+    <button class="ctx-item ctx-item--add" data-action="add-layer" role="menuitem">＋ Add as Top Layer</button>
+    <button class="ctx-item ctx-item--add" data-action="add-bg" role="menuitem">🖼 Set as Background</button>
+  </div>
+
+  <!-- ── IMAGE UPLOAD PANEL ─────────────────────────────── -->
+  <div id="upload-panel" class="upload-panel hidden">
+    <div class="upload-inner">
+      <button id="btn-close-upload" class="close-upload">✕</button>
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-icon">📁</div>
+        <p>Drop image here<br>or click to browse</p>
+        <input type="file" id="file-input" accept="image/*">
+      </div>
+      <p class="upload-hint" id="upload-hint-txt">Upload to place on page</p>
+    </div>
+  </div>
+
+</div><!-- /editor-shell -->
+
+<script src="js/local-editor.js"></script>
+</body>
+</html>

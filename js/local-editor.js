@@ -1,8 +1,9 @@
 /* ============================================================
-   JBC EDITOR — Full Audit v2
-   Fixes: drag capture overlay (move/resize survive outside iframe),
-          mobile coords, replace-bg !important, image-placed snapshot,
-          add-layer/add-bg guard, section handle scroll sync.
+   JBC EDITOR — Full Audit v3
+   Fixes: section handle viewport-clamped + setProperty !important,
+          image placement uses document-space coords,
+          inline image drag routed through capture overlay,
+          + button (Add Text / Add Image / Set Background).
    ============================================================ */
 (() => {
 
@@ -27,19 +28,22 @@
   const btnSave      = document.getElementById('btn-save');
   const canvasWrap   = document.getElementById('canvas-wrap');
   const vpToggle     = document.getElementById('vp-toggle');
+  const btnPlus      = document.getElementById('btn-plus');
+  const plusDropdown = document.getElementById('plus-dropdown');
 
   /* ── STATE ───────────────────────────────────────────── */
-  let doc          = null;
-  let win          = null;
-  let layerMode    = 'none';
-  let viewMode     = 'desktop';
-  let pendingImage = null;
-  let undoStack    = [];
-  let redoStack    = [];
-  let dirty        = false;
-  let currentPage  = 'index.html';
-  let dragGhost    = null;
-  let dragCapture  = null;   // full-screen overlay that captures mouse during iframe drags
+  let doc            = null;
+  let win            = null;
+  let layerMode      = 'none';
+  let viewMode       = 'desktop';
+  let pendingImage   = null;
+  let pendingAddMode = null;   // 'layer' | 'bg' | 'text'
+  let undoStack      = [];
+  let redoStack      = [];
+  let dirty          = false;
+  let currentPage    = 'index.html';
+  let dragGhost      = null;
+  let dragCapture    = null;
 
   /* ── UTILS ───────────────────────────────────────────── */
   function setStatus(msg) { if (statusEl) statusEl.textContent = msg; }
@@ -74,9 +78,8 @@
   }
 
   /* ── DRAG CAPTURE OVERLAY ────────────────────────────── */
-  // When a drag starts inside the iframe (move or resize), we create a
-  // transparent full-screen overlay in the EDITOR so mouse events are
-  // captured even when the cursor leaves the iframe boundary.
+  // Full-screen transparent div in the EDITOR that intercepts mouse events
+  // during any iframe drag, so drags survive leaving the iframe boundary.
   function startDragCapture(cursor) {
     stopDragCapture();
     dragCapture = document.createElement('div');
@@ -87,10 +90,7 @@
     dragCapture.addEventListener('mousemove', e => {
       if (!win || !win.__jbc_forwardMouseMove) return;
       const fRect = frame.getBoundingClientRect();
-      // Convert editor-window coords → iframe-viewport coords
-      const ix = e.clientX - fRect.left;
-      const iy = e.clientY - fRect.top;
-      win.__jbc_forwardMouseMove(ix, iy);
+      win.__jbc_forwardMouseMove(e.clientX - fRect.left, e.clientY - fRect.top);
     });
 
     dragCapture.addEventListener('mouseup', () => {
@@ -151,12 +151,19 @@
     win.__jbc_setMode && win.__jbc_setMode(layerMode);
   }
 
-  /* ── AGENT SCRIPT (runs inside iframe) ──────────────── */
+  /* ══════════════════════════════════════════════════════
+     AGENT SCRIPT — injected into and runs inside the iframe
+     Uses var (not let/const) to avoid template-literal issues.
+     ══════════════════════════════════════════════════════ */
   function agentScriptText() {
     return `
 (function() {
   if (window.__jbc_agent_init) return;
   window.__jbc_agent_init = true;
+
+  /* ── HELPERS ── */
+  function scrollX() { return window.scrollX || window.pageXOffset || 0; }
+  function scrollY() { return window.scrollY || window.pageYOffset || 0; }
 
   /* ── MODE / HOVER ── */
   var mode    = 'none';
@@ -205,12 +212,12 @@
     unhover();
     var frameRect = window.frameElement ? window.frameElement.getBoundingClientRect() : { left:0, top:0 };
     window.parent.postMessage({
-      type: 'jbc_contextmenu',
-      x: e.clientX + frameRect.left,
-      y: e.clientY + frameRect.top,
+      type:     'jbc_contextmenu',
+      x:        e.clientX + frameRect.left,
+      y:        e.clientY + frameRect.top,
       selector: selectorFor(e.target),
-      tagName: e.target.tagName,
-      text: (e.target.innerText || '').slice(0, 80)
+      tagName:  e.target.tagName,
+      text:     (e.target.innerText || '').slice(0, 80)
     }, '*');
     window.__jbc_ctx_el = e.target;
   }, true);
@@ -221,13 +228,13 @@
     e.stopPropagation();
     unhover();
     window.parent.postMessage({
-      type: 'jbc_layerclick',
-      mode: mode,
-      selector: selectorFor(e.target),
-      tagName: e.target.tagName,
-      text: (e.target.innerText || '').slice(0, 80),
+      type:       'jbc_layerclick',
+      mode:       mode,
+      selector:   selectorFor(e.target),
+      tagName:    e.target.tagName,
+      text:       (e.target.innerText || '').slice(0, 80),
       currentSrc: e.target.tagName === 'IMG' ? e.target.src : '',
-      bgImage: getComputedStyle(e.target).backgroundImage || ''
+      bgImage:    getComputedStyle(e.target).backgroundImage || ''
     }, '*');
     window.__jbc_layer_el = e.target;
   }, true);
@@ -239,7 +246,6 @@
   var moveStartMouseX = 0, moveStartMouseY = 0;
   var moveStartLeft = 0, moveStartTop = 0;
 
-  // Native iframe mousemove (fires when mouse stays inside iframe)
   document.addEventListener('mousemove', function(e) {
     if (!moveEl) return;
     e.preventDefault();
@@ -272,17 +278,17 @@
     var el = window.__jbc_ctx_el;
     if (!el) return;
 
-    var parent = el.offsetParent || el.parentElement;
-    if (parent && window.getComputedStyle(parent).position === 'static') {
-      parent.style.position = 'relative';
+    var parentEl = el.offsetParent || el.parentElement;
+    if (parentEl && window.getComputedStyle(parentEl).position === 'static') {
+      parentEl.style.position = 'relative';
     }
 
-    var elRect    = el.getBoundingClientRect();
-    var parentEl  = el.offsetParent || el.parentElement || document.body;
-    var parentRect = parentEl.getBoundingClientRect();
+    var elRect     = el.getBoundingClientRect();
+    var offsetEl   = el.offsetParent || el.parentElement || document.body;
+    var offsetRect = offsetEl.getBoundingClientRect();
 
-    moveStartLeft = elRect.left - parentRect.left + parentEl.scrollLeft;
-    moveStartTop  = elRect.top  - parentRect.top  + parentEl.scrollTop;
+    moveStartLeft = elRect.left - offsetRect.left + offsetEl.scrollLeft;
+    moveStartTop  = elRect.top  - offsetRect.top  + offsetEl.scrollTop;
 
     el.style.position = 'absolute';
     el.style.left     = moveStartLeft + 'px';
@@ -293,7 +299,6 @@
     moveReady = false;
     moveEl    = el;
 
-    // Ask parent to create drag-capture overlay so events survive outside iframe
     window.parent.postMessage({ type: 'jbc_drag_start', cursor: 'grabbing' }, '*');
   };
 
@@ -313,9 +318,9 @@
     }
   };
 
-  window.__jbc_execText  = function(cmd, val) { document.execCommand(cmd, false, val || null); };
-  window.__jbc_setFontSize = function(size) { if (window.__jbc_text_el) window.__jbc_text_el.style.fontSize = size + 'px'; };
-  window.__jbc_setColor  = function(color) { document.execCommand('foreColor', false, color); };
+  window.__jbc_execText    = function(cmd, val) { document.execCommand(cmd, false, val || null); };
+  window.__jbc_setFontSize = function(size)     { if (window.__jbc_text_el) window.__jbc_text_el.style.fontSize = size + 'px'; };
+  window.__jbc_setColor    = function(color)    { document.execCommand('foreColor', false, color); };
 
   /* ── DELETE / DUPLICATE ── */
   window.__jbc_deleteEl = function() {
@@ -332,68 +337,124 @@
     clone.style.position = 'relative';
   };
 
-  /* ── INSERT IMAGE (add as layer) ── */
-  window.__jbc_insertImage = function(dataUrl, x, y) {
-    var hit = document.elementFromPoint(x, y);
-    var parent = hit && hit.closest ? hit.closest('section, footer, header') : null;
-    if (!parent) parent = document.querySelector('section') || document.body;
+  /* ── INSERT IMAGE (top layer) ── */
+  // Inline drag state — top-level so forwarding can access it
+  var _inlineDragEl = null, _inlineDragOX = 0, _inlineDragOY = 0;
 
+  window.__jbc_insertImage = function(dataUrl, x, y) {
+    // ALWAYS use document.body as container — avoids section transform / scroll issues
+    var parent = document.body;
     if (window.getComputedStyle(parent).position === 'static') {
       parent.style.position = 'relative';
     }
 
-    // SWAP if an editor-image already exists in this section
-    var existingImg = parent.querySelector('.editor-image img, .editor-decoration.editor-image img');
-    if (existingImg) {
-      existingImg.src = dataUrl;
-      existingImg.removeAttribute('srcset');
-      existingImg.removeAttribute('sizes');
-      window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
-      return;
+    // If an editor-image already exists in the section under the click, swap its src
+    var hit = document.elementFromPoint(x, y);
+    var sec = hit && hit.closest ? hit.closest('section, footer, header') : null;
+    if (sec) {
+      var existingImg = sec.querySelector('.editor-decoration.editor-image img');
+      if (existingImg) {
+        existingImg.src = dataUrl;
+        existingImg.removeAttribute('srcset');
+        existingImg.removeAttribute('sizes');
+        window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
+        return;
+      }
     }
 
-    var pRect = parent.getBoundingClientRect();
-    var left  = Math.max(0, Math.round(x - pRect.left + parent.scrollLeft));
-    var top   = Math.max(0, Math.round(y - pRect.top  + parent.scrollTop));
+    // Convert iframe-viewport coords → document-space coords
+    var docX = Math.round(x + scrollX());
+    var docY = Math.round(y + scrollY());
 
     var div = document.createElement('div');
     div.className = 'editor-decoration editor-image';
-    div.dataset.editorId = 'added-' + Date.now();
-    div.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;width:300px;height:auto;z-index:100;cursor:grab;';
+    div.dataset.editorId = 'img-' + Date.now();
+    div.style.cssText = 'position:absolute;left:' + docX + 'px;top:' + docY + 'px;width:280px;height:auto;z-index:200;cursor:grab;';
 
     var img = document.createElement('img');
     img.src = dataUrl;
     img.style.cssText = 'display:block;width:100%;height:auto;border-radius:4px;pointer-events:none;';
     div.appendChild(img);
-    parent.insertBefore(div, parent.firstChild);
+    parent.appendChild(div);
 
-    // Draggable within its section
-    var ox = 0, oy = 0, dragging = false;
+    // Inline drag — posts jbc_drag_start so parent capture overlay forwards back
     div.addEventListener('mousedown', function(e) {
       e.preventDefault(); e.stopPropagation();
-      dragging = true;
       var r = div.getBoundingClientRect();
-      ox = e.clientX - r.left;
-      oy = e.clientY - r.top;
+      _inlineDragOX = e.clientX - r.left;
+      _inlineDragOY = e.clientY - r.top;
+      _inlineDragEl = div;
       div.style.cursor = 'grabbing';
+      window.parent.postMessage({ type: 'jbc_drag_start', cursor: 'grabbing' }, '*');
     });
+    // Native fallback (mouse stays inside iframe)
     document.addEventListener('mousemove', function(e) {
-      if (!dragging) return;
-      var pr = parent.getBoundingClientRect();
-      div.style.left = Math.max(0, e.clientX - pr.left - ox + parent.scrollLeft) + 'px';
-      div.style.top  = Math.max(0, e.clientY - pr.top  - oy + parent.scrollTop)  + 'px';
+      if (_inlineDragEl !== div) return;
+      div.style.left = Math.round(e.clientX - _inlineDragOX + scrollX()) + 'px';
+      div.style.top  = Math.round(e.clientY - _inlineDragOY + scrollY()) + 'px';
     });
     document.addEventListener('mouseup', function() {
-      if (!dragging) return;
-      dragging = false;
-      div.style.cursor = 'grab';
-      window.parent.postMessage({ type: 'jbc_move_done' }, '*');
+      if (_inlineDragEl === div) {
+        _inlineDragEl = null;
+        div.style.cursor = 'grab';
+        window.parent.postMessage({ type: 'jbc_move_done' }, '*');
+      }
     });
 
     window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
   };
 
-  /* ── RESIZE HANDLES (corner drag, aspect-ratio locked) ── */
+  /* ── INSERT TEXT (top layer) ── */
+  window.__jbc_insertText = function(x, y) {
+    var parent = document.body;
+    if (window.getComputedStyle(parent).position === 'static') {
+      parent.style.position = 'relative';
+    }
+    var docX = Math.round(x + scrollX());
+    var docY = Math.round(y + scrollY());
+
+    var div = document.createElement('div');
+    div.className = 'editor-decoration editor-textblock';
+    div.dataset.editorId = 'text-' + Date.now();
+    div.style.cssText = [
+      'position:absolute',
+      'left:' + docX + 'px',
+      'top:' + docY + 'px',
+      'min-width:160px',
+      'min-height:44px',
+      'max-width:600px',
+      'z-index:200',
+      'cursor:text',
+      'padding:10px 14px',
+      'background:rgba(0,0,0,0.5)',
+      'border-radius:4px',
+      'color:#f0e6da',
+      'font-family:inherit',
+      'font-size:18px',
+      'line-height:1.5'
+    ].join(';');
+    div.contentEditable = 'true';
+    div.textContent = 'Type here';
+    parent.appendChild(div);
+
+    // Select all placeholder text for immediate typing
+    setTimeout(function() {
+      try {
+        div.focus();
+        var range = document.createRange();
+        range.selectNodeContents(div);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } catch(err) {}
+    }, 20);
+
+    window.__jbc_ctx_el  = div;
+    window.__jbc_text_el = div;
+    window.parent.postMessage({ type: 'jbc_text_placed' }, '*');
+  };
+
+  /* ── CORNER RESIZE HANDLES ── */
   var _rEl = null, _rOvl = null, _rDir = null;
   var _rSX = 0, _rSW = 0, _rSH = 0, _rSL = 0, _rAR = 1;
 
@@ -414,7 +475,6 @@
     _rEl = null; _rDir = null;
   }
 
-  // Core resize at a given clientX (works for both native and forwarded events)
   function _rApply(clientX) {
     if (!_rDir || !_rEl) return;
     var dx   = clientX - _rSX;
@@ -441,11 +501,10 @@
     _rEl = target;
     var img = (target.tagName === 'IMG') ? target : target.querySelector('img');
     _rAR = (img && img.naturalWidth && img.naturalHeight)
-           ? img.naturalWidth / img.naturalHeight
+           ? img.naturalWidth  / img.naturalHeight
            : (target.offsetWidth / (target.offsetHeight || 1));
     _rSL = parseInt(target.style.left) || 0;
 
-    // Outline overlay (position:fixed in iframe = relative to iframe viewport)
     _rOvl = document.createElement('div');
     _rOvl.id = '__jbc_resize_ovl';
     _rOvl.style.cssText = 'position:fixed;outline:2px solid #E8891D;outline-offset:1px;z-index:99998;pointer-events:none;box-sizing:border-box;';
@@ -465,7 +524,6 @@
         var r = _rEl.getBoundingClientRect();
         _rSW  = r.width; _rSH = r.height;
         _rSL  = parseInt(_rEl.style.left) || 0;
-        // Ask parent for drag-capture overlay
         window.parent.postMessage({ type: 'jbc_drag_start', cursor: CURSORS[d] }, '*');
       });
       _rOvl.appendChild(h);
@@ -479,18 +537,35 @@
 
   /* ── SECTION HEIGHT HANDLE ── */
   var _secEl = null, _secHandle = null;
+  var _secDragging = false, _secStartY = 0, _secStartH = 0;
 
   function _secPos() {
     if (!_secEl || !_secHandle) return;
-    var r = _secEl.getBoundingClientRect();
+    var r  = _secEl.getBoundingClientRect();
+    var hy = Math.min(window.innerHeight - 26, Math.max(40, r.bottom - 11));
     _secHandle.style.left  = (r.left + r.width * 0.25) + 'px';
-    _secHandle.style.top   = (r.bottom - 11) + 'px';
-    _secHandle.style.width = (r.width * 0.5)  + 'px';
+    _secHandle.style.top   = hy + 'px';
+    _secHandle.style.width = (r.width * 0.5) + 'px';
   }
 
+  function _secApply(iy) {
+    if (!_secDragging || !_secEl) return;
+    var newH = Math.max(80, _secStartH + (iy - _secStartY));
+    // Use setProperty + !important to win over any stylesheet rules
+    _secEl.style.setProperty('min-height', newH + 'px', 'important');
+    _secEl.style.setProperty('height',     'auto',       'important');
+    _secPos();
+  }
+
+  function _secDragMove(ev) { if (_secDragging) { ev.preventDefault(); _secApply(ev.clientY); } }
+  function _secDragUp()     { if (_secDragging) { _secDragging = false; window.parent.postMessage({ type: 'jbc_resize_done' }, '*'); } }
+
   function _secClean() {
+    _secDragging = false;
     if (_secHandle) { _secHandle.remove(); _secHandle = null; }
-    document.removeEventListener('scroll', _secPos, true);
+    document.removeEventListener('mousemove', _secDragMove, true);
+    document.removeEventListener('mouseup',   _secDragUp,   true);
+    document.removeEventListener('scroll',    _secPos,      true);
     _secEl = null;
   }
 
@@ -499,52 +574,80 @@
     if (!el) return;
     _secClean();
 
-    var sec = el.closest('section,footer,header,.testimonial-section,.cta-section,#featured-work,#jbc-visual-gallery') || el;
+    // Walk up to find a real section-level container
+    var STOP_TAGS = ['SECTION', 'HEADER', 'FOOTER', 'MAIN'];
+    var sec = el;
+    while (sec && sec !== document.body) {
+      var t = (sec.tagName || '').toUpperCase();
+      if (STOP_TAGS.indexOf(t) >= 0) break;
+      if (sec.id === 'featured-work' || sec.id === 'jbc-visual-gallery') break;
+      var cls = sec.className || '';
+      if (cls.indexOf('testimonial') >= 0 || cls.indexOf('cta-section') >= 0) break;
+      sec = sec.parentElement;
+    }
+    if (!sec || sec === document.body || sec === document.documentElement) {
+      sec = el.closest('section, footer, header, main') || el;
+    }
     _secEl = sec;
 
     _secHandle = document.createElement('div');
     _secHandle.id = '__jbc_sec_handle';
-    _secHandle.innerHTML = '<span style="pointer-events:none;color:#fff;font-size:10px;letter-spacing:2px;user-select:none;">⠿ drag to resize section ⠿</span>';
-    _secHandle.style.cssText = 'position:fixed;height:22px;background:rgba(232,137,29,0.9);cursor:ns-resize;z-index:99999;display:flex;align-items:center;justify-content:center;border-radius:11px;box-shadow:0 2px 10px rgba(0,0,0,0.5);';
-    _secPos();
+    _secHandle.innerHTML =
+      '<span style="pointer-events:none;color:#fff;font-size:9px;letter-spacing:1.5px;user-select:none;white-space:nowrap;">&#x21D5; resize section &#x21D5;</span>';
+    _secHandle.style.cssText = [
+      'position:fixed',
+      'height:22px',
+      'min-width:120px',
+      'padding:0 12px',
+      'background:rgba(232,137,29,0.95)',
+      'cursor:ns-resize',
+      'z-index:99999',
+      'display:flex',
+      'align-items:center',
+      'justify-content:center',
+      'border-radius:11px',
+      'box-shadow:0 2px 12px rgba(0,0,0,0.6)',
+      'box-sizing:border-box'
+    ].join(';');
 
-    var dragging = false, startY = 0, startH = 0;
+    document.body.appendChild(_secHandle);
+    _secPos();  // position before making visible
 
     _secHandle.addEventListener('mousedown', function(ev) {
       ev.stopPropagation(); ev.preventDefault();
-      dragging = true;
-      startY = ev.clientY;
-      startH = _secEl.getBoundingClientRect().height;
+      _secDragging = true;
+      _secStartY   = ev.clientY;
+      _secStartH   = _secEl.getBoundingClientRect().height;
       window.parent.postMessage({ type: 'jbc_drag_start', cursor: 'ns-resize' }, '*');
     });
 
-    // Native iframe drag
-    document.addEventListener('mousemove', function(ev) {
-      if (!dragging) return;
-      var newH = Math.max(80, startH + (ev.clientY - startY));
-      _secEl.style.minHeight = newH + 'px';
-      _secPos();
-    });
-    document.addEventListener('mouseup', function() {
-      if (dragging) { dragging = false; window.parent.postMessage({ type: 'jbc_resize_done' }, '*'); }
-    });
-    document.addEventListener('scroll', _secPos, true);
-    document.body.appendChild(_secHandle);
+    document.addEventListener('mousemove', _secDragMove, true);
+    document.addEventListener('mouseup',   _secDragUp,   true);
+    document.addEventListener('scroll',    _secPos,      true);
+
+    // Re-position after layout stabilises
+    setTimeout(_secPos, 50);
+    setTimeout(_secPos, 300);
   };
 
   /* ── FORWARDED EVENTS from parent drag-capture overlay ── */
-  // Called by parent with iframe-space coords
   window.__jbc_forwardMouseMove = function(ix, iy) {
-    if (moveEl)  _doMove(ix, iy);
-    if (_rDir)   _rApply(ix);    // ix is iframe-space clientX, same reference as _rSX
-    // section handle: iy is iframe-space, but section handle tracks its own startY in iframe space
-    // Section handle drag is self-contained in its own listener above — no forwarding needed
+    if (moveEl)       _doMove(ix, iy);
+    if (_rDir)        _rApply(ix);
+    if (_secDragging) _secApply(iy);
+    if (_inlineDragEl) {
+      _inlineDragEl.style.left = Math.round(ix - _inlineDragOX + scrollX()) + 'px';
+      _inlineDragEl.style.top  = Math.round(iy - _inlineDragOY + scrollY()) + 'px';
+    }
   };
 
   window.__jbc_endDrag = function() {
     _endMove();
-    if (_rDir) { _rDir = null; window.parent.postMessage({ type: 'jbc_resize_done' }, '*'); }
+    if (_rDir)        { _rDir = null;        window.parent.postMessage({ type: 'jbc_resize_done' }, '*'); }
+    if (_secDragging) { _secDragging = false; window.parent.postMessage({ type: 'jbc_resize_done' }, '*'); }
+    if (_inlineDragEl){ _inlineDragEl.style.cursor = 'grab'; _inlineDragEl = null; window.parent.postMessage({ type: 'jbc_move_done' }, '*'); }
     _rPos();
+    _secPos();
   };
 
   /* ── CLEAR ALL HANDLES ── */
@@ -560,36 +663,30 @@
   /* ── MESSAGES FROM IFRAME ────────────────────────────── */
   window.addEventListener('message', e => {
     if (!e.data || !e.data.type) return;
-    const { type, x, y, selector, tagName, text } = e.data;
+    const { type } = e.data;
 
     if (type === 'jbc_contextmenu') {
       if (win && win.__jbc_clearHandles) win.__jbc_clearHandles();
-      showCtxMenu(x, y);
+      showCtxMenu(e.data.x, e.data.y);
     }
 
     if (type === 'jbc_layerclick') {
       handleLayerClick(e.data);
     }
 
-    // Drag started in iframe — create capture overlay in parent
-    if (type === 'jbc_drag_start') {
-      startDragCapture(e.data.cursor || 'grabbing');
-    }
-
-    // Drag ended (from native iframe events) — remove capture overlay
-    if (type === 'jbc_move_done') {
-      stopDragCapture();
-      snapshot();
-    }
-
-    if (type === 'jbc_resize_done') {
-      stopDragCapture();
-      snapshot();
-    }
+    if (type === 'jbc_drag_start')  { startDragCapture(e.data.cursor || 'grabbing'); }
+    if (type === 'jbc_move_done')   { stopDragCapture(); snapshot(); }
+    if (type === 'jbc_resize_done') { stopDragCapture(); snapshot(); }
 
     if (type === 'jbc_image_placed') {
       snapshot();
       setStatus('Image placed — right-click to resize, move or delete · Save when done');
+    }
+
+    if (type === 'jbc_text_placed') {
+      snapshot();
+      barText.classList.remove('hidden');
+      setStatus('Text placed — format it above, then click Done');
     }
   });
 
@@ -603,6 +700,7 @@
   document.addEventListener('click', () => {
     dropdown.classList.add('hidden');
     btnLayers.classList.remove('active');
+    if (plusDropdown) plusDropdown.classList.add('hidden');
   });
 
   dropdown.querySelectorAll('.layer-opt').forEach(btn => {
@@ -670,8 +768,8 @@
   /* ── CONTEXT MENU ────────────────────────────────────── */
   function showCtxMenu(x, y) {
     hideCtxMenu();
-    ctxMenu.style.left = Math.min(x, window.innerWidth  - 200) + 'px';
-    ctxMenu.style.top  = Math.min(y, window.innerHeight - 280) + 'px';
+    ctxMenu.style.left = Math.min(x, window.innerWidth  - 210) + 'px';
+    ctxMenu.style.top  = Math.min(y, window.innerHeight - 290) + 'px';
     ctxMenu.classList.remove('hidden');
   }
 
@@ -679,7 +777,12 @@
 
   document.addEventListener('click', hideCtxMenu);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { hideCtxMenu(); setLayerMode('none'); stopDragCapture(); }
+    if (e.key === 'Escape') {
+      hideCtxMenu();
+      setLayerMode('none');
+      stopDragCapture();
+      cancelAddMode();
+    }
   });
 
   ctxMenu.querySelectorAll('.ctx-item').forEach(btn => {
@@ -695,7 +798,6 @@
 
     const el = win.__jbc_ctx_el;
 
-    // These actions don't need a pre-selected element
     const noElNeeded = ['add-layer', 'add-bg'];
     if (!el && !noElNeeded.includes(action)) {
       setStatus('No element selected — right-click on an element first');
@@ -761,7 +863,6 @@
     /* ── REPLACE BACKGROUND ── */
     if (action === 'replace-bg') {
       openFilePicker(file => readFile(file, dataUrl => {
-        // Walk up to find a section-level element with a background
         let target = el;
         while (target && target !== win.document.body) {
           const bg = win.getComputedStyle(target).backgroundImage;
@@ -772,7 +873,6 @@
           target = el.closest('section, header, footer') || el;
         }
         snapshot();
-        // Use setProperty with !important so it wins over CSS stylesheet rules
         target.style.setProperty('background-image',    'url(' + dataUrl + ')', 'important');
         target.style.setProperty('background-size',     'cover',                'important');
         target.style.setProperty('background-position', 'center center',        'important');
@@ -790,21 +890,17 @@
     /* ── RESIZE SECTION ── */
     if (action === 'resize-section') {
       win.__jbc_showSectionHandle();
-      setStatus('Drag the orange bar to resize section height');
+      setStatus('Drag the orange pill to resize section height');
     }
 
-    /* ── ADD AS TOP LAYER ── */
+    /* ── ADD AS TOP LAYER (context menu) ── */
     if (action === 'add-layer') {
-      pendingAddMode = 'layer';
-      document.getElementById('upload-hint-txt').textContent = 'Upload image, then click anywhere on the page to place it';
-      uploadPanel.classList.remove('hidden');
+      startAddMode('layer');
     }
 
-    /* ── SET AS BACKGROUND ── */
+    /* ── SET AS BACKGROUND (context menu) ── */
     if (action === 'add-bg') {
-      pendingAddMode = 'bg';
-      document.getElementById('upload-hint-txt').textContent = 'Upload image to set as section background';
-      uploadPanel.classList.remove('hidden');
+      startAddMode('bg');
     }
   }
 
@@ -823,16 +919,56 @@
     reader.readAsDataURL(file);
   }
 
-  /* ── ADD MODE STATE ──────────────────────────────────── */
-  let pendingAddMode = null;
-  const imgOverlay   = document.getElementById('img-overlay');
+  /* ── ADD MODE ────────────────────────────────────────── */
+  // mode: 'layer' | 'bg' | 'text'
+  const imgOverlay = document.getElementById('img-overlay');
+
+  function startAddMode(mode) {
+    pendingAddMode = mode;
+    if (mode === 'text') {
+      removeDragGhost();
+      setStatus('Click anywhere on the page to place a text block');
+      return;
+    }
+    const hints = {
+      layer: 'Upload image — then click on the page to place it',
+      bg:    'Upload image to use as section background'
+    };
+    document.getElementById('upload-hint-txt').textContent = hints[mode] || '';
+    uploadPanel.classList.remove('hidden');
+  }
+
+  function cancelAddMode() {
+    pendingAddMode = null;
+    pendingImage   = null;
+    removeDragGhost();
+  }
+
+  /* ── PLUS BUTTON ─────────────────────────────────────── */
+  if (btnPlus && plusDropdown) {
+    btnPlus.addEventListener('click', e => {
+      e.stopPropagation();
+      plusDropdown.classList.toggle('hidden');
+      btnPlus.classList.toggle('active');
+    });
+
+    plusDropdown.querySelectorAll('.plus-opt').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        plusDropdown.classList.add('hidden');
+        btnPlus.classList.remove('active');
+        const add = btn.dataset.add;
+        if (add === 'text')  startAddMode('text');
+        if (add === 'image') startAddMode('layer');
+        if (add === 'bg')    startAddMode('bg');
+      });
+    });
+  }
 
   /* ── UPLOAD PANEL ────────────────────────────────────── */
   btnCloseUp.addEventListener('click', () => {
     uploadPanel.classList.add('hidden');
-    pendingImage = null;
-    pendingAddMode = null;
-    removeDragGhost();
+    cancelAddMode();
   });
 
   fileInput.addEventListener('change', e => { if (e.target.files[0]) handleUploadedFile(e.target.files[0]); });
@@ -883,9 +1019,6 @@
     }
     if (!target) { setStatus('Could not find a section — right-click on the section background'); return; }
 
-    const pos = win.getComputedStyle(target).position;
-    if (pos === 'static') target.style.setProperty('position', 'relative', 'important');
-
     snapshot();
     target.style.setProperty('background-image',    'url(' + dataUrl + ')', 'important');
     target.style.setProperty('background-size',     'cover',                'important');
@@ -896,7 +1029,7 @@
     setStatus('Background set on [' + label + '] ✓ — Save to keep');
   }
 
-  /* ── DRAG GHOST (cursor-following preview) ───────────── */
+  /* ── DRAG GHOST (cursor-following image preview) ─────── */
   function createDragGhost(src) {
     removeDragGhost();
     dragGhost = document.createElement('img');
@@ -915,21 +1048,30 @@
     dragGhost.style.top  = e.clientY + 'px';
   });
 
-  /* ── CLICK CANVAS TO PLACE TOP-LAYER IMAGE ───────────── */
+  /* ── CLICK CANVAS TO PLACE ───────────────────────────── */
   canvasWrap.addEventListener('click', e => {
-    if (!pendingImage || pendingAddMode === 'bg') return;
-    removeDragGhost();
+    if (!pendingAddMode && !pendingImage) return;
 
     const fRect = frame.getBoundingClientRect();
     const ix = e.clientX - fRect.left;
     const iy = e.clientY - fRect.top;
 
-    // Guard: only place if click is actually inside the iframe viewport
+    // Only place if click is inside the actual iframe viewport
     if (ix < 0 || iy < 0 || ix > frame.offsetWidth || iy > frame.offsetHeight) return;
 
-    if (win && win.__jbc_insertImage) win.__jbc_insertImage(pendingImage.dataUrl, ix, iy);
-    pendingImage   = null;
-    pendingAddMode = null;
+    if (pendingAddMode === 'text') {
+      removeDragGhost();
+      if (win && win.__jbc_insertText) win.__jbc_insertText(ix, iy);
+      pendingAddMode = null;
+      return;
+    }
+
+    if (pendingImage && pendingAddMode !== 'bg') {
+      removeDragGhost();
+      if (win && win.__jbc_insertImage) win.__jbc_insertImage(pendingImage.dataUrl, ix, iy);
+      pendingImage   = null;
+      pendingAddMode = null;
+    }
   });
 
   /* ── UNDO / REDO ─────────────────────────────────────── */
@@ -948,24 +1090,19 @@
     if (!doc) return;
     setStatus('Saving…');
     try {
-      const agentScript = doc.getElementById('__jbc_agent__');
-      const agentCss    = doc.getElementById('__jbc_agent_css__');
-      if (agentScript) agentScript.remove();
-      if (agentCss)    agentCss.remove();
-
-      // Also remove any resize/section handle overlays before saving
-      const resizeOvl = doc.getElementById('__jbc_resize_ovl');
-      const secHandle = doc.getElementById('__jbc_sec_handle');
-      if (resizeOvl) resizeOvl.remove();
-      if (secHandle) secHandle.remove();
+      // Strip editor-injected elements before serialising
+      ['__jbc_agent__', '__jbc_agent_css__', '__jbc_resize_ovl', '__jbc_sec_handle'].forEach(id => {
+        const el = doc.getElementById(id);
+        if (el) el.remove();
+      });
 
       const html = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
-      injectAgent();
+      injectAgent(); // re-inject so page stays editable
 
       const res  = await fetch('/api/save-html', {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ page: currentPage, html })
+        body:    JSON.stringify({ page: currentPage, html })
       });
       const json = await res.json().catch(() => ({ ok: false }));
       if (json.ok) {
@@ -989,6 +1126,7 @@
     setLayerMode('none');
     stopTextEdit();
     stopDragCapture();
+    cancelAddMode();
     dirty = false;
     undoStack = [];
     redoStack = [];

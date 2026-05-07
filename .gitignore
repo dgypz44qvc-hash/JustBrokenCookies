@@ -41,5 +41,4 @@ services-internal-*
 *.zip
 
 # Editor temp
-editor.html
 JBC
