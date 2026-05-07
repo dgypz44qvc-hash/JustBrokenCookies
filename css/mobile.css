@@ -763,7 +763,7 @@
 
   /* Mobile-optimized floral wallpaper */
   #services-overview {
-    background-image: url('../images/mobilelanding-640.webp') !important;
+    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
     background-size: cover !important;
     background-position: center 30% !important;
     background-repeat: no-repeat !important;
@@ -957,7 +957,7 @@
 
   /* Mobile portrait wallpaper */
   .jbc-floral-testimonial {
-    background-image: url('../images/mobilelanding-768.webp') !important;
+    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
     background-size: cover !important;
     background-position: center 20% !important;
     background-repeat: no-repeat !important;
@@ -1039,7 +1039,7 @@
   }
 
   .cta-section.jbc-floral-cta {
-    background-image: url('../images/mobilelanding-480.webp') !important;
+    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
     background-size: cover !important;
     background-position: center 40% !important;
     background-repeat: no-repeat !important;
