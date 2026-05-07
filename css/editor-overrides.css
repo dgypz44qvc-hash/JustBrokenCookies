@@ -2549,7 +2549,7 @@
 
 /* =========================================================
    JBC GLIMPSES CLEAN CAROUSEL BACKGROUND
-   Keep both the section and carousel holder black.
+   Keep the section black while the carousel holder stays transparent.
    ========================================================= */
 
 #jbc-visual-gallery,
@@ -2569,7 +2569,9 @@
 
 #jbc-gradient-stage {
   isolation: isolate !important;
-  background: #050505 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 #jbc-gradient-stage::before {
