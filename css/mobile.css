@@ -2283,3 +2283,345 @@
   }
 
 }
+
+
+/* ════════════════════════════════════════════════════════════
+   HOME PAGE PATCH — fix inline-style overrides + missing rules
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Section backgrounds: keep desktop webp files (same as desktop)
+         but ensure ::before overlay renders correctly ────────────── */
+  #featured-work,
+  #services-overview,
+  #jbc-visual-gallery,
+  #testimonial-section,
+  #cta-section {
+    position: relative !important;
+  }
+
+  /* Overlay darkens whichever background-image is set (inline or CSS) */
+  #featured-work::before,
+  #services-overview::before,
+  #jbc-visual-gallery::before,
+  #testimonial-section::before,
+  #cta-section::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.82) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  /* Lift all direct children above the overlay */
+  #featured-work > *,
+  #services-overview > *,
+  #jbc-visual-gallery > *,
+  #testimonial-section > *,
+  #cta-section > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+
+  /* ── Gallery: reset JS-injected opacity/blur on cards ───────── */
+  /* The gallery JS sets --jbc-gs-cards-opacity: 0.080 on the container,
+     making cards nearly invisible. Override the computed values. */
+  .jbc-gs-card {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Canvas background: hide it so the dark section BG shows instead */
+  #jbc-gs-bg {
+    display: none !important;
+  }
+
+  /* The cards container: reset JS-injected blur/scale vars */
+  #jbc-gs-cards {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Gallery lightbox nav — make touch targets bigger */
+  .jbc-gallery-lightbox__nav {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 28px !important;
+  }
+
+
+  /* ── Cinema: hide the overlay copy (panel-meta shows title) ─── */
+  .jbc-cinema-copy,
+  .jbc-cinema-kicker {
+    display: none !important;
+  }
+
+  /* Cinema counter + progress bar already hidden — belt and braces */
+  .jbc-cinema-counter,
+  .jbc-cinema-progress,
+  .jbc-cinema-progress-bar {
+    display: none !important;
+  }
+
+  /* Closing cover panel — hide on mobile (just duplicate) */
+  .jbc-cinema-panel--closing-cover {
+    display: none !important;
+  }
+
+  /* Cinema ring scroll indicator dots */
+  .jbc-cinema-nav,
+  .jbc-cinema-hint {
+    display: none !important;
+  }
+
+
+  /* ── CTA section: force spans to flow as normal inline text ─── */
+  .cta-section .section-title {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  .cta-section .section-title span {
+    position: static !important;
+    display: inline !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: auto !important;
+    font-size: inherit !important;
+    transform: none !important;
+  }
+
+  .cta-section .section-subtitle,
+  .cta-section .btn {
+    position: static !important;
+    display: inline-block !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: auto !important;
+    transform: none !important;
+  }
+
+  .cta-section .section-subtitle {
+    display: block !important;
+    margin-bottom: 32px !important;
+  }
+
+
+  /* ── Testimonial: ensure testi-content is fully visible ─────── */
+  .testi-content {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+    transition: none !important;
+    background-image: none !important;
+    background: transparent !important;
+  }
+
+
+  /* ── Featured work: section header at top ───────────────────── */
+  #featured-work .jbc-cinema-stage {
+    overflow: visible !important;
+  }
+
+  /* Show a section header above the cinema ring */
+  #featured-work .container > .sec-header {
+    display: block !important;
+    padding: 52px 24px 20px !important;
+  }
+
+  /* Ring: full bleed horizontal scroll strip */
+  #featured-work .jbc-cinema-ring {
+    padding: 0 12px 20px !important;
+  }
+
+  /* Ensure panel images are visible (no opacity/transform from JS) */
+  #featured-work .jbc-cinema-panel {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    --panel-visibility: 1 !important;
+    --focus: 1 !important;
+  }
+
+  #featured-work .jbc-cinema-panel img {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+  }
+
+} /* end @media (max-width: 768px) */
+
+
+/* ════════════════════════════════════════════════════════════
+   HOME PAGE PATCH — fix inline-style overrides + missing rules
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  #featured-work,
+  #services-overview,
+  #jbc-visual-gallery,
+  #testimonial-section,
+  #cta-section {
+    position: relative !important;
+  }
+
+  #featured-work::before,
+  #services-overview::before,
+  #jbc-visual-gallery::before,
+  #testimonial-section::before,
+  #cta-section::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.82) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  #featured-work > *,
+  #services-overview > *,
+  #jbc-visual-gallery > *,
+  #testimonial-section > *,
+  #cta-section > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .jbc-gs-card {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  #jbc-gs-bg {
+    display: none !important;
+  }
+
+  #jbc-gs-cards {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .jbc-gallery-lightbox__nav {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 28px !important;
+  }
+
+  .jbc-cinema-copy,
+  .jbc-cinema-kicker,
+  .jbc-cinema-counter,
+  .jbc-cinema-progress,
+  .jbc-cinema-progress-bar,
+  .jbc-cinema-panel--closing-cover,
+  .jbc-cinema-nav,
+  .jbc-cinema-hint {
+    display: none !important;
+  }
+
+  .cta-section .section-title {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  .cta-section .section-title span {
+    position: static !important;
+    display: inline !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: auto !important;
+    font-size: inherit !important;
+    transform: none !important;
+  }
+
+  .cta-section .section-subtitle,
+  .cta-section .btn {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: auto !important;
+    transform: none !important;
+  }
+
+  .cta-section .section-subtitle {
+    display: block !important;
+    margin-bottom: 32px !important;
+  }
+
+  .testi-content {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+    transition: none !important;
+    background-image: none !important;
+    background: transparent !important;
+  }
+
+  #featured-work .jbc-cinema-stage {
+    overflow: visible !important;
+  }
+
+  #featured-work .container > .sec-header {
+    display: block !important;
+    padding: 52px 24px 20px !important;
+  }
+
+  #featured-work .jbc-cinema-ring {
+    padding: 0 12px 20px !important;
+  }
+
+  #featured-work .jbc-cinema-panel {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    --panel-visibility: 1 !important;
+    --focus: 1 !important;
+  }
+
+  #featured-work .jbc-cinema-panel img {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+  }
+
+}
+
+/* ── Footer: suppress background image more aggressively ─── */
+@media (max-width: 768px) {
+  .footer.jbc-editorial-footer,
+  .jbc-editorial-footer {
+    background-image: none !important;
+  }
+  .footer::before,
+  .jbc-editorial-footer::before {
+    background: rgba(5,5,5,0.97) !important;
+  }
+
+  /* Hero bottom text: ensure it stays within bounds */
+  .hero-bottom {
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .hero-bottom::before {
+    font-size: clamp(34px, 9.5vw, 54px) !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+}
