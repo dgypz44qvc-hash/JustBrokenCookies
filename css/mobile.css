@@ -569,7 +569,22 @@
   #featured-work {
     padding: 0 !important;
     overflow: hidden !important;
-    background: #050505 !important;
+    background-image: url('../images/bg-featured-work.webp') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+    position: relative !important;
+  }
+
+  #featured-work::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.82) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
   }
 
   /* Flatten the 3D cinema into a horizontal snap-scroll strip.
@@ -763,7 +778,7 @@
 
   /* Mobile-optimized floral wallpaper */
   #services-overview {
-    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-image: url('../images/bg-services.webp') !important;
     background-size: cover !important;
     background-position: center 30% !important;
     background-repeat: no-repeat !important;
@@ -855,8 +870,23 @@
   /* ── 9. VISUAL GALLERY (Spin the Crumbles) ──────────────── */
   #jbc-visual-gallery {
     padding: 0 0 8px !important;
-    background: #050505 !important;
+    background-image: url('../images/bg-gallery.webp') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
     overflow: hidden !important;
+    position: relative !important;
+  }
+
+  #jbc-visual-gallery::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(5,5,5,0.82) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: block !important;
   }
 
   #jbc-visual-gallery .container {
@@ -957,7 +987,7 @@
 
   /* Mobile portrait wallpaper */
   .jbc-floral-testimonial {
-    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-image: url('../images/bg-cta.webp') !important;
     background-size: cover !important;
     background-position: center 20% !important;
     background-repeat: no-repeat !important;
@@ -1039,7 +1069,7 @@
   }
 
   .cta-section.jbc-floral-cta {
-    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-image: url('../images/bg-cta.webp') !important;
     background-size: cover !important;
     background-position: center 40% !important;
     background-repeat: no-repeat !important;
