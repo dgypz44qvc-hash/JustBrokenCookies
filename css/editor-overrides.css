@@ -1589,19 +1589,19 @@
 }
 
 #featured-work .jbc-cinema-panel:nth-child(2) > .jbc-carousel-script-title::before {
-  content: "NO. 01 / SELECTED WORK" !important;
+  content: "SELECTED WORK" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(3) > .jbc-carousel-script-title::before {
-  content: "NO. 02 / SELECTED WORK" !important;
+  content: "SELECTED WORK" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(4) > .jbc-carousel-script-title::before {
-  content: "NO. 03 / SELECTED WORK" !important;
+  content: "SELECTED WORK" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(5) > .jbc-carousel-script-title::before {
-  content: "NO. 04 / SELECTED WORK" !important;
+  content: "SELECTED WORK" !important;
 }
 
 /* Hide the old small meta so it does not compete with the luxury label. */
@@ -1884,19 +1884,19 @@
    ========================================================= */
 
 #featured-work .jbc-cinema-panel:nth-child(2) > .jbc-carousel-script-title::before {
-  content: "NO. 01 / LENS & MOTION" !important;
+  content: "LENS & MOTION" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(3) > .jbc-carousel-script-title::before {
-  content: "NO. 02 / PRODUCT NARRATIVE" !important;
+  content: "PRODUCT NARRATIVE" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(4) > .jbc-carousel-script-title::before {
-  content: "NO. 03 / HUMAN PORTRAITURE" !important;
+  content: "HUMAN PORTRAITURE" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(5) > .jbc-carousel-script-title::before {
-  content: "NO. 04 / DIGITAL ATELIER" !important;
+  content: "DIGITAL ATELIER" !important;
 }
 
 
@@ -1993,19 +1993,19 @@
 
 /* Meaningful eyebrow lines */
 #featured-work .jbc-cinema-panel:nth-child(2) > .jbc-carousel-script-title::before {
-  content: "NO. 01 / LENS & MOTION" !important;
+  content: "LENS & MOTION" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(3) > .jbc-carousel-script-title::before {
-  content: "NO. 02 / PRODUCT NARRATIVE" !important;
+  content: "PRODUCT NARRATIVE" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(4) > .jbc-carousel-script-title::before {
-  content: "NO. 03 / HUMAN PORTRAITURE" !important;
+  content: "HUMAN PORTRAITURE" !important;
 }
 
 #featured-work .jbc-cinema-panel:nth-child(5) > .jbc-carousel-script-title::before {
-  content: "NO. 04 / DIGITAL ATELIER" !important;
+  content: "DIGITAL ATELIER" !important;
 }
 
 /* Hide old competing meta labels on non-Creations cards */
@@ -2157,3 +2157,227 @@
   -webkit-text-fill-color: rgba(255, 255, 255, 0.68) !important;
 }
 
+
+/* =========================================================
+   JBC SELECTED WORK PALETTE TITLES
+   Site-palette colour accents per card, never repeated back-to-back.
+   ========================================================= */
+
+#featured-work .jbc-cinema-panel:nth-child(1),
+#featured-work .jbc-cinema-panel:nth-child(6) {
+  --jbc-work-accent: var(--gold);
+  --jbc-work-accent-rgb: 232, 137, 29;
+}
+
+#featured-work .jbc-cinema-panel:nth-child(2) {
+  --jbc-work-accent: var(--blush);
+  --jbc-work-accent-rgb: 232, 72, 72;
+}
+
+#featured-work .jbc-cinema-panel:nth-child(3) {
+  --jbc-work-accent: var(--dusty-rose);
+  --jbc-work-accent-rgb: 201, 58, 110;
+}
+
+#featured-work .jbc-cinema-panel:nth-child(4) {
+  --jbc-work-accent: var(--sage);
+  --jbc-work-accent-rgb: 138, 155, 130;
+}
+
+#featured-work .jbc-cinema-panel:nth-child(5) {
+  --jbc-work-accent: var(--wine);
+  --jbc-work-accent-rgb: 139, 58, 139;
+}
+
+#featured-work .jbc-cinema-panel,
+#featured-work .jbc-cinema-panel.is-active,
+#featured-work .jbc-cinema-panel[style*="--focus"] {
+  border: 1px solid rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.34) !important;
+  box-shadow:
+    0 28px 86px rgba(0, 0, 0, 0.46),
+    0 5px 20px rgba(0, 0, 0, 0.30),
+    0 0 0 1px rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.18) inset,
+    0 24px 90px rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.16) !important;
+}
+
+#featured-work .jbc-cinema-panel:has(.jbc-carousel-script-title)::after {
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(5, 5, 5, 0.46) 0%,
+      rgba(5, 5, 5, 0.30) 34%,
+      rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.12) 68%,
+      rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.00) 100%
+    ) !important;
+}
+
+#featured-work .jbc-cinema-panel > .jbc-carousel-script-title,
+#featured-work .jbc-creations-scroll-title {
+  font-family: var(--font-display) !important;
+  font-weight: 900 !important;
+  font-variation-settings: "wght" 900 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: none !important;
+  color: var(--jbc-work-accent, var(--gold)) !important;
+  -webkit-text-fill-color: var(--jbc-work-accent, var(--gold)) !important;
+  text-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.82),
+    0 3px 14px rgba(0, 0, 0, 0.68),
+    0 0 18px rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.18) !important;
+}
+
+#featured-work .jbc-cinema-panel > .jbc-carousel-script-title {
+  font-size: clamp(1.65rem, 3.2vw, 3.8rem) !important;
+  line-height: 0.94 !important;
+}
+
+#featured-work .jbc-creations-scroll-title {
+  font-size: clamp(2.2rem, 4.8vw, 5.8rem) !important;
+  line-height: 0.88 !important;
+}
+
+#featured-work .jbc-cinema-panel > .jbc-carousel-script-title::before,
+#featured-work .jbc-creations-scroll-title::before {
+  opacity: 1 !important;
+  font-family: var(--font-body) !important;
+  font-size: clamp(0.48rem, 0.58vw, 0.68rem) !important;
+  font-weight: 900 !important;
+  font-variation-settings: "wght" 900 !important;
+  letter-spacing: 0.42em !important;
+  text-transform: uppercase !important;
+  color: rgb(var(--jbc-work-accent-rgb, 232, 137, 29)) !important;
+  -webkit-text-fill-color: rgb(var(--jbc-work-accent-rgb, 232, 137, 29)) !important;
+  border-bottom-color: rgb(var(--jbc-work-accent-rgb, 232, 137, 29)) !important;
+  text-shadow: none !important;
+}
+
+#featured-work .jbc-cinema-panel-meta span {
+  color: var(--jbc-work-accent, var(--gold)) !important;
+}
+
+#featured-work .jbc-cinema-panel-meta strong {
+  font-family: var(--font-display) !important;
+  color: var(--cream) !important;
+}
+
+@media (max-width: 768px) {
+  #featured-work .jbc-cinema-panel-meta {
+    background:
+      linear-gradient(transparent, rgba(5,5,5,0.88) 45%, rgba(var(--jbc-work-accent-rgb, 232, 137, 29), 0.18)) !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta span {
+    color: var(--jbc-work-accent, var(--gold)) !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta strong {
+    font-family: var(--font-display) !important;
+    color: var(--cream) !important;
+  }
+}
+
+
+/* =========================================================
+   JBC ROSE FILM GATE
+   Subtle stage-level film-strip frame for Crumbles of Creations.
+   ========================================================= */
+
+#featured-work .jbc-cinema-stage {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  border-top: 1px solid rgba(232, 137, 29, 0.22) !important;
+  border-bottom: 1px solid rgba(201, 58, 110, 0.18) !important;
+}
+
+#featured-work .jbc-cinema-ring {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+#featured-work .jbc-cinema-stage::before,
+#featured-work .jbc-cinema-stage::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  height: clamp(42px, 6.5vw, 78px) !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(240, 230, 218, 0.22) 0 10px,
+      rgba(240, 230, 218, 0.22) 10px 14px,
+      transparent 14px 34px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(232, 137, 29, 0.18),
+      rgba(232, 72, 72, 0.12) 38%,
+      rgba(201, 58, 110, 0.16) 72%,
+      rgba(139, 58, 139, 0.14)
+    ),
+    url("../images/sections/section-bg-12.webp"),
+    linear-gradient(180deg, rgba(5,5,5,0.94), rgba(5,5,5,0.78)) !important;
+  background-size:
+    44px 14px,
+    100% 100%,
+    cover,
+    100% 100% !important;
+  background-repeat:
+    repeat-x,
+    no-repeat,
+    no-repeat,
+    no-repeat !important;
+  background-blend-mode: screen, soft-light, multiply, normal !important;
+  filter: saturate(0.95) contrast(1.08) !important;
+}
+
+#featured-work .jbc-cinema-stage::before {
+  top: 0 !important;
+  background-position:
+    0 clamp(12px, 1.8vw, 22px),
+    center,
+    center 42%,
+    center !important;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%) !important;
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%) !important;
+}
+
+#featured-work .jbc-cinema-stage::after {
+  bottom: 0 !important;
+  background-position:
+    22px calc(100% - clamp(24px, 3vw, 34px)),
+    center,
+    center 62%,
+    center !important;
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, #000 62%, transparent 100%) !important;
+  mask-image: linear-gradient(0deg, #000 0%, #000 62%, transparent 100%) !important;
+}
+
+@media (max-width: 768px) {
+  #featured-work .jbc-cinema-stage::before,
+  #featured-work .jbc-cinema-stage::after {
+    height: 28px !important;
+    opacity: 0.72 !important;
+    background-size:
+      34px 9px,
+      100% 100%,
+      cover,
+      100% 100% !important;
+  }
+
+  #featured-work .jbc-cinema-stage::before {
+    background-position: 0 9px, center, center 42%, center !important;
+  }
+
+  #featured-work .jbc-cinema-stage::after {
+    background-position: 17px calc(100% - 18px), center, center 62%, center !important;
+  }
+}

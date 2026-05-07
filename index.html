@@ -37,11 +37,23 @@
     }
   </style>
 <link rel="preload" as="image" href="./images/mobile/DSC03914.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04179.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04185.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04187-2.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04193.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04211.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0835.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0832.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0824.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0763-2.webp" fetchpriority="high"></head><body class="" data-editor-id="jbc-1777582870310-2u4w">
-<!-- ── JBC LOADING SCREEN ──────────────────────────────── -->
+<!-- ── Homepage-only loading title ─────────────────────── -->
+<div id="jbc-loader" aria-hidden="true" role="presentation">
+  <div class="jbc-sl-glow"></div>
+  <div class="jbc-sl-inner">
+    <div class="jbc-sl-mark" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="jbc-sl-name">
+      <span class="jbc-sl-j">JUST</span>
+      <span class="jbc-sl-b">BROKEN</span>
+      <span class="jbc-sl-c">COOKIES</span>
+    </div>
+    <div class="jbc-sl-line"></div>
+    <div class="jbc-sl-tag">Storytelling Agency</div>
+  </div>
+</div>
 
-<div class="preloader-line"></div>
-    
-  
   <div class="page-transition" data-editor-id="jbc-1777551171911-lod6"></div>
 
   <!-- ========== CURSOR ========== -->
@@ -277,6 +289,8 @@
     </div>
     <div id="jbc-gallery-lightbox" class="jbc-gallery-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
       <button class="jbc-gallery-lightbox__close" type="button" aria-label="Close image preview">×</button>
+      <button class="jbc-gallery-lightbox__nav jbc-gallery-lightbox__nav--prev" type="button" aria-label="Previous image">‹</button>
+      <button class="jbc-gallery-lightbox__nav jbc-gallery-lightbox__nav--next" type="button" aria-label="Next image">›</button>
       <div class="jbc-gallery-lightbox__frame">
         <img id="jbc-gallery-lightbox-img" class="jbc-gallery-lightbox__img" alt="">
         <div class="jbc-gallery-lightbox__actions">
@@ -400,6 +414,7 @@
 
     // ── DOM ──────────────────────────────────────────────────────────
     const stage     = document.getElementById('jbc-gradient-stage');
+    const visualSection = document.getElementById('jbc-visual-gallery');
     const cardsRoot = document.getElementById('jbc-gs-cards');
     const quote     = stage ? stage.querySelector('.jbc-gs-quote') : null;
     const bgCanvas  = document.getElementById('jbc-gs-bg');
@@ -408,6 +423,8 @@
     const lightbox  = document.getElementById('jbc-gallery-lightbox');
     const lightboxImg = document.getElementById('jbc-gallery-lightbox-img');
     const lightboxClose = lightbox ? lightbox.querySelector('.jbc-gallery-lightbox__close') : null;
+    const lightboxPrev = lightbox ? lightbox.querySelector('.jbc-gallery-lightbox__nav--prev') : null;
+    const lightboxNext = lightbox ? lightbox.querySelector('.jbc-gallery-lightbox__nav--next') : null;
 
     if (!stage || !cardsRoot) return; // bail if section not present
 
@@ -420,6 +437,7 @@
     let gradPalette = [];
     let gradCurrent = { r1:10, g1:10, b1:10, r2:15, g2:15, b2:15 };
     let bgFastUntil = 0;
+    let lightboxIndex = 0;
 
     // ── UTILS ────────────────────────────────────────────────────────
     function mod(n, m) { return ((n % m) + m) % m; }
@@ -540,6 +558,7 @@
         const { transform, z } = transformForX(pos);
         items[i].el.style.transform = transform;
         items[i].el.style.zIndex    = String(1000 + Math.round(z));
+        items[i].el.style.opacity   = '1';
         const isCore = i === closestIdx || i === prev || i === next;
         const blur   = isCore ? 0 : 2 * Math.pow(Math.abs(norm), 1.1);
         items[i].el.style.filter = `blur(${blur.toFixed(2)}px)`;
@@ -743,11 +762,13 @@
     }
 
     function revealProgressForEvent(e) {
-      const r = stage.getBoundingClientRect();
-      const y = (e.clientY - r.top) / Math.max(1, r.height);
-      const raw = (y - REVEAL_ACTIVE_TOP) / Math.max(0.001, REVEAL_ACTIVE_BOTTOM - REVEAL_ACTIVE_TOP);
+      const sectionRect = (visualSection || stage).getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      const start = sectionRect.top + 6;
+      const end = stageRect.top + stageRect.height * WHEEL_ACTIVE_TOP;
+      const raw = (e.clientY - start) / Math.max(1, end - start);
       const p = Math.max(0, Math.min(1, raw));
-      return p * p * (3 - 2 * p);
+      return Math.pow(p * p * (3 - 2 * p), 1.35);
     }
 
     function mix(a, b, p) {
@@ -761,9 +782,9 @@
       cardsRoot.style.setProperty('--jbc-gs-aperture-core', `${mix(0, 54, p).toFixed(2)}%`);
       cardsRoot.style.setProperty('--jbc-gs-aperture-soft', `${mix(38, 76, p).toFixed(2)}%`);
       cardsRoot.style.setProperty('--jbc-gs-aperture-feather', `${mix(66, 92, p).toFixed(2)}%`);
-      cardsRoot.style.setProperty('--jbc-gs-cards-opacity', mix(0.24, 1, p).toFixed(3));
-      cardsRoot.style.setProperty('--jbc-gs-cards-blur', `${mix(8, 0, p).toFixed(2)}px`);
-      cardsRoot.style.setProperty('--jbc-gs-cards-scale', mix(0.975, 1, p).toFixed(4));
+      cardsRoot.style.setProperty('--jbc-gs-cards-opacity', mix(0.08, 1, p).toFixed(3));
+      cardsRoot.style.setProperty('--jbc-gs-cards-blur', `${mix(12, 0, p).toFixed(2)}px`);
+      cardsRoot.style.setProperty('--jbc-gs-cards-scale', mix(0.965, 1, p).toFixed(4));
       if (quote) {
         quote.style.setProperty('--jbc-gs-quote-opacity', mix(0.94, 0, p).toFixed(3));
         quote.style.setProperty('--jbc-gs-quote-blur', `${mix(0, 10, p).toFixed(2)}px`);
@@ -781,9 +802,28 @@
       setRevealProgress(active ? 1 : 0);
     }
 
-    function openLightbox(src) {
+    function setLightboxImage(index, animate) {
+      if (!lightboxImg || !items.length) return;
+      lightboxIndex = mod(index, items.length);
+      const src = items[lightboxIndex].src;
+      if (!animate) {
+        lightboxImg.src = src;
+        return;
+      }
+      lightboxImg.classList.add('jbc-gallery-lightbox__img--switching');
+      setTimeout(() => {
+        lightboxImg.src = src;
+        lightboxImg.onload = () => {
+          lightboxImg.classList.remove('jbc-gallery-lightbox__img--switching');
+          lightboxImg.onload = null;
+        };
+      }, 130);
+    }
+
+    function openLightbox(src, index) {
       if (!lightbox || !lightboxImg || !src) return;
-      lightboxImg.src = src;
+      const fallbackIndex = items.findIndex(it => it.src === src);
+      setLightboxImage(Number.isFinite(index) ? index : Math.max(0, fallbackIndex), false);
       lightbox.classList.add('jbc-gallery-lightbox--open');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.classList.add('jbc-gallery-lightbox-open');
@@ -801,6 +841,11 @@
       }, 260);
     }
 
+    function stepLightbox(direction) {
+      if (!lightbox || !lightbox.classList.contains('jbc-gallery-lightbox--open')) return;
+      setLightboxImage(lightboxIndex + direction, true);
+    }
+
     function onResize() {
       const prevStep = STEP || 1;
       const ratio = SCROLL_X / (items.length * prevStep);
@@ -813,17 +858,18 @@
 
     stage.addEventListener('wheel', e => {
       if (isEntering || !TRACK) return;
-      const rawDelta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      const isHorizontalWheel = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      const rawDelta = isHorizontalWheel ? e.deltaX : e.deltaY;
       if (!rawDelta) return;
       const direction = rawDelta > 0 ? 1 : -1;
 
-      if (direction < 0) {
+      if (!isHorizontalWheel && direction < 0) {
         carouselReleaseReady = false;
         vX = 0;
         return;
       }
 
-      if (carouselReleaseReady && direction > 0) {
+      if (!isHorizontalWheel && carouselReleaseReady && direction > 0) {
         vX = 0;
         return;
       }
@@ -842,11 +888,12 @@
       const modeScale = e.deltaMode === 1 ? 18 : e.deltaMode === 2 ? stage.clientHeight : 1;
       const wheelDelta = Math.max(-140, Math.min(140, rawDelta * modeScale));
       const nextScroll = SCROLL_X + wheelDelta * WHEEL_SENS;
-      if (direction > 0 && nextScroll >= TRACK) {
+      if (!isHorizontalWheel && direction > 0 && nextScroll >= TRACK) {
         SCROLL_X = 0;
         carouselReleaseReady = true;
         vX = 0;
       } else {
+        if (isHorizontalWheel) carouselReleaseReady = false;
         SCROLL_X = mod(nextScroll, TRACK);
         vX += wheelDelta * WHEEL_SENS * 2.8;
       }
@@ -894,7 +941,8 @@
       stage.releasePointerCapture(e.pointerId);
       if (!hasSlid && pressCard) {
         const img = pressCard.querySelector('.jbc-gs-card__img');
-        openLightbox(img ? img.currentSrc || img.src : '');
+        const cardIndex = items.findIndex(it => it.el === pressCard);
+        openLightbox(img ? img.currentSrc || img.src : '', cardIndex);
         vX = 0;
       } else {
         vX = -lastDelta * DRAG_SENS;
@@ -917,8 +965,13 @@
       });
     }
     if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxPrev) lightboxPrev.addEventListener('click', () => stepLightbox(-1));
+    if (lightboxNext) lightboxNext.addEventListener('click', () => stepLightbox(1));
     document.addEventListener('keydown', e => {
+      if (!lightbox || !lightbox.classList.contains('jbc-gallery-lightbox--open')) return;
       if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+      if (e.key === 'ArrowRight') stepLightbox(1);
     });
 
     window.addEventListener('resize', () => {
@@ -931,14 +984,19 @@
     stage.addEventListener('mouseleave', () => {
       mouseIsOver = false;
       setStageAwake(false);
-      setStageRevealed(false);
       items.forEach(it => it.el.classList.remove('jbc-gs-card--lit'));
     });
 
-    stage.addEventListener('mousemove', e => {
+    const revealTarget = visualSection || stage;
+    revealTarget.addEventListener('mousemove', e => {
       setRevealProgress(revealProgressForEvent(e));
       if (!isWheelInCardBand(e)) setStageAwake(false);
     }, { passive: true });
+
+    revealTarget.addEventListener('mouseleave', () => {
+      setStageAwake(false);
+      setStageRevealed(false);
+    });
 
     // Hint — hide only when user actually scrolls/swipes the carousel
     const hint = document.getElementById('jbc-gs-hint');
