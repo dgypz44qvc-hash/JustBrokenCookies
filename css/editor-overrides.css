@@ -2548,8 +2548,8 @@
 }
 
 /* =========================================================
-   JBC GLIMPSES CAROUSEL ROSE BACKGROUND
-   Keep the section black; move the rose atmosphere into the carousel only.
+   JBC GLIMPSES CLEAN CAROUSEL BACKGROUND
+   Keep both the section and carousel holder black.
    ========================================================= */
 
 #jbc-visual-gallery,
@@ -2573,46 +2573,9 @@
 }
 
 #jbc-gradient-stage::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  background-image:
-    radial-gradient(
-      ellipse at 50% 44%,
-      rgba(5, 5, 5, 0.10) 0%,
-      rgba(5, 5, 5, 0.32) 48%,
-      rgba(5, 5, 5, 0.78) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(5, 5, 5, 0.86) 0%,
-      rgba(5, 5, 5, 0.18) 28%,
-      rgba(5, 5, 5, 0.20) 66%,
-      rgba(5, 5, 5, 0.88) 100%
-    ),
-    var(--jbc-rose-pattern, url("../images/jbc-floral-wide-desktop.jpg")) !important;
-  background-size:
-    100% 100%,
-    100% 100%,
-    cover !important;
-  background-position:
-    center,
-    center,
-    center 48% !important;
-  background-repeat: no-repeat !important;
-  opacity: 0.72 !important;
-  filter: saturate(1.1) contrast(1.04) brightness(0.76) !important;
-  transform: translateZ(0) !important;
-  -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 9%, #000 91%, transparent 100%) !important;
-  mask-image:
-    linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 9%, #000 91%, transparent 100%) !important;
-  -webkit-mask-composite: source-in !important;
-  mask-composite: intersect !important;
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
 }
 
 #jbc-gs-bg,
