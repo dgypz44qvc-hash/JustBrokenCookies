@@ -266,9 +266,9 @@
   .hero,
   .jbc-floral-hero {
     position: relative !important;
-    height: 100svh !important;
-    min-height: 620px !important;
-    max-height: 900px !important;
+    height: 70svh !important;
+    min-height: 480px !important;
+    max-height: 680px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-end !important;
@@ -726,12 +726,14 @@
     line-height: 1.2 !important;
   }
 
-  /* Section header inside featured-work */
+  /* Section header inside featured-work — opacity: 1 beats scroll-reveal JS inline */
   #featured-work .sec-header,
   #featured-work h2,
   #featured-work h3 {
     display: block !important;
     visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
     padding: 52px 24px 24px !important;
   }
 
@@ -1938,8 +1940,9 @@
     box-shadow: 0 16px 40px rgba(0,0,0,0.32) !important;
   }
 
-  /* Odd card that's last: center it */
-  .service-card:last-child:nth-child(odd) {
+  /* 3rd card (Describe) spans full width and centers — note: :last-child won't
+     match because .service-cinema and <script> come after the 3 service cards */
+  .services-grid .service-card:nth-child(3) {
     grid-column: 1 / -1 !important;
     max-width: 480px !important;
     margin-left: auto !important;
@@ -2105,7 +2108,9 @@
     gap: 24px !important;
   }
 
-  .service-card:last-of-type:nth-child(odd) {
+  /* 3rd service card (Describe) — span full width in 2-col grid
+     (can't use :last-child/:last-of-type since cinema div comes after) */
+  .services-grid .service-card:nth-child(3) {
     grid-column: 1 / -1 !important;
     max-width: 540px !important;
     margin-left: auto !important;
@@ -2504,13 +2509,14 @@
     visibility: visible !important;
   }
 
-  /* Hero height: fill viewport cleanly, no min/max fighting */
+  /* Hero height: 70% viewport on mobile — large enough to be impactful,
+     small enough that page content is immediately visible below */
   .hero,
   .jbc-floral-hero {
-    height: 100svh !important;
-    height: 100vh !important; /* fallback for older Safari */
-    min-height: 600px !important;
-    max-height: none !important;
+    height: 70svh !important;
+    height: 70vh !important; /* fallback for older Safari */
+    min-height: 480px !important;
+    max-height: 680px !important;
   }
 
   /* Hero picture tag: ensure image fills perfectly */
@@ -2568,8 +2574,11 @@
     gap: 12px !important;
   }
 
-  /* Cinema panels: proportioned cards */
-  #featured-work .jbc-cinema-panel {
+  /* Cinema panels: proportioned cards — opacity:1 beats inline <style> jbc-carousel-side-bar-fix */
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel.is-active {
+    opacity: 1 !important;
+    visibility: visible !important;
     flex: 0 0 76vw !important;
     width: 76vw !important;
     height: 54vw !important;
@@ -2764,7 +2773,8 @@
 
   /* ── FOOTER: clean 2-column layout ─────────────────────── */
   .footer,
-  .jbc-editorial-footer {
+  .jbc-editorial-footer,
+  .footer.jbc-editorial-footer {
     background-image: none !important;
     padding: 52px 0 32px !important;
   }
