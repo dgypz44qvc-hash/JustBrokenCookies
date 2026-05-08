@@ -42,3 +42,37 @@ services-internal-*
 
 # Editor temp
 JBC
+
+# CSS backup files — keep locally but don't deploy to Netlify
+css/*.backup-*.css
+css/*.bad-*.css
+css/*.broken-*.css
+css/style-before-*.css
+css/style.backup-before-*.css
+css/mobile.backup-*.css
+css/editor-overrides.backup-*.css
+
+# JS backup files
+js/*.backup-*.js
+js/main.backup-*.js
+js/local-editor.backup-*.js
+js/local-editor-before-*.js
+
+# Raw/source image assets not used on live site
+images/added-*.png
+images/fullhero*.png
+images/magnific_*.png
+images/freepik_*.png
+images/jbc-botanical-backgrounds/
+images/sections/section-bg-*.png
+images/mobile/golden*.png
+images/mobile/goldeneye*.png
+images/mobile/jbcrosegold.png
+images/mobile/newrosepattern.png
+images/mobile/princess.png
+images/mobile/valegoldnails.png
+images/mobile/valemaybe.png
+images/mobile/goldenmarough.png
+images/mobile/goldenman.png
+images/mobile/halfgoldenman.png
+images/mobile/duo.png

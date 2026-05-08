@@ -505,7 +505,7 @@
   /* Mobile page header wallpaper */
   .page-header.jbc-floral-page-header,
   .jbc-floral-page-header {
-    background-image: url('../images/jbc-floral-wide-mobile.jpg') !important;
+    background-image: url('../images/jbc-floral-wide-mobile.webp') !important;
     background-size: cover !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
@@ -1113,7 +1113,7 @@
 
   /* Optional footer wallpaper */
   .footer.jbc-editorial-footer {
-    background-image: url('../images/footer-story-bg-mobile.jpg') !important;
+    background-image: url('../images/footer-story-bg-mobile.webp') !important;
     background-size: cover !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
@@ -1313,7 +1313,7 @@
 
   /* About sections with floral background */
   .jbc-floral-about-story {
-    background-image: url('../images/jbc-floral-accent-mobile.jpg') !important;
+    background-image: url('../images/jbc-floral-accent-mobile.webp') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
@@ -1386,7 +1386,7 @@
 
   /* Process section — mobile floral wallpaper */
   .jbc-floral-service-process {
-    background-image: url('../images/jbc-floral-accent-mobile.jpg') !important;
+    background-image: url('../images/jbc-floral-accent-mobile.webp') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
@@ -1559,7 +1559,7 @@
   }
 
   .jbc-floral-contact {
-    background-image: url('../images/jbc-floral-portrait-mobile.jpg') !important;
+    background-image: url('../images/jbc-floral-portrait-mobile.webp') !important;
     background-size: cover !important;
     background-position: center 25% !important;
     background-repeat: no-repeat !important;

@@ -1587,9 +1587,9 @@ section { padding:var(--section-pad) 0; position:relative; }
    Uses: images/jbc-rose-pattern-bg.webp
    ========================================================= */
 :root {
-  --jbc-floral-wide: url("../images/jbc-floral-wide-desktop.jpg");
-  --jbc-floral-square: url("../images/jbc-floral-square.jpg");
-  --jbc-floral-portrait: url("../images/jbc-floral-portrait-mobile.jpg");
+  --jbc-floral-wide: url("../images/jbc-floral-wide-desktop.webp");
+  --jbc-floral-square: url("../images/jbc-floral-square.webp");
+  --jbc-floral-portrait: url("../images/jbc-floral-portrait-mobile.webp");
   --jbc-floral-pattern: var(--jbc-floral-wide);
   --jbc-deep: #2A221E;
   --jbc-card: #231D19;
@@ -1962,7 +1962,7 @@ section { padding:var(--section-pad) 0; position:relative; }
   z-index: 0;
   background-image:
     linear-gradient(90deg, rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.42) 48%, rgba(5, 5, 5, 0.78)),
-    url("../images/footer-story-bg-desktop.jpg");
+    url("../images/footer-story-bg-desktop.webp");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -4735,7 +4735,7 @@ footer.footer .jbc-custom,
 
 /* =========================================================
    FOOTER PORTRAIT BACKGROUND, CLEAN REBUILD
-   Uses: images/footer-story-bg-desktop.jpg
+   Uses: images/footer-story-bg-desktop.webp
    ========================================================= */
 
 footer.footer,
@@ -4773,7 +4773,7 @@ footer.footer::before,
       rgba(9,7,7,0.28) 34%,
       rgba(9,7,7,0.86) 100%
     ),
-    url("../images/footer-story-bg-desktop.jpg") !important;
+    url("../images/footer-story-bg-desktop.webp") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -4844,7 +4844,7 @@ footer.footer .footer-grid::after {
 /* =========================================================
    FOOTER CINEMATIC PORTRAIT BACKGROUND
    Footer image behind footer text
-   Uses: images/footer-story-bg-desktop.jpg
+   Uses: images/footer-story-bg-desktop.webp
    ========================================================= */
 
 footer.footer,
@@ -4883,7 +4883,7 @@ footer.footer::before,
       rgba(8,6,6,0.18) 38%,
       rgba(8,6,6,0.88) 100%
     ),
-    url("../images/footer-story-bg-desktop.jpg") !important;
+    url("../images/footer-story-bg-desktop.webp") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -4946,7 +4946,7 @@ footer.footer,
 /* =========================================================
    FORCE FOOTER IMAGE STRIP VISIBLE
    Final override, nothing should hide this layer
-   Uses: images/footer-story-bg-desktop.jpg
+   Uses: images/footer-story-bg-desktop.webp
    ========================================================= */
 
 footer.footer,
@@ -4993,7 +4993,7 @@ footer.footer::before,
       rgba(8,6,6,0.14) 40%,
       rgba(8,6,6,0.88) 100%
     ),
-    url("../images/footer-story-bg-desktop.jpg") !important;
+    url("../images/footer-story-bg-desktop.webp") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -5048,7 +5048,7 @@ footer.footer .social-links,
 
 /* =========================================================
    FOOTER IMAGE STRIP, CORRECT IMAGE
-   Uses: images/Vale flower walk.jpeg
+   Uses: images/mobile/Vale-flower-walk.webp
    Keeps footer text above, removes previous wrong/hidden footer image behaviour
    ========================================================= */
 
@@ -5098,7 +5098,7 @@ footer.footer::before,
       rgba(7,5,5,0.12) 36%,
       rgba(7,5,5,0.84) 100%
     ),
-    url("../images/Vale%20flower%20walk.jpeg") !important;
+    url("../images/mobile/Vale-flower-walk.webp") !important;
 
   background-repeat: no-repeat !important;
   background-size: cover !important;
@@ -6080,7 +6080,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.16) 42%,
       rgba(7,5,5,0.86) 100%
     ),
-    url("../images/eyestory.jpg") !important;
+    url("../images/eyestory.webp") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -6182,7 +6182,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.04) 42%,
       rgba(7,5,5,0.58) 100%
     ),
-    url("../images/eyestory.jpg") !important;
+    url("../images/eyestory.webp") !important;
 
   /* contain preserves the full original 16:9 image, no ugly zoom crop */
   background-size: contain !important;
@@ -6270,7 +6270,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.04) 42%,
       rgba(7,5,5,0.58) 100%
     ),
-    url("../images/eyestory.jpg") !important;
+    url("../images/eyestory.webp") !important;
 
   /* COVER fills the whole section, no boxed image */
   background-size: cover !important;
@@ -6381,7 +6381,7 @@ footer.footer [data-editor-id="image-002"],
       rgba(7,5,5,0.04) 42%,
       rgba(7,5,5,0.58) 100%
     ),
-    url("../images/eyestory.jpg") !important;
+    url("../images/eyestory.webp") !important;
 
   /* COVER fills the whole section, no boxed image */
   background-size: cover !important;
@@ -6691,7 +6691,7 @@ footer.footer .social-links,
       rgba(7,5,5,0.10) 45%,
       rgba(7,5,5,0.82) 100%
     ),
-    url("../images/eyestory.jpg") !important;
+    url("../images/eyestory.webp") !important;
 
   background-size: cover !important;
   background-position: center center !important;
@@ -6792,7 +6792,7 @@ footer.footer .social-links,
   z-index: 0 !important;
   pointer-events: none !important;
 
-  background-image: url("../images/jbc-floral-wide-desktop.jpg") !important;
+  background-image: url("../images/jbc-floral-wide-desktop.webp") !important;
   background-repeat: no-repeat !important;
   background-size: min(1180px, 88vw) auto !important;
   background-position: left 45% top 48% !important;
@@ -6854,7 +6854,7 @@ footer.footer .social-links,
   z-index: 0 !important;
   pointer-events: none !important;
 
-  background-image: url("../images/jbc-floral-wide-desktop.jpg") !important;
+  background-image: url("../images/jbc-floral-wide-desktop.webp") !important;
   background-repeat: no-repeat !important;
   background-size: 148% auto !important;
   opacity: 0.78 !important;
@@ -7141,7 +7141,7 @@ body:not([data-editor-id]) .jbc-floral-contact::before {
   display: block !important;
   pointer-events: none !important;
   z-index: 0 !important;
-  background-image: url("../images/jbc-floral-wide-desktop.jpg") !important;
+  background-image: url("../images/jbc-floral-wide-desktop.webp") !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
   filter: saturate(1.04) contrast(1.02) brightness(0.86) !important;
@@ -9335,7 +9335,7 @@ section.testimonial-section {
 
 /* =========================================================
    How We Build Stories
-   Correct rose card background file: jbc-floral-square.jpg
+   Correct rose card background file: jbc-floral-square.webp
    ========================================================= */
 
 /* Keep section background plain */
@@ -9365,7 +9365,7 @@ section.testimonial-section {
 
   background-image:
     linear-gradient(rgba(5, 5, 5, 0.38), rgba(5, 5, 5, 0.68)),
-    url("../images/jbc-floral-square.jpg") !important;
+    url("../images/jbc-floral-square.webp") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
@@ -9421,7 +9421,7 @@ section.testimonial-section {
   background-image:
     radial-gradient(ellipse at center, rgba(5,5,5,0.10) 0%, rgba(5,5,5,0.42) 72%, rgba(5,5,5,0.86) 100%),
     linear-gradient(90deg, rgba(5,5,5,0.82) 0%, rgba(5,5,5,0.18) 28%, rgba(5,5,5,0.18) 72%, rgba(5,5,5,0.86) 100%),
-    url("../images/jbc-floral-square.jpg") !important;
+    url("../images/jbc-floral-square.webp") !important;
 
   background-repeat: no-repeat, no-repeat, repeat !important;
   background-size: 100% 100%, 100% 100%, 520px 520px !important;
@@ -9723,7 +9723,7 @@ section.testimonial-section span {
     ),
 
     /* Rose pattern, not stretched */
-    url("../images/jbc-floral-square.jpg") !important;
+    url("../images/jbc-floral-square.webp") !important;
 
   background-repeat: no-repeat, no-repeat, no-repeat, repeat !important;
   background-size: 100% 100%, 100% 100%, 100% 100%, 560px 560px !important;
@@ -9797,7 +9797,7 @@ section.testimonial-section span {
     ),
 
     /* Rose pattern, not stretched */
-    url("../images/jbc-floral-square.jpg") !important;
+    url("../images/jbc-floral-square.webp") !important;
 
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat !important;
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 560px 560px !important;
@@ -10380,7 +10380,7 @@ section.testimonial-section span {
 /* =========================================================
    Selected Work
    Single clean rose background, not stretched, blended to black
-   Keeps only jbc-floral-square.jpg
+   Keeps only jbc-floral-square.webp
    ========================================================= */
 
 #featured-work,
@@ -10404,7 +10404,7 @@ section.testimonial-section span {
       rgba(5, 5, 5, 0.38) 78%,
       rgba(5, 5, 5, 1) 100%
     ),
-    url("../images/jbc-floral-square.jpg") !important;
+    url("../images/jbc-floral-square.webp") !important;
 
   background-repeat: no-repeat, no-repeat, repeat !important;
   background-size: 100% 100%, 100% 100%, 560px 560px !important;
