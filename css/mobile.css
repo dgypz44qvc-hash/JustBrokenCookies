@@ -334,35 +334,24 @@
     filter: none !important;
   }
 
+  .hero-bottom,
   .hero-bottom .desc,
   .hero-bottom .scroll-txt {
     display: none !important;
   }
-
-  /* Inject big headline via pseudo-element */
-  .hero-bottom::before {
-    content: 'JUST\ABROKEN\ACOOKIES' !important;
-    white-space: pre !important;
-    display: block !important;
-    font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(38px, 11vw, 60px) !important;
-    font-weight: 900 !important;
-    line-height: 1.02 !important;
-    letter-spacing: -0.025em !important;
-    color: #F0E6DA !important;
-    margin-bottom: 14px !important;
+  /* Override GSAP inline styles on hero for mobile */
+  .hero.jbc-floral-hero {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
   }
 
+
+  /* Hero text injected via CSS removed — image has text baked in */
+  .hero-bottom::before,
   .hero-bottom::after {
-    content: 'A storytelling agency — visuals, strategy & words' !important;
-    display: block !important;
-    font-family: 'Inter', Arial, sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 300 !important;
-    letter-spacing: 0.12em !important;
-    color: rgba(240,230,218,0.6) !important;
-    text-transform: uppercase !important;
-    margin-bottom: 30px !important;
+    display: none !important;
+    content: none !important;
   }
 
   /* Hero CTA button */
@@ -802,25 +791,23 @@
   .services-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 0 !important;
+    gap: 16px !important;
   }
 
-  /* Service cards — stacked accordion style */
+  /* Service cards — proper styled cards on mobile */
   .service-card {
-    background: transparent !important;
-    border-top: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 0 !important;
-    padding: 28px 0 !important;
-    box-shadow: none !important;
+    background: linear-gradient(145deg, rgba(10,10,10,0.96), rgba(5,5,5,0.92)) !important;
+    border: 1px solid rgba(240,230,218,0.13) !important;
+    border-radius: 16px !important;
+    padding: 28px 24px !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.32) !important;
     transform: none !important;
     opacity: 1 !important;
     display: block !important;
     cursor: default !important;
     transition: none !important;
-  }
-
-  .service-card:last-of-type {
-    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
   }
 
   .service-num {
@@ -828,33 +815,44 @@
     letter-spacing: 0.24em !important;
     color: #E8891D !important;
     text-transform: uppercase !important;
-    margin-bottom: 10px !important;
-    display: block !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
     font-family: 'Inter', sans-serif !important;
+  }
+  
+  .service-card.jbc-editorial-card .service-num::after {
+    content: "" !important;
+    display: inline-block !important;
+    width: 32px !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, #E8891D, transparent) !important;
+    opacity: 0.75 !important;
   }
 
   .service-card h3 {
     font-family: 'Playfair Display', Georgia, serif !important;
-    font-size: clamp(22px, 6vw, 30px) !important;
+    font-size: clamp(28px, 8vw, 42px) !important;
     font-weight: 700 !important;
     color: #F0E6DA !important;
     margin: 0 0 6px !important;
-    line-height: 1.1 !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.03em !important;
   }
 
   .service-sub {
-    font-size: 9px !important;
-    letter-spacing: 0.2em !important;
-    text-transform: uppercase !important;
-    color: rgba(240,230,218,0.35) !important;
+    font-size: clamp(13px, 3.5vw, 16px) !important;
+    letter-spacing: 0.02em !important;
+    color: #C93A6E !important;
     display: block !important;
-    margin-bottom: 12px !important;
-    font-family: 'Inter', sans-serif !important;
+    margin-bottom: 14px !important;
+    font-family: var(--font-script), 'Dancing Script', cursive !important;
   }
 
   .service-short {
-    font-size: 13px !important;
-    line-height: 1.72 !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
     color: rgba(240,230,218,0.65) !important;
     margin: 0 !important;
     font-weight: 300 !important;
