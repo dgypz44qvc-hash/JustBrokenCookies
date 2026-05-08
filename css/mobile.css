@@ -292,25 +292,15 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    object-position: center 15% !important;
+    object-position: center center !important;
     display: block !important;
   }
 
-  /* Bottom-heavy dark gradient so text is legible */
+  /* No gradient overlay — mobile hero image has branding baked in */
   .hero::after,
   .jbc-floral-hero::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 1 !important;
-    background: linear-gradient(
-      to bottom,
-      rgba(5,5,5,0.1) 0%,
-      rgba(5,5,5,0.05) 30%,
-      rgba(5,5,5,0.45) 60%,
-      rgba(5,5,5,0.95) 100%
-    ) !important;
-    pointer-events: none !important;
+    display: none !important;
+    content: none !important;
   }
 
   /* Hero content containers */
