@@ -902,6 +902,23 @@
     if (action === 'add-bg') {
       startAddMode('bg');
     }
+
+    /* ── REMOVE BACKGROUND IMAGE ── */
+    if (action === 'remove-bg') {
+      let target = el;
+      // Walk up to find the section/element that actually has a background-image
+      while (target && target !== win.document.body) {
+        const bg = win.getComputedStyle(target).backgroundImage;
+        if (bg && bg !== 'none') break;
+        target = target.parentElement;
+      }
+      if (!target || target === win.document.body) {
+        target = el.closest('section, header, footer') || el;
+      }
+      snapshot();
+      target.style.setProperty('background-image', 'none', 'important');
+      setStatus('Background image removed ✓ — Save to keep');
+    }
   }
 
   /* ── FILE HELPERS ────────────────────────────────────── */

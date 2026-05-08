@@ -453,6 +453,8 @@ html, body {
 .ctx-item--replace:hover { background: rgba(168,216,234,0.08); }
 .ctx-item--resize { color: #b8e0b8; }
 .ctx-item--resize:hover { background: rgba(184,224,184,0.08); }
+.ctx-item--danger { color: #e87070; }
+.ctx-item--danger:hover { background: rgba(232,112,112,0.12); }
 
 .ctx-divider {
   height: 1px;
