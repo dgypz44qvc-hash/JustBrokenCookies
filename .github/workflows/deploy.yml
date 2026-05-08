@@ -37,6 +37,7 @@ jobs:
                     portfolio.html magazine.html mobile-landing.html editor.html; do
             [ -f "$f" ] && cp "$f" _deploy/
           done
+          [ -f CNAME ] && cp CNAME _deploy/
 
           # --- CSS (active files only) ---
           cp css/style.css _deploy/css/
