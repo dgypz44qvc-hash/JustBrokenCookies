@@ -92,6 +92,7 @@ jobs:
 
           # --- Mobile webp gallery images ---
           [ -d images/mobile ] && cp images/mobile/*.webp _deploy/images/mobile/ 2>/dev/null || true
+          [ -f images/mobile/newrosepattern.png ] && cp images/mobile/newrosepattern.png _deploy/images/mobile/
 
           # --- Portfolio images ---
           [ -d images/portfolio ] && cp images/portfolio/*.jpg  _deploy/images/portfolio/ 2>/dev/null || true
