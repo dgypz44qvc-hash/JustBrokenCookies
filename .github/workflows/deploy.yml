@@ -27,10 +27,6 @@ jobs:
       - name: Build slim deploy folder
         run: |
           mkdir -p _deploy/css _deploy/js
-          mkdir -p _deploy/images/mobile _deploy/images/portfolio
-          mkdir -p _deploy/images/about _deploy/images/blog
-          mkdir -p _deploy/images/patterns _deploy/images/overlays
-          mkdir -p _deploy/images/sections
 
           # --- HTML pages (real pages only, no backups) ---
           for f in index.html about.html services.html contact.html \
@@ -39,13 +35,13 @@ jobs:
           done
           [ -f CNAME ] && cp CNAME _deploy/
 
-          # --- CSS (active files only) ---
+          # --- CSS (active files only, no backups) ---
           cp css/style.css _deploy/css/
           cp css/mobile.css _deploy/css/
           [ -f css/editor-overrides.css ] && cp css/editor-overrides.css _deploy/css/
           [ -f css/local-editor.css ]     && cp css/local-editor.css _deploy/css/
 
-          # --- JS (active files only) ---
+          # --- JS (active files only, no backups) ---
           cp js/main.js _deploy/js/
           [ -f js/app.js ]          && cp js/app.js _deploy/js/
           [ -f js/local-editor.js ] && cp js/local-editor.js _deploy/js/
@@ -54,60 +50,8 @@ jobs:
           # --- Fonts ---
           [ -d fonts ] && cp -r fonts _deploy/
 
-          # --- Root-level images (only the ones referenced in HTML/CSS) ---
-          for f in \
-            "footer-story-bg-desktop.jpg" \
-            "footer-story-bg-desktop.webp" \
-            "footer-story-bg-mobile.jpg" \
-            "hero-mobile-desktop-ratio-1080.jpg" \
-            "hero-mobile-desktop-ratio-1080.webp" \
-            "hero-mobile-desktop-ratio-768.jpg" \
-            "hero-mobile-desktop-ratio-768.webp" \
-            "heromobile-1280.jpg" "heromobile-1280.webp" \
-            "heromobile-640.jpg"  "heromobile-640.webp" \
-            "heromobile-900.jpg"  "heromobile-900.webp" \
-            "heromultiroses-1280.jpg" "heromultiroses-1920.jpg" "heromultiroses-900.jpg" \
-            "jbc-floral-accent-mobile.jpg" \
-            "jbc-floral-portrait-mobile.jpg" \
-            "jbc-floral-square.jpg" \
-            "jbc-floral-square.webp" \
-            "jbc-floral-wide-desktop.jpg" \
-            "jbc-floral-wide-mobile.jpg" \
-            "jbc-rose-pattern-bg.png" \
-            "jbc-rose-pattern-bg.webp" \
-            "roseframe-carousel-overlay.png" \
-            "roseframe-carousel-overlay.webp" \
-            "creations-title-card.webp" \
-            "creations-title-card.svg" \
-            "eyestory.jpg" \
-            "eyestory.webp" \
-            "mobilelanding-480.webp" "mobilelanding-640.webp" "mobilelanding-768.webp" \
-            "magnific_swap-the-lady-in-img1-wit_2903671142-1777665351148.webp" \
-            "hand-cursor.svg" \
-            "Vale flower walk.jpeg" \
-            "hero-portrait.jpg" \
-            "herobandw-1280.jpg" "herobandw-1920.jpg" "herobandw-900.jpg"; do
-            [ -f "images/$f" ] && cp "images/$f" "_deploy/images/"
-          done
-
-          # --- Mobile webp gallery images ---
-          [ -d images/mobile ] && cp images/mobile/*.webp _deploy/images/mobile/ 2>/dev/null || true
-          [ -f images/mobile/newrosepattern.png ] && cp images/mobile/newrosepattern.png _deploy/images/mobile/
-
-          # --- Portfolio images ---
-          [ -d images/portfolio ] && cp images/portfolio/*.jpg  _deploy/images/portfolio/ 2>/dev/null || true
-          [ -d images/portfolio ] && cp images/portfolio/*.webp _deploy/images/portfolio/ 2>/dev/null || true
-
-          # --- About / Blog images ---
-          [ -d images/about ] && cp images/about/*.jpg _deploy/images/about/ 2>/dev/null || true
-          [ -d images/blog ]  && cp images/blog/*.jpg  _deploy/images/blog/  2>/dev/null || true
-
-          # --- Sections backgrounds ---
-          [ -d images/sections ]  && cp -r images/sections  _deploy/images/ 2>/dev/null || true
-
-          # --- Patterns & Overlays ---
-          [ -d images/patterns ]  && cp -r images/patterns  _deploy/images/ 2>/dev/null || true
-          [ -d images/overlays ]  && cp -r images/overlays  _deploy/images/ 2>/dev/null || true
+          # --- ALL images (copy entire folder so nothing gets missed) ---
+          cp -r images _deploy/images
 
           echo "=== Deploy folder size ==="
           du -sh _deploy/
