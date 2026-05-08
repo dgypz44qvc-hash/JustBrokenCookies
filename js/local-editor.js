@@ -338,31 +338,62 @@
   };
 
   /* ── INSERT IMAGE (top layer) ── */
-  // Inline drag state — top-level so forwarding can access it
+  // Shared drag state — one pair of document listeners handles ALL editor images
   var _inlineDragEl = null, _inlineDragOX = 0, _inlineDragOY = 0;
 
+  // Register drag listeners ONCE, not once-per-image
+  document.addEventListener('mousemove', function(e) {
+    if (!_inlineDragEl) return;
+    _inlineDragEl.style.left = Math.round(e.clientX - _inlineDragOX + scrollX()) + 'px';
+    _inlineDragEl.style.top  = Math.round(e.clientY - _inlineDragOY + scrollY()) + 'px';
+  });
+  document.addEventListener('mouseup', function() {
+    if (!_inlineDragEl) return;
+    _inlineDragEl.style.cursor = 'grab';
+    _inlineDragEl = null;
+    window.parent.postMessage({ type: 'jbc_move_done' }, '*');
+  });
+
   window.__jbc_insertImage = function(dataUrl, x, y) {
-    // ALWAYS use document.body as container — avoids section transform / scroll issues
     var parent = document.body;
     if (window.getComputedStyle(parent).position === 'static') {
       parent.style.position = 'relative';
     }
 
-    // If an editor-image already exists in the section under the click, swap its src
+    // Check if click lands ON an existing editor image → replace its src instead of adding
     var hit = document.elementFromPoint(x, y);
-    var sec = hit && hit.closest ? hit.closest('section, footer, header') : null;
-    if (sec) {
-      var existingImg = sec.querySelector('.editor-decoration.editor-image img');
-      if (existingImg) {
-        existingImg.src = dataUrl;
-        existingImg.removeAttribute('srcset');
-        existingImg.removeAttribute('sizes');
-        window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
-        return;
+    if (hit) {
+      var hitWrap = hit.closest ? hit.closest('.editor-decoration.editor-image') : null;
+      if (hitWrap) {
+        var hitImg = hitWrap.querySelector('img');
+        if (hitImg) {
+          hitImg.src = dataUrl;
+          hitImg.removeAttribute('srcset');
+          hitImg.removeAttribute('sizes');
+          window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
+          return;
+        }
       }
     }
 
-    // Convert iframe-viewport coords → document-space coords
+    // Check if click is inside the bounding box of any existing editor image
+    // (handles saved-and-reloaded images which are already in the DOM)
+    var allImgWraps = document.querySelectorAll('.editor-decoration.editor-image');
+    for (var i = 0; i < allImgWraps.length; i++) {
+      var r = allImgWraps[i].getBoundingClientRect();
+      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
+        var eImg = allImgWraps[i].querySelector('img');
+        if (eImg) {
+          eImg.src = dataUrl;
+          eImg.removeAttribute('srcset');
+          eImg.removeAttribute('sizes');
+          window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
+          return;
+        }
+      }
+    }
+
+    // No existing image at click point — create a new one
     var docX = Math.round(x + scrollX());
     var docY = Math.round(y + scrollY());
 
@@ -377,7 +408,7 @@
     div.appendChild(img);
     parent.appendChild(div);
 
-    // Inline drag — posts jbc_drag_start so parent capture overlay forwards back
+    // Per-image mousedown to start drag (references shared _inlineDragEl)
     div.addEventListener('mousedown', function(e) {
       e.preventDefault(); e.stopPropagation();
       var r = div.getBoundingClientRect();
@@ -386,19 +417,6 @@
       _inlineDragEl = div;
       div.style.cursor = 'grabbing';
       window.parent.postMessage({ type: 'jbc_drag_start', cursor: 'grabbing' }, '*');
-    });
-    // Native fallback (mouse stays inside iframe)
-    document.addEventListener('mousemove', function(e) {
-      if (_inlineDragEl !== div) return;
-      div.style.left = Math.round(e.clientX - _inlineDragOX + scrollX()) + 'px';
-      div.style.top  = Math.round(e.clientY - _inlineDragOY + scrollY()) + 'px';
-    });
-    document.addEventListener('mouseup', function() {
-      if (_inlineDragEl === div) {
-        _inlineDragEl = null;
-        div.style.cursor = 'grab';
-        window.parent.postMessage({ type: 'jbc_move_done' }, '*');
-      }
     });
 
     window.parent.postMessage({ type: 'jbc_image_placed' }, '*');
