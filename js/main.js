@@ -1002,130 +1002,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* =========================================================
    JBC GLIMPSES IMAGE FALLBACK
-   Forces the Glimpses carousel cards to use known local images.
+   Uses the real 10 image files from /images.
+   Safe: only updates image src values, does NOT touch carousel transforms.
    ========================================================= */
-document.addEventListener('DOMContentLoaded', function () {
-  const gallery = document.querySelector('#jbc-visual-gallery');
-  if (!gallery) return;
-
-  const imagePool = [
-    'images/mobile/DSC03914.webp',
-    'images/mobile/DSC04179.webp',
-    'images/mobile/DSC04185.webp',
-    'images/mobile/DSC04187-2.webp',
-    'images/mobile/DSC04193.webp',
-    'images/mobile/DSC04211.webp',
-    'images/mobile/_DSC0835.webp',
-    'images/mobile/_DSC0832.webp',
-    'images/mobile/_DSC0824.webp',
-    'images/mobile/_DSC0763-2.webp'
+(function fixJbcGlimpsesImages() {
+  const images = [
+    "images/footer-story-bg-mobile.webp",
+    "images/goldenman.png",
+    "images/goldeneye2.png",
+    "images/goldeneye.png",
+    "images/golden man.png",
+    "images/duo.png",
+    "images/magnific_add-model-of-img2-as-the-_2902617019-1777631263486.webp",
+    "images/princess.png",
+    "images/Vale-flower-walk.webp",
+    "images/halfgoldenman.png"
   ];
 
-  const cards = Array.from(gallery.querySelectorAll('.jbc-gs-card'));
+  const applyImages = () => {
+    const cards = Array.from(document.querySelectorAll("#jbc-visual-gallery .jbc-gs-card"));
 
-  cards.forEach(function (card, index) {
-    let img = card.querySelector('img, .jbc-gs-card__img');
-    const fallbackSrc = imagePool[index % imagePool.length];
-
-    if (!img) {
-      img = document.createElement('img');
-      img.className = 'jbc-gs-card__img';
-      img.alt = '';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      card.appendChild(img);
+    if (!cards.length) {
+      console.warn("JBC Glimpses: no .jbc-gs-card elements found yet.");
+      return;
     }
-
-    img.classList.add('jbc-gs-card__img');
-
-    const currentSrc = img.getAttribute('src') || '';
-    const looksMissing =
-      currentSrc.trim() === '' ||
-      currentSrc.includes('placeholder') ||
-      currentSrc.includes('undefined');
-
-    if (looksMissing) {
-      img.src = fallbackSrc;
-    }
-
-    img.addEventListener('error', function () {
-      img.src = fallbackSrc;
-    }, { once: true });
-  });
-});
-
-/* =========================================================
-   JBC GLIMPSES IMAGE FALLBACK, FORCED FINAL PATCH
-   Uses the real gallery images from /images, not /images/mobile.
-   ========================================================= */
-(function initJbcGlimpsesForcedImagePatch() {
-  function applyGlimpsesImages() {
-    const gallery = document.querySelector('#jbc-visual-gallery');
-    if (!gallery) return;
-
-    const imagePaths = [
-      'images/DSC03914.webp',
-      'images/DSC04179.webp',
-      'images/DSC04185.webp',
-      'images/DSC04187-2.webp',
-      'images/DSC04193.webp',
-      'images/DSC04211.webp',
-      'images/_DSC0835.webp',
-      'images/_DSC0832.webp',
-      'images/_DSC0824.webp',
-      'images/_DSC0763-2.webp'
-    ];
-
-    const cards = Array.from(gallery.querySelectorAll('.jbc-gs-card'));
-    if (!cards.length) return;
 
     cards.forEach((card, index) => {
-      const imagePath = imagePaths[index % imagePaths.length];
-      let img = card.querySelector('img.jbc-gs-card__img, .jbc-gs-card__img');
+      const img = card.querySelector("img, .jbc-gs-card__img");
+      if (!img) return;
 
-      if (!img || img.tagName.toLowerCase() !== 'img') {
-        img = document.createElement('img');
-        img.className = 'jbc-gs-card__img';
-        img.alt = '';
-        img.decoding = 'async';
-        img.loading = index < 3 ? 'eager' : 'lazy';
-        card.prepend(img);
+      const src = images[index % images.length];
+
+      img.setAttribute("src", src);
+      img.setAttribute("loading", index < 3 ? "eager" : "lazy");
+      img.setAttribute("decoding", "async");
+
+      if (img.tagName.toLowerCase() === "img") {
+        img.removeAttribute("srcset");
+        img.removeAttribute("sizes");
       }
-
-      img.src = imagePath;
-      img.removeAttribute('srcset');
-      img.removeAttribute('sizes');
-
-      img.style.display = 'block';
-      img.style.visibility = 'visible';
-      img.style.opacity = '1';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-      img.style.objectPosition = 'center center';
-      img.style.filter = 'none';
-      img.style.webkitMaskImage = 'none';
-      img.style.maskImage = 'none';
-
-      card.style.backgroundImage = `url("${imagePath}")`;
-      card.style.backgroundSize = 'cover';
-      card.style.backgroundPosition = 'center center';
-      card.style.backgroundRepeat = 'no-repeat';
-      card.style.visibility = 'visible';
-      card.style.opacity = '1';
-      card.style.filter = 'none';
-      card.style.webkitMaskImage = 'none';
-      card.style.maskImage = 'none';
     });
-  }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyGlimpsesImages);
-  } else {
-    applyGlimpsesImages();
-  }
+    console.log("JBC Glimpses: applied", images.length, "real image paths.");
+  };
 
-  window.addEventListener('load', applyGlimpsesImages, { once: true });
+  applyImages();
+
+  window.addEventListener("load", applyImages, { once: true });
+
+  setTimeout(applyImages, 300);
+  setTimeout(applyImages, 900);
 })();
 
 /* =========================================================
