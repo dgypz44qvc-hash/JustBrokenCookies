@@ -2957,3 +2957,104 @@ footer.footer .footer-bottom,
   -webkit-mask-image: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.76) 46%, transparent 100%) !important;
   mask-image: linear-gradient(0deg, #000 0%, rgba(0, 0, 0, 0.76) 46%, transparent 100%) !important;
 }
+
+/* =========================================================
+   JBC CAROUSEL FIRST/LAST WHITE BAND FIX
+   Fixes bright edge/band on first and last carousel cards only.
+   ========================================================= */
+
+@media (min-width: 769px) {
+  #featured-work .jbc-cinema-panel {
+    background: #050505 !important;
+    background-color: #050505 !important;
+    overflow: hidden !important;
+    border-radius: 44px !important;
+  }
+
+  #featured-work .jbc-cinema-panel > img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: #050505 !important;
+  }
+
+  #featured-work .jbc-cinema-panel:first-child > img,
+  #featured-work .jbc-cinema-panel:last-child > img {
+    width: calc(100% + 8px) !important;
+    height: calc(100% + 8px) !important;
+    max-width: none !important;
+    transform: translate(-4px, -4px) scale(1.012) !important;
+    transform-origin: center center !important;
+  }
+
+  #featured-work .jbc-cinema-panel:first-child,
+  #featured-work .jbc-cinema-panel:last-child {
+    background: #050505 !important;
+    box-shadow: inset 0 0 0 1px rgba(232, 137, 29, 0.08) !important;
+  }
+
+  #featured-work .jbc-cinema-panel:first-child::before,
+  #featured-work .jbc-cinema-panel:first-child::after,
+  #featured-work .jbc-cinema-panel:last-child::before,
+  #featured-work .jbc-cinema-panel:last-child::after {
+    border-radius: inherit !important;
+    overflow: hidden !important;
+    clip-path: inset(0 round 44px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #featured-work .jbc-cinema-panel,
+  #featured-work .jbc-cinema-panel > img {
+    background: #050505 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* =========================================================
+   JBC CAROUSEL OPACITY CLEANUP, EDGE BAND FIX
+   Fixes bright bands caused by low-focus edge panels and old
+   pseudo overlays still being partially visible.
+   ========================================================= */
+
+@media (min-width: 769px) {
+  #featured-work .jbc-cinema-panel {
+    opacity: var(--panel-visibility, 0) !important;
+    transition: opacity 0.18s linear !important;
+    background: #050505 !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  #featured-work .jbc-cinema-panel.is-active {
+    opacity: 1 !important;
+    z-index: 1000 !important;
+  }
+
+  /* Kill old rose-frame pseudo overlays.
+     These are the likely source of the white/bright band. */
+  #featured-work .jbc-cinema-panel::after {
+    content: none !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    background: none !important;
+    background-image: none !important;
+  }
+
+  /* Keep dots soft and tied to the real panel opacity. */
+  #featured-work .jbc-cinema-panel::before {
+    opacity: calc(var(--panel-visibility, 0) * 0.62) !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+}
