@@ -1008,15 +1008,15 @@ document.addEventListener('DOMContentLoaded', () => {
 (function fixJbcGlimpsesImages() {
   const images = [
     "images/footer-story-bg-mobile.webp",
-    "images/goldenman.png",
-    "images/goldeneye2.png",
-    "images/goldeneye.png",
+    "images/goldenman.webp",
+    "images/goldeneye2.webp",
+    "images/goldeneye.webp",
     "images/golden man.png",
-    "images/duo.png",
+    "images/duo.webp",
     "images/magnific_add-model-of-img2-as-the-_2902617019-1777631263486.webp",
-    "images/princess.png",
+    "images/princess.webp",
     "images/Vale-flower-walk.webp",
-    "images/halfgoldenman.png"
+    "images/halfgoldenman.webp"
   ];
 
   const applyImages = () => {

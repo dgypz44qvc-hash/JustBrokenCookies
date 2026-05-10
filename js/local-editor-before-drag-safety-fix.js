@@ -169,7 +169,7 @@
   const assetDefaults = {
     image: { src: '', prefix: 'image', className: 'editor-decoration editor-image', blend: 'normal', width: 320, height: 220 },
     decoration: { src: '', prefix: 'decor', className: 'editor-decoration', blend: 'normal', width: 280, height: 280 },
-    rose: { src: 'images/jbc-rose-pattern-bg.png', prefix: 'rose', className: 'editor-decoration editor-rose', blend: 'screen', width: 300, height: 300 },
+    rose: { src: 'images/jbc-rose-pattern-bg.webp', prefix: 'rose', className: 'editor-decoration editor-rose', blend: 'screen', width: 300, height: 300 },
     vector: { src: '', prefix: 'vector', className: 'editor-decoration editor-vector', blend: 'normal', width: 280, height: 280 }
   };
 

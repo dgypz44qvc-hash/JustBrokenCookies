@@ -58,7 +58,7 @@
   left: -4px !important;
   top: 63px !important;
   background-color: rgb(0, 0, 0) !important;
-  background-image: url("images/heromultiroses-1920.jpg") !important;
+  background-image: url("images/heromultiroses-1920.webp") !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
@@ -2569,7 +2569,7 @@
       rgba(5, 5, 5, 0.34) 68%,
       rgba(5, 5, 5, 0.96) 100%
     ),
-    url("../images/mobile/newrosepattern.png") !important;
+    url("../images/mobile/newrosepattern.webp") !important;
   background-color: #050505 !important;
   background-size: 100% 100%, 100% 100%, cover !important;
   background-position: center, center, center 52% !important;
