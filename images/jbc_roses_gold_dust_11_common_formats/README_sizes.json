@@ -1,0 +1,57 @@
+[
+  {
+    "file": "01_original_source_1672x941.jpg",
+    "size": "1672x941",
+    "use": "Original wide source"
+  },
+  {
+    "file": "02_16x9_web_hero_1920x1080.jpg",
+    "size": "1920x1080",
+    "use": "Website hero / YouTube / deck wide"
+  },
+  {
+    "file": "03_16x9_4k_3840x2160.jpg",
+    "size": "3840x2160",
+    "use": "Large hero / 4K screen"
+  },
+  {
+    "file": "04_9x16_story_1080x1920.jpg",
+    "size": "1080x1920",
+    "use": "Instagram/TikTok/Reels story"
+  },
+  {
+    "file": "05_1x1_square_1080x1080.jpg",
+    "size": "1080x1080",
+    "use": "Instagram square post"
+  },
+  {
+    "file": "06_4x5_instagram_portrait_1080x1350.jpg",
+    "size": "1080x1350",
+    "use": "Instagram portrait feed"
+  },
+  {
+    "file": "07_3x4_portrait_1200x1600.jpg",
+    "size": "1200x1600",
+    "use": "Pinterest / portrait print crop"
+  },
+  {
+    "file": "08_2x3_vertical_1200x1800.jpg",
+    "size": "1200x1800",
+    "use": "Poster / vertical crop"
+  },
+  {
+    "file": "09_3x2_landscape_1800x1200.jpg",
+    "size": "1800x1200",
+    "use": "Photography landscape crop"
+  },
+  {
+    "file": "10_21x9_ultrawide_banner_2560x1080.jpg",
+    "size": "2560x1080",
+    "use": "Website banner / cinematic strip"
+  },
+  {
+    "file": "11_191x100_social_link_1200x628.jpg",
+    "size": "1200x628",
+    "use": "Facebook / LinkedIn link preview"
+  }
+]
