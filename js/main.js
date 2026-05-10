@@ -31,6 +31,12 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ---- PAGE TYPE FLAG ----
+  // Gives CSS a safe way to style non-home pages without touching index/home.
+  const jbcPath = window.location.pathname.split('/').pop() || 'index.html';
+  document.body.classList.toggle('jbc-page-home', jbcPath === 'index.html' || jbcPath === '');
+  document.body.classList.toggle('jbc-page-inner', jbcPath !== 'index.html' && jbcPath !== '');
+
   // ---- MOBILE: CLEAR ANY BAKED-IN SCROLL STATES ----
   // When the page is saved by the editor mid-scroll, GSAP/parallax inline styles get baked
   // into the HTML (opacity, transform, filter). CSS !important can't beat inline styles, so

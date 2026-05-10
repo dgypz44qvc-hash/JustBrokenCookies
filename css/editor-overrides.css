@@ -5002,3 +5002,987 @@ footer.footer .footer-bottom,
   }
 }
 
+
+/* =========================================================
+   JBC INNER PAGES, BRAND ROSE BACKGROUND SYSTEM
+   Uses the current home hero rose artwork as a controlled brand texture
+   on non-home pages only. Does not touch the homepage.
+   ========================================================= */
+
+body.jbc-page-inner {
+  background-color: #050505 !important;
+}
+
+body.jbc-page-inner main,
+body.jbc-page-inner .page-main,
+body.jbc-page-inner .page-content {
+  background-color: #050505 !important;
+}
+
+body.jbc-page-inner section,
+body.jbc-page-inner .page-hero,
+body.jbc-page-inner .about-hero,
+body.jbc-page-inner .services-hero,
+body.jbc-page-inner .portfolio-hero,
+body.jbc-page-inner .blog-hero,
+body.jbc-page-inner .contact-hero,
+body.jbc-page-inner .jbc-editorial-section {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background-color: #050505 !important;
+}
+
+/* One elegant brand veil per section, behind the content. */
+body.jbc-page-inner section::before,
+body.jbc-page-inner .page-hero::before,
+body.jbc-page-inner .about-hero::before,
+body.jbc-page-inner .services-hero::before,
+body.jbc-page-inner .portfolio-hero::before,
+body.jbc-page-inner .blog-hero::before,
+body.jbc-page-inner .contact-hero::before,
+body.jbc-page-inner .jbc-editorial-section::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.22 !important;
+  background-image:
+    radial-gradient(ellipse at 50% 46%, rgba(5, 5, 5, 0.10) 0%, rgba(5, 5, 5, 0.38) 48%, rgba(5, 5, 5, 0.92) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.92) 0%, rgba(5, 5, 5, 0.16) 34%, rgba(5, 5, 5, 0.18) 66%, rgba(5, 5, 5, 0.94) 100%),
+    url("../images/02_16x9_web_hero_1920x1080.webp") !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+  background-position: center, center, center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Inner page hero gets a slightly richer opening image, still restrained. */
+body.jbc-page-inner .page-hero::before,
+body.jbc-page-inner .about-hero::before,
+body.jbc-page-inner .services-hero::before,
+body.jbc-page-inner .portfolio-hero::before,
+body.jbc-page-inner .blog-hero::before,
+body.jbc-page-inner .contact-hero::before {
+  opacity: 0.34 !important;
+  background-position: center, center, center 42% !important;
+}
+
+/* Content always stays above the rose veil. */
+body.jbc-page-inner section > *,
+body.jbc-page-inner .page-hero > *,
+body.jbc-page-inner .about-hero > *,
+body.jbc-page-inner .services-hero > *,
+body.jbc-page-inner .portfolio-hero > *,
+body.jbc-page-inner .blog-hero > *,
+body.jbc-page-inner .contact-hero > *,
+body.jbc-page-inner .jbc-editorial-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Full-width centre edge fades, not corner-only vignettes. */
+body.jbc-page-inner section::after,
+body.jbc-page-inner .page-hero::after,
+body.jbc-page-inner .about-hero::after,
+body.jbc-page-inner .services-hero::after,
+body.jbc-page-inner .portfolio-hero::after,
+body.jbc-page-inner .blog-hero::after,
+body.jbc-page-inner .contact-hero::after,
+body.jbc-page-inner .jbc-editorial-section::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  display: block !important;
+  visibility: visible !important;
+  background:
+    linear-gradient(to bottom,
+      #050505 0%,
+      rgba(5, 5, 5, 0.86) 6%,
+      rgba(5, 5, 5, 0.22) 20%,
+      rgba(5, 5, 5, 0) 34%),
+    linear-gradient(to top,
+      #050505 0%,
+      rgba(5, 5, 5, 0.86) 6%,
+      rgba(5, 5, 5, 0.22) 20%,
+      rgba(5, 5, 5, 0) 34%) !important;
+}
+
+/* Calm older decorative rose fragments on inner pages only. */
+body.jbc-page-inner .editor-decoration,
+body.jbc-page-inner .jbc-floral-bg,
+body.jbc-page-inner .rose-background,
+body.jbc-page-inner .flower-background,
+body.jbc-page-inner .background-rose,
+body.jbc-page-inner [data-editor-id*="rose"],
+body.jbc-page-inner [data-editor-id*="flower"] {
+  opacity: 0.10 !important;
+  mix-blend-mode: soft-light !important;
+  pointer-events: none !important;
+}
+
+/* Give readable panels enough darkness against the rose veil. */
+body.jbc-page-inner .service-card,
+body.jbc-page-inner .portfolio-item,
+body.jbc-page-inner .blog-card,
+body.jbc-page-inner .team-card,
+body.jbc-page-inner .value-card,
+body.jbc-page-inner .process-card,
+body.jbc-page-inner .contact-form,
+body.jbc-page-inner .contact-info,
+body.jbc-page-inner .about-text,
+body.jbc-page-inner .service-detail,
+body.jbc-page-inner .jbc-cinema-panel {
+  background-color: rgba(5, 5, 5, 0.62) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+@media (max-width: 768px) {
+  body.jbc-page-inner section::before,
+  body.jbc-page-inner .page-hero::before,
+  body.jbc-page-inner .about-hero::before,
+  body.jbc-page-inner .services-hero::before,
+  body.jbc-page-inner .portfolio-hero::before,
+  body.jbc-page-inner .blog-hero::before,
+  body.jbc-page-inner .contact-hero::before,
+  body.jbc-page-inner .jbc-editorial-section::before {
+    opacity: 0.18 !important;
+    background-position: center, center, center center !important;
+  }
+
+  body.jbc-page-inner .page-hero::before,
+  body.jbc-page-inner .about-hero::before,
+  body.jbc-page-inner .services-hero::before,
+  body.jbc-page-inner .portfolio-hero::before,
+  body.jbc-page-inner .blog-hero::before,
+  body.jbc-page-inner .contact-hero::before {
+    opacity: 0.26 !important;
+  }
+}
+
+
+/* =========================================================
+   JBC INNER PAGES, RICH ROSE BACKGROUND FINAL OVERRIDE
+   Inner pages only. Home page is untouched because every selector requires
+   body.jbc-page-inner.
+   ========================================================= */
+
+body.jbc-page-inner {
+  background-color: #050505 !important;
+}
+
+/* Remove old scattered/legacy floral pattern layers on inner pages only. */
+body.jbc-page-inner .jbc-floral-hero::before,
+body.jbc-page-inner .jbc-floral-work::before,
+body.jbc-page-inner .jbc-floral-process::before,
+body.jbc-page-inner .jbc-floral-gallery::before,
+body.jbc-page-inner .jbc-floral-testimonial::before,
+body.jbc-page-inner .jbc-floral-cta::before,
+body.jbc-page-inner .jbc-floral-about-story::before,
+body.jbc-page-inner .jbc-floral-about-stats::before,
+body.jbc-page-inner .jbc-floral-about-values::before,
+body.jbc-page-inner .jbc-floral-service-process::before,
+body.jbc-page-inner .jbc-floral-contact::before,
+body.jbc-page-inner .jbc-floral-portfolio-grid::before,
+body.jbc-page-inner .jbc-floral-page-header::before,
+body.jbc-page-inner .jbc-floral-hero::after,
+body.jbc-page-inner .jbc-floral-work::after,
+body.jbc-page-inner .jbc-floral-process::after,
+body.jbc-page-inner .jbc-floral-gallery::after,
+body.jbc-page-inner .jbc-floral-testimonial::after,
+body.jbc-page-inner .jbc-floral-cta::after,
+body.jbc-page-inner .jbc-floral-about-story::after,
+body.jbc-page-inner .jbc-floral-about-stats::after,
+body.jbc-page-inner .jbc-floral-about-values::after,
+body.jbc-page-inner .jbc-floral-service-process::after,
+body.jbc-page-inner .jbc-floral-contact::after,
+body.jbc-page-inner .jbc-floral-portfolio-grid::after,
+body.jbc-page-inner .jbc-floral-page-header::after,
+body.jbc-page-inner .editor-decoration,
+body.jbc-page-inner [data-editor-id*="rose"],
+body.jbc-page-inner [data-editor-id*="flower"],
+body.jbc-page-inner [class*="rose-pattern"],
+body.jbc-page-inner [class*="flower-pattern"] {
+  content: none !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background: none !important;
+  background-image: none !important;
+  pointer-events: none !important;
+}
+
+/* Put the new rose artwork directly on inner page sections, rich enough to see. */
+body.jbc-page-inner section,
+body.jbc-page-inner .page-header,
+body.jbc-page-inner .page-hero,
+body.jbc-page-inner .about-hero,
+body.jbc-page-inner .services-hero,
+body.jbc-page-inner .portfolio-hero,
+body.jbc-page-inner .contact-hero,
+body.jbc-page-inner .jbc-editorial-section,
+body.jbc-page-inner .about-story,
+body.jbc-page-inner .about-values,
+body.jbc-page-inner .services-overview,
+body.jbc-page-inner .portfolio-section,
+body.jbc-page-inner .contact-section {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: #050505 !important;
+  background-image:
+    radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.16) 42%, rgba(5, 5, 5, 0.84) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.90) 0%, rgba(5, 5, 5, 0.18) 22%, rgba(5, 5, 5, 0.12) 58%, rgba(5, 5, 5, 0.94) 100%),
+    url("../images/02_16x9_web_hero_1920x1080.webp") !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+  background-position: center, center, center center !important;
+  background-repeat: no-repeat !important;
+  background-blend-mode: normal, normal, normal !important;
+}
+
+/* Stronger hero/header areas on inner pages, closer to the homepage mood. */
+body.jbc-page-inner .page-header,
+body.jbc-page-inner .page-hero,
+body.jbc-page-inner .about-hero,
+body.jbc-page-inner .services-hero,
+body.jbc-page-inner .portfolio-hero,
+body.jbc-page-inner .contact-hero,
+body.jbc-page-inner section:first-of-type {
+  background-image:
+    radial-gradient(ellipse at 50% 46%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.10) 42%, rgba(5, 5, 5, 0.78) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.72) 0%, rgba(5, 5, 5, 0.08) 30%, rgba(5, 5, 5, 0.14) 62%, rgba(5, 5, 5, 0.88) 100%),
+    url("../images/02_16x9_web_hero_1920x1080.webp") !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+  background-position: center, center, center 44% !important;
+}
+
+/* Full-width black fades at section intersections, including centre edges. */
+body.jbc-page-inner section::after,
+body.jbc-page-inner .page-header::after,
+body.jbc-page-inner .page-hero::after,
+body.jbc-page-inner .about-hero::after,
+body.jbc-page-inner .services-hero::after,
+body.jbc-page-inner .portfolio-hero::after,
+body.jbc-page-inner .contact-hero::after,
+body.jbc-page-inner .jbc-editorial-section::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background:
+    linear-gradient(to bottom,
+      #050505 0%,
+      rgba(5, 5, 5, 0.88) 5%,
+      rgba(5, 5, 5, 0.38) 17%,
+      rgba(5, 5, 5, 0) 31%),
+    linear-gradient(to top,
+      #050505 0%,
+      rgba(5, 5, 5, 0.88) 5%,
+      rgba(5, 5, 5, 0.38) 17%,
+      rgba(5, 5, 5, 0) 31%) !important;
+}
+
+/* Keep content above rose background and fades. */
+body.jbc-page-inner section > *,
+body.jbc-page-inner .page-header > *,
+body.jbc-page-inner .page-hero > *,
+body.jbc-page-inner .about-hero > *,
+body.jbc-page-inner .services-hero > *,
+body.jbc-page-inner .portfolio-hero > *,
+body.jbc-page-inner .contact-hero > *,
+body.jbc-page-inner .jbc-editorial-section > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Dark editorial panels so text/cards remain readable over the richer background. */
+body.jbc-page-inner .service-card,
+body.jbc-page-inner .portfolio-item,
+body.jbc-page-inner .blog-card,
+body.jbc-page-inner .team-card,
+body.jbc-page-inner .value-card,
+body.jbc-page-inner .process-card,
+body.jbc-page-inner .contact-form-wrap,
+body.jbc-page-inner .contact-info-wrap,
+body.jbc-page-inner .contact-form,
+body.jbc-page-inner .contact-info,
+body.jbc-page-inner .about-text,
+body.jbc-page-inner .service-detail {
+  background-color: rgba(5, 5, 5, 0.68) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+@media (max-width: 768px) {
+  body.jbc-page-inner section,
+  body.jbc-page-inner .page-header,
+  body.jbc-page-inner .page-hero,
+  body.jbc-page-inner .about-hero,
+  body.jbc-page-inner .services-hero,
+  body.jbc-page-inner .portfolio-hero,
+  body.jbc-page-inner .contact-hero,
+  body.jbc-page-inner .jbc-editorial-section {
+    background-image:
+      radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.18) 42%, rgba(5, 5, 5, 0.88) 100%),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.90) 0%, rgba(5, 5, 5, 0.14) 28%, rgba(5, 5, 5, 0.18) 64%, rgba(5, 5, 5, 0.94) 100%),
+      url("../images/04_9x16_story_1080x1920.webp") !important;
+    background-size: 100% 100%, 100% 100%, cover !important;
+    background-position: center, center, center center !important;
+  }
+}
+
+
+/* =========================================================
+   CONTACT PAGE, LET ROSE BACKGROUND SHOW THROUGH
+   Inner contact page only. Makes form/info boxes more transparent
+   while keeping text readable.
+   ========================================================= */
+
+body.jbc-page-inner .contact-form-wrap,
+body.jbc-page-inner .contact-info-wrap,
+body.jbc-page-inner .contact-form,
+body.jbc-page-inner .contact-info {
+  background-color: rgba(5, 5, 5, 0.34) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+body.jbc-page-inner .contact-form input,
+body.jbc-page-inner .contact-form textarea,
+body.jbc-page-inner .contact-form select {
+  background-color: rgba(5, 5, 5, 0.26) !important;
+  border-color: rgba(240, 230, 218, 0.20) !important;
+  color: rgba(240, 230, 218, 0.92) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+body.jbc-page-inner .contact-form input::placeholder,
+body.jbc-page-inner .contact-form textarea::placeholder {
+  color: rgba(240, 230, 218, 0.38) !important;
+}
+
+body.jbc-page-inner .contact-info-item {
+  border-bottom-color: rgba(240, 230, 218, 0.13) !important;
+  background-color: transparent !important;
+}
+
+body.jbc-page-inner .contact-grid {
+  background-color: rgba(5, 5, 5, 0.10) !important;
+}
+
+
+/* =========================================================
+   CONTACT PAGE, CLEAR GLASS + FIX BACKGROUND POSITION
+   Inner contact page only. Home untouched.
+   ========================================================= */
+
+/* Control the contact form section background so it does not show
+   a giant blurry lower crop. */
+body.jbc-page-inner .contact-section,
+body.jbc-page-inner section:has(.contact-grid) {
+  background-image:
+    radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.08) 0%, rgba(5, 5, 5, 0.28) 44%, rgba(5, 5, 5, 0.88) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.72) 0%, rgba(5, 5, 5, 0.18) 28%, rgba(5, 5, 5, 0.26) 66%, rgba(5, 5, 5, 0.92) 100%),
+    url("../images/02_16x9_web_hero_1920x1080.webp") !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+  background-position: center, center, center 38% !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Cleaner fade over contact area, less muddy. */
+body.jbc-page-inner .contact-section::after,
+body.jbc-page-inner section:has(.contact-grid)::after {
+  background:
+    linear-gradient(to bottom,
+      #050505 0%,
+      rgba(5, 5, 5, 0.72) 7%,
+      rgba(5, 5, 5, 0.18) 22%,
+      rgba(5, 5, 5, 0) 38%),
+    linear-gradient(to top,
+      #050505 0%,
+      rgba(5, 5, 5, 0.62) 5%,
+      rgba(5, 5, 5, 0.10) 20%,
+      rgba(5, 5, 5, 0) 34%) !important;
+}
+
+/* Remove the heavy black panel blocks on contact only. */
+body.jbc-page-inner .contact-grid,
+body.jbc-page-inner .contact-form-wrap,
+body.jbc-page-inner .contact-info-wrap,
+body.jbc-page-inner .contact-form,
+body.jbc-page-inner .contact-info {
+  background: transparent !important;
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Very light column glass, just enough to separate content. */
+body.jbc-page-inner .contact-form-wrap,
+body.jbc-page-inner .contact-info-wrap {
+  background-color: rgba(5, 5, 5, 0.10) !important;
+}
+
+/* Inputs, smoky glass instead of black boxes. */
+body.jbc-page-inner .contact-form input,
+body.jbc-page-inner .contact-form textarea,
+body.jbc-page-inner .contact-form select {
+  background-color: rgba(5, 5, 5, 0.10) !important;
+  border-color: rgba(240, 230, 218, 0.26) !important;
+  color: rgba(240, 230, 218, 0.94) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+body.jbc-page-inner .contact-form input:focus,
+body.jbc-page-inner .contact-form textarea:focus,
+body.jbc-page-inner .contact-form select:focus {
+  background-color: rgba(5, 5, 5, 0.18) !important;
+  border-color: rgba(232, 72, 72, 0.62) !important;
+  box-shadow: 0 0 0 2px rgba(232, 72, 72, 0.12) !important;
+}
+
+body.jbc-page-inner .contact-form input::placeholder,
+body.jbc-page-inner .contact-form textarea::placeholder {
+  color: rgba(240, 230, 218, 0.34) !important;
+}
+
+body.jbc-page-inner .contact-info-item {
+  background: transparent !important;
+  border-bottom-color: rgba(240, 230, 218, 0.12) !important;
+}
+
+/* Kill any pseudo layer attached to the boxes themselves. */
+body.jbc-page-inner .contact-grid::before,
+body.jbc-page-inner .contact-grid::after,
+body.jbc-page-inner .contact-form-wrap::before,
+body.jbc-page-inner .contact-form-wrap::after,
+body.jbc-page-inner .contact-info-wrap::before,
+body.jbc-page-inner .contact-info-wrap::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+
+/* =========================================================
+   CONTACT PAGE, REMOVE THIN BACKGROUND LEAK LINE
+   Inner contact page only. Covers the tiny coloured sliver at the
+   page-header/contact-grid intersection without touching home.
+   ========================================================= */
+
+body.jbc-page-inner .contact-grid {
+  position: relative !important;
+  border-top: 1px solid rgba(5, 5, 5, 0.96) !important;
+}
+
+body.jbc-page-inner .contact-grid::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -3px !important;
+  height: 8px !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+  background: #050505 !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.jbc-page-inner .contact-form-wrap,
+body.jbc-page-inner .contact-info-wrap {
+  border-top-color: rgba(5, 5, 5, 0.96) !important;
+}
+
+
+/* =========================================================
+   INNER PAGES, REMOVE OLD WHITE STRUCTURAL CRACK LINES
+   Inner pages only. Keeps home untouched.
+   These lines come from older page-header / magazine / section borders
+   and pseudo separators.
+   ========================================================= */
+
+body.jbc-page-inner .page-header,
+body.jbc-page-inner .jbc-floral-page-header,
+body.jbc-page-inner .contact-grid,
+body.jbc-page-inner .about-grid,
+body.jbc-page-inner .services-grid,
+body.jbc-page-inner .portfolio-grid,
+body.jbc-page-inner .portfolio-grid-full,
+body.jbc-page-inner .blog-grid,
+body.jbc-page-inner .magazine,
+body.jbc-page-inner [class*="magazine"],
+body.jbc-page-inner section {
+  border-top-color: rgba(5, 5, 5, 0.96) !important;
+  border-bottom-color: rgba(5, 5, 5, 0.96) !important;
+}
+
+body.jbc-page-inner .page-header,
+body.jbc-page-inner .jbc-floral-page-header {
+  border-bottom: 0 !important;
+  box-shadow: inset 0 -18px 22px rgba(5, 5, 5, 0.94) !important;
+}
+
+/* Seal the join directly after each inner page header. */
+body.jbc-page-inner .page-header + section,
+body.jbc-page-inner .jbc-floral-page-header + section,
+body.jbc-page-inner .page-header + .contact-grid,
+body.jbc-page-inner .jbc-floral-page-header + .contact-grid,
+body.jbc-page-inner .page-header + .magazine,
+body.jbc-page-inner .jbc-floral-page-header + .magazine,
+body.jbc-page-inner .page-header + [class*="magazine"],
+body.jbc-page-inner .jbc-floral-page-header + [class*="magazine"] {
+  position: relative !important;
+  border-top: 0 !important;
+}
+
+/* Tiny black veil over the old 1px crack area. */
+body.jbc-page-inner .page-header + section::before,
+body.jbc-page-inner .jbc-floral-page-header + section::before,
+body.jbc-page-inner .page-header + .contact-grid::before,
+body.jbc-page-inner .jbc-floral-page-header + .contact-grid::before,
+body.jbc-page-inner .page-header + .magazine::before,
+body.jbc-page-inner .jbc-floral-page-header + .magazine::before,
+body.jbc-page-inner .page-header + [class*="magazine"]::before,
+body.jbc-page-inner .jbc-floral-page-header + [class*="magazine"]::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -3px !important;
+  height: 12px !important;
+  z-index: 30 !important;
+  pointer-events: none !important;
+  background: linear-gradient(to bottom,
+    #050505 0%,
+    rgba(5, 5, 5, 0.98) 35%,
+    rgba(5, 5, 5, 0.72) 70%,
+    rgba(5, 5, 5, 0) 100%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Calm old pale editorial borders without destroying layout. */
+body.jbc-page-inner .sec-header,
+body.jbc-page-inner .contact-info-item,
+body.jbc-page-inner .contact-form-wrap,
+body.jbc-page-inner .contact-info-wrap,
+body.jbc-page-inner .about-image,
+body.jbc-page-inner .testi-brutal,
+body.jbc-page-inner .blog-card,
+body.jbc-page-inner .portfolio-item,
+body.jbc-page-inner .service-card,
+body.jbc-page-inner .value-card,
+body.jbc-page-inner .process-card,
+body.jbc-page-inner [class*="magazine"] * {
+  border-color: rgba(240, 230, 218, 0.10) !important;
+}
+
+body.jbc-page-inner [class*="magazine"] {
+  border-color: rgba(5, 5, 5, 0.96) !important;
+}
+
+body.jbc-page-inner [class*="magazine"]::before,
+body.jbc-page-inner [class*="magazine"]::after {
+  border-color: rgba(5, 5, 5, 0.96) !important;
+}
+
+
+/* =========================================================
+   MAGAZINE PAGE, MATCH INNER PAGE ROSE SYSTEM
+   Inner pages only. Removes pale magazine dividers and gives the
+   magazine/blog layout the same rich rose background language.
+   ========================================================= */
+
+body.jbc-page-inner [class*="magazine"],
+body.jbc-page-inner .blog-page,
+body.jbc-page-inner .blog-section,
+body.jbc-page-inner .blog-featured,
+body.jbc-page-inner .blog-hero,
+body.jbc-page-inner .blog-grid,
+body.jbc-page-inner .blog-list,
+body.jbc-page-inner .editorial-magazine,
+body.jbc-page-inner .magazine-page,
+body.jbc-page-inner .magazine-section {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: #050505 !important;
+  background-image:
+    radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.14) 42%, rgba(5, 5, 5, 0.84) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.88) 0%, rgba(5, 5, 5, 0.16) 24%, rgba(5, 5, 5, 0.14) 62%, rgba(5, 5, 5, 0.94) 100%),
+    url("../images/02_16x9_web_hero_1920x1080.webp") !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+  background-position: center, center, center center !important;
+  background-repeat: no-repeat !important;
+  border-color: rgba(5, 5, 5, 0.96) !important;
+}
+
+/* Full edge fades, including centre edges. */
+body.jbc-page-inner [class*="magazine"]::before,
+body.jbc-page-inner .blog-page::before,
+body.jbc-page-inner .blog-section::before,
+body.jbc-page-inner .blog-featured::before,
+body.jbc-page-inner .blog-hero::before,
+body.jbc-page-inner .blog-grid::before,
+body.jbc-page-inner .blog-list::before,
+body.jbc-page-inner .editorial-magazine::before,
+body.jbc-page-inner .magazine-page::before,
+body.jbc-page-inner .magazine-section::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(to bottom,
+      #050505 0%,
+      rgba(5, 5, 5, 0.76) 7%,
+      rgba(5, 5, 5, 0.18) 24%,
+      rgba(5, 5, 5, 0) 40%),
+    linear-gradient(to top,
+      #050505 0%,
+      rgba(5, 5, 5, 0.76) 7%,
+      rgba(5, 5, 5, 0.18) 24%,
+      rgba(5, 5, 5, 0) 40%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Seal top crack lines on magazine/blog blocks. */
+body.jbc-page-inner [class*="magazine"]::after,
+body.jbc-page-inner .blog-page::after,
+body.jbc-page-inner .blog-section::after,
+body.jbc-page-inner .blog-featured::after,
+body.jbc-page-inner .blog-hero::after,
+body.jbc-page-inner .blog-grid::after,
+body.jbc-page-inner .blog-list::after,
+body.jbc-page-inner .editorial-magazine::after,
+body.jbc-page-inner .magazine-page::after,
+body.jbc-page-inner .magazine-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -4px !important;
+  height: 14px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  background: linear-gradient(to bottom,
+    #050505 0%,
+    rgba(5, 5, 5, 0.98) 42%,
+    rgba(5, 5, 5, 0.62) 78%,
+    rgba(5, 5, 5, 0) 100%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.jbc-page-inner [class*="magazine"] > *,
+body.jbc-page-inner .blog-page > *,
+body.jbc-page-inner .blog-section > *,
+body.jbc-page-inner .blog-featured > *,
+body.jbc-page-inner .blog-hero > *,
+body.jbc-page-inner .blog-grid > *,
+body.jbc-page-inner .blog-list > *,
+body.jbc-page-inner .editorial-magazine > *,
+body.jbc-page-inner .magazine-page > *,
+body.jbc-page-inner .magazine-section > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Remove the pale white magazine grid feeling. */
+body.jbc-page-inner [class*="magazine"],
+body.jbc-page-inner [class*="magazine"] *,
+body.jbc-page-inner .blog-featured,
+body.jbc-page-inner .blog-featured *,
+body.jbc-page-inner .blog-grid,
+body.jbc-page-inner .blog-grid *,
+body.jbc-page-inner .blog-list,
+body.jbc-page-inner .blog-list * {
+  border-color: rgba(240, 230, 218, 0.08) !important;
+}
+
+body.jbc-page-inner [class*="magazine"] > .container,
+body.jbc-page-inner .blog-featured > .container,
+body.jbc-page-inner .blog-section > .container,
+body.jbc-page-inner .blog-hero > .container,
+body.jbc-page-inner .magazine-section > .container {
+  background-color: rgba(5, 5, 5, 0.08) !important;
+}
+
+@media (max-width: 768px) {
+  body.jbc-page-inner [class*="magazine"],
+  body.jbc-page-inner .blog-page,
+  body.jbc-page-inner .blog-section,
+  body.jbc-page-inner .blog-featured,
+  body.jbc-page-inner .blog-hero,
+  body.jbc-page-inner .blog-grid,
+  body.jbc-page-inner .blog-list,
+  body.jbc-page-inner .editorial-magazine,
+  body.jbc-page-inner .magazine-page,
+  body.jbc-page-inner .magazine-section {
+    background-image:
+      radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.18) 42%, rgba(5, 5, 5, 0.88) 100%),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.90) 0%, rgba(5, 5, 5, 0.14) 28%, rgba(5, 5, 5, 0.18) 64%, rgba(5, 5, 5, 0.94) 100%),
+      url("../images/04_9x16_story_1080x1920.webp") !important;
+    background-size: 100% 100%, 100% 100%, cover !important;
+    background-position: center, center, center center !important;
+  }
+}
+
+
+/* =========================================================
+   MAGAZINE PAGE, MATCH INNER PAGE ROSE SYSTEM
+   Inner pages only. Removes pale magazine dividers and gives the
+   magazine/blog layout the same rich rose background language.
+   ========================================================= */
+
+body.jbc-page-inner [class*="magazine"],
+body.jbc-page-inner .blog-page,
+body.jbc-page-inner .blog-section,
+body.jbc-page-inner .blog-featured,
+body.jbc-page-inner .blog-hero,
+body.jbc-page-inner .blog-grid,
+body.jbc-page-inner .blog-list,
+body.jbc-page-inner .editorial-magazine,
+body.jbc-page-inner .magazine-page,
+body.jbc-page-inner .magazine-section {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: #050505 !important;
+  background-image:
+    radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.14) 42%, rgba(5, 5, 5, 0.84) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.88) 0%, rgba(5, 5, 5, 0.16) 24%, rgba(5, 5, 5, 0.14) 62%, rgba(5, 5, 5, 0.94) 100%),
+    url("../images/02_16x9_web_hero_1920x1080.webp") !important;
+  background-size: 100% 100%, 100% 100%, cover !important;
+  background-position: center, center, center center !important;
+  background-repeat: no-repeat !important;
+  border-color: rgba(5, 5, 5, 0.96) !important;
+}
+
+/* Full edge fades, including centre edges. */
+body.jbc-page-inner [class*="magazine"]::before,
+body.jbc-page-inner .blog-page::before,
+body.jbc-page-inner .blog-section::before,
+body.jbc-page-inner .blog-featured::before,
+body.jbc-page-inner .blog-hero::before,
+body.jbc-page-inner .blog-grid::before,
+body.jbc-page-inner .blog-list::before,
+body.jbc-page-inner .editorial-magazine::before,
+body.jbc-page-inner .magazine-page::before,
+body.jbc-page-inner .magazine-section::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(to bottom,
+      #050505 0%,
+      rgba(5, 5, 5, 0.76) 7%,
+      rgba(5, 5, 5, 0.18) 24%,
+      rgba(5, 5, 5, 0) 40%),
+    linear-gradient(to top,
+      #050505 0%,
+      rgba(5, 5, 5, 0.76) 7%,
+      rgba(5, 5, 5, 0.18) 24%,
+      rgba(5, 5, 5, 0) 40%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Seal top crack lines on magazine/blog blocks. */
+body.jbc-page-inner [class*="magazine"]::after,
+body.jbc-page-inner .blog-page::after,
+body.jbc-page-inner .blog-section::after,
+body.jbc-page-inner .blog-featured::after,
+body.jbc-page-inner .blog-hero::after,
+body.jbc-page-inner .blog-grid::after,
+body.jbc-page-inner .blog-list::after,
+body.jbc-page-inner .editorial-magazine::after,
+body.jbc-page-inner .magazine-page::after,
+body.jbc-page-inner .magazine-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -4px !important;
+  height: 14px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  background: linear-gradient(to bottom,
+    #050505 0%,
+    rgba(5, 5, 5, 0.98) 42%,
+    rgba(5, 5, 5, 0.62) 78%,
+    rgba(5, 5, 5, 0) 100%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.jbc-page-inner [class*="magazine"] > *,
+body.jbc-page-inner .blog-page > *,
+body.jbc-page-inner .blog-section > *,
+body.jbc-page-inner .blog-featured > *,
+body.jbc-page-inner .blog-hero > *,
+body.jbc-page-inner .blog-grid > *,
+body.jbc-page-inner .blog-list > *,
+body.jbc-page-inner .editorial-magazine > *,
+body.jbc-page-inner .magazine-page > *,
+body.jbc-page-inner .magazine-section > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Remove the pale white magazine grid feeling. */
+body.jbc-page-inner [class*="magazine"],
+body.jbc-page-inner [class*="magazine"] *,
+body.jbc-page-inner .blog-featured,
+body.jbc-page-inner .blog-featured *,
+body.jbc-page-inner .blog-grid,
+body.jbc-page-inner .blog-grid *,
+body.jbc-page-inner .blog-list,
+body.jbc-page-inner .blog-list * {
+  border-color: rgba(240, 230, 218, 0.08) !important;
+}
+
+body.jbc-page-inner [class*="magazine"] > .container,
+body.jbc-page-inner .blog-featured > .container,
+body.jbc-page-inner .blog-section > .container,
+body.jbc-page-inner .blog-hero > .container,
+body.jbc-page-inner .magazine-section > .container {
+  background-color: rgba(5, 5, 5, 0.08) !important;
+}
+
+@media (max-width: 768px) {
+  body.jbc-page-inner [class*="magazine"],
+  body.jbc-page-inner .blog-page,
+  body.jbc-page-inner .blog-section,
+  body.jbc-page-inner .blog-featured,
+  body.jbc-page-inner .blog-hero,
+  body.jbc-page-inner .blog-grid,
+  body.jbc-page-inner .blog-list,
+  body.jbc-page-inner .editorial-magazine,
+  body.jbc-page-inner .magazine-page,
+  body.jbc-page-inner .magazine-section {
+    background-image:
+      radial-gradient(ellipse at 50% 48%, rgba(5, 5, 5, 0.00) 0%, rgba(5, 5, 5, 0.18) 42%, rgba(5, 5, 5, 0.88) 100%),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.90) 0%, rgba(5, 5, 5, 0.14) 28%, rgba(5, 5, 5, 0.18) 64%, rgba(5, 5, 5, 0.94) 100%),
+      url("../images/04_9x16_story_1080x1920.webp") !important;
+    background-size: 100% 100%, 100% 100%, cover !important;
+    background-position: center, center, center center !important;
+  }
+}
+
+
+/* =========================================================
+   HOME HERO TO NEXT SECTION, SOFT BLACK BLEND MASK
+   Homepage only. Blends the bottom of the hero into the section below
+   with a full-width centre fade, not just corner vignettes.
+   ========================================================= */
+
+body.jbc-page-home .hero {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
+
+body.jbc-page-home .hero::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -1px !important;
+  height: clamp(180px, 24vh, 360px) !important;
+  z-index: 85 !important;
+  pointer-events: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 5, 0) 0%,
+    rgba(5, 5, 5, 0.16) 18%,
+    rgba(5, 5, 5, 0.48) 42%,
+    rgba(5, 5, 5, 0.86) 72%,
+    #050505 100%
+  ) !important;
+}
+
+/* Keep hero text above the fade */
+body.jbc-page-home .hero-content,
+body.jbc-page-home .hero-bottom,
+body.jbc-page-home .hero .tag,
+body.jbc-page-home .hero-oil-wrap,
+body.jbc-page-home .hero-mega {
+  position: relative !important;
+  z-index: 90 !important;
+}
+
+/* Add matching black fade at the top of the next section */
+body.jbc-page-home .manifesto,
+body.jbc-page-home .hero + section {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+body.jbc-page-home .manifesto::before,
+body.jbc-page-home .hero + section::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -1px !important;
+  height: clamp(140px, 18vh, 280px) !important;
+  z-index: 20 !important;
+  pointer-events: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(
+    to bottom,
+    #050505 0%,
+    rgba(5, 5, 5, 0.88) 18%,
+    rgba(5, 5, 5, 0.48) 48%,
+    rgba(5, 5, 5, 0) 100%
+  ) !important;
+}
+
+body.jbc-page-home .manifesto > *,
+body.jbc-page-home .hero + section > * {
+  position: relative !important;
+  z-index: 25 !important;
+}
+
+@media (max-width: 768px) {
+  body.jbc-page-home .hero::after {
+    height: clamp(150px, 22vh, 300px) !important;
+  }
+
+  body.jbc-page-home .manifesto::before,
+  body.jbc-page-home .hero + section::before {
+    height: clamp(110px, 16vh, 220px) !important;
+  }
+}
