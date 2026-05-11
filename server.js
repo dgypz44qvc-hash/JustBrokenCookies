@@ -264,6 +264,90 @@ app.post('/api/upload-image', upload.single('image'), (req, res) => {
   } catch (e) { res.status(500).json({ ok: false, error: e.message }); }
 });
 
+/* ── AI SUGGEST ─────────────────────────────────────────── */
+app.post('/api/ai-suggest', async (req, res) => {
+  try {
+    const { layers = [], page = 'index.html' } = req.body;
+
+    // Build a compact description of what's under the cursor
+    const layerDesc = layers.slice(0, 6).map((l, i) => {
+      const parts = [];
+      if (l.tag) parts.push(l.tag.toLowerCase());
+      if (l.id)  parts.push(`#${l.id}`);
+      if (l.cls) parts.push(`.${l.cls.split(' ')[0]}`);
+      if (l.text) parts.push(`"${l.text.slice(0,40)}"`);
+      if (l.src)  parts.push(`src:${l.src}`);
+      if (l.bg)   parts.push(`bg:yes`);
+      return `${i+1}. ${parts.join(' ')}`;
+    }).join('\n');
+
+    const systemPrompt = `You are an expert web editor assistant for JBC (Just Broken Cookies), a luxury creative agency website.
+The user right-clicked on the page. Based on the layers under their cursor, suggest 3–4 SHORT, actionable edit commands (max 6 words each).
+Focus on what makes sense for the specific element (e.g. for text → "Change headline copy", for image → "Swap hero photo", for section → "Adjust section padding").
+Respond ONLY with a JSON array of strings. No explanation, no markdown. Example: ["Edit headline text","Change background image","Adjust font size"]`;
+
+    const userMsg = `Page: ${page}\nLayers under cursor:\n${layerDesc}`;
+
+    // Try Ollama first (local, free, fast)
+    let suggestions = null;
+    try {
+      const ollamaRes = await fetch('http://localhost:11434/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'llama3.2:3b',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user',   content: userMsg }
+          ],
+          temperature: 0.3,
+          max_tokens: 120
+        }),
+        signal: AbortSignal.timeout(4000)
+      });
+      if (ollamaRes.ok) {
+        const od = await ollamaRes.json();
+        const text = od.choices?.[0]?.message?.content || '';
+        const match = text.match(/\[[\s\S]*?\]/);
+        if (match) suggestions = JSON.parse(match[0]);
+      }
+    } catch (_) { /* Ollama not running — fall through to Groq */ }
+
+    // Groq fallback
+    if (!suggestions) {
+      const groqKey = process.env.GROQ_API_KEY || '';
+      if (!groqKey) throw new Error('No AI backend available. Start Ollama or set GROQ_API_KEY.');
+      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqKey}`
+        },
+        body: JSON.stringify({
+          model: 'llama-3.1-8b-instant',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user',   content: userMsg }
+          ],
+          temperature: 0.3,
+          max_tokens: 120
+        }),
+        signal: AbortSignal.timeout(6000)
+      });
+      if (!groqRes.ok) throw new Error(`Groq error ${groqRes.status}`);
+      const gd = await groqRes.json();
+      const text = gd.choices?.[0]?.message?.content || '';
+      const match = text.match(/\[[\s\S]*?\]/);
+      if (match) suggestions = JSON.parse(match[0]);
+    }
+
+    if (!Array.isArray(suggestions) || !suggestions.length) throw new Error('Empty AI response');
+    res.json({ ok: true, suggestions: suggestions.slice(0, 4) });
+  } catch (e) {
+    res.status(200).json({ ok: false, suggestions: [], error: e.message });
+  }
+});
+
 app.post('/api/backup', async (req, res) => {
   try {
     await ensureDirs();

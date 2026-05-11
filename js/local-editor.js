@@ -227,13 +227,38 @@
     e.stopPropagation();
     unhover();
     var frameRect = window.frameElement ? window.frameElement.getBoundingClientRect() : { left:0, top:0 };
+
+    // Capture ALL layers at cursor for AI context
+    var layers = [];
+    try {
+      var els = document.elementsFromPoint(e.clientX, e.clientY) || [e.target];
+      els.slice(0, 8).forEach(function(el) {
+        if (!el || el === document.documentElement || el === document.body) return;
+        if (el.id && el.id.indexOf('__jbc') >= 0) return;
+        var cs = window.getComputedStyle(el);
+        var bgImg = cs.backgroundImage || '';
+        if (bgImg === 'none') bgImg = '';
+        layers.push({
+          tag:   el.tagName,
+          id:    el.id || '',
+          cls:   (typeof el.className === 'string' ? el.className : '').replace(/__jbc[\\w-]*/g,'').trim().slice(0,80),
+          text:  (el.innerText || '').replace(/\\s+/g,' ').trim().slice(0,60),
+          bg:    bgImg ? bgImg.slice(0,80) : '',
+          src:   el.tagName === 'IMG' ? (el.src || '').split('/').pop().slice(0,40) : '',
+          color: cs.color || '',
+          font:  cs.fontSize + ' ' + cs.fontWeight
+        });
+      });
+    } catch(err) { layers = []; }
+
     window.parent.postMessage({
       type:     'jbc_contextmenu',
       x:        e.clientX + frameRect.left,
       y:        e.clientY + frameRect.top,
       selector: selectorFor(e.target),
       tagName:  e.target.tagName,
-      text:     (e.target.innerText || '').slice(0, 80)
+      text:     (e.target.innerText || '').slice(0, 80),
+      layers:   layers
     }, '*');
     window.__jbc_ctx_el = e.target;
   }, true);
@@ -702,6 +727,10 @@
     if (type === 'jbc_contextmenu') {
       if (win && win.__jbc_clearHandles) win.__jbc_clearHandles();
       showCtxMenu(e.data.x, e.data.y);
+      // Fire AI suggestions in parallel — injects them into menu when ready
+      if (e.data.layers && e.data.layers.length) {
+        fetchAiSuggestions(e.data.layers, e.data.x, e.data.y);
+      }
     }
 
     if (type === 'jbc_layerclick') {
@@ -808,12 +837,51 @@
   /* ── CONTEXT MENU ────────────────────────────────────── */
   function showCtxMenu(x, y) {
     hideCtxMenu();
-    ctxMenu.style.left = Math.min(x, window.innerWidth  - 210) + 'px';
-    ctxMenu.style.top  = Math.min(y, window.innerHeight - 290) + 'px';
+    ctxMenu.style.left = Math.min(x, window.innerWidth  - 230) + 'px';
+    ctxMenu.style.top  = Math.min(y, window.innerHeight - 320) + 'px';
     ctxMenu.classList.remove('hidden');
+    // Reset AI section
+    const aiSection = ctxMenu.querySelector('.ctx-ai-section');
+    if (aiSection) {
+      aiSection.innerHTML = '<div class="ctx-ai-thinking">✦ AI reading context…</div>';
+    }
   }
 
   function hideCtxMenu() { ctxMenu.classList.add('hidden'); }
+
+  /* ── AI CONTEXT SUGGESTIONS ──────────────────────────── */
+  async function fetchAiSuggestions(layers, x, y) {
+    const aiSection = ctxMenu.querySelector('.ctx-ai-section');
+    if (!aiSection) return;
+    try {
+      const res = await fetch('/api/ai-suggest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ layers, page: currentPage })
+      });
+      if (!res.ok) throw new Error('AI unavailable');
+      const data = await res.json();
+      if (!data.suggestions || !data.suggestions.length) throw new Error('No suggestions');
+
+      aiSection.innerHTML = '<div class="ctx-ai-label">✦ AI Suggestions</div>';
+      data.suggestions.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'ctx-item ctx-item--ai';
+        btn.textContent = s.label;
+        btn.title = s.description || '';
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          hideCtxMenu();
+          // If action maps to a known handler, run it; otherwise show description
+          if (s.action) handleCtxAction(s.action);
+          else setStatus('AI: ' + (s.description || s.label));
+        });
+        aiSection.appendChild(btn);
+      });
+    } catch (err) {
+      aiSection.innerHTML = '<div class="ctx-ai-thinking" style="opacity:0.4">✦ AI offline</div>';
+    }
+  }
 
   document.addEventListener('click', hideCtxMenu);
   document.addEventListener('keydown', e => {
