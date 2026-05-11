@@ -10,7 +10,11 @@ const ROOT = process.cwd();
 const PORT = process.env.PORT || 3000;
 const EDITOR_PASSWORD = process.env.EDITOR_PASSWORD || '';
 
-const allowedWritableFiles = new Set(['index.html', 'css/editor-overrides.css']);
+const allowedWritableFiles = new Set([
+  'index.html', 'about.html', 'services.html',
+  'portfolio.html', 'magazine.html', 'contact.html',
+  'mobile-landing.html', 'css/editor-overrides.css'
+]);
 
 function safeResolve(relPath) {
   if (!relPath || typeof relPath !== 'string') throw new Error('Missing path');
@@ -33,7 +37,7 @@ function editorAuth(req, res, next) {
 
 function safeWritableFile(relPath) {
   const clean = String(relPath || '').replace(/^\/+/, '');
-  if (!allowedWritableFiles.has(clean)) throw new Error('File is not writable by editor');
+  if (!allowedWritableFiles.has(clean)) throw new Error(`File "${clean}" is not writable by editor`);
   return safeResolve(clean);
 }
 
@@ -188,13 +192,15 @@ app.get('/api/site-html', async (req, res) => {
 app.post('/api/save-html', async (req, res) => {
   try {
     await ensureDirs();
-    let { html } = req.body;
+    let { html, page } = req.body;
     if (!html || typeof html !== 'string') throw new Error('Missing html');
+    // Default to index.html if no page specified, but use whatever page was sent
+    const targetPage = (page || 'index.html').replace(/^\/+/, '');
     html = ensureEditorCssLink(ensureEditorIds(html));
     const backups = [];
-    backups.push(await backupIfExists('index.html'));
-    await fs.writeFile(safeWritableFile('index.html'), html, 'utf8');
-    res.json({ ok: true, backups: backups.filter(Boolean) });
+    backups.push(await backupIfExists(targetPage));
+    await fs.writeFile(safeWritableFile(targetPage), html, 'utf8');
+    res.json({ ok: true, page: targetPage, backups: backups.filter(Boolean) });
   } catch (e) { res.status(500).json({ ok: false, error: e.message }); }
 });
 

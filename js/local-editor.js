@@ -161,6 +161,22 @@
   if (window.__jbc_agent_init) return;
   window.__jbc_agent_init = true;
 
+  /* ── BLOCK ALL NAVIGATION — prevent clicking nav links from loading a
+       different page into the iframe while currentPage stays unchanged,
+       which would cause the wrong file to be overwritten on Save ── */
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    // Block any link that navigates to a different HTML page
+    if (href && !href.startsWith('#') && !href.startsWith('javascript') &&
+        !href.startsWith('mailto') && !href.startsWith('tel')) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.parent.postMessage({ type: 'jbc_nav_blocked', href: href }, '*');
+    }
+  }, true);
+
   /* ── HELPERS ── */
   function scrollX() { return window.scrollX || window.pageXOffset || 0; }
   function scrollY() { return window.scrollY || window.pageYOffset || 0; }
@@ -705,6 +721,12 @@
       snapshot();
       barText.classList.remove('hidden');
       setStatus('Text placed — format it above, then click Done');
+    }
+
+    // Nav links are blocked inside the editor to prevent page switching
+    // without currentPage updating, which would overwrite the wrong file on Save
+    if (type === 'jbc_nav_blocked') {
+      setStatus('⚠ Navigation blocked — use the page selector above to switch pages');
     }
   });
 
