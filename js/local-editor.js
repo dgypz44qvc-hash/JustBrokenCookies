@@ -1060,6 +1060,20 @@
     target.style.setProperty('background-position', 'center center',        'important');
     target.style.setProperty('background-repeat',   'no-repeat',            'important');
 
+    // If target is the hero section, also update the <picture>/<img class="hero-full-bg">
+    // so the visible full-bleed image actually changes
+    if ((target.className || '').includes('hero') || target.dataset.editorId === 'hero-section') {
+      const heroImg = target.querySelector('.hero-full-bg');
+      if (heroImg) {
+        heroImg.src = dataUrl;
+        heroImg.srcset = '';
+      }
+      // Update all <source> elements inside the hero <picture>
+      target.querySelectorAll('picture source').forEach(src => {
+        src.srcset = dataUrl;
+      });
+    }
+
     const label = target.id ? '#' + target.id : (target.className || '').split(' ')[0];
     setStatus('Background set on [' + label + '] ✓ — Save to keep');
   }
