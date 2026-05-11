@@ -864,16 +864,33 @@
       openFilePicker(file => readFile(file, dataUrl => {
         snapshot();
         const tag = (el.tagName || '').toUpperCase();
-        const img = tag === 'IMG'     ? el
-                  : tag === 'PICTURE' ? el.querySelector('img')
-                  : el.querySelector('img');
+        let img = tag === 'IMG'     ? el
+                : tag === 'PICTURE' ? el.querySelector('img')
+                : el.querySelector('img');
+
+        // If no img found directly, walk up — handles right-clicking on hero-content
+        // or any child element that sits above the hero-full-bg
+        if (!img) {
+          const heroSection = el.closest('section.hero, .jbc-floral-hero, [data-editor-id="hero-section"]');
+          if (heroSection) img = heroSection.querySelector('.hero-full-bg, img');
+        }
+
         if (img) {
           img.src = dataUrl;
           img.removeAttribute('srcset');
           img.removeAttribute('sizes');
-          setStatus('Image replaced ✓');
+          // Clear all <source> elements in the parent <picture> so the browser
+          // doesn't keep showing the old srcset image
+          const pic = img.closest('picture');
+          if (pic) pic.querySelectorAll('source').forEach(s => { s.srcset = ''; s.removeAttribute('srcset'); });
+          // Also update the section background-image if this is the hero
+          const heroSec = img.closest('section.hero, .jbc-floral-hero, [data-editor-id="hero-section"]');
+          if (heroSec) {
+            heroSec.style.setProperty('background-image', 'url(' + dataUrl + ')', 'important');
+          }
+          setStatus('Image replaced ✓ — Save to keep');
         } else {
-          setStatus('No <img> found — right-click directly on the image');
+          setStatus('No image found — right-click directly on the hero image area');
         }
       }));
     }
@@ -1263,6 +1280,10 @@
   });
 
   /* ── INIT ────────────────────────────────────────────── */
+  // Always reset to Home on load — prevents browser from restoring a stale
+  // page-select value and accidentally switching to About/Services etc.
+  currentPage = 'index.html';
+  pageSelect.value = 'index.html';
   loadPage(currentPage);
 
 })();
