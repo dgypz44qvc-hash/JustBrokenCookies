@@ -462,6 +462,36 @@ html, body {
   margin: 4px 8px;
 }
 
+/* ── LAYERS PANEL ───────────────────────────────────────── */
+.ctx-layers-section {
+  padding: 2px 0;
+}
+.ctx-layers-label {
+  padding: 5px 12px 3px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,230,218,0.4);
+  user-select: none;
+}
+.ctx-item--layer {
+  flex-direction: row;
+  gap: 6px;
+  align-items: baseline;
+  color: var(--cream);
+  font-size: 12px;
+  padding: 5px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 260px;
+}
+.ctx-item--layer:hover { background: rgba(255,255,255,0.06); }
+.layer-icon { font-size: 11px; flex-shrink: 0; width: 14px; }
+.layer-name { font-weight: 600; font-size: 11px; flex-shrink: 0; }
+.layer-snip { color: rgba(240,230,218,0.4); font-size: 10px; overflow: hidden; text-overflow: ellipsis; }
+.ctx-divider--layers { background: rgba(255,255,255,0.05); }
+
 /* ── AI SUGGESTION SECTION ──────────────────────────────── */
 .ctx-ai-section {
   padding: 2px 0;

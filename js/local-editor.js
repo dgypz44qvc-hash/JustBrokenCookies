@@ -140,6 +140,7 @@
     agentStyle.textContent = `
       .__jbc_hover    { outline:2px solid rgba(232,137,29,0.6) !important; outline-offset:2px !important; cursor:pointer !important; }
       .__jbc_selected { outline:2px solid #E8891D !important; outline-offset:2px !important; }
+      .__jbc_layer_hi { outline:3px solid #E8891D !important; outline-offset:3px !important; box-shadow:0 0 0 6px rgba(232,137,29,0.18) !important; transition:outline 0.15s; }
       [contenteditable="true"] { outline:2px dashed rgba(232,137,29,0.8) !important; outline-offset:2px !important; }
     `;
 
@@ -246,7 +247,8 @@
           bg:    bgImg ? bgImg.slice(0,80) : '',
           src:   el.tagName === 'IMG' ? (el.src || '').split('/').pop().slice(0,40) : '',
           color: cs.color || '',
-          font:  cs.fontSize + ' ' + cs.fontWeight
+          font:  cs.fontSize + ' ' + cs.fontWeight,
+          sel:   selectorFor(el)
         });
       });
     } catch(err) { layers = []; }
@@ -715,6 +717,28 @@
     _secClean();
   };
 
+  /* ── LAYER HIGHLIGHT (from parent clicking a layer in the panel) ── */
+  window.addEventListener('message', function(ev) {
+    if (!ev.data || ev.data.type !== 'jbc_select_layer') return;
+    // Remove previous highlight
+    var prev = document.querySelector('.__jbc_layer_hi');
+    if (prev) prev.classList.remove('__jbc_layer_hi');
+    // Highlight the chosen element
+    var el = ev.data.sel ? document.querySelector(ev.data.sel) : null;
+    if (!el && ev.data.idx !== undefined) {
+      // Fallback: re-run elementsFromPoint at last right-click coords
+      el = (document.elementsFromPoint(ev.data.cx || 0, ev.data.cy || 0) || [])[ev.data.idx] || null;
+    }
+    if (el) {
+      el.classList.add('__jbc_layer_hi');
+      window.__jbc_ctx_el = el;
+      // Scroll element into view gently
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Auto-remove highlight after 3s
+      setTimeout(function() { el.classList.remove('__jbc_layer_hi'); }, 3000);
+    }
+  });
+
 })();
     `;
   }
@@ -727,8 +751,9 @@
     if (type === 'jbc_contextmenu') {
       if (win && win.__jbc_clearHandles) win.__jbc_clearHandles();
       showCtxMenu(e.data.x, e.data.y);
-      // Fire AI suggestions in parallel — injects them into menu when ready
+      // Populate layers panel
       if (e.data.layers && e.data.layers.length) {
+        showLayersPanel(e.data.layers, e.data.x, e.data.y);
         fetchAiSuggestions(e.data.layers, e.data.x, e.data.y);
       }
     }
@@ -837,14 +862,50 @@
   /* ── CONTEXT MENU ────────────────────────────────────── */
   function showCtxMenu(x, y) {
     hideCtxMenu();
-    ctxMenu.style.left = Math.min(x, window.innerWidth  - 230) + 'px';
-    ctxMenu.style.top  = Math.min(y, window.innerHeight - 320) + 'px';
+    ctxMenu.style.left = Math.min(x, window.innerWidth  - 250) + 'px';
+    ctxMenu.style.top  = Math.min(y, window.innerHeight - 420) + 'px';
     ctxMenu.classList.remove('hidden');
+    // Reset layers section
+    const layersSection = ctxMenu.querySelector('.ctx-layers-section');
+    if (layersSection) layersSection.innerHTML = '';
     // Reset AI section
     const aiSection = ctxMenu.querySelector('.ctx-ai-section');
     if (aiSection) {
       aiSection.innerHTML = '<div class="ctx-ai-thinking">✦ AI reading context…</div>';
     }
+  }
+
+  /* ── LAYERS PANEL ────────────────────────────────────── */
+  function showLayersPanel(layers, cx, cy) {
+    const sec = ctxMenu.querySelector('.ctx-layers-section');
+    if (!sec) return;
+    sec.innerHTML = '<div class="ctx-layers-label">LAYERS AT CURSOR</div>';
+    layers.forEach((l, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'ctx-item ctx-item--layer';
+      // Build a readable label: tag + id/class hint + text snippet
+      let icon = '◻';
+      const tag = (l.tag || '').toLowerCase();
+      if (tag === 'img')                              icon = '🖼';
+      else if (tag === 'section' || tag === 'footer') icon = '▬';
+      else if (/^h[1-6]$/.test(tag))                 icon = 'T';
+      else if (tag === 'p' || tag === 'span')         icon = 'T';
+      else if (l.bg)                                  icon = '🎨';
+      const name = l.id ? '#' + l.id : l.cls ? '.' + l.cls.split(' ')[0] : tag;
+      const snippet = l.text ? ' — "' + l.text.slice(0, 28) + (l.text.length > 28 ? '…' : '') + '"'
+                             : l.src ? ' — ' + l.src : l.bg ? ' — bg image' : '';
+      btn.innerHTML = `<span class="layer-icon">${icon}</span><span class="layer-name">${name}</span><span class="layer-snip">${snippet}</span>`;
+      btn.addEventListener('click', ev => {
+        ev.stopPropagation();
+        hideCtxMenu();
+        // Tell iframe to highlight this element
+        if (frame.contentWindow) {
+          frame.contentWindow.postMessage({ type: 'jbc_select_layer', sel: l.sel, idx, cx, cy }, '*');
+        }
+        setStatus(`Selected: ${name}${snippet} — right-click to edit`);
+      });
+      sec.appendChild(btn);
+    });
   }
 
   function hideCtxMenu() { ctxMenu.classList.add('hidden'); }
@@ -865,16 +926,14 @@
 
       aiSection.innerHTML = '<div class="ctx-ai-label">✦ AI Suggestions</div>';
       data.suggestions.forEach(s => {
+        const label = typeof s === 'string' ? s : (s.label || s.text || JSON.stringify(s));
         const btn = document.createElement('button');
         btn.className = 'ctx-item ctx-item--ai';
-        btn.textContent = s.label;
-        btn.title = s.description || '';
+        btn.textContent = label;
         btn.addEventListener('click', e => {
           e.stopPropagation();
           hideCtxMenu();
-          // If action maps to a known handler, run it; otherwise show description
-          if (s.action) handleCtxAction(s.action);
-          else setStatus('AI: ' + (s.description || s.label));
+          setStatus('AI: ' + label);
         });
         aiSection.appendChild(btn);
       });
