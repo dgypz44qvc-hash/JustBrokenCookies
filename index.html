@@ -37,7 +37,7 @@
       z-index: 1000 !important;
     }
   </style>
-<link rel="preload" as="image" href="./images/mobile/DSC03914.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04179.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04185.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04187-2.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04193.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/DSC04211.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0835.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0832.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0824.webp" fetchpriority="high"><link rel="preload" as="image" href="./images/mobile/_DSC0763-2.webp" fetchpriority="high"></head><body class="jbc-page-home" data-editor-id="jbc-1777582870310-2u4w">
+<link rel="preload" as="image" href="images/DSC03914.webp" fetchpriority="high"><link rel="preload" as="image" href="images/DSC04179.webp" fetchpriority="high"><link rel="preload" as="image" href="images/DSC04185.webp" fetchpriority="high"><link rel="preload" as="image" href="images/DSC04187-2.webp" fetchpriority="high"><link rel="preload" as="image" href="images/DSC04193.webp" fetchpriority="high"><link rel="preload" as="image" href="images/DSC04211.webp" fetchpriority="high"><link rel="preload" as="image" href="images/_DSC0835.webp" fetchpriority="high"><link rel="preload" as="image" href="images/_DSC0832.webp" fetchpriority="high"><link rel="preload" as="image" href="images/_DSC0824.webp" fetchpriority="high"><link rel="preload" as="image" href="images/_DSC0763-2.webp" fetchpriority="high"></head><body class="jbc-page-home" data-editor-id="jbc-1777582870310-2u4w">
 <!-- ── Homepage-only loading title ─────────────────────── -->
 
 
@@ -73,7 +73,7 @@
       <!-- Desktop: heromultiroses (min-width 769px) -->
       <source type="image/webp" media="(min-width: 769px)" sizes="100vw">
       <!-- Mobile: JBC brand hero -->
-      <source media="(max-width: 768px)" sizes="100vw">
+      <source media="(max-width: 768px)" srcset="images/mobilelanding-768.webp 768w, images/mobilelanding.webp 900w" sizes="100vw" type="image/webp">
       <img class="hero-full-bg" src="images/editor-bg-b0569335cf.webp" width="1920" height="1073" loading="eager" fetchpriority="high" decoding="async" alt="" aria-hidden="true" data-editor-id="jbc-1777630811279-gbt9">
     </picture>
     <div class="hero-bottom" data-editor-id="hero-bottom" style="opacity: 1">
@@ -358,29 +358,29 @@
 
     // ── CONFIGURATION ───────────────────────────────────────────────
     const IMAGES_DESKTOP = [
-      './images/mobile/DSC03914.webp',
-      './images/mobile/DSC04179.webp',
-      './images/mobile/DSC04185.webp',
-      './images/mobile/DSC04187-2.webp',
-      './images/mobile/DSC04193.webp',
-      './images/mobile/DSC04211.webp',
-      './images/mobile/_DSC0835.webp',
-      './images/mobile/_DSC0832.webp',
-      './images/mobile/_DSC0824.webp',
-      './images/mobile/_DSC0763-2.webp',
+      'images/DSC03914.webp',
+      'images/DSC04179.webp',
+      'images/DSC04185.webp',
+      'images/DSC04187-2.webp',
+      'images/DSC04193.webp',
+      'images/DSC04211.webp',
+      'images/_DSC0835.webp',
+      'images/_DSC0832.webp',
+      'images/_DSC0824.webp',
+      'images/_DSC0763-2.webp',
     ];
 
     const IMAGES_MOBILE = [
-      './images/mobile/DSC03914.webp',
-      './images/mobile/DSC04179.webp',
-      './images/mobile/DSC04185.webp',
-      './images/mobile/DSC04187-2.webp',
-      './images/mobile/DSC04193.webp',
-      './images/mobile/DSC04211.webp',
-      './images/mobile/_DSC0835.webp',
-      './images/mobile/_DSC0832.webp',
-      './images/mobile/_DSC0824.webp',
-      './images/mobile/_DSC0763-2.webp',
+      'images/DSC03914.webp',
+      'images/DSC04179.webp',
+      'images/DSC04185.webp',
+      'images/DSC04187-2.webp',
+      'images/DSC04193.webp',
+      'images/DSC04211.webp',
+      'images/_DSC0835.webp',
+      'images/_DSC0832.webp',
+      'images/_DSC0824.webp',
+      'images/_DSC0763-2.webp',
     ];
 
     const IMAGES = window.innerWidth <= 768 ? IMAGES_MOBILE : IMAGES_DESKTOP;
@@ -1088,4 +1088,4 @@
       init();
     }
   })();
-  </script><div style="position: relative;">dup test</div></body></html>
+  </script></body></html>

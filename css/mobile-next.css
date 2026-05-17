@@ -72,12 +72,29 @@
 /* ── 2. Hero — premium mobile treatment ───────────────────── */
 @media (max-width: 768px) {
 
-  /* Portrait hero image — center top to show face/brand */
+  /* Portrait hero image — override desktop bg, show mobile image */
   .hero.jbc-floral-hero {
     background-image: url('../images/mobilelanding-768.webp') !important;
     background-size: cover !important;
     background-position: center top !important;
     background-repeat: no-repeat !important;
+    min-height: 100svh !important;
+  }
+
+  /* Hide the desktop <img> overlay — let CSS background show */
+  .hero.jbc-floral-hero .hero-full-bg {
+    display: none !important;
+  }
+
+  /* Hero bottom content — pin to lower third */
+  .hero.jbc-floral-hero .hero-bottom {
+    position: absolute !important;
+    bottom: 80px !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 24px !important;
+    text-align: center !important;
+    z-index: 3 !important;
   }
 
   .hero-full-bg {
@@ -544,6 +561,367 @@
   .service-card:hover,
   .portfolio-item:hover {
     transform: none !important;
+  }
+
+}
+
+
+/* ── 15. Process cards — compact on mobile ───────────────── */
+@media (max-width: 768px) {
+
+  #process-section {
+    padding: 48px 0 40px !important;
+  }
+
+  #process-section .services-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 0 16px !important;
+  }
+
+  #process-section .service-card.jbc-editorial-card {
+    padding: 20px 20px 22px !important;
+    min-height: unset !important;
+    height: auto !important;
+    border-radius: 12px !important;
+  }
+
+  #process-section .service-num {
+    font-size: 9px !important;
+    letter-spacing: 0.2em !important;
+    margin-bottom: 6px !important;
+  }
+
+  #process-section .service-card h3 {
+    font-size: clamp(20px, 5.5vw, 26px) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 4px !important;
+  }
+
+  #process-section .service-sub {
+    font-size: 11px !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+  }
+
+  #process-section .service-short,
+  #process-section .service-card p {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    margin: 0 !important;
+    color: rgba(240,230,218,0.7) !important;
+  }
+
+  #process-section .service-expand {
+    display: none !important;
+  }
+
+}
+
+
+/* ── 16. Featured work carousel — mobile friendly ─────────── */
+@media (max-width: 768px) {
+
+  /* Make the carousel section visible and well-padded */
+  #featured-work {
+    padding: 48px 0 32px !important;
+    overflow: hidden !important;
+  }
+
+  /* The cinema stage — remove desktop height constraints */
+  #featured-work .jbc-cinema-stage,
+  #featured-work .jbc-codrops-cinema {
+    height: auto !important;
+    min-height: unset !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  /* The scrollable ring — horizontal snap scroll */
+  #featured-work .jbc-cinema-ring {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding: 8px 20px 24px !important;
+    height: auto !important;
+    min-height: unset !important;
+    transform: none !important;
+    position: relative !important;
+    scrollbar-width: none !important;
+  }
+
+  #featured-work .jbc-cinema-ring::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Each panel — fixed size, snap */
+  #featured-work .jbc-cinema-panel {
+    flex: 0 0 78vw !important;
+    width: 78vw !important;
+    height: 52vw !important;
+    min-height: 200px !important;
+    scroll-snap-align: center !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+  }
+
+  /* Images fill the panel */
+  #featured-work .jbc-cinema-panel img,
+  #featured-work .jbc-cinema-panel video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    inset: 0 !important;
+  }
+
+  /* Pin & stage wrappers — remove desktop positioning */
+  #featured-work .jbc-cinema-pin {
+    position: relative !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+}
+
+
+/* ── 17. Visual glimpses gallery — mobile grid ───────────── */
+@media (max-width: 768px) {
+
+  #jbc-visual-gallery {
+    padding: 48px 0 32px !important;
+    overflow: hidden !important;
+  }
+
+  /* Override the 3D canvas stage for mobile — simple scroll */
+  #jbc-gradient-stage {
+    height: auto !important;
+    min-height: unset !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  #jbc-gs-bg {
+    display: none !important;
+  }
+
+  /* Cards — horizontal scroll strip */
+  #jbc-gs-cards {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 10px !important;
+    padding: 8px 20px 16px !important;
+    scrollbar-width: none !important;
+    /* reset any desktop 3D transforms */
+    transform: none !important;
+    position: relative !important;
+    height: auto !important;
+  }
+
+  #jbc-gs-cards::-webkit-scrollbar { display: none !important; }
+
+  .jbc-gs-card {
+    flex: 0 0 70vw !important;
+    width: 70vw !important;
+    height: 88vw !important;
+    scroll-snap-align: center !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    /* Reset all desktop 3D */
+    transform: none !important;
+    will-change: auto !important;
+    filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .jbc-gs-card__img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    inset: 0 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+}
+
+
+/* ── 18. Testimonial — compact ────────────────────────────── */
+@media (max-width: 768px) {
+
+  .testimonial-section.jbc-floral-testimonial {
+    padding: 48px 0 48px !important;
+  }
+
+  .testi-brutal {
+    padding: 0 24px !important;
+    max-width: 100% !important;
+  }
+
+  .testi-mark {
+    margin-bottom: 16px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.22em !important;
+  }
+
+  .testi-content {
+    font-size: clamp(17px, 4.8vw, 22px) !important;
+    line-height: 1.55 !important;
+  }
+
+  .testi-author,
+  .testi-source {
+    font-size: 11px !important;
+    margin-top: 20px !important;
+    letter-spacing: 0.16em !important;
+  }
+
+}
+
+
+/* ── 19. CTA section — fix black spot ────────────────────── */
+@media (max-width: 768px) {
+
+  .cta-section.jbc-floral-cta {
+    padding: 56px 0 64px !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    min-height: unset !important;
+  }
+
+  /* Overlay so text is readable over any background */
+  .cta-section.jbc-floral-cta::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(8,8,8,0.55) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .cta-section .container {
+    position: relative !important;
+    z-index: 1 !important;
+    padding: 0 24px !important;
+    gap: 16px !important;
+  }
+
+  .cta-section .section-title {
+    font-size: clamp(26px, 7.5vw, 38px) !important;
+    line-height: 1.08 !important;
+  }
+
+  .cta-section .section-subtitle {
+    font-size: 11px !important;
+    letter-spacing: 0.22em !important;
+    margin-bottom: 4px !important;
+  }
+
+  .cta-section .btn,
+  #cta-button {
+    padding: 14px 36px !important;
+    font-size: 12px !important;
+    letter-spacing: 0.18em !important;
+    margin-top: 8px !important;
+  }
+
+}
+
+
+/* ── 20. Footer — compact ─────────────────────────────────── */
+@media (max-width: 768px) {
+
+  #footer-section {
+    padding: 48px 0 32px !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    min-height: unset !important;
+    height: auto !important;
+  }
+
+  #footer-grid,
+  .footer-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    padding: 0 24px !important;
+  }
+
+  #footer-brand,
+  .footer-brand {
+    text-align: center !important;
+    padding: 0 !important;
+  }
+
+  .footer-brand .brand-name,
+  .footer-brand .footer-logo {
+    font-size: clamp(18px, 5vw, 24px) !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 8px !important;
+  }
+
+  .footer-brand p,
+  .footer-brand .footer-tagline {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    color: rgba(240,230,218,0.55) !important;
+    margin-bottom: 20px !important;
+  }
+
+  .footer-col {
+    padding: 0 !important;
+  }
+
+  .footer-col h4,
+  .footer-col .footer-col-title {
+    font-size: 9px !important;
+    letter-spacing: 0.22em !important;
+    margin-bottom: 12px !important;
+    color: rgba(240,230,218,0.4) !important;
+  }
+
+  .footer-col a {
+    font-size: 13px !important;
+    padding: 6px 0 !important;
+    min-height: 36px !important;
+    line-height: 1.4 !important;
+  }
+
+  .footer-bottom,
+  .footer-copy {
+    padding: 24px 24px 0 !important;
+    font-size: 10px !important;
+    border-top: 1px solid rgba(255,255,255,0.08) !important;
+    margin-top: 8px !important;
+    text-align: center !important;
+    color: rgba(240,230,218,0.3) !important;
+  }
+
+  .social-links {
+    justify-content: center !important;
+    gap: 20px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .social-links a {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 16px !important;
   }
 
 }
