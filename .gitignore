@@ -101,3 +101,6 @@ k"q
 # ── Old PNGs replaced by webp ────────────────────────────────
 images/editor-bg-85879a13a06b.png
 images/editor-bg-d2364056d56a.png
+
+# Local Netlify folder
+.netlify
