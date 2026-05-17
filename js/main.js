@@ -452,18 +452,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.body.dataset.editorId) return;
 
     if (isMobileReveal) {
-      // Mobile: simple fade in instead of clip-path (avoids paint jank)
-      el.style.opacity = '0';
-      el.style.transition = 'opacity 0.6s ease';
-      const imgFadeObs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setTimeout(() => { entry.target.style.opacity = '1'; }, 150);
-            imgFadeObs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      imgFadeObs.observe(el);
+      // Mobile: start visible — never hide images on mobile.
+      // Inline style on element already sets opacity:1; leave it alone.
+      // Just ensure no leftover transforms from desktop path.
+      el.style.opacity = '1';
+      el.style.transform = 'none';
     } else {
       // Desktop: gentle opacity reveal — image visible but faded, scrolls to full
       el.style.opacity = '0.4';

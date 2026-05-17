@@ -8,8 +8,8 @@
   <link rel="preload" as="image" href="images/mobilelanding-768.webp" imagesrcset="images/mobilelanding-768.webp 768w, images/mobilelanding.webp 900w" imagesizes="100vw" media="(max-width: 768px)" fetchpriority="high">
   <link rel="preload" as="image" href="images/nehgoldsea.webp" media="(min-width: 769px)" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/mobile.css">
-  <link rel="stylesheet" href="css/mobile-next.css">
+  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="css/mobile-next.css" media="(max-width: 768px)">
   <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/editor-overrides.css">
   <style id="jbc-carousel-creations-real-image-fix">
@@ -351,7 +351,7 @@
   <script src="js/mobile-next.js"></script>
 
   <!-- ========== GRADIENT 3D CAROUSEL — adapted from clementgrellier/gradientslider ========== -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script>
   (function () {
     'use strict';

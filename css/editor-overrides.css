@@ -6327,10 +6327,7 @@ body:not([data-editor-id]) .jbc-floral-service-detail-4::before,
   backdrop-filter:         grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
 }
 
-/* 5. Images start at 40% opacity so they're always visible, scroll reveals to full */
-.service-detail-image {
-  opacity: 0.4;
-}
+/* 5. opacity start-state handled by main.js on desktop only — no CSS needed */
 /* 6. Remove white divider lines between service sections */
 .service-detail {
   border-bottom: none !important;

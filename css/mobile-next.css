@@ -421,7 +421,108 @@
 }
 
 
-/* ── 13. Safe overrides for common smash points ─────────── */
+/* ── 13. Services page — proper mobile layout ─────────────── */
+/*
+   On phones the service-detail 2-column grid collapses badly.
+   Stack image on top, content below. Give image a defined height.
+   This fixes: invisible images, squished text, "odd HTML" overflow.
+*/
+@media (max-width: 768px) {
+
+  /* Stack vertically — image on top, content below */
+  .service-detail,
+  .service-detail.reverse {
+    display: flex !important;
+    flex-direction: column !important;
+    direction: ltr !important;
+  }
+
+  /* Image block — explicit height so IntersectionObserver can fire
+     and object-fit:cover has something to fill */
+  .service-detail-image {
+    width: 100% !important;
+    height: 62vw !important;
+    min-height: 220px !important;
+    max-height: 340px !important;
+    flex-shrink: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .service-detail-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    /* Remove desktop grayscale — mobile shows colour */
+    filter: none !important;
+  }
+
+  /* Content block — full width, comfortable padding */
+  .service-detail-content {
+    width: 100% !important;
+    padding: 36px 24px 48px !important;
+  }
+
+  /* Service number label */
+  .service-number {
+    font-size: 9px !important;
+    letter-spacing: 0.26em !important;
+    color: #E8891D !important;
+    margin-bottom: 12px !important;
+    display: block !important;
+    font-family: 'Inter', sans-serif !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Title */
+  .service-detail-content .section-title {
+    font-size: clamp(26px, 7.5vw, 38px) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Subtitle */
+  .service-detail-content .section-subtitle {
+    margin-bottom: 16px !important;
+  }
+
+  /* Body text */
+  .service-detail-content .section-text {
+    font-size: 14px !important;
+    line-height: 1.78 !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* List */
+  .service-detail-content .service-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .service-detail-content .service-list li {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    color: rgba(240,230,218,0.65) !important;
+    padding: 7px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    font-weight: 300 !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .service-detail-content .service-list li:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Separator between service sections */
+  .service-detail {
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  }
+
+}
+
+
+/* ── 14. Safe overrides for common smash points ─────────── */
 @media (max-width: 768px) {
 
   /* Prevent any element from punching outside viewport */
