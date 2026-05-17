@@ -425,9 +425,15 @@ html, body {
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 8px;
   padding: 6px;
-  min-width: 160px;
+  min-width: 180px;
+  max-width: min(360px, calc(100vw - 28px));
+  max-height: min(82vh, 720px);
   z-index: 9999;
   box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* scroll wrapper (.ctx-menu-scroll) is injected by stabilizeCtxMenu() */
 }
 
 .ctx-item {
@@ -456,10 +462,88 @@ html, body {
 .ctx-item--danger { color: #e87070; }
 .ctx-item--danger:hover { background: rgba(232,112,112,0.12); }
 
+/* ── Image Overlay opacity control ─────────────── */
+.ctx-overlay-section {
+  padding: 2px 8px 6px;
+}
+.ctx-overlay-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: rgba(240,230,218,0.45);
+  padding: 5px 4px 5px;
+}
+.ctx-overlay-row {
+  display: flex;
+  gap: 3px;
+}
+.ctx-item--overlay {
+  flex: 1 1 0;
+  padding: 5px 2px;
+  font-size: 10px;
+  font-family: inherit;
+  text-align: center;
+  border: 1px solid rgba(240,230,218,0.14);
+  border-radius: 3px;
+  background: rgba(240,230,218,0.05);
+  color: rgba(240,230,218,0.65);
+  cursor: pointer;
+  transition: background 0.14s, color 0.14s, border-color 0.14s;
+  white-space: nowrap;
+}
+.ctx-item--overlay:hover {
+  background: rgba(240,230,218,0.14);
+  color: rgba(240,230,218,1);
+  border-color: rgba(240,230,218,0.32);
+}
+.ctx-item--overlay[data-action="overlay-off"]:hover {
+  background: rgba(232,112,112,0.15);
+  border-color: rgba(232,112,112,0.4);
+  color: #e87070;
+}
+.ctx-item--overlay[data-action="overlay-restore"]:hover {
+  background: rgba(168,216,234,0.1);
+  border-color: rgba(168,216,234,0.3);
+  color: #a8d8ea;
+}
+
 .ctx-divider {
   height: 1px;
   background: rgba(255,255,255,0.07);
   margin: 4px 8px;
+}
+
+/* ── CONTEXT MENU DRAG HANDLE ───────────────────────────── */
+.ctx-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  min-height: 22px;
+  cursor: grab;
+  color: rgba(240,230,218,0.25);
+  font-size: 14px;
+  letter-spacing: 2px;
+  user-select: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 2px;
+  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--ctx-bg);
+}
+.ctx-drag-handle:hover { color: rgba(240,230,218,0.5); }
+.ctx-drag-handle:active { cursor: grabbing; }
+
+/* ── PLACE OVERLAY (image/text placement intercept) ─────── */
+#place-overlay {
+  position: fixed;
+  z-index: 9998;
+  cursor: crosshair;
+  background: transparent;
 }
 
 /* ── LAYERS PANEL ───────────────────────────────────────── */
@@ -475,21 +559,44 @@ html, body {
   color: rgba(240,230,218,0.4);
   user-select: none;
 }
-.ctx-item--layer {
-  flex-direction: row;
+.ctx-layer-row {
+  display: flex;
+  align-items: center;
   gap: 6px;
-  align-items: baseline;
+  padding: 5px 10px 5px 12px;
+  cursor: pointer;
   color: var(--cream);
   font-size: 12px;
-  padding: 5px 12px;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 260px;
+  max-width: 270px;
+  border-left: 2px solid transparent;
+  transition: background 0.1s, border-color 0.1s;
 }
-.ctx-item--layer:hover { background: rgba(255,255,255,0.06); }
-.layer-icon { font-size: 11px; flex-shrink: 0; width: 14px; }
+.ctx-layer-row:hover { background: rgba(255,255,255,0.05); }
+.ctx-layer-row.active {
+  background: rgba(232,137,29,0.12);
+  border-left-color: var(--gold);
+}
+.ctx-layer-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid rgba(240,230,218,0.3);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+.ctx-layer-radio:checked {
+  border-color: var(--gold);
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(232,137,29,0.25);
+}
+.layer-icon { font-size: 11px; flex-shrink: 0; width: 14px; text-align: center; }
 .layer-name { font-weight: 600; font-size: 11px; flex-shrink: 0; }
-.layer-snip { color: rgba(240,230,218,0.4); font-size: 10px; overflow: hidden; text-overflow: ellipsis; }
+.layer-snip { color: rgba(240,230,218,0.35); font-size: 10px; overflow: hidden; text-overflow: ellipsis; }
 .ctx-divider--layers { background: rgba(255,255,255,0.05); }
 
 /* ── AI SUGGESTION SECTION ──────────────────────────────── */
@@ -522,6 +629,25 @@ html, body {
 }
 .ctx-item--ai:hover {
   background: rgba(232,137,29,0.12);
+  color: #fff;
+}
+/* Action button — triggers a deterministic editor patch */
+.ctx-item--action {
+  color: #7ee8a2;
+  border-left: 2px solid #7ee8a2;
+  margin-top: 6px;
+}
+.ctx-item--action:hover {
+  background: rgba(126,232,162,0.12);
+  color: #fff;
+}
+/* Rollback button */
+.ctx-item--rollback {
+  color: #e8a07e;
+  border-left: 2px solid #e8a07e;
+}
+.ctx-item--rollback:hover {
+  background: rgba(232,160,126,0.12);
   color: #fff;
 }
 .ctx-divider--ai {
@@ -745,3 +871,167 @@ html, body {
 
 /* ── UTILITY ─────────────────────────────────────────────── */
 .hidden { display: none !important; }
+
+/* ── AI ASSIST INSIDE LAYER CONTEXT MENU ───────────────── */
+.ctx-ai-selected {
+  padding: 4px 12px 8px;
+  font-size: 10px;
+  color: rgba(240,230,218,0.48);
+  line-height: 1.35;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ctx-ai-prompt {
+  display: block;
+  width: calc(100% - 16px);
+  min-height: 58px;
+  margin: 4px 8px 8px;
+  padding: 8px 9px;
+  resize: vertical;
+  border-radius: 7px;
+  border: 1px solid rgba(240,230,218,0.14);
+  background: rgba(255,255,255,0.055);
+  color: var(--cream);
+  font: 11px/1.4 'Inter', -apple-system, sans-serif;
+  outline: none;
+}
+
+.ctx-ai-prompt:focus {
+  border-color: rgba(232,137,29,0.55);
+  background: rgba(255,255,255,0.075);
+}
+
+.ctx-ai-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0 8px 8px;
+}
+
+.ctx-ai-actions .ctx-item--ai {
+  justify-content: center;
+  padding: 8px 7px;
+  font-size: 11px;
+  border-left: 0;
+  border: 1px solid rgba(232,137,29,0.22);
+  background: rgba(232,137,29,0.07);
+}
+
+.ctx-ai-output {
+  display: block;
+  width: calc(100% - 16px);
+  max-width: 328px;
+  max-height: 230px;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  margin: 0 8px 8px;
+  padding: 9px;
+  border-radius: 7px;
+  background: rgba(0,0,0,0.24);
+  color: rgba(240,230,218,0.78);
+  font: 10.5px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overscroll-behavior: contain;
+}
+
+/* Context panel stability, close button, and internal scroll */
+.ctx-close-btn {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(240,230,218,0.62);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  z-index: 4;
+}
+.ctx-close-btn:hover {
+  background: rgba(232,112,112,0.18);
+  color: #fff;
+}
+.ctx-menu-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  flex: 1 1 auto;
+  overscroll-behavior: contain;
+  padding-right: 2px;
+}
+.ctx-menu-scroll::-webkit-scrollbar,
+.ctx-ai-output::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.ctx-menu-scroll::-webkit-scrollbar-thumb,
+.ctx-ai-output::-webkit-scrollbar-thumb {
+  background: rgba(240,230,218,0.18);
+  border-radius: 99px;
+}
+
+
+/* ============================================================
+   JBC FIX: keep AI answer contained inside context panel
+   Prevents AI text from overlapping Edit/Delete/Move actions
+   ============================================================ */
+
+.ctx-ai-section {
+  display: block !important;
+  position: relative !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 8px !important;
+  border-bottom: 1px solid rgba(232,137,29,0.18) !important;
+  flex: 0 0 auto !important;
+}
+
+.ctx-ai-output {
+  display: block !important;
+  position: relative !important;
+  width: calc(100% - 16px) !important;
+  max-width: 100% !important;
+  min-height: 42px !important;
+  max-height: 190px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  margin: 8px 8px 10px !important;
+  padding: 10px 10px 12px !important;
+  border-radius: 8px !important;
+  background: rgba(0,0,0,0.34) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  color: rgba(240,230,218,0.78) !important;
+  font: 10.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  z-index: 1 !important;
+}
+
+.ctx-ai-actions {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-bottom: 8px !important;
+}
+
+.ctx-ai-prompt {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.ctx-menu .ctx-divider,
+.ctx-menu .ctx-item {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.ctx-menu-scroll {
+  display: block !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+

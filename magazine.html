@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Magazine — JustBrokenCookies</title>
   <meta name="description" content="Thoughts on storytelling, branding, and the creative process from the JustBrokenCookies team.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="preload" href="images/jbc-rose-pattern-bg.webp" as="image" type="image/png">
   <link rel="stylesheet" href="css/style.css">
@@ -18,7 +16,6 @@
     .mag-header {
       text-align: center;
       padding: 120px 40px 40px;
-      border-bottom: 2px solid #fff;
       position: relative;
     }
     .mag-header .mag-issue {
@@ -59,7 +56,6 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: 70vh;
-      border-bottom: 2px solid #fff;
     }
     .mag-featured-image {
       position: relative;
@@ -95,7 +91,6 @@
       flex-direction: column;
       justify-content: center;
       padding: 60px 50px;
-      border-left: 2px solid #fff;
     }
     .mag-featured-content .mag-meta {
       font-family: var(--font-body);
@@ -150,7 +145,6 @@
     .mag-pullquote {
       text-align: center;
       padding: 60px 40px;
-      border-bottom: 2px solid #fff;
       position: relative;
     }
     .mag-pullquote blockquote {
@@ -192,7 +186,6 @@
       justify-content: space-between;
       align-items: baseline;
       padding: 0 40px 20px;
-      border-bottom: 1px solid rgba(184, 173, 160, 0.15);
       margin-bottom: 0;
     }
     .mag-section-head h3 {
@@ -215,14 +208,11 @@
       grid-template-columns: 1fr 1fr 1fr;
     }
     .mag-article {
-      border-right: 2px solid #fff;
-      border-bottom: 2px solid #fff;
       position: relative;
       overflow: hidden;
       transition: background 0.4s ease;
     }
     .mag-article:nth-child(3n) {
-      border-right: none;
     }
     .mag-article:hover {
       background: rgba(184, 173, 160, 0.04);
@@ -230,7 +220,6 @@
     .mag-article-image {
       aspect-ratio: 16/10;
       overflow: hidden;
-      border-bottom: 1px solid rgba(184, 173, 160, 0.12);
     }
     .mag-article-image img {
       width: 100%;
@@ -290,13 +279,10 @@
     .mag-two-up {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border-bottom: 2px solid #fff;
     }
     .mag-two-up .mag-article {
-      border-bottom: none;
     }
     .mag-two-up .mag-article:last-child {
-      border-right: none;
     }
 
     /* --- RESPONSIVE --- */
@@ -309,18 +295,14 @@
         aspect-ratio: 16/9;
       }
       .mag-featured-content {
-        border-left: none;
-        border-top: 2px solid #fff;
         padding: 40px 30px;
       }
       .mag-editorial-grid {
         grid-template-columns: 1fr 1fr;
       }
       .mag-article:nth-child(3n) {
-        border-right: 2px solid #fff;
       }
       .mag-article:nth-child(2n) {
-        border-right: none;
       }
       .mag-header {
         padding: 100px 24px 30px;
@@ -332,7 +314,6 @@
         grid-template-columns: 1fr;
       }
       .mag-article {
-        border-right: none !important;
       }
       .mag-featured-content {
         padding: 30px 20px;
@@ -349,14 +330,14 @@
     }
   </style>
 </head>
-<body>
+<body class="jbc-page-inner">
   <div class="page-transition"></div>
 
   <!-- ========== CURSOR ========== -->
   <div class="cursor-dot"></div>
   <div class="cursor-ring"></div>
 
-  <nav class="nav" id="navbar">
+  <nav class="nav scrolled" id="navbar">
     <div class="container">
       <a href="index.html" class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></a>
       <div class="nav-links" id="navLinks">
@@ -372,34 +353,34 @@
   </nav>
 
   <!-- ===== MAGAZINE MASTHEAD ===== -->
-  <section class="mag-header jbc-floral-page-header">
-    <span class="mag-issue">Issue No. 01 &mdash; Spring 2026</span>
+  <section class="mag-header jbc-floral-page-header" style="background-image: url(&quot;/images/editor-bg-85879a13a06b.webp&quot;) !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;">
+    <span class="mag-issue">Issue No. 01 — Spring 2026</span>
     <h1><span style="color:var(--gold);">The</span> <span style="color:var(--blush);">Magazine</span></h1>
-    <p class="mag-tagline">Stories, strategy &amp; the creative edge &mdash; from the JBC desk</p>
+    <p class="mag-tagline">Stories, strategy &amp; the creative edge — from the JBC desk</p>
   </section>
 
   <!-- ===== FEATURED HERO ARTICLE ===== -->
-  <article class="mag-featured jbc-editorial-section jbc-floral-blog-grid">
+  <article class="mag-featured jbc-editorial-section jbc-floral-blog-grid" style="background-image: url(&quot;/images/editor-bg-06579110f90c.webp&quot;) !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;">
     <div class="mag-featured-image">
       <img decoding="async" loading="lazy" src="images/blog/blog-1.webp" alt="Why the Best Brand Stories Are the Ones You Almost Didn't Tell">
       <span class="mag-cat-badge">Storytelling</span>
     </div>
     <div class="mag-featured-content">
-      <p class="mag-meta">Cover Story &mdash; April 15, 2026</p>
+      <p class="mag-meta">Cover Story — April 15, 2026</p>
       <h2><a href="magazine/post-01.html">Why the Best Brand Stories Are the Ones You Almost Didn't Tell</a></h2>
-      <p class="mag-excerpt">The stories that resonate most are rarely the ones you planned from the start. They're the ones you hesitated to share &mdash; and that hesitation is the signal.</p>
-      <a href="magazine/post-01.html" class="mag-read-link">Read the full story &rarr;</a>
+      <p class="mag-excerpt">The stories that resonate most are rarely the ones you planned from the start. They're the ones you hesitated to share — and that hesitation is the signal.</p>
+      <a href="magazine/post-01.html" class="mag-read-link">Read the full story →</a>
     </div>
   </article>
 
   <!-- ===== PULL QUOTE ===== -->
   <div class="mag-pullquote">
     <blockquote>The brands we remember are the ones brave enough to show their cracks.</blockquote>
-    <span class="pq-attr">&mdash; JustBrokenCookies</span>
+    <span class="pq-attr">— JustBrokenCookies</span>
   </div>
 
   <!-- ===== EDITORIAL GRID ===== -->
-  <section class="mag-grid-section">
+  <section class="mag-grid-section" style="background-image: url(&quot;/images/editor-bg-3aa8ca807b9c.webp&quot;) !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;">
     <div class="mag-section-head">
       <h3>Latest Stories</h3>
       <span class="mag-issue-num">Vol. 1</span>
@@ -412,7 +393,7 @@
         </div>
         <div class="mag-article-body">
           <span class="mag-cat">Design</span>
-          <h4><a href="#">Content Strategy Is Not a Calendar &mdash; It's a Compass</a></h4>
+          <h4><a href="#">Content Strategy Is Not a Calendar — It's a Compass</a></h4>
           <p class="mag-snippet">Stop thinking of content strategy as a schedule to fill. Start thinking of it as a direction to follow.</p>
           <span class="mag-date">April 8, 2026</span>
         </div>
@@ -453,7 +434,7 @@
       </div>
       <div class="mag-article-body">
         <span class="mag-cat">Culture</span>
-        <h4><a href="#">Broken Cookies Taste Better: Our Manifesto</a></h4>
+        <h4 class=""><a href="#">Broken Cookies Taste Better: Our Manifesto</a></h4>
         <p class="mag-snippet">Why we named ourselves after broken cookies, and what it means for how we create.</p>
         <span class="mag-date">March 2, 2026</span>
       </div>
@@ -464,25 +445,25 @@
       </div>
       <div class="mag-article-body">
         <span class="mag-cat">Process</span>
-        <h4><a href="#">Behind the Scenes: How We Build a Campaign from Zero</a></h4>
-        <p class="mag-snippet">A transparent look at our creative process &mdash; from first client call to final deliverable.</p>
+        <h4><a href="#" class="">Behind the Scenes: How We Build a Campaign from Zero</a></h4>
+        <p class="mag-snippet">A transparent look at our creative process — from first client call to final deliverable.</p>
         <span class="mag-date">February 18, 2026</span>
       </div>
     </div>
   </div>
 
   <!-- ===== CTA ===== -->
-  <section class="cta-section jbc-editorial-section jbc-floral-cta">
+  <section class="cta-section jbc-editorial-section jbc-floral-cta" data-editor-id="cta-section">
     <div class="container" style="text-align:center;">
-      <h2 class="section-title"><span style="color:var(--gold);">Got a </span><span style="color:var(--blush);">Story </span><span style="color:var(--wine);">to Tell?</span></h2>
+      <h2 class="section-title" data-editor-id="cta-title"><span style="color:var(--gold);">Got a </span><span style="color:var(--blush);">Story </span><span style="color:var(--wine);">to Tell?</span></h2>
       <p class="section-subtitle">we'd love to help you tell it</p>
-      <a href="contact.html" class="btn btn-primary">Start a Project</a>
+      <a href="contact.html" class="btn btn-primary" data-editor-id="cta-button">Start a Project</a>
     </div>
   </section>
 
-  <footer class="footer jbc-editorial-footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
+  <footer class="footer jbc-editorial-footer" data-editor-id="footer-section">
+    <div class="footer-grid" data-editor-id="footer-grid">
+      <div class="footer-brand" data-editor-id="footer-brand">
         <div class="nav-logo"><span class="just">JUST</span><span class="broken">BROKEN</span><span class="cookies">COOKIES</span></div>
         <p>A storytelling agency that cracks open the ordinary to reveal the extraordinary.</p>
         <div class="social-links">
@@ -496,13 +477,14 @@
       <div class="footer-col"><h4>Services</h4><a href="services.html">Define</a><a href="services.html">Design</a><a href="services.html">Describe</a></div>
       <div class="footer-col"><h4>Contact</h4><a href="mailto:hello@justbrokencookies.com">hello@justbrokencookies.com</a><a href="contact.html">Send a Message</a></div>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" data-editor-id="footer-bottom">
       <span><span style="color:var(--gold);">JUST</span><span style="color:var(--blush);">BROKEN</span><span style="color:var(--wine);">COOKIES</span></span>
-      <span>&copy; 2026</span>
+      <span>© 2026</span>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
   <script src="js/editor-refs.js"></script>
-</body>
-</html>
+
+
+</body></html>

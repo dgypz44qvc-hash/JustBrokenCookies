@@ -1,79 +1,103 @@
-# Original unoptimized mobile images (use images/mobile/ WebP versions instead)
-images/images mobile/
+# ── Server backup files ──────────────────────────────────────
+server.backup-*.js
+server.emergency-*.js
 
-# Backup folders — local only
-backups/
-emergency-backups/
-editor-audit/
+# ── JS emergency backups ─────────────────────────────────────
+js/local-editor.emergency-*.js
 
-# Node
+# ── Utility/cleanup scripts ──────────────────────────────────
+COMMIT_AND_CLEANUP.sh
+cleanup-images.sh
+delete-png-duplicates.sh
+
+# ── Editor temp image saves (timestamped) ────────────────────
+# Pattern: name-TIMESTAMP.ext or name-TIMESTAMP-TIMESTAMP.ext
+images/bacground-*.webp
+images/bacground-*.png
+images/bacground.webp
+images/bespoke-*.png
+images/bespoke.png
+images/bg-cta-*.webp
+images/fashiongold-*.png
+images/fashiongold.png
+images/london1-*.png
+images/london1.png
+images/londondream.png
+images/miramare-*.png
+images/miramare.png
+images/tssort.png
+
+# ── Editor bg versions (unreferenced intermediates) ──────────
+images/editor-bg-1441821c9a7e.webp
+images/editor-bg-38db8d27e066.webp
+images/editor-bg-58ee9bf77781.webp
+images/editor-bg-7fb1e51763.webp
+images/editor-bg-8c9dcd583b.webp
+images/editor-bg-925dc5964af0.png
+images/editor-bg-934e2029c1-*.webp
+images/editor-bg-c1dc22bdcf-*.webp
+images/editor-bg-dc78dca72681.webp
+images/editor-bg-e8228c506cd1.png
+images/editor-bg-ef553643927f.webp
+images/editor-bg-f1460942b4a3.webp
+images/editor-bg-f550fea69e48.webp
+images/editor-bg-f7c5701a63cd.webp
+
+# ── Unused/replaced hero images ──────────────────────────────
+images/herosea.webp
+images/newhero2.webp
+images/notitlehero.webp
+images/partenonhero.webp
+images/seaaplshero.webp
+images/06_4x5_instagram_portrait_1080x1350.webp
+
+# ── Test/temp files ──────────────────────────────────────────
+images/.test-write
+images/*.gif
+
+# ── Node / OS junk ───────────────────────────────────────────
 node_modules/
-package-lock.json
+.DS_Store
+*.log
+.env
 
-# Backup HTML files
-*.backup-*.html
-*.bad-*.html
+# ── CSS backup files ─────────────────────────────────────────
+css/*.backup-*.css
+css/style.backup-*.css
+css/style.bad-*.css
+css/style.broken-*.css
+css/style-before-*.css
+
+# ── JS backup files ──────────────────────────────────────────
+js/local-editor.backup-*.js
+js/main.backup-*.js
+
+# ── HTML backup files ────────────────────────────────────────
+editor.backup-*.html
 index.backup-*.html
 
-# Backup SVGs
-images/*.backup-*.svg
-
-# Screenshots
-images/Screenshot*
-images/screenshot*
-
-# macOS
-.DS_Store
-**/.DS_Store
-
-# Audit scripts & PNGs
-*.audit.js
-*-audit.js
-*-audit.png
-mobile-audit*
-mobile-screenshot*
-work-title-*
-selected-work-*
-section-gap-*
-services-internal-*
-
-# Zip archives
+# ── ZIP archives in repo root ────────────────────────────────
 *.zip
+JBC-Site-v*.zip
+JustBrokenCookies-Website.zip
 
-# Editor temp
-JBC
-
-# CSS backup files — keep locally but don't deploy to Netlify
-css/*.backup-*.css
-css/*.bad-*.css
-css/*.broken-*.css
-css/style-before-*.css
-css/style.backup-before-*.css
-css/mobile.backup-*.css
-css/editor-overrides.backup-*.css
-
-# JS backup files
-js/*.backup-*.js
-js/main.backup-*.js
-js/local-editor.backup-*.js
-js/local-editor-before-*.js
-
-# Raw/source image assets not used on live site
-images/added-*.png
-images/fullhero*.png
-images/magnific_*.png
-images/freepik_*.png
-images/jbc-botanical-backgrounds/
-images/sections/section-bg-*.png
-images/mobile/golden*.png
-images/mobile/goldeneye*.png
-images/mobile/jbcrosegold.png
-images/mobile/newrosepattern.png
-images/mobile/princess.png
-images/mobile/valegoldnails.png
-images/mobile/valemaybe.png
-images/mobile/goldenmarough.png
-images/mobile/goldenman.png
-images/mobile/halfgoldenman.png
-images/mobile/duo.png
+# ── Backup/archive directories ───────────────────────────────
+backups/
 _originals-for-downloads/
+emergency-backups/
+images/jbc-botanical-backgrounds/
+images/jbc_roses_gold_dust_11_common_formats/
+
+# ── Image backups / SVG backups ──────────────────────────────
+images/*.backup-*.svg
+images/creations-title-card.backup-*.svg
+images/Screenshot-*.webp
+images/jbc-botanical-backgrounds*.zip
+images/jbc_roses_gold_dust_11_common_formats*.zip
+
+# ── Misc ─────────────────────────────────────────────────────
+k"q
+
+# ── Old PNGs replaced by webp ────────────────────────────────
+images/editor-bg-85879a13a06b.png
+images/editor-bg-d2364056d56a.png

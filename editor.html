@@ -146,6 +146,7 @@
 
   <!-- ── RIGHT-CLICK CONTEXT MENU ──────────────────────── -->
   <div id="ctx-menu" class="ctx-menu hidden" role="menu">
+    <div id="ctx-drag-handle" class="ctx-drag-handle" title="Drag to move menu">⠿</div>
     <!-- Layers at cursor inject here -->
     <div class="ctx-layers-section"></div>
     <div class="ctx-divider ctx-divider--layers hidden" id="ctx-div-layers"></div>
@@ -164,6 +165,18 @@
     <button class="ctx-item ctx-item--replace" data-action="replace-img" role="menuitem">🖼 Replace Image</button>
     <button class="ctx-item ctx-item--replace" data-action="replace-bg" role="menuitem">🎨 Replace Background</button>
     <button class="ctx-item ctx-item--danger" data-action="remove-bg" role="menuitem">✕ Remove Background Image</button>
+    <!-- Image overlay opacity control (shown only when an image container is at cursor) -->
+    <div class="ctx-divider ctx-divider--overlay hidden" id="ctx-div-overlay"></div>
+    <div id="ctx-overlay-section" class="ctx-overlay-section hidden">
+      <div class="ctx-overlay-label" id="ctx-overlay-label">⬛ IMAGE OVERLAY</div>
+      <div class="ctx-overlay-row">
+        <button class="ctx-item ctx-item--overlay" data-action="overlay-off"     role="menuitem" title="Remove gradient overlay completely">✕ Off</button>
+        <button class="ctx-item ctx-item--overlay" data-action="overlay-low"     role="menuitem" title="Light overlay (25%)">░ Light</button>
+        <button class="ctx-item ctx-item--overlay" data-action="overlay-mid"     role="menuitem" title="Medium overlay (50%)">▒ Med</button>
+        <button class="ctx-item ctx-item--overlay" data-action="overlay-high"    role="menuitem" title="Heavy overlay (80%)">▓ Heavy</button>
+        <button class="ctx-item ctx-item--overlay" data-action="overlay-restore" role="menuitem" title="Restore original CSS default">↺ Reset</button>
+      </div>
+    </div>
     <div class="ctx-divider"></div>
     <button class="ctx-item ctx-item--add" data-action="add-layer" role="menuitem">＋ Add as Top Layer</button>
     <button class="ctx-item ctx-item--add" data-action="add-bg" role="menuitem">🖼 Set as Background</button>
@@ -185,5 +198,6 @@
 </div><!-- /editor-shell -->
 
 <script src="js/local-editor.js"></script>
+  <script src="js/local-ai-inspector.js"></script>
 </body>
 </html>

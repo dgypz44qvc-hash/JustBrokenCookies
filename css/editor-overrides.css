@@ -5986,3 +5986,353 @@ body.jbc-page-home .hero + section > * {
     height: clamp(110px, 16vh, 220px) !important;
   }
 }
+
+/* =========================================================
+   JBC BACKGROUND IMAGE RATIO GUARD
+   Prevent editor-added photographic backgrounds from stretching.
+   Use cover for real images, never 100% 100% distortion.
+   ========================================================= */
+
+section[style*="background-image"],
+.hero[style*="background-image"],
+.jbc-editorial-section[style*="background-image"],
+.page-header[style*="background-image"],
+.cta-section[style*="background-image"],
+footer[style*="background-image"] {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Actual image-based hero backgrounds should also keep ratio. */
+.hero picture,
+.hero .hero-full-bg {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero .hero-full-bg {
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* EDITOR SAFE PATCH: undefined */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("undefined") — never blocked by container */
+/* Current section: "section-bottom-fade: hero-section" — Carousel untouched */
+section.hero[data-editor-id="hero-section"]::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 260px !important;
+  background: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 65%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  section.hero[data-editor-id="hero-section"]::before {
+    height: 160px !important;
+  }
+}
+/* END EDITOR SAFE PATCH: undefined */
+/* EDITOR SAFE PATCH: section-bottom-fade: hero-section */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("featured-work-section") — never blocked by container */
+/* Current section: "hero-section" — Carousel untouched */
+#featured-work.jbc-editorial-section.jbc-floral-work::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  /* Extend 220px ABOVE featured-work so the gradient bridges the seam
+     and fades the hero's bottom edge. featured-work is later in the DOM
+     than .hero, so this pseudo-element naturally paints on top of hero. */
+  top: -220px !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  /* 220px above seam + 260px inside featured-work = 480px total */
+  height: 480px !important;
+  /* Gradient breakdown (total 480px):
+       0%  = 220px above seam (in hero)  → fully transparent, hero shows
+      40%  = 28px above seam             → darkening fast
+      46%  = at the seam (220/480=45.8%) → fully dark — hard seam masked
+      60%  = 67px into featured-work     → still quite dark
+      82%  = 154px into featured-work    → fading out
+     100%  = 260px into featured-work    → transparent, section content shows
+  */
+  background-image: linear-gradient(
+    to bottom,
+    transparent                  0%,
+    rgba(5,5,5,0)                30%,
+    rgba(5,5,5,0.55)             40%,
+    rgba(5,5,5,1)                46%,
+    rgba(5,5,5,0.88)             60%,
+    rgba(5,5,5,0.4)              82%,
+    transparent                  100%
+  ) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: top center !important;
+  background-color: transparent !important;
+  /* Kill any mask that would hide the gradient */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  #featured-work.jbc-editorial-section.jbc-floral-work::before {
+    top: -140px !important;
+    height: 320px !important;
+    background-image: linear-gradient(
+      to bottom,
+      transparent              0%,
+      rgba(5,5,5,0)            28%,
+      rgba(5,5,5,0.55)         40%,
+      rgba(5,5,5,1)            44%,
+      rgba(5,5,5,0.85)         58%,
+      rgba(5,5,5,0.4)          80%,
+      transparent              100%
+    ) !important;
+  }
+}
+/* END EDITOR SAFE PATCH: section-bottom-fade: hero-section */
+/* EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551171912-30nb */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("process-section") — never blocked by container */
+/* Current section: "jbc-1777551171912-30nb" — Carousel untouched */
+#services-overview.jbc-editorial-section.jbc-floral-process::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 260px !important;
+  /* Gradient — reset every background sub-property explicitly */
+  background-image: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 65%, transparent 100%) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: top center !important;
+  background-color: transparent !important;
+  /* Kill any mask that would hide the gradient */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  #services-overview.jbc-editorial-section.jbc-floral-process::before {
+    height: 160px !important;
+  }
+}
+/* END EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551171912-30nb */
+/* EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551738761-3mns */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("jbc-visual-gallery") — never blocked by container */
+/* Current section: "jbc-1777551738761-3mns" — Carousel untouched */
+#jbc-visual-gallery.jbc-editorial-section.jbc-floral-gallery::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 260px !important;
+  /* Gradient — reset every background sub-property explicitly */
+  background-image: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 65%, transparent 100%) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: top center !important;
+  background-color: transparent !important;
+  /* Kill any mask that would hide the gradient */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  #jbc-visual-gallery.jbc-editorial-section.jbc-floral-gallery::before {
+    height: 160px !important;
+  }
+}
+/* END EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551738761-3mns */
+/* EDITOR SAFE PATCH: section-bottom-fade: cta-section */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("footer-section") — never blocked by container */
+/* Current section: "cta-section" — Carousel untouched */
+footer.footer.jbc-editorial-footer[data-editor-id="footer-section"]::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 260px !important;
+  /* Gradient — reset every background sub-property explicitly */
+  background-image: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 65%, transparent 100%) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: top center !important;
+  background-color: transparent !important;
+  /* Kill any mask that would hide the gradient */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  footer.footer.jbc-editorial-footer[data-editor-id="footer-section"]::before {
+    height: 160px !important;
+  }
+}
+/* END EDITOR SAFE PATCH: section-bottom-fade: cta-section */
+/* EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551171912-4dr1 */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("footer-section") — never blocked by container */
+/* Current section: "jbc-1777551171912-4dr1" — Carousel untouched */
+footer.footer.jbc-editorial-footer[data-editor-id="footer-section"]::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 260px !important;
+  /* Gradient — reset every background sub-property explicitly */
+  background-image: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 65%, transparent 100%) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: top center !important;
+  background-color: transparent !important;
+  /* Kill any mask that would hide the gradient */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  footer.footer.jbc-editorial-footer[data-editor-id="footer-section"]::before {
+    height: 160px !important;
+  }
+}
+/* END EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551171912-4dr1 */
+/* EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551171912-e6pe */
+/* Applied by JBC local editor — remove this entire block to undo */
+/* Fade on ::before of next section ("process-section") — never blocked by container */
+/* Current section: "jbc-1777551171912-e6pe" — Carousel untouched */
+#services-overview.jbc-editorial-section.jbc-floral-process::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: 260px !important;
+  /* Gradient — reset every background sub-property explicitly */
+  background-image: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 65%, transparent 100%) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: top center !important;
+  background-color: transparent !important;
+  /* Kill any mask that would hide the gradient */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+@media (max-width: 768px) {
+  #services-overview.jbc-editorial-section.jbc-floral-process::before {
+    height: 160px !important;
+  }
+}
+/* END EDITOR SAFE PATCH: section-bottom-fade: jbc-1777551171912-e6pe */
+/* EDITOR SAFE PATCH: service-section-bg-lighten */
+/* Applied by JBC local editor — remove this block to restore default section darkness */
+
+/* 1. Soften section dark-edge vignette (was 0.88, now subtle) */
+body:not([data-editor-id]) .jbc-floral-service-detail::after,
+.jbc-floral-service-detail::after {
+  opacity: 0.36 !important;
+}
+
+/* 2. Remove solid black card backgrounds — let floral pattern breathe */
+body.jbc-page-inner .service-detail,
+body:not([data-editor-id]) .jbc-floral-service-detail,
+.jbc-floral-service-detail {
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+body:not([data-editor-id]) .service-detail-image,
+.service-detail-image {
+  background: transparent !important;
+}
+
+/* 3. Floral rose pattern more visible */
+body:not([data-editor-id]) .jbc-floral-service-detail-1::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-2::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-3::before,
+body:not([data-editor-id]) .jbc-floral-service-detail-4::before,
+.jbc-floral-service-detail-1::before,
+.jbc-floral-service-detail-2::before,
+.jbc-floral-service-detail-3::before,
+.jbc-floral-service-detail-4::before {
+  opacity: 0.42 !important;
+}
+
+/* 4. Cinematic image veil — full original dark B&W treatment restored on boxes */
+.service-detail-image::before,
+.about-image::before,
+.portfolio-item::before,
+.portfolio-item.jbc-editorial-work-item::before,
+.blog-card-image::before,
+.team-card::before,
+.mag-featured-image::before,
+.mag-article-image::before {
+  opacity: 1 !important;
+  -webkit-backdrop-filter: grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
+  backdrop-filter:         grayscale(1) sepia(0.16) saturate(0.76) contrast(1.14) brightness(0.82) !important;
+}
+
+/* 5. Images start at 40% opacity so they're always visible, scroll reveals to full */
+.service-detail-image {
+  opacity: 0.4;
+}
+/* 6. Remove white divider lines between service sections */
+.service-detail {
+  border-bottom: none !important;
+}
+/* END EDITOR SAFE PATCH: service-section-bg-lighten */

@@ -1,0 +1,448 @@
+/* ============================================================
+   JBC Mobile Next — css/mobile-next.css
+   Enhancement layer. Loads AFTER mobile.css.
+   ✓ Only affects ≤ 768px
+   ✓ Never overrides mobile.css card/layout structure
+   ✓ Never touches .jbc-cinema-* or editor elements
+   ✓ Respects prefers-reduced-motion
+   ============================================================ */
+
+
+/* ── 0. Touch & performance baseline ─────────────────────── */
+@media (max-width: 768px) {
+
+  /* Touch tap highlight off for interactive elements */
+  a, button, [role="button"], .btn, .hamburger, .service-card,
+  .jbc-cinema-panel, .jbc-gs-card, .portfolio-item {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Ensure all interactive targets are at least 44px */
+  .nav-links a { min-height: 44px; display: flex; align-items: center; }
+  .footer-col a { min-height: 36px; display: flex; align-items: center; }
+
+  /* Smooth momentum scroll for containers */
+  .jbc-cinema-ring {
+    -webkit-overflow-scrolling: touch !important;
+    scroll-behavior: smooth !important;
+  }
+
+}
+
+
+/* ── 1. Navigation polish ─────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Nav scrolled: tighten shadow */
+  .nav.scrolled {
+    box-shadow: 0 2px 24px rgba(0,0,0,0.5) !important;
+  }
+
+  /* Hamburger active state — X morphs */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg) !important;
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg) !important;
+  }
+
+  /* Full-screen nav menu — staggered link entrance */
+  .nav-links.open a {
+    animation: jbc-nav-slide 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .nav-links.open a:nth-child(1) { animation-delay: 0.06s; }
+  .nav-links.open a:nth-child(2) { animation-delay: 0.12s; }
+  .nav-links.open a:nth-child(3) { animation-delay: 0.18s; }
+  .nav-links.open a:nth-child(4) { animation-delay: 0.24s; }
+  .nav-links.open a:nth-child(5) { animation-delay: 0.30s; }
+  .nav-links.open a:nth-child(6) { animation-delay: 0.36s; }
+
+  @keyframes jbc-nav-slide {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+}
+
+
+/* ── 2. Hero — premium mobile treatment ───────────────────── */
+@media (max-width: 768px) {
+
+  /* Portrait hero image — center top to show face/brand */
+  .hero.jbc-floral-hero {
+    background-image: url('../images/mobilelanding-768.webp') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .hero-full-bg {
+    object-position: center top !important;
+  }
+
+  /* Cinematic bottom fade — draws eye to content below */
+  .hero.jbc-floral-hero::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(5,5,5,0.04) 0%,
+      rgba(5,5,5,0.00) 28%,
+      rgba(5,5,5,0.40) 72%,
+      rgba(5,5,5,0.88) 100%
+    ) !important;
+    pointer-events: none !important;
+    display: block !important;
+  }
+
+  /* Scroll indicator at bottom of hero */
+  .hero.jbc-floral-hero::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 1px !important;
+    height: 40px !important;
+    background: linear-gradient(to bottom, rgba(240,230,218,0.6), rgba(240,230,218,0)) !important;
+    z-index: 2 !important;
+    display: block !important;
+    animation: jbc-scroll-line 2s ease-in-out infinite !important;
+  }
+
+  @keyframes jbc-scroll-line {
+    0%   { opacity: 0; transform: translateX(-50%) scaleY(0); transform-origin: top; }
+    40%  { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) scaleY(1); transform-origin: top; }
+  }
+
+}
+
+
+/* ── 3. Manifesto ticker — refined ───────────────────────── */
+@media (max-width: 768px) {
+
+  .manifesto {
+    letter-spacing: 0.2em !important;
+  }
+
+  .manifesto .marquee-track {
+    animation-duration: 18s !important;
+  }
+
+}
+
+
+/* ── 4. Section headers — editorial rhythm ────────────────── */
+@media (max-width: 768px) {
+
+  /* Orange accent line above section number/label */
+  .sec-header {
+    padding-top: 56px !important;
+    padding-bottom: 28px !important;
+  }
+
+  .sec-header::before {
+    content: '' !important;
+    display: block !important;
+    width: 32px !important;
+    height: 1px !important;
+    background: #E8891D !important;
+    margin-bottom: 14px !important;
+  }
+
+}
+
+
+/* ── 5. Featured Work carousel — swipe polish ─────────────── */
+@media (max-width: 768px) {
+
+  /* Padding so first/last panel peek */
+  #featured-work .jbc-cinema-ring {
+    padding: 0 20px 20px !important;
+    gap: 12px !important;
+    scroll-padding-left: 20px !important;
+  }
+
+  /* Panels — slightly taller, softer corners */
+  #featured-work .jbc-cinema-panel {
+    flex: 0 0 76vw !important;
+    width: 76vw !important;
+    height: 56vw !important;
+    border-radius: 18px !important;
+    margin: 0 !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7) !important;
+  }
+
+  /* Active-ish panel: the one scrolled to center looks full;
+     neighbours appear slightly faded — pure CSS, no JS */
+  #featured-work .jbc-cinema-panel {
+    transition: opacity 0.3s ease !important;
+  }
+
+  /* Meta label — cleaner */
+  #featured-work .jbc-cinema-panel-meta {
+    padding: 64px 18px 18px !important;
+    background: linear-gradient(
+      transparent,
+      rgba(5,5,5,0.65) 40%,
+      rgba(5,5,5,0.95)
+    ) !important;
+  }
+
+  #featured-work .jbc-cinema-panel-meta strong {
+    font-size: 16px !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Swipe hint pill */
+  .jbc-swipe-hint {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 0 0 8px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.22em !important;
+    text-transform: uppercase !important;
+    color: rgba(240,230,218,0.35) !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .jbc-swipe-hint svg {
+    opacity: 0.4 !important;
+  }
+
+  .jbc-swipe-hint-wrapper {
+    text-align: center !important;
+    padding: 0 0 24px !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+}
+
+
+/* ── 6. Services overview — card polish ──────────────────── */
+@media (max-width: 768px) {
+
+  /* Keep mobile.css card structure — just add accent glow */
+  .service-card.jbc-editorial-card {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Warm glow in top-left corner of each card */
+  .service-card.jbc-editorial-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -40px !important;
+    left: -40px !important;
+    width: 120px !important;
+    height: 120px !important;
+    background: radial-gradient(circle, rgba(232,137,29,0.12), transparent 70%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  .service-card.jbc-editorial-card > * {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Number — accent line grows on scroll (CSS only) */
+  .service-num {
+    position: relative !important;
+  }
+
+}
+
+
+/* ── 7. Visual gallery — touch drag hint ─────────────────── */
+@media (max-width: 768px) {
+
+  #jbc-gradient-stage {
+    cursor: grab !important;
+    touch-action: pan-y !important;
+  }
+
+  #jbc-gradient-stage:active {
+    cursor: grabbing !important;
+  }
+
+}
+
+
+/* ── 8. Testimonial — editorial pull-quote style ─────────── */
+@media (max-width: 768px) {
+
+  .testi-brutal {
+    padding: 0 32px !important;
+  }
+
+  /* Large decorative open-quote */
+  .testi-content::before {
+    content: '\201C' !important;
+    display: block !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 72px !important;
+    line-height: 0.7 !important;
+    color: #E8891D !important;
+    opacity: 0.4 !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+  }
+
+}
+
+
+/* ── 9. CTA section — fix absolute positioned children ───── */
+@media (max-width: 768px) {
+
+  /* Reset any inline absolute positioning from desktop */
+  .cta-section .container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+
+  .cta-section .section-subtitle,
+  .cta-section .btn,
+  .cta-section .section-title,
+  .cta-section [style*="position: absolute"],
+  .cta-section [style*="position:absolute"] {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+
+  .cta-section .section-title {
+    font-size: clamp(28px, 8vw, 42px) !important;
+    line-height: 1.05 !important;
+  }
+
+  .cta-section .btn {
+    margin: 0 auto !important;
+  }
+
+}
+
+
+/* ── 10. Footer — breathing + social ────────────────────── */
+@media (max-width: 768px) {
+
+  .social-links a:hover,
+  .social-links a:active {
+    color: #E8891D !important;
+  }
+
+  .footer-col a:hover,
+  .footer-col a:active {
+    color: #E8891D !important;
+  }
+
+}
+
+
+/* ── 11. Subtle scroll reveals (never fully hidden) ───────── */
+/*
+   Elements start at 88% opacity + 16px down.
+   On viewport entry they animate to full.
+   This means content is ALWAYS readable — never invisible.
+*/
+@media (max-width: 768px) {
+
+  .jbc-reveal {
+    opacity: 0.88;
+    transform: translateY(16px);
+    transition:
+      opacity  0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .jbc-reveal.is-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* Staggered grid children */
+  .jbc-reveal-stagger > * {
+    opacity: 0.85;
+    transform: translateY(14px);
+    transition:
+      opacity  0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .jbc-reveal-stagger.is-visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.04s; }
+  .jbc-reveal-stagger.is-visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.12s; }
+  .jbc-reveal-stagger.is-visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.20s; }
+  .jbc-reveal-stagger.is-visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.28s; }
+  .jbc-reveal-stagger.is-visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.36s; }
+  .jbc-reveal-stagger.is-visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.44s; }
+
+}
+
+
+/* ── 12. Reduced motion — zero animation ─────────────────── */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+
+  .jbc-reveal,
+  .jbc-reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero.jbc-floral-hero::after {
+    display: none !important;
+    animation: none !important;
+  }
+
+  .nav-links.open a {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  @keyframes jbc-nav-slide { from {} to {} }
+  @keyframes jbc-scroll-line { from {} to {} }
+
+}
+
+
+/* ── 13. Safe overrides for common smash points ─────────── */
+@media (max-width: 768px) {
+
+  /* Prevent any element from punching outside viewport */
+  img, video, iframe, svg, canvas {
+    max-width: 100% !important;
+  }
+
+  /* Ensure containers never cause horizontal scroll */
+  .container {
+    overflow: hidden !important;
+  }
+
+  /* Section backgrounds never cause overflow */
+  section {
+    overflow-x: hidden !important;
+  }
+
+  /* Remove desktop hover states that can get "stuck" on touch */
+  .service-card:hover,
+  .portfolio-item:hover {
+    transform: none !important;
+  }
+
+}

@@ -31,6 +31,36 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ---- BACKGROUND IMAGE RATIO GUARD ----
+  // The editor sometimes saves photo backgrounds with background-size: 100% 100%,
+  // which stretches images. Convert those baked inline cases to cover so images keep ratio.
+  (function jbcBackgroundRatioGuard() {
+    const fix = () => {
+      document.querySelectorAll('[style*="background-image"]').forEach((el) => {
+        const bg = el.style.backgroundImage;
+        if (!bg || bg === 'none') return;
+
+        const size = (el.style.backgroundSize || '').trim().toLowerCase();
+
+        if (size === '100% 100%' || size.includes('100% 100%')) {
+          el.style.setProperty('background-size', 'cover', 'important');
+        }
+
+        if (!el.style.backgroundRepeat) {
+          el.style.setProperty('background-repeat', 'no-repeat', 'important');
+        }
+
+        if (!el.style.backgroundPosition) {
+          el.style.setProperty('background-position', 'center center', 'important');
+        }
+      });
+    };
+
+    fix();
+    window.addEventListener('load', fix, { once: true });
+    setTimeout(fix, 300);
+  })();
+
   // ---- PAGE TYPE FLAG ----
   // Gives CSS a safe way to style non-home pages without touching index/home.
   const jbcPath = window.location.pathname.split('/').pop() || 'index.html';
@@ -66,8 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---- PAGE TRANSITIONS ----
+  // Skip entirely in editor mode — the agent blocks navigation, but the transition
+  // overlay would still fire and cover the whole page (making placed images "disappear").
   const pageTransition = document.querySelector('.page-transition');
-  if (pageTransition) {
+  if (pageTransition && !document.body.dataset.editorId) {
     document.querySelectorAll('a[href]').forEach(link => {
       const href = link.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('mailto:') ||
@@ -315,12 +347,31 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // ---- SCROLL REVEAL ----
-  const revealElements = document.querySelectorAll(
+  // Skip in editor mode — clip-path and opacity:0 animations hide elements from
+  // document.elementsFromPoint(), breaking the context-menu layer detection.
+  if (document.body.dataset.editorId) {
+    // Editor mode: just make sure everything is visible immediately
+    document.querySelectorAll(
+      '.fade-up, .reveal, .service-card, .value-card, .process-card, .blog-card, ' +
+      '.portfolio-item, .team-card, .stat-item, .contact-info-item, ' +
+      '.service-detail, .section-title, .section-label, .section-subtitle, ' +
+      '.sec-header, .about-text, .testi-content, .about-image, ' +
+      '.service-detail-image, .about-image'
+    ).forEach(el => {
+      el.style.opacity    = '';
+      el.style.filter     = '';
+      el.style.transform  = '';
+      el.style.clipPath   = '';
+      el.style.transition = '';
+    });
+  }
+
+  const revealElements = !document.body.dataset.editorId ? document.querySelectorAll(
     '.fade-up, .reveal, .service-card, .value-card, .process-card, .blog-card, ' +
     '.portfolio-item, .team-card, .stat-item, .contact-info-item, ' +
     '.service-detail, .section-title, .section-label, .section-subtitle, ' +
     '.sec-header, .about-text, .testi-content, .about-image'
-  );
+  ) : [];
 
   const isMobileReveal = window.innerWidth <= 768;
 
@@ -396,6 +447,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- IMAGE CLIP / SLIDE REVEAL ----
   document.querySelectorAll('.about-image, .service-detail-image').forEach(el => {
+    // In editor mode: skip all clip-path/opacity animations — they hide elements from
+    // elementsFromPoint() and make it impossible to right-click on the image area
+    if (document.body.dataset.editorId) return;
+
     if (isMobileReveal) {
       // Mobile: simple fade in instead of clip-path (avoids paint jank)
       el.style.opacity = '0';
@@ -410,13 +465,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }, { threshold: 0.1 });
       imgFadeObs.observe(el);
     } else {
-      // Desktop: cinematic clip-path wipe
-      el.style.clipPath = 'inset(100% 0 0 0)';
-      el.style.transition = 'clip-path 1.2s cubic-bezier(0.16,1,0.3,1)';
+      // Desktop: gentle opacity reveal — image visible but faded, scrolls to full
+      el.style.opacity = '0.4';
+      el.style.transform = 'scale(1.04)';
+      el.style.transition = 'opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.2s cubic-bezier(0.16,1,0.3,1)';
       const imgObs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            setTimeout(() => { entry.target.style.clipPath = 'inset(0 0 0 0)'; }, 200);
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'scale(1)';
+            }, 200);
             imgObs.unobserve(entry.target);
           }
         });
@@ -587,6 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- PARALLAX ON IMAGES ----
   document.querySelectorAll('.portfolio-item img, .about-image img, .service-detail-image img').forEach(img => {
+    if (document.body.dataset.editorId) return; // no parallax in editor — keeps elements at expected hit positions
     img.style.transition = 'transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s ease';
 
     const imgParallax = new IntersectionObserver((entries) => {
