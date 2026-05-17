@@ -38,11 +38,14 @@ jobs:
           # --- CSS (active files only, no backups) ---
           cp css/style.css _deploy/css/
           cp css/mobile.css _deploy/css/
+          [ -f css/mobile-next.css ]      && cp css/mobile-next.css _deploy/css/
+          [ -f css/loader.css ]           && cp css/loader.css _deploy/css/
           [ -f css/editor-overrides.css ] && cp css/editor-overrides.css _deploy/css/
           [ -f css/local-editor.css ]     && cp css/local-editor.css _deploy/css/
 
           # --- JS (active files only, no backups) ---
           cp js/main.js _deploy/js/
+          [ -f js/mobile-next.js ]  && cp js/mobile-next.js _deploy/js/
           [ -f js/app.js ]          && cp js/app.js _deploy/js/
           [ -f js/local-editor.js ] && cp js/local-editor.js _deploy/js/
           [ -f js/mobile-editor.js ] && cp js/mobile-editor.js _deploy/js/
